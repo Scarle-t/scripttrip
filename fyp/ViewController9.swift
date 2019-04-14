@@ -12,17 +12,15 @@ import CoreLocation
 
 class ViewController9: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UITableViewDelegate, UITableViewDataSource {
     
-    let catTxt: [String] = ["Arts and Culture", "Dining", "Relax", "Fun", "Landscape"]
-    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return catTxt.count
+        return AppDelegate().catTxt.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell")
         
-        cell?.textLabel?.text = catTxt[indexPath.row]
+        cell?.textLabel?.text = AppDelegate().catTxt[indexPath.row]
         
         return cell!
     }

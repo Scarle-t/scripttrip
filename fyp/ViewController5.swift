@@ -24,11 +24,8 @@ class ViewController5: UIViewController, UITableViewDataSource, UITableViewDeleg
         return cell
     }
     
-    let cat: [UIImage] = [#imageLiteral(resourceName: "art_culture_pdf"), #imageLiteral(resourceName: "dining_pdf"), #imageLiteral(resourceName: "relax_pdf"), #imageLiteral(resourceName: "fun_pdf"), #imageLiteral(resourceName: "landscape_pdf")]
-    let catTxt: [String] = ["Arts and Culture", "Dining", "Relax", "Fun", "Landscape"]
-    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return catTxt.count
+        return AppDelegate().catTxt.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -36,8 +33,8 @@ class ViewController5: UIViewController, UITableViewDataSource, UITableViewDeleg
         
         cell.items.dataSource = self
         
-        cell.catName.text = catTxt[indexPath.row]
-        cell.catImg.image = cat[indexPath.row]
+        cell.catName.text = AppDelegate().catTxt[indexPath.row]
+        cell.catImg.image = AppDelegate().cat[indexPath.row]
         
         return cell
     }

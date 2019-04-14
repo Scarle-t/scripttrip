@@ -29,6 +29,13 @@ class HeaderView: UICollectionReusableView {
     
 }
 
+class cateChoiceCell: UICollectionViewCell{
+    
+    @IBOutlet weak var catImg: UIImageView!
+    @IBOutlet weak var catName: UILabel!
+    
+}
+
 class StretchyHeaderLayout: UICollectionViewFlowLayout {
     
     // we want to modify the attributes of our header component somehow
