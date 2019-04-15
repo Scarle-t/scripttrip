@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController10: UIViewController, UIScrollViewDelegate{
+class Photo: UIViewController, UIScrollViewDelegate{
 
     @IBOutlet weak var imgScroll: UIScrollView!
     @IBOutlet weak var imgDetail: UIImageView!

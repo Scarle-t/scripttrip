@@ -7,8 +7,41 @@
 //
 
 import UIKit
+import MapKit
 
-class CollectionViewCell: UICollectionViewCell {
+class AnnotationView: MKAnnotationView {
+    
+    /*
+     // Only override draw() if you perform custom drawing.
+     // An empty implementation adversely affects performance during animation.
+     override func draw(_ rect: CGRect) {
+     // Drawing code
+     }
+     */
+    
+}
+
+class categoryCell: UITableViewCell {
+    
+    @IBOutlet weak var items: UICollectionView!
+    @IBOutlet weak var catImg: UIImageView!
+    @IBOutlet weak var catName: UILabel!
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        // Initialization code
+        
+    }
+    
+    override func setSelected(_ selected: Bool, animated: Bool) {
+        super.setSelected(selected, animated: animated)
+        
+        // Configure the view for the selected state
+    }
+    
+}
+
+class featuredCell: UICollectionViewCell {
     
     @IBOutlet weak var view: UIView!
     @IBOutlet weak var catImg: UIImageView!

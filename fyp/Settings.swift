@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController8: UITableViewController {
+class Settings: UITableViewController {
 
     @IBAction func done(_ sender: UIBarButtonItem) {
         self.dismiss(animated: true, completion: nil)

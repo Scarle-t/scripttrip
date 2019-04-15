@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController4: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate, UICollectionViewDelegateFlowLayout {
+class Featured: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate, UICollectionViewDelegateFlowLayout {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section{
@@ -68,7 +68,7 @@ class ViewController4: UIViewController, UICollectionViewDataSource, UICollectio
             
             self.present(vc, animated: true, completion: nil)
         case 1:
-            let vc = storyboard?.instantiateViewController(withIdentifier: "vc") as! ViewController
+            let vc = storyboard?.instantiateViewController(withIdentifier: "vc") as! mainScreen
 
             self.present(vc, animated: false, completion: nil)
 //            self.tabBarController?.dismiss(animated: false, completion: nil)
@@ -127,7 +127,7 @@ class ViewController4: UIViewController, UICollectionViewDataSource, UICollectio
         
         switch collectionView.tag{
         case 0:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! CollectionViewCell
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! featuredCell
             
             cell.layer.masksToBounds = false
             cell.layer.shadowColor = UIColor.lightGray.cgColor

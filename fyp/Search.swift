@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController6: UIViewController {
+class Search: UIViewController {
 
     @IBOutlet weak var nav: UINavigationBar!
     

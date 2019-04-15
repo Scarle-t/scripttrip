@@ -10,10 +10,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Main Screen-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController storyboardIdentifier="vc" id="BYZ-38-t0r" customClass="ViewController" customModule="fyp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="vc" id="BYZ-38-t0r" customClass="mainScreen" customModule="fyp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -101,10 +101,10 @@
             </objects>
             <point key="canvasLocation" x="-79.200000000000003" y="132.68365817091455"/>
         </scene>
-        <!--View Controller2-->
+        <!--Reg interest Choice-->
         <scene sceneID="Lvu-hd-HQy">
             <objects>
-                <viewController storyboardIdentifier="interest" id="mIz-MA-hgx" customClass="ViewController2" customModule="fyp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="interest" id="mIz-MA-hgx" customClass="reg_interestChoice" customModule="fyp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8UF-G3-kEz">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -199,7 +199,7 @@
         <!--Featured-->
         <scene sceneID="L0l-ou-HJ7">
             <objects>
-                <viewController storyboardIdentifier="vc4" id="Xd7-zg-hNb" customClass="ViewController4" customModule="fyp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="vc4" id="Xd7-zg-hNb" customClass="Featured" customModule="fyp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="oya-Lt-y9x">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -214,7 +214,7 @@
                                     <inset key="sectionInset" minX="16" minY="10" maxX="16" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="cell" id="2el-x3-5Ke" customClass="CollectionViewCell" customModule="fyp" customModuleProvider="target">
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="cell" id="2el-x3-5Ke" customClass="featuredCell" customModule="fyp" customModuleProvider="target">
                                         <rect key="frame" x="17" y="60" width="341" height="338"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
@@ -505,7 +505,7 @@
         <!--Explore-->
         <scene sceneID="LSr-nI-VAb">
             <objects>
-                <viewController id="xPR-Ay-xLs" customClass="ViewController9" customModule="fyp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="xPR-Ay-xLs" customClass="Explore" customModule="fyp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="948-5o-Acm">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -754,10 +754,10 @@
             </objects>
             <point key="canvasLocation" x="2005.5999999999999" y="851.42428785607206"/>
         </scene>
-        <!--View Controller6-->
+        <!--Search-->
         <scene sceneID="BkE-29-WEK">
             <objects>
-                <viewController id="X7n-C3-AKg" customClass="ViewController6" customModule="fyp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="X7n-C3-AKg" customClass="Search" customModule="fyp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="mM6-cL-LCz">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -806,7 +806,7 @@
         <!--Category-->
         <scene sceneID="dea-zB-YwW">
             <objects>
-                <viewController storyboardIdentifier="vc5" id="3IX-8d-Qmp" customClass="ViewController5" customModule="fyp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="vc5" id="3IX-8d-Qmp" customClass="Category" customModule="fyp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="lwX-ag-KN9">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -919,10 +919,10 @@
             </objects>
             <point key="canvasLocation" x="1301.5999999999999" y="852.3238380809596"/>
         </scene>
-        <!--View Controller3-->
+        <!--Reg done-->
         <scene sceneID="J5o-gQ-MKq">
             <objects>
-                <viewController storyboardIdentifier="vc3" id="kxy-Xf-t1i" customClass="ViewController3" customModule="fyp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="vc3" id="kxy-Xf-t1i" customClass="reg_done" customModule="fyp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="fac-w1-PVW">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -956,10 +956,10 @@
             </objects>
             <point key="canvasLocation" x="1302" y="133"/>
         </scene>
-        <!--View Controller7-->
+        <!--Bookmarks-->
         <scene sceneID="3lQ-eW-IVu">
             <objects>
-                <viewController storyboardIdentifier="vc7" id="h7p-PW-yPp" customClass="ViewController7" customModule="fyp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="vc7" id="h7p-PW-yPp" customClass="Bookmarks" customModule="fyp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="HxM-ut-s5A">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1090,10 +1090,10 @@
             </objects>
             <point key="canvasLocation" x="-79.200000000000003" y="1554.872563718141"/>
         </scene>
-        <!--View Controller8-->
+        <!--Settings-->
         <scene sceneID="dke-b4-rn7">
             <objects>
-                <tableViewController storyboardIdentifier="vc8" id="DLx-Lc-MCQ" customClass="ViewController8" customModule="fyp" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="vc8" id="DLx-Lc-MCQ" customClass="Settings" customModule="fyp" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="1Q2-ys-dbA">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1238,10 +1238,10 @@
             </objects>
             <point key="canvasLocation" x="609" y="1555"/>
         </scene>
-        <!--View Controller10-->
+        <!--Photo-->
         <scene sceneID="Wpm-8Y-GC0">
             <objects>
-                <viewController id="15g-9w-gpF" customClass="ViewController10" customModule="fyp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="15g-9w-gpF" customClass="Photo" customModule="fyp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="3Qr-iu-pGL">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

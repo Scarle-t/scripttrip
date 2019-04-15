@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController7: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
+class Bookmarks: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section{
@@ -60,7 +60,7 @@ class ViewController7: UIViewController, UICollectionViewDataSource, UICollectio
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! CollectionViewCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! featuredCell
         
         cell.layer.masksToBounds = false
         cell.layer.shadowColor = UIColor.lightGray.cgColor

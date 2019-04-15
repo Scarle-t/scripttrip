@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController3: UIViewController {
+class reg_done: UIViewController {
 
     @IBOutlet weak var txt: UILabel!
     @IBOutlet weak var btn: UIButton!
