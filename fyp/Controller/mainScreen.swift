@@ -65,7 +65,7 @@ class mainScreen: UIViewController {
                 self.usr.alpha = 0
                 self.pwd.alpha = 0
             }
-            let interest = storyboard?.instantiateViewController(withIdentifier: "interest") as! ViewController2
+            let interest = storyboard?.instantiateViewController(withIdentifier: "interest") as! reg_interestChoice
             
             self.present(interest, animated: true, completion: backFunc)
             

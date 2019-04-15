@@ -54,7 +54,7 @@ class Featured: UIViewController, UICollectionViewDataSource, UICollectionViewDe
         case 0:
             switch indexPath.row{
             case 0, 1:
-                let vc = storyboard?.instantiateViewController(withIdentifier: "vc7") as! ViewController7
+                let vc = storyboard?.instantiateViewController(withIdentifier: "vc7") as! Bookmarks
                 
                 self.present(vc, animated: true, completion: nil)
             case 2:
@@ -64,7 +64,7 @@ class Featured: UIViewController, UICollectionViewDataSource, UICollectionViewDe
             default:
                 break
             }
-            let vc = storyboard?.instantiateViewController(withIdentifier: "vc7") as! ViewController7
+            let vc = storyboard?.instantiateViewController(withIdentifier: "vc7") as! Bookmarks
             
             self.present(vc, animated: true, completion: nil)
         case 1:
