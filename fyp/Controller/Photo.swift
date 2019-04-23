@@ -9,13 +9,16 @@
 import UIKit
 
 class Photo: UIViewController, UIScrollViewDelegate{
-
+    
+    //VARIABLE
+    var statusBar = false
+    
+    //IBOUTLET
     @IBOutlet weak var imgScroll: UIScrollView!
     @IBOutlet weak var imgDetail: UIImageView!
     @IBOutlet weak var xBtn: UIButton!
     
-    var statusBar = false
-    
+    //IBACTION
     @IBAction func xLeave(_ sender: UIButton) {
         AppDelegate.AppUtility.lockOrientation(.portrait, andRotateTo: .portrait)
         statusBar = false
@@ -26,6 +29,29 @@ class Photo: UIViewController, UIScrollViewDelegate{
         self.dismiss(animated: true, completion: nil)
     }
     
+    //DELEGATION
+        //SCROLL VIEW
+    func viewForZooming(in scrollView: UIScrollView) -> UIView? {
+        return imgDetail
+    }
+    
+    //OBJC FUNC
+    
+    //FUNC
+    
+    func delegate(){
+        imgScroll.delegate = self
+    }
+    
+    func layout(){
+        xBtn.layer.cornerRadius = xBtn.frame.width / 2
+        
+        imgScroll.minimumZoomScale = 1.0
+        imgScroll.maximumZoomScale = 6.0
+        imgDetail.contentMode = .scaleAspectFit
+    }
+    
+    //VIEW CONTROLLER
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -33,13 +59,9 @@ class Photo: UIViewController, UIScrollViewDelegate{
         
         AppDelegate.AppUtility.lockOrientation(.all)
         
-        xBtn.layer.cornerRadius = xBtn.frame.width / 2
+        delegate()
         
-        imgScroll.delegate = self
-        
-        imgScroll.minimumZoomScale = 1.0
-        imgScroll.maximumZoomScale = 6.0
-        imgDetail.contentMode = .scaleAspectFit
+        layout()
         
     }
     
@@ -53,10 +75,6 @@ class Photo: UIViewController, UIScrollViewDelegate{
             self.setNeedsUpdateOfHomeIndicatorAutoHidden()
         }
         
-    }
-    
-    func viewForZooming(in scrollView: UIScrollView) -> UIView? {
-        return imgDetail
     }
     
     override var prefersStatusBarHidden: Bool{

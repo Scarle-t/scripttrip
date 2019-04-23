@@ -44,7 +44,8 @@ class categoryCell: UITableViewCell {
 class featuredCell: UICollectionViewCell {
     
     @IBOutlet weak var view: UIView!
-    @IBOutlet weak var catImg: UIImageView!
+    @IBOutlet weak var img: UIImageView!
+    @IBOutlet weak var title: UILabel!
     
 }
 
@@ -54,11 +55,20 @@ class contentViewCell: UICollectionViewCell{
     
 }
 
+class otherContentViewCell: UICollectionViewCell{
+    
+    @IBOutlet weak var img: UIImageView!
+    @IBOutlet weak var content: UILabel!
+    
+}
+
 class HeaderView: UICollectionReusableView {
     
     @IBOutlet weak var headerImg: UIImageView!
     @IBOutlet weak var xBtn: UIButton!
     @IBOutlet weak var plus: UIButton!
+    @IBOutlet weak var title: UILabel!
+    @IBOutlet weak var gradient: UIView!
     
 }
 

@@ -10,8 +10,10 @@ import UIKit
 
 class mainScreen: UIViewController {
     
+    //VARIABLE
     var state = ""
     
+    //IBOUTLET
     @IBOutlet weak var logo: UIView!
     @IBOutlet weak var usr: UITextField!
     @IBOutlet weak var pwd: UITextField!
@@ -20,6 +22,7 @@ class mainScreen: UIViewController {
     @IBOutlet weak var backBtn: UIButton!
     @IBOutlet weak var forgot: UIButton!
     
+    //IBACTION
     @IBAction func loginAction(_ sender: UIButton) {
         if state == ""{
             UIView.animate(withDuration: 0.5) {
@@ -33,7 +36,7 @@ class mainScreen: UIViewController {
                 
                 self.login.frame = CGRect(x: self.login.frame.minX, y: self.login.frame.minY + 55, width: self.login.frame.width, height: self.login.frame.height)
                 
-//                self.view.layoutIfNeeded()
+                //                self.view.layoutIfNeeded()
                 
             }
             state = "login"
@@ -45,37 +48,23 @@ class mainScreen: UIViewController {
             
         }
     }
+    
     @IBAction func registerBtn(_ sender: UIButton) {
-        if state == ""{
-            UIView.animate(withDuration: 0.5) {
-                self.logo.frame = CGRect(x: self.logo.frame.minX, y: self.logo.frame.minY - 50, width: self.logo.frame.width, height: self.logo.frame.height)
-                
-                self.usr.alpha = 1
-                self.pwd.alpha = 1
-                self.login.alpha = 0
-                self.backBtn.alpha = 1
-                
-            }
-            state = "register"
-        }else if state == "register"{
-            UIView.animate(withDuration: 0.5) {
-                self.login.alpha = 0
-                self.backBtn.alpha = 0
-                self.register.alpha = 0
-                self.usr.alpha = 0
-                self.pwd.alpha = 0
-            }
-            let interest = storyboard?.instantiateViewController(withIdentifier: "interest") as! reg_interestChoice
-            
-            self.present(interest, animated: true, completion: backFunc)
-            
-        }
+        
     }
     
     @IBAction func back(_ sender: UIButton) {
         backFunc()
     }
     
+    //DELEGATION
+    
+    //OBJC FUNC
+    @objc func dismissKb(){
+        view.endEditing(true)
+    }
+    
+    //FUNC
     func backFunc(){
         view.endEditing(true)
         UIView.animate(withDuration: 0.5) {
@@ -96,10 +85,15 @@ class mainScreen: UIViewController {
         state = ""
     }
     
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+    func layout(){
+        let toolBar = UIToolbar()
+        let spaceButton = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        let cancelButton = UIBarButtonItem(title: "Hide Keyboard", style: .plain, target: self, action: #selector(dismissKb))
+        toolBar.barStyle = .default
+        toolBar.isTranslucent = true
+        toolBar.sizeToFit()
+        toolBar.setItems([spaceButton, cancelButton], animated: false)
+        toolBar.isUserInteractionEnabled = true
         
         login.layer.cornerRadius = 12
         register.layer.cornerRadius = 12
@@ -109,10 +103,21 @@ class mainScreen: UIViewController {
         usr.backgroundColor = UIColor(white: 1, alpha: 0.75)
         pwd.backgroundColor = UIColor(white: 1, alpha: 0.75)
         
+        usr.inputAccessoryView = toolBar
+        pwd.inputAccessoryView = toolBar
+        
         let statusBar: UIView = UIApplication.shared.value(forKey: "statusBar") as! UIView
         if statusBar.responds(to: #selector(setter: UIView.backgroundColor)) {
             statusBar.backgroundColor = "42E89D".toUIColor
         }
+    }
+    
+    //VIEW CONTROLLER
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        // Do any additional setup after loading the view, typically from a nib.
+        
+        layout()
         
     }
 
