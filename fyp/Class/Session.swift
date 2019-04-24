@@ -8,11 +8,135 @@
 
 import UIKit
 
-class Session: NSObject{
+class Session: NSObject, UITableViewDelegate, UITableViewDataSource, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout{
     
     static let shared = Session()
     static let parser = JSONParser()
     
+    //USER MENU
+    fileprivate var userView = UIView()
+    fileprivate var userTable = UITableView()
+    fileprivate let userIcon = UIImageView()
+    fileprivate let closeUser = UIButton()
+    fileprivate let dimView = UIView()
+    fileprivate let settings = ["Profile", "Account Settings", "About"]
+    func setupUserView(){
+        let window = UIApplication.shared.keyWindow
+        let mainCollectionView = UICollectionView(frame: userView.frame, collectionViewLayout: UICollectionViewFlowLayout())
+        let dimTap = UITapGestureRecognizer(target: self, action: #selector(closeMenu))
+        
+        mainCollectionView.delegate = self
+        mainCollectionView.dataSource = self
+        userTable.delegate = self
+        userTable.dataSource = self
+        
+        mainCollectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "cell")
+        mainCollectionView.register(UICollectionReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "header")
+        mainCollectionView.contentInsetAdjustmentBehavior = .always
+        let layout = mainCollectionView.collectionViewLayout as! UICollectionViewFlowLayout
+        layout.sectionHeadersPinToVisibleBounds = true
+        mainCollectionView.collectionViewLayout = layout
+        userTable.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        userIcon.image = #imageLiteral(resourceName: "user")
+        closeUser.setImage(#imageLiteral(resourceName: "left"), for: .normal)
+        closeUser.contentMode = .scaleAspectFill
+        closeUser.titleLabel?.text = nil
+        closeUser.addTarget(self, action: #selector(closeMenu), for: .touchUpInside)
+        dimView.addGestureRecognizer(dimTap)
+        
+        dimView.frame = window!.frame
+        dimView.backgroundColor = UIColor.black
+        dimView.alpha = 0
+        userView.frame = CGRect(x: 0, y: 0, width: (window?.frame.width)! / 3 * 2, height: (window?.frame.height)!)
+        userView.layer.cornerRadius = 25
+        userView.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMaxXMaxYCorner]
+        userView.clipsToBounds = true
+        userView.backgroundColor = UIColor.white
+        userIcon.frame = CGRect(x: 0, y: 0, width: userView.frame.width, height: userView.frame.width)
+        mainCollectionView.clipsToBounds = true
+        mainCollectionView.showsVerticalScrollIndicator = false
+        mainCollectionView.showsHorizontalScrollIndicator = false
+        mainCollectionView.frame = userView.frame
+        mainCollectionView.backgroundColor = UIColor.clear
+        closeUser.frame = CGRect(x: 5, y: 15, width: 50, height: 50)
+        closeUser.backgroundColor = UIColor.clear
+        
+        
+        
+        userView.frame.origin.x = -((window?.frame.width)! / 3 * 2)
+        
+        userView.addSubview(mainCollectionView)
+        mainCollectionView.reloadData()
+        UIApplication.shared.keyWindow?.addSubview(dimView)
+        UIApplication.shared.keyWindow?.addSubview(userView)
+        
+    }
+    internal func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return settings.count
+    }
+    internal func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+        
+        cell.textLabel?.text = settings[indexPath.row]
+        
+        return cell
+        
+    }
+    internal func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 1
+    }
+    internal func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 1
+    }
+    internal func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath)
+        
+        userTable = UITableView(frame: cell.contentView.frame, style: .grouped)
+        
+        userTable.reloadData()
+        
+        cell.contentView.addSubview(userTable)
+        
+        return cell
+        
+    }
+    internal func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        switch kind{
+        case UICollectionView.elementKindSectionHeader:
+            let header = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "header", for: indexPath)
+            
+            header.backgroundColor = UIColor.white
+            
+            header.addSubview(userIcon)
+            header.addSubview(closeUser)
+            
+            return header
+            
+        default:
+            return UICollectionReusableView()
+        }
+    }
+    internal func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        return .init(width: userView.frame.width, height: userView.frame.width)
+    }
+    internal func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return .init(width: userView.frame.width, height: userView.frame.height - userView.frame.width)
+    }
+    @objc func closeMenu(){
+        UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut, animations: {
+            self.dimView.alpha = 0
+            self.userView.frame.origin.x -= self.userView.frame.width
+        }, completion: nil)
+        
+    }
+    func showUserMenu(){
+        UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseIn, animations: {
+            self.userView.frame.origin.x = 0
+            self.dimView.alpha = 0.3
+        }, completion: nil)
+    }
+    
+    //CATEGORY
     fileprivate var categories = [Category]()
     func getCategories()->[Category]{
         return categories
@@ -35,6 +159,7 @@ class Session: NSObject{
         return returnItem
     }
     
+    //TRIP
     fileprivate var trips = [Trip]()
     func getTrips()->[Trip]{
         return trips

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class Featured: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate, UICollectionViewDelegateFlowLayout, NetworkDelegate {
+class Featured: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, NetworkDelegate {
     
     //VARIABLE
     let session = Session.shared
@@ -20,9 +20,6 @@ class Featured: UIViewController, UICollectionViewDataSource, UICollectionViewDe
     var yLoc: CGFloat = 0.0
     var timer = Timer()
     var added = false
-    var userMenu = false
-    var initialUserPan = CGPoint.zero
-    var orignialUser: CGFloat = 0.0
     var initialTouchPointSE = CGPoint.zero
     var original: CGFloat = 0.0
     var feedItems = 3
@@ -32,130 +29,14 @@ class Featured: UIViewController, UICollectionViewDataSource, UICollectionViewDe
     @IBOutlet weak var cv: UICollectionView!
     @IBOutlet weak var contentView: UIView!
     @IBOutlet weak var contents: UICollectionView!
-    @IBOutlet weak var userTable: UITableView!
-    @IBOutlet weak var userIcon: UIImageView!
-    @IBOutlet weak var userView: UIView!
     @IBOutlet weak var blurView: UIView!
     
     //IBACTION
     @IBAction func userBtn(_ sender: UIButton) {
-        userMenu = true
-        UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseIn, animations: {
-            self.userView.frame = CGRect(x: 0, y: 0, width: self.userView.frame.width, height: self.userView.frame.height)
-            self.blurView.alpha = 0.35
-        }, completion: nil)
-    }
-    
-    @IBAction @objc func userLeave(_ sender: Any) {
-        if userMenu{
-            UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseOut, animations: {
-                self.userView.frame = CGRect(x: 0 - self.userView.frame.width, y: 0, width: self.userView.frame.width, height: self.userView.frame.height)
-                self.blurView.alpha = 0
-            }, completion: nil)
-            userMenu = false
-        }
-    }
-    
-    @IBAction func screenEdge(_ sender: UIScreenEdgePanGestureRecognizer) {
-        
-        if !userMenu{
-            let touchPoint = sender.location(in: self.view.window)
-            
-            switch sender.state {
-            case .began:
-                initialTouchPointSE = touchPoint
-            case .changed:
-                if touchPoint.x > initialTouchPointSE.x && touchPoint.x <= userView.frame.width {
-                    userView.frame.origin.x = (touchPoint.x - initialTouchPointSE.x) - userView.frame.width
-                    //                    blurView.alpha = touchPoint.x / (self.view.frame.width / 3)
-                }
-            case .ended, .cancelled:
-                if touchPoint.x - initialTouchPointSE.x > self.view.frame.width / 3 {
-                    userMenu = true
-                    UIView.animate(withDuration: 0.3) {
-                        self.blurView.alpha = 0.35
-                        self.userView.frame = CGRect(x: 0, y: 0, width: self.userView.frame.width, height: self.userView.frame.height)
-                    }
-                } else {
-                    UIView.animate(withDuration: 0.2, animations: {
-                        self.blurView.alpha = 0
-                        self.userView.frame = CGRect(x: self.orignialUser,
-                                                     y: self.userView.frame.minY,
-                                                     width: self.userView.frame.size.width,
-                                                     height: self.userView.frame.size.height)
-                    })
-                }
-            case .failed, .possible:
-                break
-            }
-        }
+        session.showUserMenu()
     }
     
     //DELEGATION
-        //TABLE VIEW
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        switch section{
-        case 0:
-            return 3
-        case 1:
-            return 1
-        default:
-            return 0
-        }
-    }
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        switch indexPath.section{
-        case 0:
-            switch indexPath.row{
-            case 0:
-                cell.textLabel?.text = "Bookmarks"
-            case 1:
-                cell.textLabel?.text = "History"
-            case 2:
-                cell.textLabel?.text = "Settings"
-            default:
-                break
-            }
-            
-        case 1:
-            cell.textLabel?.text = "Logout"
-            cell.textLabel?.textColor = "FF4740".toUIColor
-        default:
-            break
-        }
-        return cell
-    }
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return 2
-    }
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        switch indexPath.section{
-        case 0:
-            switch indexPath.row{
-            case 0, 1:
-                let vc = storyboard?.instantiateViewController(withIdentifier: "vc7") as! Bookmarks
-                
-                self.present(vc, animated: true, completion: nil)
-            case 2:
-                let vc = storyboard?.instantiateViewController(withIdentifier: "vc8") as! UITableViewController
-                
-                self.present(vc, animated: true, completion: nil)
-            default:
-                break
-            }
-            let vc = storyboard?.instantiateViewController(withIdentifier: "vc7") as! Bookmarks
-            
-            self.present(vc, animated: true, completion: nil)
-        case 1:
-            let vc = storyboard?.instantiateViewController(withIdentifier: "vc") as! mainScreen
-            
-            self.present(vc, animated: false, completion: nil)
-        //            self.tabBarController?.dismiss(animated: false, completion: nil)
-        default:
-            break
-        }
-    }
         //COLLECTION VIEW
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         switch collectionView.tag{
@@ -358,48 +239,14 @@ class Featured: UIViewController, UICollectionViewDataSource, UICollectionViewDe
         state = "bookmark"
     }
     
-    @objc func userPan(_ sender: UIPanGestureRecognizer){
-        if userMenu{
-            let touchPoint = sender.location(in: self.view.window)
-            
-            switch sender.state {
-            case .began:
-                initialUserPan = touchPoint
-            case .changed:
-                if initialUserPan.x > touchPoint.x {
-                    userView.frame.origin.x = 0 - (initialUserPan.x - touchPoint.x)
-                    blurView.alpha = touchPoint.x / (self.view.frame.width / 3)
-                }
-            case .ended, .cancelled:
-                if initialUserPan.x - touchPoint.x > self.view.frame.width / 3 {
-                    userMenu = false
-                    UIView.animate(withDuration: 0.3) {
-                        self.blurView.alpha = 0
-                        self.userView.frame = CGRect(x: self.orignialUser,
-                                                     y: self.userView.frame.minY,
-                                                     width: self.userView.frame.size.width,
-                                                     height: self.userView.frame.size.height)
-                    }
-                } else {
-                    UIView.animate(withDuration: 0.2, animations: {
-                        self.blurView.alpha = 1
-                        self.userView.frame = CGRect(x: 0, y: 0, width: self.userView.frame.width, height: self.userView.frame.height)
-                        
-                    })
-                }
-            case .failed, .possible:
-                break
-            }
-        }
+    @objc func userLeave(_ sender: UITapGestureRecognizer){
+        session.closeMenu()
     }
     
     //FUNC
     func delegate(){
         cv.dataSource = self
         cv.delegate = self
-        
-        userTable.dataSource = self
-        userTable.delegate = self
         
         contents.delegate = self
         contents.dataSource = self
@@ -417,17 +264,10 @@ class Featured: UIViewController, UICollectionViewDataSource, UICollectionViewDe
         
         blurView.frame = UIApplication.shared.keyWindow!.frame
         
-        orignialUser = userView.frame.minX
         original = contentView.frame.minY
-        
-        userIcon.layer.cornerRadius = userIcon.frame.width / 2
-        userIcon.layer.borderColor = UIColor.lightGray.cgColor
-        userIcon.layer.borderWidth = 1
         
         contentView.layer.cornerRadius = 12
         contentView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
-        
-        userView.frame = CGRect(x: 0 - userView.frame.width, y: 0, width: userView.frame.width, height: self.view.frame.height)
         
         let statusBar: UIView = UIApplication.shared.value(forKey: "statusBar") as! UIView
         if statusBar.responds(to: #selector(setter: UIView.backgroundColor)) {
@@ -439,9 +279,7 @@ class Featured: UIViewController, UICollectionViewDataSource, UICollectionViewDe
     func setup(){
         let tap2 = UITapGestureRecognizer(target: self, action: #selector(userLeave(_:)))
         blurView.addGestureRecognizer(tap2)
-        
-        let direction = PanDirectionGestureRecognizer(direction: .horizontal, target: self, action: #selector(userPan(_:)))
-        userView.addGestureRecognizer(direction)
+        session.setupUserView()
     }
     
     //VIEW CONTROLLER
