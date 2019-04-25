@@ -103,6 +103,7 @@ class CategoryView: UIViewController, UITableViewDataSource, UITableViewDelegate
     
     //OBJC FUNC
     @objc func userMenu(_ sender: UIButton){
+        session.showUserMenu()
     }
     
     //FUNC

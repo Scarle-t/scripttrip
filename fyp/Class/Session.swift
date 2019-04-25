@@ -15,14 +15,17 @@ class Session: NSObject, UITableViewDelegate, UITableViewDataSource, UICollectio
     
     //USER MENU
     fileprivate var userView = UIView()
-    fileprivate var userTable = UITableView()
+    fileprivate var userTable = UITableView(frame: CGRect(origin: CGPoint.zero, size: CGSize.zero), style: .plain)
     fileprivate let userIcon = UIImageView()
     fileprivate let closeUser = UIButton()
     fileprivate let dimView = UIView()
+    fileprivate let username = UILabel()
+    fileprivate let blur = UIVisualEffectView(effect: UIBlurEffect(style: .extraLight))
+    fileprivate let blurBg = UIVisualEffectView(effect: UIBlurEffect(style: .extraLight))
     fileprivate let settings = ["Profile", "Account Settings", "About"]
     func setupUserView(){
         let window = UIApplication.shared.keyWindow
-        let mainCollectionView = UICollectionView(frame: userView.frame, collectionViewLayout: UICollectionViewFlowLayout())
+        let mainCollectionView = UICollectionView(frame: userView.frame, collectionViewLayout: StretchyHeaderLayout())
         let dimTap = UITapGestureRecognizer(target: self, action: #selector(closeMenu))
         
         mainCollectionView.delegate = self
@@ -33,11 +36,12 @@ class Session: NSObject, UITableViewDelegate, UITableViewDataSource, UICollectio
         mainCollectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "cell")
         mainCollectionView.register(UICollectionReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "header")
         mainCollectionView.contentInsetAdjustmentBehavior = .always
-        let layout = mainCollectionView.collectionViewLayout as! UICollectionViewFlowLayout
-        layout.sectionHeadersPinToVisibleBounds = true
-        mainCollectionView.collectionViewLayout = layout
+//        let layout = mainCollectionView.collectionViewLayout as! UICollectionViewFlowLayout
+//        layout.sectionHeadersPinToVisibleBounds = true
+//        mainCollectionView.collectionViewLayout = layout
         userTable.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         userIcon.image = #imageLiteral(resourceName: "user")
+        userIcon.contentMode = .scaleAspectFill
         closeUser.setImage(#imageLiteral(resourceName: "left"), for: .normal)
         closeUser.contentMode = .scaleAspectFill
         closeUser.titleLabel?.text = nil
@@ -51,17 +55,27 @@ class Session: NSObject, UITableViewDelegate, UITableViewDataSource, UICollectio
         userView.layer.cornerRadius = 25
         userView.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMaxXMaxYCorner]
         userView.clipsToBounds = true
-        userView.backgroundColor = UIColor.white
+        userView.backgroundColor = UIColor.clear
         userIcon.frame = CGRect(x: 0, y: 0, width: userView.frame.width, height: userView.frame.width)
         mainCollectionView.clipsToBounds = true
         mainCollectionView.showsVerticalScrollIndicator = false
         mainCollectionView.showsHorizontalScrollIndicator = false
         mainCollectionView.frame = userView.frame
         mainCollectionView.backgroundColor = UIColor.clear
-        closeUser.frame = CGRect(x: 5, y: 15, width: 50, height: 50)
+        closeUser.frame = CGRect(x: 5, y: 53, width: 50, height: 50)
         closeUser.backgroundColor = UIColor.clear
-        
-        
+        username.text = "User"
+        username.font = UIFont(name: "Avenir Next", size: 27)
+        username.textAlignment = .center
+        username.frame = CGRect(x: 0, y: userIcon.frame.maxY - 45, width: userView.frame.width, height: 45)
+        username.backgroundColor = UIColor.clear
+        username.minimumScaleFactor = 0.5
+        username.adjustsFontSizeToFitWidth = true
+        blur.frame = username.frame
+        username.frame.origin.y = 0
+        blur.contentView.addSubview(username)
+        blurBg.frame = userView.frame
+        userView.addSubview(blurBg)
         
         userView.frame.origin.x = -((window?.frame.width)! / 3 * 2)
         
@@ -71,6 +85,9 @@ class Session: NSObject, UITableViewDelegate, UITableViewDataSource, UICollectio
         UIApplication.shared.keyWindow?.addSubview(userView)
         
     }
+    internal func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
     internal func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return settings.count
     }
@@ -78,6 +95,9 @@ class Session: NSObject, UITableViewDelegate, UITableViewDataSource, UICollectio
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
         
         cell.textLabel?.text = settings[indexPath.row]
+        cell.textLabel?.font = UIFont(name: "Avenir Next", size: 17)
+        cell.accessoryType = .disclosureIndicator
+        cell.backgroundColor = UIColor.clear
         
         return cell
         
@@ -91,9 +111,9 @@ class Session: NSObject, UITableViewDelegate, UITableViewDataSource, UICollectio
     internal func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath)
         
-        userTable = UITableView(frame: cell.contentView.frame, style: .grouped)
+        userTable.frame = cell.contentView.frame
         
-        userTable.reloadData()
+        userTable.backgroundColor = UIColor.clear
         
         cell.contentView.addSubview(userTable)
         
@@ -105,10 +125,14 @@ class Session: NSObject, UITableViewDelegate, UITableViewDataSource, UICollectio
         case UICollectionView.elementKindSectionHeader:
             let header = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "header", for: indexPath)
             
-            header.backgroundColor = UIColor.white
+            header.backgroundColor = UIColor.clear
             
             header.addSubview(userIcon)
+//            header.addSubview(blur)
             header.addSubview(closeUser)
+            
+            userIcon.fillSuperview()
+//            blur.bottomSuperview()
             
             return header
             

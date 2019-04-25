@@ -161,7 +161,6 @@
 		A6A67CF7222FE9A600D82479 /* fyp */ = {
 			isa = PBXGroup;
 			children = (
-				A6836A34226B4E41008F75EB /* fyp.entitlements */,
 				A68BFAFB2265040200BAF061 /* Action */,
 				A6A67CF8222FE9A700D82479 /* AppDelegate.swift */,
 				A6A67CFF222FE9A800D82479 /* Assets.xcassets */,
@@ -169,6 +168,7 @@
 				A68BFAFC2265040800BAF061 /* Class */,
 				A68BFAF9226503A400BAF061 /* Controller */,
 				A68BFAFD2265041600BAF061 /* Extension */,
+				A6836A34226B4E41008F75EB /* fyp.entitlements */,
 				A6A67D04222FE9A800D82479 /* Info.plist */,
 				A6A67D01222FE9A800D82479 /* LaunchScreen.storyboard */,
 				A6A67CFC222FE9A700D82479 /* Main.storyboard */,

@@ -495,15 +495,6 @@ Join us now</string>
                                                     </constraints>
                                                     <state key="normal" image="cross"/>
                                                 </button>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cYh-0R-JcP">
-                                                    <rect key="frame" x="309" y="17" width="35" height="35"/>
-                                                    <color key="backgroundColor" white="1" alpha="0.89755458050000003" colorSpace="calibratedWhite"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="35" id="DDm-Zl-YfE"/>
-                                                        <constraint firstAttribute="width" constant="35" id="Hia-4C-Iao"/>
-                                                    </constraints>
-                                                    <state key="normal" image="plus"/>
-                                                </button>
                                                 <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kQh-AF-pMf">
                                                     <rect key="frame" x="0.0" y="178" width="360" height="62"/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -523,11 +514,9 @@ Join us now</string>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="kQh-AF-pMf" firstAttribute="leading" secondItem="MVT-hU-fPo" secondAttribute="leading" id="3Cm-qJ-fyq"/>
-                                                <constraint firstAttribute="trailing" secondItem="cYh-0R-JcP" secondAttribute="trailing" constant="16" id="5Ks-rf-Lrs"/>
                                                 <constraint firstItem="SBh-aP-G5Q" firstAttribute="leading" secondItem="MVT-hU-fPo" secondAttribute="leading" id="8Cd-R2-9tp"/>
                                                 <constraint firstItem="vz1-lx-fMN" firstAttribute="leading" secondItem="MVT-hU-fPo" secondAttribute="leading" constant="17" id="Aao-pp-NXE"/>
                                                 <constraint firstItem="hHt-b2-Gx3" firstAttribute="leading" secondItem="MVT-hU-fPo" secondAttribute="leading" constant="17" id="AxM-Yh-j14"/>
-                                                <constraint firstItem="cYh-0R-JcP" firstAttribute="top" secondItem="MVT-hU-fPo" secondAttribute="top" constant="17" id="CjM-FR-h6Q"/>
                                                 <constraint firstItem="SBh-aP-G5Q" firstAttribute="top" secondItem="MVT-hU-fPo" secondAttribute="top" id="HTb-0e-ac6"/>
                                                 <constraint firstAttribute="trailing" secondItem="kQh-AF-pMf" secondAttribute="trailing" id="J4n-6b-bGF"/>
                                                 <constraint firstItem="hHt-b2-Gx3" firstAttribute="top" secondItem="MVT-hU-fPo" secondAttribute="top" constant="17" id="P8h-gL-yPs"/>
@@ -540,20 +529,33 @@ Join us now</string>
                                             <connections>
                                                 <outlet property="gradient" destination="kQh-AF-pMf" id="mzW-n3-q58"/>
                                                 <outlet property="headerImg" destination="SBh-aP-G5Q" id="cu3-I5-C9X"/>
-                                                <outlet property="plus" destination="cYh-0R-JcP" id="idL-7F-9cn"/>
                                                 <outlet property="title" destination="vz1-lx-fMN" id="q1C-fu-NQe"/>
                                                 <outlet property="xBtn" destination="hHt-b2-Gx3" id="n1L-Jt-zxz"/>
                                             </connections>
                                         </collectionReusableView>
                                     </collectionView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cYh-0R-JcP">
+                                        <rect key="frame" x="309" y="17" width="35" height="35"/>
+                                        <color key="backgroundColor" white="1" alpha="0.89755458050000003" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="35" id="DDm-Zl-YfE"/>
+                                            <constraint firstAttribute="width" constant="35" id="Hia-4C-Iao"/>
+                                        </constraints>
+                                        <state key="normal" image="plus"/>
+                                        <connections>
+                                            <action selector="plus:" destination="Xd7-zg-hNb" eventType="touchUpInside" id="DhA-Og-dIA"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <gestureRecognizers/>
                                 <constraints>
                                     <constraint firstItem="Vag-yL-HJM" firstAttribute="top" secondItem="gab-KF-edG" secondAttribute="top" id="BYe-nU-dRW"/>
+                                    <constraint firstItem="cYh-0R-JcP" firstAttribute="top" secondItem="gab-KF-edG" secondAttribute="top" constant="17" id="I6U-ou-vM6"/>
                                     <constraint firstAttribute="trailing" secondItem="Vag-yL-HJM" secondAttribute="trailing" id="OFr-bZ-v3C"/>
                                     <constraint firstItem="Vag-yL-HJM" firstAttribute="leading" secondItem="gab-KF-edG" secondAttribute="leading" id="itj-fs-1oP"/>
                                     <constraint firstAttribute="bottom" secondItem="Vag-yL-HJM" secondAttribute="bottom" id="m8G-iH-6Q1"/>
+                                    <constraint firstAttribute="trailing" secondItem="cYh-0R-JcP" secondAttribute="trailing" constant="16" id="w7L-rI-SLa"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -581,6 +583,7 @@ Join us now</string>
                         <outlet property="contentView" destination="gab-KF-edG" id="dUY-nN-XeH"/>
                         <outlet property="contents" destination="Vag-yL-HJM" id="zGd-Ee-kQc"/>
                         <outlet property="cv" destination="7le-nk-3TG" id="mAd-Cb-wqH"/>
+                        <outlet property="plusBtn" destination="cYh-0R-JcP" id="ON2-YK-z5x"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="I4T-Jb-phd" userLabel="First Responder" sceneMemberID="firstResponder"/>

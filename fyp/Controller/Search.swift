@@ -11,6 +11,7 @@ import UIKit
 class Search: UIViewController {
     
     //VARIABLE
+    let session = Session.shared
     
     //IBOUTLET
     @IBOutlet weak var nav: UINavigationBar!
@@ -25,10 +26,15 @@ class Search: UIViewController {
         view.endEditing(true)
     }
     
+    @objc func userMenu(_ sender: UIButton){
+        session.showUserMenu()
+    }
+    
     //FUNC
     func layout(){
         let menu = UIButton(frame: CGRect(x: 10, y: 10, width: 45, height: 30))
         menu.setImage(#imageLiteral(resourceName: "menu"), for: .normal)
+        menu.addTarget(self, action: #selector(userMenu(_:)), for: .touchUpInside)
         nav.addSubview(menu)
     }
     

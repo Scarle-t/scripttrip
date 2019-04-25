@@ -237,6 +237,7 @@ class Explore: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, U
     }
     
     @objc func userMenu(_ sender: UIButton){
+        session.showUserMenu()
     }
     
     //FUNC

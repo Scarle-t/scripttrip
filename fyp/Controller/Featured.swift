@@ -30,10 +30,16 @@ class Featured: UIViewController, UICollectionViewDataSource, UICollectionViewDe
     @IBOutlet weak var contentView: UIView!
     @IBOutlet weak var contents: UICollectionView!
     @IBOutlet weak var blurView: UIView!
+    @IBOutlet weak var plusBtn: UIButton!
     
     //IBACTION
     @IBAction func userBtn(_ sender: UIButton) {
         session.showUserMenu()
+    }
+    
+    @IBAction func plus(_ sender: UIButton){
+        state = "addBookmark"
+        network.send(url: "https://scripttrip.scarletsc.net/iOS/addBookmark.php?trip=\(selectedItem.TID)&user=93112488", method: "GET", query: nil)
     }
     
     //DELEGATION
@@ -159,10 +165,6 @@ class Featured: UIViewController, UICollectionViewDataSource, UICollectionViewDe
                 
                 header.xBtn.addTarget(self, action: #selector(xLeave(_:)), for: .touchUpInside)
                 
-                header.plus.layer.cornerRadius = header.plus.frame.width / 2
-                
-                header.plus.addTarget(self, action: #selector(plus(_:)), for: .touchUpInside)
-                
                 header.gradient.layer.cornerRadius = 12
                 header.gradient.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
                 
@@ -181,6 +183,9 @@ class Featured: UIViewController, UICollectionViewDataSource, UICollectionViewDe
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
         if collectionView.tag == 0{
+            
+            state = "checkBookmark"
+            network.send(url: "https://scripttrip.scarletsc.net/iOS/checkBookmark.php?trip=\(selectedItem.TID)&user=93112488", method: "GET", query: nil)
             
             selectedItem = session.getTrips()[indexPath.row]
             
@@ -216,7 +221,36 @@ class Featured: UIViewController, UICollectionViewDataSource, UICollectionViewDe
             DispatchQueue.main.async {
                 self.cv.reloadData()
             }
-        }else if state == "bookmark"{
+        }else if state == "addBookmark"{
+            guard let result = parser.parse(data) else {return}
+            for item in result{
+                if (item["Result"] as! String) == "OK"{
+                    let alert = UIAlertController(title: "Added to bookmarks.", message: nil, preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
+                    self.present(alert, animated: true, completion: nil)
+                }else{
+                    let alert = UIAlertController(title: "Error when adding bookmarks.", message: (item["Reason"] as? String), preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
+                    self.present(alert, animated: true, completion: nil)
+                }
+            }
+        }else if state == "checkBookmark"{
+            guard let result = parser.parse(data) else {return}
+            for item in result{
+                if (item["Result"] as! String) == "Exist"{
+                    DispatchQueue.main.async {
+                        self.plusBtn.alpha = 0
+                    }
+                }else{
+                    DispatchQueue.main.async {
+                        self.plusBtn.alpha = 1
+                    }
+                    
+                }
+            }
+            DispatchQueue.main.async {
+                self.plusBtn.layoutIfNeeded()
+            }
             
         }
         
@@ -226,21 +260,12 @@ class Featured: UIViewController, UICollectionViewDataSource, UICollectionViewDe
     //OBJC FUNC
     @objc func xLeave(_ sender: UIButton){
         
-        added = false
         UIView.animate(withDuration: 0.3) {
             self.contentView.frame = CGRect(x: self.contentView.frame.minX, y: self.view.frame.height, width: self.contentView.frame.width, height: self.contentView.frame.height)
             self.blurView.alpha = 0
             self.tabBarController?.tabBar.frame = CGRect(x: (self.tabBarController?.tabBar.frame.minX)!, y: (self.tabBarController?.tabBar.frame.minY)! - (self.tabBarController?.tabBar.frame.height)!, width: (self.tabBarController?.tabBar.frame.width)!, height: (self.tabBarController?.tabBar.frame.height)!)
         }
         
-    }
-    
-    @objc func plus(_ sender: UIButton){
-        state = "bookmark"
-    }
-    
-    @objc func userLeave(_ sender: UITapGestureRecognizer){
-        session.closeMenu()
     }
     
     //FUNC
@@ -269,6 +294,8 @@ class Featured: UIViewController, UICollectionViewDataSource, UICollectionViewDe
         contentView.layer.cornerRadius = 12
         contentView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
         
+        plusBtn.layer.cornerRadius = plusBtn.frame.width / 2
+        
         let statusBar: UIView = UIApplication.shared.value(forKey: "statusBar") as! UIView
         if statusBar.responds(to: #selector(setter: UIView.backgroundColor)) {
             statusBar.backgroundColor = "42E89D".toUIColor
@@ -277,8 +304,6 @@ class Featured: UIViewController, UICollectionViewDataSource, UICollectionViewDe
     }
     
     func setup(){
-        let tap2 = UITapGestureRecognizer(target: self, action: #selector(userLeave(_:)))
-        blurView.addGestureRecognizer(tap2)
         session.setupUserView()
     }
     
