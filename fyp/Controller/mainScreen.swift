@@ -8,10 +8,11 @@
 
 import UIKit
 
-class mainScreen: UIViewController {
-    
+class mainScreen: UIViewController, NetworkDelegate {
     //VARIABLE
     var state = ""
+    let network = Network()
+    let session = Session.shared
     
     //IBOUTLET
     @IBOutlet weak var logo: UIView!
@@ -42,10 +43,8 @@ class mainScreen: UIViewController {
             state = "login"
         }else if state == "login"{
             
-            let vct = storyboard?.instantiateViewController(withIdentifier: "vct") as! UITabBarController
-            
-            self.present(vct, animated: false, completion: backFunc)
-            
+            network.send(url: "https://scripttrip.scarletsc.net/iOS/login.php", method: "POST", query: "email=\(usr.text!)&pass=\(pwd.text!.sha1())")
+
         }
     }
     
@@ -58,6 +57,23 @@ class mainScreen: UIViewController {
     }
     
     //DELEGATION
+    func ResponseHandle(data: Data) {
+        guard let result = Session.parser.parse(data) else {return}
+        
+        for item in result{
+            if (item["Result"] as! String) == "OK"{
+                session.parseUser([item["Reason"] as! NSDictionary])
+                let vct = storyboard?.instantiateViewController(withIdentifier: "vct") as! UITabBarController
+                
+                self.present(vct, animated: false, completion: backFunc)
+            }else{
+                let alert = UIAlertController(title: "Failed to login.", message: "Please try again.", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
+                self.present(alert, animated: true, completion: nil)
+            }
+        }
+        
+    }
     
     //OBJC FUNC
     @objc func dismissKb(){
@@ -83,6 +99,9 @@ class mainScreen: UIViewController {
             
         }
         state = ""
+    }
+    func delegate(){
+        network.delegate = self
     }
     
     func layout(){
@@ -112,12 +131,18 @@ class mainScreen: UIViewController {
 //        }
     }
     
+    func setup(){
+        
+    }
+    
     //VIEW CONTROLLER
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
+        delegate()
         layout()
+        setup()
         
     }
 

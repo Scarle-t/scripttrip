@@ -13,6 +13,39 @@ class Session: NSObject, UITableViewDelegate, UITableViewDataSource, UICollectio
     static let shared = Session()
     static let parser = JSONParser()
     
+    //USER INFO
+    static let user = User()
+    fileprivate let usr = Session.user
+    fileprivate var usrMap = NSDictionary()
+    func parseUser(_ data: [NSDictionary]){
+        for item in data{
+            guard let uid = item["UID"] as? String else {return}
+            guard let email = item["email"] as? String else {return}
+            guard let lname = item["Lname"] as? String else {return}
+            guard let fname = item["Fname"] as? String else {return}
+            guard let type = item["type"] as? String else {return}
+            
+            usr.UID = Int(uid)!
+            usr.email = email
+            usr.Lname = lname
+            usr.Fname = fname
+            usr.type = type
+            
+            usr.Sess_ID = (item["Sess_ID"] as? String) ?? nil
+            usr.icon = (item["icon"] as? String) ?? nil
+            
+//            usrMap = usr.map()
+        }
+    }
+    func updateUser(key: String, value: String){
+        if key == "UID"{
+            usrMap.setValue(Int(value), forKey: key)
+        }else{
+            usrMap.setValue(value, forKey: key)
+        }
+        parseUser([usrMap])
+    }
+    
     //USER MENU
     fileprivate var userView = UIView()
     fileprivate var userTable = UITableView(frame: CGRect(origin: CGPoint.zero, size: CGSize.zero), style: .plain)
@@ -22,8 +55,9 @@ class Session: NSObject, UITableViewDelegate, UITableViewDataSource, UICollectio
     fileprivate let username = UILabel()
     fileprivate let blur = UIVisualEffectView(effect: UIBlurEffect(style: .extraLight))
     fileprivate let blurBg = UIVisualEffectView(effect: UIBlurEffect(style: .extraLight))
-    fileprivate let settings = ["Username", "Account Settings", "About"]
+    fileprivate var settings = ["", "Account Settings", "About"]
     func setupUserView(){
+        settings[0] = usr.Fname + " " + usr.Lname
         let window = UIApplication.shared.keyWindow
         let mainCollectionView = UICollectionView(frame: userView.frame, collectionViewLayout: StretchyHeaderLayout())
         let dimTap = UITapGestureRecognizer(target: self, action: #selector(closeMenu))
