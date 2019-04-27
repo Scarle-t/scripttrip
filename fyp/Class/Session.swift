@@ -22,7 +22,7 @@ class Session: NSObject, UITableViewDelegate, UITableViewDataSource, UICollectio
     fileprivate let username = UILabel()
     fileprivate let blur = UIVisualEffectView(effect: UIBlurEffect(style: .extraLight))
     fileprivate let blurBg = UIVisualEffectView(effect: UIBlurEffect(style: .extraLight))
-    fileprivate let settings = ["Profile", "Account Settings", "About"]
+    fileprivate let settings = ["Username", "Account Settings", "About"]
     func setupUserView(){
         let window = UIApplication.shared.keyWindow
         let mainCollectionView = UICollectionView(frame: userView.frame, collectionViewLayout: StretchyHeaderLayout())
@@ -42,7 +42,7 @@ class Session: NSObject, UITableViewDelegate, UITableViewDataSource, UICollectio
         userTable.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         userIcon.image = #imageLiteral(resourceName: "user")
         userIcon.contentMode = .scaleAspectFill
-        closeUser.setImage(#imageLiteral(resourceName: "left"), for: .normal)
+        closeUser.setImage(#imageLiteral(resourceName: "left_tint"), for: .normal)
         closeUser.contentMode = .scaleAspectFill
         closeUser.titleLabel?.text = nil
         closeUser.addTarget(self, action: #selector(closeMenu), for: .touchUpInside)
@@ -65,7 +65,7 @@ class Session: NSObject, UITableViewDelegate, UITableViewDataSource, UICollectio
         closeUser.frame = CGRect(x: 5, y: 53, width: 50, height: 50)
         closeUser.backgroundColor = UIColor.clear
         username.text = "User"
-        username.font = UIFont(name: "Avenir Next", size: 27)
+        username.font = UIFont(name: "AvenirNext-DemiBold", size: 27)
         username.textAlignment = .center
         username.frame = CGRect(x: 0, y: userIcon.frame.maxY - 45, width: userView.frame.width, height: 45)
         username.backgroundColor = UIColor.clear
@@ -95,8 +95,15 @@ class Session: NSObject, UITableViewDelegate, UITableViewDataSource, UICollectio
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
         
         cell.textLabel?.text = settings[indexPath.row]
-        cell.textLabel?.font = UIFont(name: "Avenir Next", size: 17)
-        cell.accessoryType = .disclosureIndicator
+        if indexPath.row == 0{
+            cell.textLabel?.font = UIFont(name: "AvenirNext-Heavy", size: 27)
+            cell.textLabel?.textAlignment = .center
+            cell.accessoryType = .none
+        }else{
+            cell.textLabel?.font = UIFont(name: "AvenirNext-DemiBold", size: 17)
+            cell.textLabel?.textAlignment = .left
+            cell.accessoryType = .disclosureIndicator
+        }
         cell.backgroundColor = UIColor.clear
         
         return cell

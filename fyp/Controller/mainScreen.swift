@@ -106,10 +106,10 @@ class mainScreen: UIViewController {
         usr.inputAccessoryView = toolBar
         pwd.inputAccessoryView = toolBar
         
-        let statusBar: UIView = UIApplication.shared.value(forKey: "statusBar") as! UIView
-        if statusBar.responds(to: #selector(setter: UIView.backgroundColor)) {
-            statusBar.backgroundColor = "42E89D".toUIColor
-        }
+//        let statusBar: UIView = UIApplication.shared.value(forKey: "statusBar") as! UIView
+//        if statusBar.responds(to: #selector(setter: UIView.backgroundColor)) {
+//            statusBar.backgroundColor = "42E89D".toUIColor
+//        }
     }
     
     //VIEW CONTROLLER

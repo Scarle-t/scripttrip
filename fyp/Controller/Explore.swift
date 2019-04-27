@@ -312,13 +312,21 @@ class Explore: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, U
         original = planView.frame.minY
         originalFilterMenuY = self.view.frame.maxY - filterMenu.frame.height
         
-        let header = UIView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: 50))
-        header.backgroundColor = "42E89D".toUIColor
+        let header = UIView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: 62))
+        header.backgroundColor = .white
         
-        let menu = UIButton(frame: CGRect(x: 10, y: 10, width: 45, height: 30))
-        menu.setImage(#imageLiteral(resourceName: "menu"), for: .normal)
+        let menu = UIButton(frame: CGRect(x: 10, y: 16, width: 45, height: 30))
+        menu.setImage(#imageLiteral(resourceName: "menu_tint"), for: .normal)
         menu.addTarget(self, action: #selector(userMenu(_:)), for: .touchUpInside)
         
+        let text = UILabel(frame: header.frame)
+        text.text = "Explore"
+        text.textColor = "42C89D".toUIColor
+        text.font = UIFont(name: "AvenirNext-Heavy", size: 30)
+        
+        text.frame.origin.x = 63
+        
+        header.addSubview(text)
         header.addSubview(menu)
         
         mk.addSubview(header)

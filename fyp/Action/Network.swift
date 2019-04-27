@@ -21,21 +21,21 @@ extension NetworkDelegate{
         let alert = UIAlertController(title: "HTTP Error", message: "\(httpStatus.statusCode).", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
         DispatchQueue.main.async {
-            UIApplication.shared.keyWindow?.rootViewController?.present(alert, animated: true, completion: nil)
+            UIApplication.shared.keyWindow?.window?.rootViewController?.present(alert, animated: true, completion: nil)
         }
     }
     func reachabilityError(){
         let alert = UIAlertController(title: "Network unavailable, please try again later.", message: nil, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
         DispatchQueue.main.async {
-            UIApplication.shared.keyWindow?.rootViewController?.present(alert, animated: true, completion: nil)
+            UIApplication.shared.keyWindow?.window?.rootViewController?.present(alert, animated: true, completion: nil)
         }
     }
     func URLSessionError(error: Error?){
         let alert = UIAlertController(title: "URL Session Error", message: "\(error ?? Error.self as! Error).", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
         DispatchQueue.main.async {
-            UIApplication.shared.keyWindow?.rootViewController?.present(alert, animated: true, completion: nil)
+            UIApplication.shared.keyWindow?.window?.rootViewController?.present(alert, animated: true, completion: nil)
         }
     }
     func ResponsePhoto(data: Data)->UIImage?{

@@ -24,6 +24,7 @@ class Featured: UIViewController, UICollectionViewDataSource, UICollectionViewDe
     var original: CGFloat = 0.0
     var feedItems = 3
     var state = ""
+    let mainRefresh = UIRefreshControl()
     
     //IBOUTLET
     @IBOutlet weak var cv: UICollectionView!
@@ -122,7 +123,7 @@ class Featured: UIViewController, UICollectionViewDataSource, UICollectionViewDe
         
         switch collectionView.tag{
         case 0:
-            return .init(width: self.view.frame.width, height: 50)
+            return .init(width: self.view.frame.width, height: 62)
         case 1:
             return .init(width: view.frame.width, height: view.frame.width / 2 * 2.5)
         default:
@@ -139,7 +140,7 @@ class Featured: UIViewController, UICollectionViewDataSource, UICollectionViewDe
             case UICollectionView.elementKindSectionHeader:
                 let header = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "header", for: indexPath)
                 
-                header.frame = CGRect(x: 0 , y: 0, width: collectionView.frame.width, height: 50)
+                header.frame = CGRect(x: 0 , y: 0, width: collectionView.frame.width, height: 62)
                 
                 return header
                 
@@ -185,9 +186,10 @@ class Featured: UIViewController, UICollectionViewDataSource, UICollectionViewDe
         if collectionView.tag == 0{
             
             state = "checkBookmark"
-            network.send(url: "https://scripttrip.scarletsc.net/iOS/checkBookmark.php?trip=\(selectedItem.TID)&user=93112488", method: "GET", query: nil)
             
             selectedItem = session.getTrips()[indexPath.row]
+            
+            network.send(url: "https://scripttrip.scarletsc.net/iOS/checkBookmark.php?trip=\(selectedItem.TID)&user=93112488", method: "GET", query: nil)
             
             DispatchQueue.main.async {
                 self.contents.reloadData()
@@ -216,6 +218,12 @@ class Featured: UIViewController, UICollectionViewDataSource, UICollectionViewDe
     
         //NETWORK
     func ResponseHandle(data: Data) {
+        DispatchQueue.main.async {
+            if self.mainRefresh.isRefreshing{
+                self.mainRefresh.endRefreshing()
+            }
+        }
+        
         if state == "trip"{
             session.setTrips(session.parseTrip(parser.parseNested(data)))
             DispatchQueue.main.async {
@@ -228,6 +236,9 @@ class Featured: UIViewController, UICollectionViewDataSource, UICollectionViewDe
                     let alert = UIAlertController(title: "Added to bookmarks.", message: nil, preferredStyle: .alert)
                     alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
                     self.present(alert, animated: true, completion: nil)
+                    DispatchQueue.main.async {
+                        self.plusBtn.alpha = 0
+                    }
                 }else{
                     let alert = UIAlertController(title: "Error when adding bookmarks.", message: (item["Reason"] as? String), preferredStyle: .alert)
                     alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
@@ -268,6 +279,11 @@ class Featured: UIViewController, UICollectionViewDataSource, UICollectionViewDe
         
     }
     
+    @objc func refreshFeatured(_ sender: UIRefreshControl){
+        state = "trip"
+        network.send(url: "https://scripttrip.scarletsc.net/iOS/getTrips.php", method: "GET", query: nil)
+    }
+    
     //FUNC
     func delegate(){
         cv.dataSource = self
@@ -296,15 +312,19 @@ class Featured: UIViewController, UICollectionViewDataSource, UICollectionViewDe
         
         plusBtn.layer.cornerRadius = plusBtn.frame.width / 2
         
-        let statusBar: UIView = UIApplication.shared.value(forKey: "statusBar") as! UIView
-        if statusBar.responds(to: #selector(setter: UIView.backgroundColor)) {
-            statusBar.backgroundColor = "42E89D".toUIColor
-        }
+        mainRefresh.tintColor = "42C89D".toUIColor
+        
+//        let statusBar: UIView = UIApplication.shared.value(forKey: "statusBar") as! UIView
+//        if statusBar.responds(to: #selector(setter: UIView.backgroundColor)) {
+//            statusBar.backgroundColor = "42E89D".toUIColor
+//        }
         
     }
     
     func setup(){
         session.setupUserView()
+        mainRefresh.addTarget(self, action: #selector(refreshFeatured(_:)), for: .valueChanged)
+        cv.refreshControl = mainRefresh
     }
     
     //VIEW CONTROLLER
