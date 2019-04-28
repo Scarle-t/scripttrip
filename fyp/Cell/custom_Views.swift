@@ -72,6 +72,24 @@ class HeaderView: UICollectionReusableView {
     
 }
 
+class contentHeader: UICollectionReusableView{
+    var img = UIImageView()
+    var close = UIButton()
+}
+
+class contentTitle: UICollectionViewCell{
+    var title = UILabel()
+}
+
+class mainContent: UICollectionViewCell{
+    var content = UILabel()
+}
+
+class secondaryContent: UICollectionViewCell{
+    var img = UIImageView()
+    var content = UILabel()
+}
+
 class cateChoiceCell: UICollectionViewCell{
     
     @IBOutlet weak var catImg: UIImageView!

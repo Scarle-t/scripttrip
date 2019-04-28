@@ -20,11 +20,8 @@ class reg_interestChoice: UIViewController, UICollectionViewDelegate, UICollecti
     @IBOutlet weak var catChoice: UICollectionView!
     
     //IBACTION
-    @IBAction func finish(_ sender: UIButton) {
-        let vc3 = storyboard?.instantiateViewController(withIdentifier: "vc3") as! reg_done
-        
-        self.present(vc3, animated: true, completion: nil)
-        
+    @IBAction func back(_ sender: UIButton) {
+        self.navigationController?.popViewController(animated: true)
     }
     
     //DELEGATION
@@ -90,21 +87,6 @@ class reg_interestChoice: UIViewController, UICollectionViewDelegate, UICollecti
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        UIView.animate(withDuration: 0.5) {
-            self.view.layer.backgroundColor = "D3F2FF".toUIColor.cgColor
-            
-            let statusBar: UIView = UIApplication.shared.value(forKey: "statusBar") as! UIView
-            if statusBar.responds(to: #selector(setter: UIView.backgroundColor)) {
-                statusBar.backgroundColor = "D3F2FF".toUIColor
-            }
-            
-        }
-        UIView.animate(withDuration: 0.5) {
-            self.interestTxt.frame = CGRect(x: self.interestTxt.frame.minX, y: self.interestTxt.frame.minY - 30, width: self.interestTxt.frame.width, height: self.interestTxt.frame.height)
-            self.interestTxt.alpha = 1
-            self.finishBtn.alpha = 1
-            self.catChoice.alpha = 1
-        }
         
     }
     

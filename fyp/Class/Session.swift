@@ -13,6 +13,12 @@ class Session: NSObject, UITableViewDelegate, UITableViewDataSource, UICollectio
     static let shared = Session()
     static let parser = JSONParser()
     
+    //REGISTER INFO
+    var regFname = String()
+    var regLname = String()
+    var regEmail = String()
+    var regPass = String()
+    
     //USER INFO
     static let user = User()
     fileprivate let usr = Session.user
@@ -48,14 +54,14 @@ class Session: NSObject, UITableViewDelegate, UITableViewDataSource, UICollectio
     
     //USER MENU
     fileprivate var userView = UIView()
-    fileprivate var userTable = UITableView(frame: CGRect(origin: CGPoint.zero, size: CGSize.zero), style: .plain)
+    fileprivate var userTable = UITableView(frame: CGRect(origin: CGPoint.zero, size: CGSize.zero), style: .grouped)
     fileprivate let userIcon = UIImageView()
     fileprivate let closeUser = UIButton()
     fileprivate let dimView = UIView()
     fileprivate let username = UILabel()
     fileprivate let blur = UIVisualEffectView(effect: UIBlurEffect(style: .extraLight))
     fileprivate let blurBg = UIVisualEffectView(effect: UIBlurEffect(style: .extraLight))
-    fileprivate var settings = ["", "Account Settings", "About"]
+    fileprivate var settings = ["", "Bookmarks", "History", "Account Settings", "About"]
     func setupUserView(){
         settings[0] = usr.Fname + " " + usr.Lname
         let window = UIApplication.shared.keyWindow
@@ -120,28 +126,69 @@ class Session: NSObject, UITableViewDelegate, UITableViewDataSource, UICollectio
         
     }
     internal func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
+        return 3
     }
     internal func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return settings.count
+        if section == 0{
+            return 3
+        }else if section == 1{
+            return 2
+        }else if section == 2{
+            return 1
+        }
+        return 0
     }
     internal func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
         
-        cell.textLabel?.text = settings[indexPath.row]
-        if indexPath.row == 0{
-            cell.textLabel?.font = UIFont(name: "AvenirNext-Heavy", size: 27)
-            cell.textLabel?.textAlignment = .center
-            cell.accessoryType = .none
-        }else{
+        switch indexPath.section{
+        case 0:
+            cell.textLabel?.text = settings[indexPath.row]
+            if indexPath.row == 0{
+                cell.textLabel?.font = UIFont(name: "AvenirNext-Heavy", size: 27)
+                cell.textLabel?.textAlignment = .center
+                cell.accessoryType = .none
+                
+            }else{
+                cell.textLabel?.font = UIFont(name: "AvenirNext-DemiBold", size: 17)
+                cell.textLabel?.textAlignment = .left
+                cell.accessoryType = .disclosureIndicator
+            }
+            cell.backgroundColor = UIColor.clear
+            if indexPath.row == 1{
+                cell.accessoryView = UIImageView(image: #imageLiteral(resourceName: "bookmark_pdf"))
+            }else if indexPath.row == 2{
+                cell.accessoryView = UIImageView(image: #imageLiteral(resourceName: "history_pdf"))
+            }
+            
+            return cell
+        case 1:
+            cell.textLabel?.text = settings[indexPath.row + 3]
             cell.textLabel?.font = UIFont(name: "AvenirNext-DemiBold", size: 17)
             cell.textLabel?.textAlignment = .left
             cell.accessoryType = .disclosureIndicator
+            cell.backgroundColor = UIColor.clear
+            
+            return cell
+        case 2:
+            cell.textLabel?.text = "Logout"
+            cell.textLabel?.font = UIFont(name: "AvenirNext-Regular", size: 17)
+            cell.textLabel?.textColor = "FF697B".toUIColor
+            cell.textLabel?.textAlignment = .left
+            cell.backgroundColor = UIColor.clear
+            
+            return cell
+        default:
+            return UITableViewCell()
         }
-        cell.backgroundColor = UIColor.clear
         
-        return cell
-        
+    }
+    internal func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if indexPath.section == 2 && indexPath.row == 0{
+            userView.removeFromSuperview()
+            dimView.removeFromSuperview()
+            UIApplication.shared.keyWindow?.rootViewController?.dismiss(animated: false, completion: nil)
+        }
     }
     internal func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 1

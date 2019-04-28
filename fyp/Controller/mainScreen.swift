@@ -42,7 +42,7 @@ class mainScreen: UIViewController, NetworkDelegate {
             }
             state = "login"
         }else if state == "login"{
-            
+            view.endEditing(true)
             network.send(url: "https://scripttrip.scarletsc.net/iOS/login.php", method: "POST", query: "email=\(usr.text!)&pass=\(pwd.text!.sha1())")
 
         }
@@ -68,7 +68,11 @@ class mainScreen: UIViewController, NetworkDelegate {
                 self.present(vct, animated: false, completion: backFunc)
             }else{
                 let alert = UIAlertController(title: "Failed to login.", message: "Please try again.", preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
+                alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: ({ _ in
+                    DispatchQueue.main.async {
+                        self.usr.becomeFirstResponder()
+                    }
+                })))
                 self.present(alert, animated: true, completion: nil)
             }
         }
@@ -83,6 +87,8 @@ class mainScreen: UIViewController, NetworkDelegate {
     //FUNC
     func backFunc(){
         view.endEditing(true)
+        usr.text = nil
+        pwd.text = nil
         UIView.animate(withDuration: 0.5) {
             self.logo.frame = CGRect(x: self.logo.frame.minX, y: self.logo.frame.minY + 50, width: self.logo.frame.width, height: self.logo.frame.height)
             

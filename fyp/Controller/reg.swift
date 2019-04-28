@@ -14,11 +14,6 @@ class reg: UIViewController{
     
     
     //IBOUTLET
-    @IBOutlet weak var fname: UITextField!
-    @IBOutlet weak var lname: UITextField!
-    @IBOutlet weak var email: UITextField!
-    @IBOutlet weak var pwd: UITextField!
-    @IBOutlet weak var verPwd: UITextField!
     @IBOutlet weak var regBtn: UIButton!
     
     //IBACTION
@@ -30,9 +25,7 @@ class reg: UIViewController{
     
     
     //OBJC FUNC
-    @objc func dismissKb(){
-        view.endEditing(true)
-    }
+    
     
     //FUNC
     func delegate(){
@@ -41,26 +34,9 @@ class reg: UIViewController{
     
     func layout(){
         
-        let toolBar = UIToolbar()
-        let spaceButton = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-        let cancelButton = UIBarButtonItem(title: "Hide Keyboard", style: .plain, target: self, action: #selector(dismissKb))
-        toolBar.barStyle = .default
-        toolBar.isTranslucent = true
-        toolBar.sizeToFit()
-        toolBar.setItems([spaceButton, cancelButton], animated: false)
-        toolBar.isUserInteractionEnabled = true
-        
-        lname.backgroundColor = UIColor(white: 1, alpha: 0.75)
-        fname.backgroundColor = UIColor(white: 1, alpha: 0.75)
-        email.backgroundColor = UIColor(white: 1, alpha: 0.75)
-        pwd.backgroundColor = UIColor(white: 1, alpha: 0.75)
-        verPwd.backgroundColor = UIColor(white: 1, alpha: 0.75)
-        
-        lname.inputAccessoryView = toolBar
-        fname.inputAccessoryView = toolBar
-        email.inputAccessoryView = toolBar
-        pwd.inputAccessoryView = toolBar
-        verPwd.inputAccessoryView = toolBar
+        UIView.animate(withDuration: 1) {
+            self.view.layer.backgroundColor = "D3F2FF".toUIColor.cgColor
+        }
         
         regBtn.layer.cornerRadius = 12
         regBtn.backgroundColor = UIColor(white: 1, alpha: 0.7)
@@ -68,8 +44,7 @@ class reg: UIViewController{
     }
     
     func setup(){
-        pwd.passwordRules = UITextInputPasswordRules(descriptor: "minlength: 8;")
-        verPwd.passwordRules = UITextInputPasswordRules(descriptor: "minlength: 8;")
+        
     }
     
     //VIEW CONTROLLER
