@@ -15,7 +15,7 @@ class Featured: UIViewController, UICollectionViewDataSource, UICollectionViewDe
     let parser = Session.parser
     let network = Network()
     var selectedItem = Trip()
-    var imgs = [Item : UIImage]()
+    var imgs = [Trip : UIImage]()
     var textHeight = [Item : CGFloat]()
     var yLoc: CGFloat = 0.0
     var timer = Timer()
@@ -24,7 +24,8 @@ class Featured: UIViewController, UICollectionViewDataSource, UICollectionViewDe
     var feedItems = 3
     var state = ""
     var mainRefresh: UIRefreshControl?
-    let tripView = TripView()
+    var tripView: TripView!
+    let group = DispatchGroup()
     
     //IBOUTLET
     @IBOutlet weak var cv: UICollectionView!
@@ -49,14 +50,30 @@ class Featured: UIViewController, UICollectionViewDataSource, UICollectionViewDe
         cell.layer.shadowOpacity = 0.1
         
         cell.title.text = session.getTrips()[indexPath.row].T_Title
-        
-//            cell.img.image = imgs[session.getTrips()[indexPath.row].Items[0]]
-        
+
         cell.view.layer.cornerRadius = 15
         
         UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseIn, animations: {
             cell.alpha = 1
         }, completion: nil)
+        
+        if imgs[self.session.getTrips()[indexPath.row]] == nil{
+            group.enter()
+            network.getPhoto(url: "https://scripttrip.scarletsc.net/img/\(session.getTrips()[indexPath.row].Items[0].I_Image)") { (data, response, error) in
+                guard let data = data, error == nil else {return}
+                self.imgs[self.session.getTrips()[indexPath.row]] = UIImage(data: data)!
+                self.group.leave()
+            }
+            group.notify(queue: .main) {
+                self.cv.reloadItems(at: [indexPath])
+            }
+        }
+        
+        DispatchQueue.main.async {
+            UIView.animate(withDuration: 0.2, animations: {
+                cell.img.image = self.imgs[self.session.getTrips()[indexPath.row]]
+            })
+        }
         
         return cell
         
@@ -82,6 +99,7 @@ class Featured: UIViewController, UICollectionViewDataSource, UICollectionViewDe
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         tripView.displayTrip = session.getTrips()[indexPath.row]
+        tripView.headerImg = imgs[session.getTrips()[indexPath.row]]
         tripView.show()
     }
     
@@ -166,6 +184,7 @@ class Featured: UIViewController, UICollectionViewDataSource, UICollectionViewDe
     
     func setup(){
         session.setupUserView()
+        tripView = TripView(delegate: self)
         DispatchQueue.main.async {
             self.mainRefresh = UIRefreshControl()
             self.mainRefresh!.addTarget(self, action: #selector(self.refreshFeatured(_:)), for: .valueChanged)

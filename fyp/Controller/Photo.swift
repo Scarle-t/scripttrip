@@ -12,6 +12,7 @@ class Photo: UIViewController, UIScrollViewDelegate{
     
     //VARIABLE
     var statusBar = false
+    var img: UIImage?
     
     //IBOUTLET
     @IBOutlet weak var imgScroll: UIScrollView!
@@ -51,6 +52,10 @@ class Photo: UIViewController, UIScrollViewDelegate{
         imgDetail.contentMode = .scaleAspectFit
     }
     
+    func setup(){
+        imgDetail.image = img
+    }
+    
     //VIEW CONTROLLER
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -62,6 +67,8 @@ class Photo: UIViewController, UIScrollViewDelegate{
         delegate()
         
         layout()
+        
+        setup()
         
     }
     

@@ -34,9 +34,14 @@ class reg_interestChoice: UIViewController, UICollectionViewDelegate, UICollecti
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! cateChoiceCell
         
         cell.layer.cornerRadius = 7
+        cell.alpha = 0
         
 //        cell.catImg.image = AppDelegate().cat[indexPath.row]
         cell.catName.text = session.getCategories()[indexPath.row].C_Name
+        
+        UIView.animate(withDuration: 0.2) {
+            cell.alpha = 1
+        }
         
         return cell
     }

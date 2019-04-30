@@ -44,9 +44,12 @@ class TripView: NSObject, UICollectionViewDelegateFlowLayout, UICollectionViewDe
         }else{
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "otherContent", for: indexPath) as! secondaryContent
             
+            let imgTap = UITapGestureRecognizer(target: self, action: #selector(showImg(_:)))
+            
             cell.img.frame = CGRect(x: 0, y: 0, width: cell.contentView.frame.width, height: cell.contentView.frame.width / 3 * 2)
             cell.img.contentMode = .scaleAspectFit
-            cell.img.image = #imageLiteral(resourceName: "Image-1")
+            cell.img.isUserInteractionEnabled = true
+            cell.img.addGestureRecognizer(imgTap)
             
             cell.content.frame = CGRect(x: 0, y: cell.img.frame.maxY, width: cell.contentView.frame.width, height: cell.contentView.frame.height - cell.img.frame.height)
             cell.content.font = UIFont(name: "AnevirNext-Regular", size: 18)
@@ -55,6 +58,24 @@ class TripView: NSObject, UICollectionViewDelegateFlowLayout, UICollectionViewDe
             
             cell.contentView.addSubview(cell.img)
             cell.contentView.addSubview(cell.content)
+            if imgs[displayTrip!.Items[indexPath.row - 1]] == nil{
+                group.enter()
+                Network().getPhoto(url: "https://scripttrip.scarletsc.net/img/\(displayTrip!.Items[indexPath.row - 1].I_Image)") { (data, response, error) in
+                    guard let data = data, error == nil else {return}
+                    self.imgs[self.displayTrip!.Items[indexPath.row - 1]] = UIImage(data: data)
+                    self.group.leave()
+                }
+                group.notify(queue: .main) {
+                    self.contents.reloadItems(at: [indexPath])
+                }
+            }
+            
+            DispatchQueue.main.async {
+                UIView.animate(withDuration: 0.2, animations: {
+                    cell.img.image = self.imgs[self.displayTrip!.Items[indexPath.row - 1]]
+                    self.tapImgs[imgTap] = self.imgs[self.displayTrip!.Items[indexPath.row - 1]]
+                })
+            }
             
             return cell
         }
@@ -65,6 +86,10 @@ class TripView: NSObject, UICollectionViewDelegateFlowLayout, UICollectionViewDe
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         let header = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "header", for: indexPath) as! contentHeader
         
+        let imgTap = UITapGestureRecognizer(target: self, action: #selector(showImg(_:)))
+        
+        tapImgs[imgTap] = headerImg
+        
         header.close.frame = CGRect(x: 17, y: 17, width: 35, height: 35)
         header.close.layer.cornerRadius = 35 / 2
         header.close.setImage(#imageLiteral(resourceName: "cross"), for: .normal)
@@ -74,7 +99,9 @@ class TripView: NSObject, UICollectionViewDelegateFlowLayout, UICollectionViewDe
         header.img.frame = header.frame
         header.img.contentMode = .scaleAspectFill
         header.img.clipsToBounds = true
-        header.img.image = #imageLiteral(resourceName: "Image")
+        header.img.image = headerImg
+        header.img.isUserInteractionEnabled = true
+        header.img.addGestureRecognizer(imgTap)
         
         header.addSubview(header.img)
         header.addSubview(header.close)
@@ -98,7 +125,12 @@ class TripView: NSObject, UICollectionViewDelegateFlowLayout, UICollectionViewDe
     }
     
     //ATTRIBUTE
+    var delegate: UIViewController?
     var displayTrip: Trip?
+    var headerImg: UIImage?
+    var imgs = [Item : UIImage]()
+    var tapImgs = [UITapGestureRecognizer : UIImage]()
+    let group = DispatchGroup()
     
     var window: UIWindow?
     var view: UIView!
@@ -108,9 +140,10 @@ class TripView: NSObject, UICollectionViewDelegateFlowLayout, UICollectionViewDe
     var dimBg: UIView!
     
     //INIT
-    override init(){
+    init(delegate: UIViewController){
         super.init()
         DispatchQueue.main.async {
+            self.delegate = delegate
             self.window = UIApplication.shared.keyWindow
             self.view = UIView()
             self.addBookmark = UIButton()
@@ -159,7 +192,13 @@ class TripView: NSObject, UICollectionViewDelegateFlowLayout, UICollectionViewDe
     }
     
     //ACTION
+    @objc func showImg(_ sender: UITapGestureRecognizer){
+        let photo = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "imgZoom") as! Photo
+        photo.img = tapImgs[sender]
+        delegate?.present(photo, animated: true, completion: nil)
+    }
     func show(){
+        contents.scrollsToTop = true
         for item in displayTrip!.Items{
             let height = Float(item.I_Content.count / 16)
             heightForItem.append(CGFloat(floor(height < 1 ? 1 : height) * 20))

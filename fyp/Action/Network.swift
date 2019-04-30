@@ -13,7 +13,6 @@ protocol NetworkDelegate: class{
     func httpErrorHandle(httpStatus: HTTPURLResponse)
     func URLSessionError(error: Error?)
     func ResponseHandle(data: Data)
-    func ResponsePhoto(data: Data)->UIImage?
 }
 
 extension NetworkDelegate{
@@ -37,9 +36,6 @@ extension NetworkDelegate{
         DispatchQueue.main.async {
             UIApplication.shared.keyWindow?.window?.rootViewController?.present(alert, animated: true, completion: nil)
         }
-    }
-    func ResponsePhoto(data: Data)->UIImage?{
-        return UIImage(data: data)
     }
 }
 
@@ -74,21 +70,11 @@ class Network: NSObject{
         }
     }
     
-    func getPhoto(url: URL) -> UIImage? {
-        var img: UIImage?
-        URLSession.shared.dataTask(with: url) { data, response, error in
-            guard let data = data, error == nil else {
-                self.delegate?.URLSessionError(error: error)
-                return
-            }
-            if let httpStatus = response as? HTTPURLResponse, httpStatus.statusCode != 200 {
-                // check for http errors
-                self.delegate?.httpErrorHandle(httpStatus: httpStatus)
-                return
-            }
-            img = self.delegate?.ResponsePhoto(data: data)
-        }.resume()
-        return img
+    func getPhoto(url: String, completion: @escaping (Data?, URLResponse?, Error?) -> ()) {
+        guard let u = URL(string: url) else {self.delegate?.URLSessionError(error: nil); return}
+        URLSession.shared.dataTask(with: u) { data, response, error in
+            completion(data, response, error)
+            }.resume()
     }
     
 }

@@ -13,6 +13,7 @@ class mainScreen: UIViewController, NetworkDelegate {
     var state = ""
     let network = Network()
     let session = Session.shared
+    let userDefault = UserDefaults.standard
     
     //IBOUTLET
     @IBOutlet weak var logo: UIView!
@@ -22,6 +23,7 @@ class mainScreen: UIViewController, NetworkDelegate {
     @IBOutlet weak var register: UIButton!
     @IBOutlet weak var backBtn: UIButton!
     @IBOutlet weak var forgot: UIButton!
+    @IBOutlet weak var whiteView: UIView!
     
     //IBACTION
     @IBAction func loginAction(_ sender: UIButton) {
@@ -64,13 +66,19 @@ class mainScreen: UIViewController, NetworkDelegate {
             if (item["Result"] as! String) == "OK"{
                 session.parseUser([item["Reason"] as! NSDictionary])
                 let vct = storyboard?.instantiateViewController(withIdentifier: "vct") as! UITabBarController
+                if whiteView.alpha == 1{
+                    self.present(vct, animated: false, completion: {
+                        self.whiteView.alpha = 0
+                    })
+                }else{
+                    self.present(vct, animated: false, completion: backFunc)
+                }
                 
-                self.present(vct, animated: false, completion: backFunc)
             }else{
                 let alert = UIAlertController(title: "Failed to login.", message: "Please try again.", preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: ({ _ in
                     DispatchQueue.main.async {
-                        self.usr.becomeFirstResponder()
+//                        self.usr.becomeFirstResponder()
                     }
                 })))
                 self.present(alert, animated: true, completion: nil)
@@ -138,7 +146,17 @@ class mainScreen: UIViewController, NetworkDelegate {
     }
     
     func setup(){
-        
+        if userDefault.bool(forKey: "isLoggedIn"){
+            let uuid = userDefault.value(forKey: "uuid") as! String
+            let sessID = userDefault.value(forKey: "sessid") as! String
+            
+            network.send(url: "https://scripttrip.scarletsc.net/iOS/login.php", method: "POST", query: "uuid=\(uuid.sha1())&sessID=\(sessID.sha1())")
+            
+        }else{
+            UIView.animate(withDuration: 0.2) {
+                self.whiteView.alpha = 0
+            }
+        }
     }
     
     //VIEW CONTROLLER
