@@ -8,7 +8,7 @@
 
 import UIKit
 
-class reg_password: UIViewController{
+class reg_password: UIViewController, UITextFieldDelegate{
     
     //VARIABLE
     
@@ -24,6 +24,33 @@ class reg_password: UIViewController{
         self.navigationController?.popViewController(animated: true)
     }
     @IBAction func next(_ sender: UIButton) {
+        nextCheck()
+    }
+    @IBAction func tapTxt(_ sender: UITextField) {
+        sender.layer.borderWidth = 0
+    }
+    
+    //DELEGATION
+        //TEXT FIELD
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        if textField.tag == 0{
+            pwd.becomeFirstResponder()
+        }else if textField.tag == 1{
+            verPwd.becomeFirstResponder()
+        }else{
+            view.endEditing(true)
+            nextCheck()
+        }
+        return true
+    }
+    
+    //OBJC FUNC
+    @objc func dismissKb(){
+        view.endEditing(true)
+    }
+    
+    //FUNC
+    func nextCheck(){
         if mail.text == "" || mail.text == nil{
             mail.layer.borderWidth = 1
             mail.layer.borderColor = "FF697B".toUIColor.cgColor
@@ -54,23 +81,12 @@ class reg_password: UIViewController{
         let regDone = storyboard?.instantiateViewController(withIdentifier: "vc3") as! reg_done
         
         self.navigationController?.pushViewController(regDone, animated: true)
-        
-    }
-    @IBAction func tapTxt(_ sender: UITextField) {
-        sender.layer.borderWidth = 0
     }
     
-    //DELEGATION
-    
-    
-    //OBJC FUNC
-    @objc func dismissKb(){
-        view.endEditing(true)
-    }
-    
-    //FUNC
     func delegate(){
-        
+        mail.delegate = self
+        pwd.delegate = self
+        verPwd.delegate = self
     }
     
     func layout(){
@@ -94,6 +110,10 @@ class reg_password: UIViewController{
         mail.inputAccessoryView = toolBar
         pwd.inputAccessoryView = toolBar
         verPwd.inputAccessoryView = toolBar
+        
+        let tap = UITapGestureRecognizer(target: self, action: #selector(dismissKb))
+        
+        view.addGestureRecognizer(tap)
         
     }
     

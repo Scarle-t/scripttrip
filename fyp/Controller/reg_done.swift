@@ -22,13 +22,19 @@ class reg_done: UIViewController, NetworkDelegate {
     
     //IBACTION
     @IBAction func finishBtn(_ sender: UIButton) {
-        state = "login"
-        network.send(url: "https://scripttrip.scarletsc.net/iOS/login.php", method: "POST", query: "email=\(session.regEmail)&pass=\(session.regPass.sha1())")
+        if state == "regFb"{
+            state = "login"
+            network.send(url: "https://scripttrip.scarletsc.net/iOS/login.php", method: "POST", query: "email=\(session.regEmail)&fbid=\(session.regFbId)")
+            session.loginState = "fb"
+        }else{
+            state = "login"
+            network.send(url: "https://scripttrip.scarletsc.net/iOS/login.php", method: "POST", query: "email=\(session.regEmail)&pass=\(session.regPass.sha1())")
+        }
     }
     
     //DELEGATION
     func ResponseHandle(data: Data) {
-        if state == "reg"{
+        if state == "reg" || state == "regFb"{
             guard let result = Session.parser.parse(data) else {return}
             
             for item in result{
@@ -81,8 +87,14 @@ class reg_done: UIViewController, NetworkDelegate {
     }
     
     func setup(){
-        state = "reg"
-        network.send(url: "https://scripttrip.scarletsc.net/iOS/register.php", method: "POST", query: "email=\(session.regEmail)&pass=\(session.regPass.sha1())&fname=\(session.regFname)&lname=\(session.regLname)")
+        
+        if state == "regFb"{
+            network.send(url: "https://scripttrip.scarletsc.net/iOS/register.php", method: "POST", query: "email=\(session.regEmail)&&fname=\(session.regFname)&lname=\(session.regLname)&fb=\(session.regFbId)")
+        }else{
+            state = "reg"
+            network.send(url: "https://scripttrip.scarletsc.net/iOS/register.php", method: "POST", query: "email=\(session.regEmail)&pass=\(session.regPass.sha1())&fname=\(session.regFname)&lname=\(session.regLname)")
+        }
+        
     }
     
     //VIEW CONTROLLER

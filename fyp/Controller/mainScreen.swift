@@ -8,9 +8,10 @@
 
 import UIKit
 
-class mainScreen: UIViewController, NetworkDelegate {
+class mainScreen: UIViewController, UITextFieldDelegate, NetworkDelegate, FBSDKLoginButtonDelegate {
     //VARIABLE
     var state = ""
+    var loginButton: FBSDKLoginButton!
     let network = Network()
     let session = Session.shared
     let userDefault = UserDefaults.standard
@@ -38,8 +39,7 @@ class mainScreen: UIViewController, NetworkDelegate {
                 self.forgot.alpha = 1
                 
                 self.login.frame = CGRect(x: self.login.frame.minX, y: self.login.frame.minY + 55, width: self.login.frame.width, height: self.login.frame.height)
-                
-                //                self.view.layoutIfNeeded()
+                self.loginButton.alpha = 1
                 
             }
             state = "login"
@@ -59,6 +59,7 @@ class mainScreen: UIViewController, NetworkDelegate {
     }
     
     //DELEGATION
+        //NETWORK
     func ResponseHandle(data: Data) {
         guard let result = Session.parser.parse(data) else {return}
         
@@ -78,13 +79,32 @@ class mainScreen: UIViewController, NetworkDelegate {
                 let alert = UIAlertController(title: "Failed to login.", message: "Please try again.", preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: ({ _ in
                     DispatchQueue.main.async {
-//                        self.usr.becomeFirstResponder()
+                        self.whiteView.alpha = 0
                     }
                 })))
                 self.present(alert, animated: true, completion: nil)
             }
         }
         
+    }
+        //TEXT FIELD
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        if textField.tag == 0{
+            pwd.becomeFirstResponder()
+        }else{
+            view.endEditing(true)
+            network.send(url: "https://scripttrip.scarletsc.net/iOS/login.php", method: "POST", query: "email=\(usr.text!)&pass=\(pwd.text!.sha1())")
+        }
+        return true
+    }
+    
+        //FB LOGIN
+    func loginButton(_ loginButton: FBSDKLoginButton!, didCompleteWith result: FBSDKLoginManagerLoginResult!, error: Error!) {
+        handleFbLogin()
+    }
+    
+    func loginButtonDidLogOut(_ loginButton: FBSDKLoginButton!) {
+        return
     }
     
     //OBJC FUNC
@@ -106,6 +126,7 @@ class mainScreen: UIViewController, NetworkDelegate {
             self.login.alpha = 1
             self.backBtn.alpha = 0
             self.forgot.alpha = 0
+            self.loginButton.alpha = 0
             
             if self.state == "login"{
                 self.login.frame = CGRect(x: self.login.frame.minX, y: self.login.frame.minY - 55, width: self.login.frame.width, height: self.login.frame.height)
@@ -114,8 +135,27 @@ class mainScreen: UIViewController, NetworkDelegate {
         }
         state = ""
     }
+    
+    func handleFbLogin(){
+//        let options = ["fields": "id, email, first_name, last_name, picture.type(large)"]
+        let options = ["fields": "id, email, picture.type(large)"]
+        FBSDKGraphRequest(graphPath: "me", parameters: options)?.start(completionHandler: { (con, result, err) in
+            guard let result = result as? NSDictionary, err == nil else {return}
+            print(result)
+            if let picture = result["picture"] as? NSDictionary, let data = picture["data"] as? NSDictionary, let url = data["url"] as? String{
+                self.session.usr.icon = url
+            }
+            
+            self.network.send(url: "https://scripttrip.scarletsc.net/iOS/login.php", method: "POST", query: "email=\(result["email"]!)&fbid=\(result["id"]!)&fb")
+            self.session.loginState = "fb"
+            
+        })
+    }
+    
     func delegate(){
         network.delegate = self
+        usr.delegate = self
+        pwd.delegate = self
     }
     
     func layout(){
@@ -157,6 +197,25 @@ class mainScreen: UIViewController, NetworkDelegate {
                 self.whiteView.alpha = 0
             }
         }
+        
+        let tap = UITapGestureRecognizer(target: self, action: #selector(dismissKb))
+        
+        view.addGestureRecognizer(tap)
+        
+        loginButton = FBSDKLoginButton()
+        loginButton.readPermissions = ["email"]
+        loginButton.delegate = self
+        loginButton.frame = login.frame
+        loginButton.frame.origin.x = login.frame.origin.x
+        loginButton.frame.origin.y = login.frame.maxY + 50 + 55
+        loginButton.alpha = 0
+        
+        view.addSubview(loginButton)
+        
+        if FBSDKAccessToken.current() != nil{
+            handleFbLogin()
+        }
+        
     }
     
     //VIEW CONTROLLER

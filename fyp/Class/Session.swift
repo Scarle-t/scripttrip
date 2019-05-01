@@ -8,7 +8,7 @@
 
 import UIKit
 
-class Session: NSObject, UITableViewDelegate, UITableViewDataSource, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout{
+class Session: NSObject, UITableViewDelegate, UITableViewDataSource, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, FBSDKLoginButtonDelegate{
     
     static let shared = Session()
     static let parser = JSONParser()
@@ -18,12 +18,14 @@ class Session: NSObject, UITableViewDelegate, UITableViewDataSource, UICollectio
     var regLname = String()
     var regEmail = String()
     var regPass = String()
+    var regFbId = String()
     
     //USER INFO
     static let user = User()
-    fileprivate let usr = Session.user
+    let usr = Session.user
     fileprivate var usrMap = NSDictionary()
     fileprivate let userDefault = UserDefaults.standard
+    var loginState = ""
     func parseUser(_ data: [NSDictionary]){
         for item in data{
             guard let uid = item["UID"] as? String else {return}
@@ -31,6 +33,9 @@ class Session: NSObject, UITableViewDelegate, UITableViewDataSource, UICollectio
             guard let lname = item["Lname"] as? String else {return}
             guard let fname = item["Fname"] as? String else {return}
             guard let type = item["type"] as? String else {return}
+            if let icon = item["icon"] as? String{
+                usr.icon = icon
+            }
             
             usr.UID = Int(uid)!
             usr.email = email
@@ -39,7 +44,6 @@ class Session: NSObject, UITableViewDelegate, UITableViewDataSource, UICollectio
             usr.type = type
             
             usr.Sess_ID = (item["Sess_ID"] as? String) ?? nil
-            usr.icon = (item["icon"] as? String) ?? nil
             
             let uuid = UIDevice.current.identifierForVendor?.uuidString
             let date = Date()
@@ -60,14 +64,6 @@ class Session: NSObject, UITableViewDelegate, UITableViewDataSource, UICollectio
             
         }
     }
-    func updateUser(key: String, value: String){
-        if key == "UID"{
-            usrMap.setValue(Int(value), forKey: key)
-        }else{
-            usrMap.setValue(value, forKey: key)
-        }
-        parseUser([usrMap])
-    }
     
     //USER MENU
     fileprivate var window: UIWindow?
@@ -81,6 +77,7 @@ class Session: NSObject, UITableViewDelegate, UITableViewDataSource, UICollectio
     fileprivate let blurBg = UIVisualEffectView(effect: UIBlurEffect(style: .extraLight))
     fileprivate var settings = ["", "Bookmarks", "History", "Account Settings", "About"]
     fileprivate let group = DispatchGroup()
+    fileprivate let loginButton = FBSDKLoginButton()
     func setupUserView(){
         settings[0] = usr.Fname + " " + usr.Lname
         window = UIApplication.shared.keyWindow
@@ -181,25 +178,43 @@ class Session: NSObject, UITableViewDelegate, UITableViewDataSource, UICollectio
             
             return cell
         case 2:
-            cell.textLabel?.text = "Logout"
-            cell.textLabel?.font = UIFont(name: "AvenirNext-Regular", size: 17)
-            cell.textLabel?.textColor = "FF697B".toUIColor
-            cell.textLabel?.textAlignment = .left
-            cell.backgroundColor = UIColor.clear
+            if loginState == "fb"{
+                loginButton.removeFromSuperview()
+                cell.backgroundColor = .clear
+                cell.textLabel?.text = nil
+                loginButton.readPermissions = ["email"]
+                loginButton.delegate = self
+                cell.contentView.addSubview(loginButton)
+                loginButton.center = cell.contentView.center
+                loginButton.frame.origin.x -= 5
+                loginButton.alpha = 1
+                return cell
+            }else{
+                loginButton.removeFromSuperview()
+                loginButton.alpha = 0
+                cell.textLabel?.text = "Logout"
+                cell.textLabel?.font = UIFont(name: "AvenirNext-Regular", size: 17)
+                cell.textLabel?.textColor = "FF697B".toUIColor
+                cell.textLabel?.textAlignment = .left
+                cell.backgroundColor = UIColor.clear
+                
+                return cell
+            }
             
-            return cell
         default:
             return UITableViewCell()
         }
         
     }
     internal func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if indexPath.section == 2 && indexPath.row == 0{
-            iconImg = nil
-            userView.removeFromSuperview()
-            dimView.removeFromSuperview()
-            userDefault.set(false, forKey: "isLoggedIn")
-            UIApplication.shared.keyWindow?.rootViewController?.dismiss(animated: false, completion: nil)
+        if loginState == ""{
+            if indexPath.section == 2 && indexPath.row == 0{
+                iconImg = nil
+                userView.removeFromSuperview()
+                dimView.removeFromSuperview()
+                userDefault.set(false, forKey: "isLoggedIn")
+                UIApplication.shared.keyWindow?.rootViewController?.dismiss(animated: false, completion: nil)
+            }
         }
     }
     
@@ -211,6 +226,8 @@ class Session: NSObject, UITableViewDelegate, UITableViewDataSource, UICollectio
     }
     internal func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath)
+        
+        userTable.removeFromSuperview()
         
         userTable.frame = cell.contentView.frame
         userTable.contentInset = UIEdgeInsets(top: -35, left: 0, bottom: 0, right: 0)
@@ -231,7 +248,7 @@ class Session: NSObject, UITableViewDelegate, UITableViewDataSource, UICollectio
             if usr.icon != nil{
                 if iconImg == nil{
                     group.enter()
-                    Network().getPhoto(url: "https://scripttrip.scarletsc.net/img/icon/\(usr.icon!)") { (data, response, error) in
+                    Network().getPhoto(url: "\(usr.icon!)") { (data, response, error) in
                         guard let data = data, error == nil else {return}
                         self.iconImg = UIImage(data: data)
                         self.group.leave()
@@ -266,6 +283,19 @@ class Session: NSObject, UITableViewDelegate, UITableViewDataSource, UICollectio
             self.userView.frame.origin.x -= self.userView.frame.width
         }, completion: nil)
         
+    }
+    func loginButton(_ loginButton: FBSDKLoginButton!, didCompleteWith result: FBSDKLoginManagerLoginResult!, error: Error!) {
+        return
+    }
+    
+    func loginButtonDidLogOut(_ loginButton: FBSDKLoginButton!) {
+        loginButton.removeFromSuperview()
+        iconImg = nil
+        userView.removeFromSuperview()
+        dimView.removeFromSuperview()
+        loginState = ""
+        userDefault.set(false, forKey: "isLoggedIn")
+        UIApplication.shared.keyWindow?.rootViewController?.dismiss(animated: false, completion: nil)
     }
     func showUserMenu(){
         DispatchQueue.main.async {

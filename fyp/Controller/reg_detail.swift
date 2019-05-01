@@ -8,8 +8,7 @@
 
 import UIKit
 
-class reg_detail: UIViewController{
-    
+class reg_detail: UIViewController, UITextFieldDelegate{
     //VARIABLE
     
     
@@ -23,19 +22,45 @@ class reg_detail: UIViewController{
         self.navigationController?.popViewController(animated: true)
     }
     @IBAction func next(_ sender: UIButton) {
+        nextCheck()
+    }
+    @IBAction func tapTxt(_ sender: UITextField) {
+        sender.layer.borderWidth = 0
+    }
+    
+    
+    //DELEGATION
+        //TEXT FIELD
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        if textField.tag == 0{
+            lname.becomeFirstResponder()
+        }else{
+            view.endEditing(true)
+            nextCheck()
+        }
+        return true
+    }
+    
+    //OBJC FUNC
+    @objc func dismissKb(){
+        view.endEditing(true)
+    }
+    
+    //FUNC
+    func nextCheck(){
         view.endEditing(true)
         fname.layer.borderWidth = 0
         lname.layer.borderWidth = 0
         if fname.text == "" || fname.text == nil{
             fname.layer.borderWidth = 1
             fname.layer.borderColor = "FF697B".toUIColor.cgColor
-//            fname.becomeFirstResponder()
+            //            fname.becomeFirstResponder()
             return
         }
         if lname.text == "" || lname.text == nil{
             lname.layer.borderWidth = 1
             lname.layer.borderColor = "FF697B".toUIColor.cgColor
-//            lname.becomeFirstResponder()
+            //            lname.becomeFirstResponder()
             return
         }
         Session.shared.regFname = fname.text!
@@ -44,24 +69,11 @@ class reg_detail: UIViewController{
         let reg_int = storyboard?.instantiateViewController(withIdentifier: "interest") as! reg_interestChoice
         
         self.navigationController?.pushViewController(reg_int, animated: true)
-        
-    }
-    @IBAction func tapTxt(_ sender: UITextField) {
-        sender.layer.borderWidth = 0
     }
     
-    
-    //DELEGATION
-    
-    
-    //OBJC FUNC
-    @objc func dismissKb(){
-        view.endEditing(true)
-    }
-    
-    //FUNC
     func delegate(){
-        
+        fname.delegate = self
+        lname.delegate = self
     }
     
     func layout(){
@@ -83,6 +95,10 @@ class reg_detail: UIViewController{
         
         fname.inputAccessoryView = toolBar
         lname.inputAccessoryView = toolBar
+        
+        let tap = UITapGestureRecognizer(target: self, action: #selector(dismissKb))
+        
+        view.addGestureRecognizer(tap)
         
     }
     
