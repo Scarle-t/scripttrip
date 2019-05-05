@@ -79,8 +79,19 @@ class reg_detail: UIViewController, UITextFieldDelegate{
     func layout(){
         regBtn.layer.cornerRadius = 12
         regBtn.backgroundColor = UIColor(white: 1, alpha: 0.7)
-        fname.backgroundColor = UIColor(white: 1, alpha: 0.75)
-        lname.backgroundColor = UIColor(white: 1, alpha: 0.75)
+        
+        fname.setBottomBorder()
+        lname.setBottomBorder()
+        
+        let fPH = NSAttributedString(string: "First Name", attributes: [NSAttributedString.Key.foregroundColor : UIColor.black])
+        let lPH = NSAttributedString(string: "Last Name", attributes: [NSAttributedString.Key.foregroundColor : UIColor.black])
+        
+        fname.backgroundColor = "D3F2FF".toUIColor
+        lname.backgroundColor = "D3F2FF".toUIColor
+        
+        fname.attributedPlaceholder = fPH
+        lname.attributedPlaceholder = lPH
+        
     }
     
     func setup(){

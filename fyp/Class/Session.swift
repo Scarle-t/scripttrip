@@ -35,6 +35,11 @@ class Session: NSObject, UITableViewDelegate, UITableViewDataSource, UICollectio
             guard let type = item["type"] as? String else {return}
             if let icon = item["icon"] as? String{
                 usr.icon = icon
+                Network().getPhoto(url: "\(icon)") { (data, response, error) in
+                    guard let data = data, error == nil else {return}
+                    self.iconImg = UIImage(data: data)
+                    self.usr.iconImage = UIImage(data: data)
+                }
             }
             
             usr.UID = Int(uid)!
@@ -207,6 +212,11 @@ class Session: NSObject, UITableViewDelegate, UITableViewDataSource, UICollectio
         
     }
     internal func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if indexPath.section == 1 && indexPath.row == 0 {
+            let profileView = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "profile") as! UINavigationController
+            UIApplication.shared.keyWindow?.rootViewController?.presentedViewController?.present(profileView, animated: true, completion: closeMenu)
+        }
+        
         if loginState == ""{
             if indexPath.section == 2 && indexPath.row == 0{
                 iconImg = nil
@@ -214,6 +224,7 @@ class Session: NSObject, UITableViewDelegate, UITableViewDataSource, UICollectio
                 dimView.removeFromSuperview()
                 userDefault.set(false, forKey: "isLoggedIn")
                 UIApplication.shared.keyWindow?.rootViewController?.dismiss(animated: false, completion: nil)
+                return
             }
         }
     }
@@ -251,6 +262,7 @@ class Session: NSObject, UITableViewDelegate, UITableViewDataSource, UICollectio
                     Network().getPhoto(url: "\(usr.icon!)") { (data, response, error) in
                         guard let data = data, error == nil else {return}
                         self.iconImg = UIImage(data: data)
+                        self.usr.iconImage = UIImage(data: data)
                         self.group.leave()
                     }
                 }

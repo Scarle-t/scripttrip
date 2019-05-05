@@ -8,7 +8,7 @@
 
 import UIKit
 
-class Featured: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, NetworkDelegate {
+class Featured: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UIScrollViewDelegate, NetworkDelegate {
     
     //VARIABLE
     let session = Session.shared
@@ -26,6 +26,7 @@ class Featured: UIViewController, UICollectionViewDataSource, UICollectionViewDe
     var mainRefresh: UIRefreshControl?
     var tripView: TripView!
     let group = DispatchGroup()
+    var lastOffset: CGFloat = 0.0
     
     //IBOUTLET
     @IBOutlet weak var cv: UICollectionView!
@@ -156,6 +157,25 @@ class Featured: UIViewController, UICollectionViewDataSource, UICollectionViewDe
         
     }
     
+        //SCROLL VIEW
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if (self.lastOffset > scrollView.contentOffset.y) {
+            // move up
+            let layout = cv.collectionViewLayout as! UICollectionViewFlowLayout
+            layout.sectionHeadersPinToVisibleBounds = true
+            cv.collectionViewLayout = layout
+        }
+        else if (self.lastOffset < scrollView.contentOffset.y) {
+            // move down
+            let layout = cv.collectionViewLayout as! UICollectionViewFlowLayout
+            layout.sectionHeadersPinToVisibleBounds = false
+            cv.collectionViewLayout = layout
+        }
+        
+        // update the new position acquired
+        self.lastOffset = scrollView.contentOffset.y
+    }
+    
     //OBJC FUNC
     @objc func refreshFeatured(_ sender: UIRefreshControl){
         state = "trip"
@@ -166,14 +186,13 @@ class Featured: UIViewController, UICollectionViewDataSource, UICollectionViewDe
     func delegate(){
         cv.dataSource = self
         cv.delegate = self
-        
         network.delegate = self
     }
     
     func layout(){
-        let layout = cv.collectionViewLayout as! UICollectionViewFlowLayout
-        layout.sectionHeadersPinToVisibleBounds = true
-        cv.collectionViewLayout = layout
+//        let layout = cv.collectionViewLayout as! UICollectionViewFlowLayout
+//        layout.sectionHeadersPinToVisibleBounds = true
+//        cv.collectionViewLayout = layout
 
 //        let statusBar: UIView = UIApplication.shared.value(forKey: "statusBar") as! UIView
 //        if statusBar.responds(to: #selector(setter: UIView.backgroundColor)) {

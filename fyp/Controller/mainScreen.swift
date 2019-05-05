@@ -11,6 +11,7 @@ import UIKit
 class mainScreen: UIViewController, UITextFieldDelegate, NetworkDelegate, FBSDKLoginButtonDelegate {
     //VARIABLE
     var state = ""
+    var networkState = ""
     var loginButton: FBSDKLoginButton!
     let network = Network()
     let session = Session.shared
@@ -45,6 +46,7 @@ class mainScreen: UIViewController, UITextFieldDelegate, NetworkDelegate, FBSDKL
             state = "login"
         }else if state == "login"{
             view.endEditing(true)
+            networkState = "login"
             network.send(url: "https://scripttrip.scarletsc.net/iOS/login.php", method: "POST", query: "email=\(usr.text!)&pass=\(pwd.text!.sha1())")
 
         }
@@ -58,33 +60,125 @@ class mainScreen: UIViewController, UITextFieldDelegate, NetworkDelegate, FBSDKL
         backFunc()
     }
     
+    @IBAction func forgotPass(_ sender: UIButton) {
+        let alert = UIAlertController(title: nil, message: NSLocalizedString("resetTitle", comment: ""), preferredStyle: .alert)
+        alert.addTextField { (email) in
+            email.placeholder = "Email"
+            email.keyboardType = .emailAddress
+            email.textContentType = .emailAddress
+            email.returnKeyType = .next
+            email.enablesReturnKeyAutomatically = true
+            email.font = UIFont(name: "AvenirNext-Regular", size: 17)
+            email.tag = 10
+        }
+        alert.addTextField { (pass) in
+            pass.placeholder = NSLocalizedString("newPassword", comment: "")
+            pass.keyboardType = .asciiCapable
+            pass.textContentType = .newPassword
+            pass.isSecureTextEntry = true
+            pass.returnKeyType = .next
+            pass.enablesReturnKeyAutomatically = true
+            pass.font = UIFont(name: "AvenirNext-Regular", size: 17)
+            pass.tag = 11
+        }
+        alert.addTextField { (verPass) in
+            verPass.placeholder = "Verify Password"
+            verPass.keyboardType = .asciiCapable
+            verPass.textContentType = .newPassword
+            verPass.isSecureTextEntry = true
+            verPass.returnKeyType = .send
+            verPass.enablesReturnKeyAutomatically = true
+            verPass.font = UIFont(name: "AvenirNext-Regular", size: 17)
+            verPass.tag = 12
+        }
+        alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .default, handler: { [weak alert] _ in
+            let emailTxt = alert!.textFields![0]
+            let passTxt = alert!.textFields![1]
+            let verTxt = alert!.textFields![2]
+            
+            if emailTxt.text == "" || emailTxt.text == nil{
+                emailTxt.layer.borderColor = "FF697B".toUIColor.cgColor
+                emailTxt.layer.borderWidth = 1
+                alert!.actions[0].isEnabled = false
+            }
+            
+            if passTxt.text == "" || passTxt.text == nil{
+                passTxt.layer.borderColor = "FF697B".toUIColor.cgColor
+                passTxt.layer.borderWidth = 1
+                alert!.actions[0].isEnabled = false
+            }
+            
+            if verTxt.text == "" || verTxt.text == nil{
+                verTxt.layer.borderColor = "FF697B".toUIColor.cgColor
+                verTxt.layer.borderWidth = 1
+                alert!.actions[0].isEnabled = false
+            }
+            
+            if passTxt.text != verTxt.text {
+                passTxt.layer.borderColor = "FF697B".toUIColor.cgColor
+                verTxt.layer.borderColor = "FF697B".toUIColor.cgColor
+                passTxt.layer.borderWidth = 1
+                verTxt.layer.borderWidth = 1
+                alert!.actions[0].isEnabled = false
+            }
+            
+            self.networkState = "reset"
+            
+            self.network.send(url: "https://scripttrip.scarletsc.net/iOS/reset.php", method: "POST", query: "email=\(emailTxt.text!)&pass=\(passTxt.text!.sha1())")
+            
+            alert?.dismiss(animated: true, completion: nil)
+            
+        }))
+        alert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel, handler: nil))
+        self.present(alert, animated: true, completion: nil)
+        
+    }
+    
     //DELEGATION
         //NETWORK
     func ResponseHandle(data: Data) {
         guard let result = Session.parser.parse(data) else {return}
         
-        for item in result{
-            if (item["Result"] as! String) == "OK"{
-                session.parseUser([item["Reason"] as! NSDictionary])
-                let vct = storyboard?.instantiateViewController(withIdentifier: "vct") as! UITabBarController
-                if whiteView.alpha == 1{
-                    self.present(vct, animated: false, completion: {
-                        self.whiteView.alpha = 0
-                    })
-                }else{
-                    self.present(vct, animated: false, completion: backFunc)
-                }
-                
-            }else{
-                let alert = UIAlertController(title: "Failed to login.", message: "Please try again.", preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: ({ _ in
-                    DispatchQueue.main.async {
-                        self.whiteView.alpha = 0
+        if networkState == "login"{
+            for item in result{
+                if (item["Result"] as! String) == "OK"{
+                    session.parseUser([item["Reason"] as! NSDictionary])
+                    let vct = storyboard?.instantiateViewController(withIdentifier: "vct") as! UITabBarController
+                    if whiteView.alpha == 1{
+                        self.present(vct, animated: false, completion: {
+                            self.whiteView.alpha = 0
+                        })
+                    }else{
+                        self.present(vct, animated: false, completion: backFunc)
                     }
-                })))
-                self.present(alert, animated: true, completion: nil)
+                    
+                }else{
+                    let alert = UIAlertController(title: NSLocalizedString("failLoginTitle", comment: ""), message: NSLocalizedString("failLoginMsg", comment: ""), preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .cancel, handler: ({ _ in
+                        DispatchQueue.main.async {
+                            self.whiteView.alpha = 0
+                        }
+                    })))
+                    self.present(alert, animated: true, completion: nil)
+                }
+            }
+        }else if networkState == "reset"{
+            for item in result{
+                if (item["Result"] as! String) == "OK"{
+                    
+                    let alert = UIAlertController(title: NSLocalizedString("resetSuccess", comment: ""), message: nil, preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .cancel, handler: nil))
+                    self.present(alert, animated: true, completion: nil)
+                    
+                }else{
+                    let alert = UIAlertController(title: NSLocalizedString("resetFail", comment: ""), message: "\(item["Reason"]!)", preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .cancel, handler: nil))
+                    self.present(alert, animated: true, completion: nil)
+                }
             }
         }
+        
+        
         
     }
         //TEXT FIELD
@@ -138,6 +232,7 @@ class mainScreen: UIViewController, UITextFieldDelegate, NetworkDelegate, FBSDKL
     
     func handleFbLogin(){
 //        let options = ["fields": "id, email, first_name, last_name, picture.type(large)"]
+        networkState = "login"
         let options = ["fields": "id, email, picture.type(large)"]
         FBSDKGraphRequest(graphPath: "me", parameters: options)?.start(completionHandler: { (con, result, err) in
             guard let result = result as? NSDictionary, err == nil else {return}
@@ -161,7 +256,7 @@ class mainScreen: UIViewController, UITextFieldDelegate, NetworkDelegate, FBSDKL
     func layout(){
         let toolBar = UIToolbar()
         let spaceButton = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-        let cancelButton = UIBarButtonItem(title: "Hide Keyboard", style: .plain, target: self, action: #selector(dismissKb))
+        let cancelButton = UIBarButtonItem(title: NSLocalizedString("hideKB", comment: ""), style: .plain, target: self, action: #selector(dismissKb))
         toolBar.barStyle = .default
         toolBar.isTranslucent = true
         toolBar.sizeToFit()
@@ -173,8 +268,17 @@ class mainScreen: UIViewController, UITextFieldDelegate, NetworkDelegate, FBSDKL
         login.backgroundColor = UIColor(white: 1, alpha: 0.7)
         register.backgroundColor = UIColor(white: 1, alpha: 0.7)
         
-        usr.backgroundColor = UIColor(white: 1, alpha: 0.75)
-        pwd.backgroundColor = UIColor(white: 1, alpha: 0.75)
+        usr.setBottomBorder()
+        pwd.setBottomBorder()
+        
+        let usrPH = NSAttributedString(string: NSLocalizedString("email", comment: ""), attributes: [NSAttributedString.Key.foregroundColor : UIColor.black])
+        let pwdPH = NSAttributedString(string: NSLocalizedString("password", comment: ""), attributes: [NSAttributedString.Key.foregroundColor : UIColor.black])
+        
+        usr.backgroundColor = "42E89D".toUIColor
+        pwd.backgroundColor = "42E89D".toUIColor
+        
+        usr.attributedPlaceholder = usrPH
+        pwd.attributedPlaceholder = pwdPH
         
         usr.inputAccessoryView = toolBar
         pwd.inputAccessoryView = toolBar
@@ -189,9 +293,8 @@ class mainScreen: UIViewController, UITextFieldDelegate, NetworkDelegate, FBSDKL
         if userDefault.bool(forKey: "isLoggedIn"){
             let uuid = userDefault.value(forKey: "uuid") as! String
             let sessID = userDefault.value(forKey: "sessid") as! String
-            
+            networkState = "login"
             network.send(url: "https://scripttrip.scarletsc.net/iOS/login.php", method: "POST", query: "uuid=\(uuid.sha1())&sessID=\(sessID.sha1())")
-            
         }else{
             UIView.animate(withDuration: 0.2) {
                 self.whiteView.alpha = 0
@@ -207,7 +310,7 @@ class mainScreen: UIViewController, UITextFieldDelegate, NetworkDelegate, FBSDKL
         loginButton.delegate = self
         loginButton.frame = login.frame
         loginButton.frame.origin.x = login.frame.origin.x
-        loginButton.frame.origin.y = login.frame.maxY + 50 + 55
+        loginButton.frame.origin.y = login.frame.maxY + 70 + 55
         loginButton.alpha = 0
         
         view.addSubview(loginButton)

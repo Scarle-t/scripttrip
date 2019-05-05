@@ -70,6 +70,33 @@ class Network: NSObject{
         }
     }
     
+    func send(url action: String, method: String, query content: String?, completion: @escaping (Data?)->()){
+        
+        if Reachability().isConnectedToNetwork(){
+            var request = URLRequest(url: URL(string: action)!)
+            request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
+            request.httpMethod = method
+            if let content = content{
+                request.httpBody = content.data(using: .utf8)
+            }
+            let task = URLSession.shared.dataTask(with: request) { data, response, error in
+                guard let data = data, error == nil else {
+                    self.delegate?.URLSessionError(error: error)
+                    return
+                }
+                if let httpStatus = response as? HTTPURLResponse, httpStatus.statusCode != 200 {
+                    // check for http errors
+                    self.delegate?.httpErrorHandle(httpStatus: httpStatus)
+                    return
+                }
+                completion(data)
+            }
+            task.resume()
+        }else{
+            self.delegate?.reachabilityError()
+        }
+    }
+    
     func getPhoto(url: String, completion: @escaping (Data?, URLResponse?, Error?) -> ()) {
         guard let u = URL(string: url) else {self.delegate?.URLSessionError(error: nil); return}
         URLSession.shared.dataTask(with: u) { data, response, error in

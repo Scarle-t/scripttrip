@@ -92,9 +92,23 @@ class reg_password: UIViewController, UITextFieldDelegate{
     func layout(){
         regBtn.layer.cornerRadius = 12
         regBtn.backgroundColor = UIColor(white: 1, alpha: 0.7)
-        mail.backgroundColor = UIColor(white: 1, alpha: 0.75)
-        pwd.backgroundColor = UIColor(white: 1, alpha: 0.75)
-        verPwd.backgroundColor = UIColor(white: 1, alpha: 0.75)
+        
+        mail.setBottomBorder()
+        pwd.setBottomBorder()
+        verPwd.setBottomBorder()
+        
+        let mPH = NSAttributedString(string: "Email", attributes: [NSAttributedString.Key.foregroundColor : UIColor.black])
+        let pPh = NSAttributedString(string: "Password", attributes: [NSAttributedString.Key.foregroundColor : UIColor.black])
+        let vPH = NSAttributedString(string: "Verify Password", attributes: [NSAttributedString.Key.foregroundColor : UIColor.black])
+        
+        mail.backgroundColor = "D3F2FF".toUIColor
+        pwd.backgroundColor = "D3F2FF".toUIColor
+        verPwd.backgroundColor = "D3F2FF".toUIColor
+        
+        mail.attributedPlaceholder = mPH
+        pwd.attributedPlaceholder = pPh
+        verPwd.attributedPlaceholder = vPH
+        
     }
     
     func setup(){

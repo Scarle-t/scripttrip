@@ -54,7 +54,7 @@ class Explore: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, U
     
     @IBAction func closeFilter(_ sender: UIButton) {
         UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut, animations: {
-            self.filterMenu.frame = CGRect(x: self.filterMenu.frame.minX, y: self.view.frame.maxY, width: self.filterMenu.frame.width, height: self.filterMenu.frame.height)
+            self.filterMenu.frame = CGRect(x: self.filterMenu.frame.minX, y: self.view.frame.maxY + 50, width: self.filterMenu.frame.width, height: self.filterMenu.frame.height)
         }, completion: nil)
     }
     
@@ -81,13 +81,13 @@ class Explore: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, U
     //DELEGATION
         //TABLE VIEW
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return AppDelegate().catTxt.count
+        return session.getCategories().count
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell")
         
-        cell?.textLabel?.text = AppDelegate().catTxt[indexPath.row]
+        cell?.textLabel?.text = session.getCategories()[indexPath.row].C_Name
         
         return cell!
     }
@@ -307,7 +307,7 @@ class Explore: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, U
         filterMenu.layer.shadowColor = UIColor.lightGray.cgColor
         filterMenu.layer.shadowOffset = CGSize(width: 0, height: 0)
         filterMenu.layer.shadowRadius = 7
-        filterMenu.frame = CGRect(x: filterMenu.frame.minX, y: self.view.frame.maxY, width: filterMenu.frame.width, height: self.view.frame.height / 2)
+        filterMenu.frame = CGRect(x: filterMenu.frame.minX, y: self.view.frame.maxY + 50, width: filterMenu.frame.width, height: self.view.frame.height / 2)
         
         original = planView.frame.minY
         originalFilterMenuY = self.view.frame.maxY - filterMenu.frame.height
@@ -361,6 +361,14 @@ class Explore: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, U
         super.viewDidAppear(animated)
         
         network.send(url: "https://scripttrip.scarletsc.net/iOS/getTrips.php", method: "GET", query: nil)
+        
+        network.send(url: "https://scripttrip.scarletsc.net/iOS/getCategory.php", method: "GET", query: nil) { (data) in
+            guard let data = data else {return}
+            self.session.setCategories(self.session.parseCategory(Session.parser.parse(data)))
+            DispatchQueue.main.async {
+                self.filterList.reloadData()
+            }
+        }
         
     }
 

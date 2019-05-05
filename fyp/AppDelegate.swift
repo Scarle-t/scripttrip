@@ -12,9 +12,6 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-    
-    let catTxt: [String] = ["Arts and Culture", "Dining", "Relax", "Fun", "Landscape"]
-    let cat: [UIImage] = [#imageLiteral(resourceName: "art_culture_pdf"), #imageLiteral(resourceName: "dining_pdf"), #imageLiteral(resourceName: "relax_pdf"), #imageLiteral(resourceName: "fun_pdf"), #imageLiteral(resourceName: "landscape_pdf")]
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.

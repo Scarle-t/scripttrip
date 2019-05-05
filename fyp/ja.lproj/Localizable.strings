@@ -1,0 +1,21 @@
+/* 
+  Localizable.strings
+  fyp
+
+  Created by Scarlet on 5/3/31 H.
+  Copyright © 31 Scarlet. All rights reserved.
+*/
+
+"resetTitle" = "リセットするメールと新しいパスワードを入力してください。";
+"failLoginTitle" = "ログインに失敗しました。";
+"failLoginMsg" = "もう一度やり直してください。";
+"resetSuccess" = "成功しました。 これで新しいパスワードでログインできます。";
+"resetFail" = "パスワードをリセットできませんでした。";
+
+"email" = "メール";
+"password" = "パスワード";
+"newPassword" = "新しいパスワード";
+"OK" = "はい";
+"Cancel" = "いいえ";
+
+"hideKB" = "キーボードを隠す";

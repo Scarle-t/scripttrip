@@ -158,6 +158,7 @@ class TripView: NSObject, UICollectionViewDelegateFlowLayout, UICollectionViewDe
             self.contents.register(contentTitle.self, forCellWithReuseIdentifier: "contentTitle")
             self.contents.register(contentHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "header")
             self.contents.backgroundColor = .white
+            self.contents.alwaysBounceVertical = true
             
             self.view.frame = CGRect(x: 0, y: 75, width: (self.window?.frame.width)!, height: (self.window?.frame.height)! - 75)
             self.view.frame.origin.y = (self.window?.frame.height)!
@@ -198,22 +199,28 @@ class TripView: NSObject, UICollectionViewDelegateFlowLayout, UICollectionViewDe
         delegate?.present(photo, animated: true, completion: nil)
     }
     func show(){
-        contents.scrollsToTop = true
+        contents.setContentOffset(CGPoint(x: 0,y: 0), animated: false)
         for item in displayTrip!.Items{
             let height = Float(item.I_Content.count / 16)
             heightForItem.append(CGFloat(floor(height < 1 ? 1 : height) * 20))
         }
+        if headerImg == nil {
+            Network().getPhoto(url: "https://scripttrip.scarletasc.net/img/\(displayTrip!.Items[0].I_Image)") { (data, response, error) in
+                guard let imgData = data, error != nil else {return}
+                self.headerImg = UIImage(data: imgData)
+            }
+        }
         DispatchQueue.main.async {
             self.contents.reloadData()
         }
-        UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseIn, animations: {
+        UIView.animate(withDuration: 0.25, delay: 0, options: .curveEaseIn, animations: {
             self.view.frame.origin.y = 75
             self.dimBg.alpha = 0.4
         }, completion: nil)
     }
     
     @objc func hide(){
-        UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut, animations: {
+        UIView.animate(withDuration: 0.25, delay: 0, options: .curveEaseOut, animations: {
             self.view.frame.origin.y = (self.window?.frame.height)!
             self.dimBg.alpha = 0
         }, completion: nil)

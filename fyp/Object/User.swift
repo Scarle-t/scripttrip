@@ -19,6 +19,8 @@ class User: NSObject{
     var type: String
     var icon: String?
     
+    var iconImage: UIImage?
+    
     //INIT
     override init(){
         UID = 0
@@ -28,6 +30,7 @@ class User: NSObject{
         Sess_ID = nil
         type = ""
         icon = nil
+        iconImage = nil
     }
     
 }
