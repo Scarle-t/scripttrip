@@ -17,6 +17,7 @@ class Trip: NSObject{
     var Items: [Item]
     var trends: Int
     var naturalLanguage: String?
+    var ts: String?
     
     //INIT
     override init(){
@@ -26,6 +27,7 @@ class Trip: NSObject{
         Items = []
         trends = 0
         naturalLanguage = nil
+        ts = nil
     }
     
 }

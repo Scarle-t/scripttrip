@@ -99,6 +99,7 @@ class Featured: UIViewController, UICollectionViewDataSource, UICollectionViewDe
 
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        network.send(url: "https://scripttrip.scarletsc.net/iOS/addHistory.php", method: "POST", query: "user=\(session.usr.UID)&trip=\(session.getTrips()[indexPath.row].TID)", completion: nil)
         tripView.displayTrip = session.getTrips()[indexPath.row]
         tripView.headerImg = imgs[session.getTrips()[indexPath.row]]
         tripView.show()

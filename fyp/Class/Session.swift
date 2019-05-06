@@ -217,6 +217,11 @@ class Session: NSObject, UITableViewDelegate, UITableViewDataSource, UICollectio
             UIApplication.shared.keyWindow?.rootViewController?.presentedViewController?.present(bookmarkView, animated: true, completion: nil)
         }
         
+        if indexPath.section == 0 && indexPath.row == 2{
+            let historyView = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "history") as! History
+            UIApplication.shared.keyWindow?.rootViewController?.presentedViewController?.present(historyView, animated: true, completion: nil)
+        }
+        
         if indexPath.section == 1 && indexPath.row == 0 {
             let profileView = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "profile") as! UINavigationController
             UIApplication.shared.keyWindow?.rootViewController?.presentedViewController?.present(profileView, animated: true, completion: nil)
@@ -337,16 +342,16 @@ class Session: NSObject, UITableViewDelegate, UITableViewDataSource, UICollectio
         return categories
     }
     func setCategories(_ item: [Category]?){
-        guard let data = item else {print("data is null"); return}
+        guard let data = item else {return}
         self.categories = data
     }
     func parseCategory(_ item: [NSDictionary]?)->[Category]?{
-        guard let data = item else {print("data is null"); return nil}
+        guard let data = item else {return nil}
         
         var returnItem = [Category]()
         for item in data{
-            guard let cid = item["CID"] as? Int else {print("cid is null"); return nil}
-            guard let c_name = item["C_Name"] as? String else {print("c_name is null"); return nil}
+            guard let cid = item["CID"] as? Int else {return nil}
+            guard let c_name = item["C_Name"] as? String else {return nil}
             
             returnItem.append(Category(CID: cid, C_Name: c_name))
             
@@ -360,11 +365,11 @@ class Session: NSObject, UITableViewDelegate, UITableViewDataSource, UICollectio
         return trips
     }
     func setTrips(_ item: [Trip]?){
-        guard let data = item else {print("data is null"); return}
+        guard let data = item else {return}
         self.trips = data
     }
     func parseTrip(_ item: [[NSDictionary]]?)->[Trip]?{
-        guard let data = item else {print("data is null"); return nil}
+        guard let data = item else {return nil}
         
         var returnItem = [Trip]()
         
@@ -372,15 +377,15 @@ class Session: NSObject, UITableViewDelegate, UITableViewDataSource, UICollectio
             let trip = Trip()
             for i in item{
                 let itm = Item()
-                guard let tid = i["TID"] as? Int else {print("tid is null");return nil}
-                guard let t_title = i["T_Title"] as? String else {print("t_title is null");return nil}
-                guard let cateogry = i["Category"] as? String else {print("category is null");return nil}
-                guard let i_content = i["I_Content"] as? String else {print("i_content is null");return nil}
-                guard let i_image = i["I_Image"] as? String else {print("i_image is null");return nil}
-                guard let i_lat = i["I_Lat"] as? Double else {print("i_lat is null");return nil}
-                guard let i_longt = i["I_Longt"] as? Double else {print("i_longt is null");return nil}
-                guard let item_order = i["Item_order"] as? Int else {print("item_order is null");return nil}
-                guard let trends = i["trends"] as? Int else {print("trends is null");return nil}
+                guard let tid = i["TID"] as? Int else {return nil}
+                guard let t_title = i["T_Title"] as? String else {return nil}
+                guard let cateogry = i["Category"] as? String else {return nil}
+                guard let i_content = i["I_Content"] as? String else {return nil}
+                guard let i_image = i["I_Image"] as? String else {return nil}
+                guard let i_lat = i["I_Lat"] as? Double else {return nil}
+                guard let i_longt = i["I_Longt"] as? Double else {return nil}
+                guard let item_order = i["Item_order"] as? Int else {return nil}
+                guard let trends = i["trends"] as? Int else {return nil}
                 
                 trip.TID = tid
                 trip.T_Title = t_title
@@ -392,6 +397,7 @@ class Session: NSObject, UITableViewDelegate, UITableViewDataSource, UICollectio
                 itm.Item_order = item_order
                 trip.trends = trends
                 trip.naturalLanguage = (i["naturalLanguage"] as? String) ?? nil
+                trip.ts = (i["ts"] as? String) ?? nil
                 
                 trip.Items.append(itm)
                 

@@ -131,6 +131,7 @@ class TripView: NSObject, UICollectionViewDelegateFlowLayout, UICollectionViewDe
     var imgs = [Item : UIImage]()
     var tapImgs = [UITapGestureRecognizer : UIImage]()
     let group = DispatchGroup()
+    let network = Network()
     
     var window: UIWindow?
     var view: UIView!
@@ -167,10 +168,12 @@ class TripView: NSObject, UICollectionViewDelegateFlowLayout, UICollectionViewDe
             self.view.clipsToBounds = true
             
             self.contents.frame = self.view.frame
+            
             self.addBookmark.setImage(#imageLiteral(resourceName: "plus"), for: .normal)
             self.addBookmark.backgroundColor = .init(white: 1, alpha: 0.9)
             self.addBookmark.frame = CGRect(x: self.view.frame.maxX - 17 - 35, y: 17, width: 35, height: 35)
             self.addBookmark.layer.cornerRadius = 35 / 2
+            self.addBookmark.addTarget(self, action: #selector(self.addBk(_:)), for: .touchUpInside)
             
             self.dimBg.frame = (self.window?.frame)!
             self.dimBg.backgroundColor = .black
@@ -198,6 +201,24 @@ class TripView: NSObject, UICollectionViewDelegateFlowLayout, UICollectionViewDe
     }
     
     //ACTION
+    @objc func addBk(_ sender: UIButton){
+        network.send(url: "https://scripttrip.scarletsc.net/iOS/addBookmark.php", method: "POST", query: "user=\(Session.user.UID)&trip=\(displayTrip!.TID)") { (data) in
+            guard let result = Session.parser.parse(data!) else {return}
+            for item in result{
+                if (item["Result"] as! String) == "OK"{
+                    let alert = UIAlertController(title: "Successful", message: nil, preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: { (_) in
+                        self.addBookmark.alpha = 0
+                    }))
+                    self.delegate?.present(alert, animated: true, completion: nil)
+                }else{
+                    let alert = UIAlertController(title: "Failed", message: "\(item["Reason"])", preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
+                    self.delegate?.present(alert, animated: true, completion: nil)
+                }
+            }
+        }
+    }
     @objc func showImg(_ sender: UITapGestureRecognizer){
         let photo = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "imgZoom") as! Photo
         photo.img = tapImgs[sender]
@@ -213,6 +234,16 @@ class TripView: NSObject, UICollectionViewDelegateFlowLayout, UICollectionViewDe
             Network().getPhoto(url: "https://scripttrip.scarletasc.net/img/\(displayTrip!.Items[0].I_Image)") { (data, response, error) in
                 guard let imgData = data, error != nil else {return}
                 self.headerImg = UIImage(data: imgData)
+            }
+        }
+        network.send(url: "https://scripttrip.scarletsc.net/iOS/checkBookmark?user=\(Session.user.UID)&trip=\(displayTrip!.TID)", method: "GET", query: nil) { (data) in
+            guard let result = Session.parser.parse(data!) else {return}
+            for item in result{
+                if (item["Result"] as! String) == "Exist"{
+                    self.addBookmark.alpha = 0
+                }else{
+                    self.addBookmark.alpha = 1
+                }
             }
         }
         DispatchQueue.main.async {

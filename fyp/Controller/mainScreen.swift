@@ -236,7 +236,6 @@ class mainScreen: UIViewController, UITextFieldDelegate, NetworkDelegate, FBSDKL
         let options = ["fields": "id, email, picture.type(large)"]
         FBSDKGraphRequest(graphPath: "me", parameters: options)?.start(completionHandler: { (con, result, err) in
             guard let result = result as? NSDictionary, err == nil else {return}
-            print(result)
             if let picture = result["picture"] as? NSDictionary, let data = picture["data"] as? NSDictionary, let url = data["url"] as? String{
                 self.session.usr.icon = url
             }

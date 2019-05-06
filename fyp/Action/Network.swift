@@ -70,7 +70,7 @@ class Network: NSObject{
         }
     }
     
-    func send(url action: String, method: String, query content: String?, completion: @escaping (Data?)->()){
+    func send(url action: String, method: String, query content: String?, completion: ((Data?)->())?){
         
         if Reachability().isConnectedToNetwork(){
             var request = URLRequest(url: URL(string: action)!)
@@ -89,7 +89,7 @@ class Network: NSObject{
                     self.delegate?.httpErrorHandle(httpStatus: httpStatus)
                     return
                 }
-                completion(data)
+                completion?(data)
             }
             task.resume()
         }else{
