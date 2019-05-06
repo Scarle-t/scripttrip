@@ -133,8 +133,8 @@ class Session: NSObject, UITableViewDelegate, UITableViewDataSource, UICollectio
         
         userView.addSubview(mainCollectionView)
         mainCollectionView.reloadData()
-        UIApplication.shared.keyWindow?.addSubview(dimView)
-        UIApplication.shared.keyWindow?.addSubview(userView)
+        UIApplication.shared.keyWindow?.rootViewController?.presentedViewController?.view.addSubview(dimView)
+        UIApplication.shared.keyWindow?.rootViewController?.presentedViewController?.view.addSubview(userView)
         
     }
     internal func numberOfSections(in tableView: UITableView) -> Int {
@@ -160,7 +160,7 @@ class Session: NSObject, UITableViewDelegate, UITableViewDataSource, UICollectio
                 cell.textLabel?.font = UIFont(name: "AvenirNext-Heavy", size: 27)
                 cell.textLabel?.textAlignment = .center
                 cell.accessoryType = .none
-                
+                cell.selectionStyle = .none
             }else{
                 cell.textLabel?.font = UIFont(name: "AvenirNext-DemiBold", size: 17)
                 cell.textLabel?.textAlignment = .left
@@ -212,9 +212,19 @@ class Session: NSObject, UITableViewDelegate, UITableViewDataSource, UICollectio
         
     }
     internal func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if indexPath.section == 0 && indexPath.row == 1{
+            let bookmarkView = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "bookmarks") as! Bookmarks
+            UIApplication.shared.keyWindow?.rootViewController?.presentedViewController?.present(bookmarkView, animated: true, completion: nil)
+        }
+        
         if indexPath.section == 1 && indexPath.row == 0 {
             let profileView = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "profile") as! UINavigationController
-            UIApplication.shared.keyWindow?.rootViewController?.presentedViewController?.present(profileView, animated: true, completion: closeMenu)
+            UIApplication.shared.keyWindow?.rootViewController?.presentedViewController?.present(profileView, animated: true, completion: nil)
+        }
+        
+        if indexPath.section == 1 && indexPath.row == 1 {
+            let aboutView = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "about") as! About
+            UIApplication.shared.keyWindow?.rootViewController?.presentedViewController?.present(aboutView, animated: true, completion: nil)
         }
         
         if loginState == ""{
@@ -321,6 +331,7 @@ class Session: NSObject, UITableViewDelegate, UITableViewDataSource, UICollectio
     }
     
     //CATEGORY
+    let cate_icons: [UIImage] = [#imageLiteral(resourceName: "fun.pdf"), #imageLiteral(resourceName: "dining.pdf"), #imageLiteral(resourceName: "relax.pdf"), UIImage(), #imageLiteral(resourceName: "art_culture.pdf"), #imageLiteral(resourceName: "gathering.pdf"), #imageLiteral(resourceName: "hiking.pdf"), #imageLiteral(resourceName: "workout.pdf"), #imageLiteral(resourceName: "handicraft.pdf"), UIImage(), #imageLiteral(resourceName: "landscape.pdf")]
     fileprivate var categories = [Category]()
     func getCategories()->[Category]{
         return categories

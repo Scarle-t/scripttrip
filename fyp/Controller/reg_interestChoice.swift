@@ -36,7 +36,7 @@ class reg_interestChoice: UIViewController, UICollectionViewDelegate, UICollecti
         cell.layer.cornerRadius = 7
         cell.alpha = 0
         
-//        cell.catImg.image = AppDelegate().cat[indexPath.row]
+        cell.catImg.image = session.cate_icons[session.getCategories()[indexPath.row].CID - 1]
         cell.catName.text = session.getCategories()[indexPath.row].C_Name
         
         UIView.animate(withDuration: 0.2) {

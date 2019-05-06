@@ -203,7 +203,7 @@ class Featured: UIViewController, UICollectionViewDataSource, UICollectionViewDe
     
     func setup(){
         session.setupUserView()
-        tripView = TripView(delegate: self)
+        tripView = TripView(delegate: self, haveTabBar: true)
         DispatchQueue.main.async {
             self.mainRefresh = UIRefreshControl()
             self.mainRefresh!.addTarget(self, action: #selector(self.refreshFeatured(_:)), for: .valueChanged)

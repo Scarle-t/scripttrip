@@ -130,7 +130,7 @@ class Search: UIViewController, UITableViewDelegate, UITableViewDataSource, UISe
         
         network.delegate = self
         
-        tripView = TripView(delegate: self)
+        tripView = TripView(delegate: self, haveTabBar: true)
     }
     
     func layout(){

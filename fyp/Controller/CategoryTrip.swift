@@ -103,9 +103,7 @@ class CategoryTrip: UIViewController, UICollectionViewDelegate, UICollectionView
     }
     
     //OBJC FUNC
-    @objc func backPress(){
-        self.navigationController?.popViewController(animated: true)
-    }
+    
     
     //FUNC
     func delegate(){
@@ -114,7 +112,7 @@ class CategoryTrip: UIViewController, UICollectionViewDelegate, UICollectionView
         
         network.delegate = self
         
-        tripView = TripView(delegate: self)
+        tripView = TripView(delegate: self, haveTabBar: true)
     }
     
     func layout(){

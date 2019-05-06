@@ -31,7 +31,7 @@ class CategoryView: UIViewController, UITableViewDataSource, UITableViewDelegate
         cell.alpha = 0
         
         cell.catName.text = session.getCategories()[indexPath.row].C_Name
-//        cell.catImg.image = AppDelegate().cat[indexPath.row]
+        cell.catImg.image = session.cate_icons[session.getCategories()[indexPath.row].CID -  1]
         
         UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseIn, animations: {
             cell.alpha = 1

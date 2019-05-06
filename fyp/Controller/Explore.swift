@@ -54,7 +54,7 @@ class Explore: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, U
     
     @IBAction func closeFilter(_ sender: UIButton) {
         UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut, animations: {
-            self.filterMenu.frame = CGRect(x: self.filterMenu.frame.minX, y: self.view.frame.maxY + 50, width: self.filterMenu.frame.width, height: self.filterMenu.frame.height)
+            self.filterMenu.frame = CGRect(x: self.filterMenu.frame.minX, y: self.view.frame.maxY + 100, width: self.filterMenu.frame.width, height: self.filterMenu.frame.height)
         }, completion: nil)
     }
     
@@ -88,6 +88,12 @@ class Explore: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, U
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell")
         
         cell?.textLabel?.text = session.getCategories()[indexPath.row].C_Name
+        
+        let img = UIImageView(image: session.cate_icons[session.getCategories()[indexPath.row].CID - 1])
+        
+        img.frame = CGRect(x: 0, y: 0, width: 55, height: 55)
+        
+        cell?.accessoryView = img
         
         return cell!
     }
@@ -307,7 +313,7 @@ class Explore: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, U
         filterMenu.layer.shadowColor = UIColor.lightGray.cgColor
         filterMenu.layer.shadowOffset = CGSize(width: 0, height: 0)
         filterMenu.layer.shadowRadius = 7
-        filterMenu.frame = CGRect(x: filterMenu.frame.minX, y: self.view.frame.maxY + 50, width: filterMenu.frame.width, height: self.view.frame.height / 2)
+        filterMenu.frame = CGRect(x: filterMenu.frame.minX, y: self.view.frame.maxY + 100, width: filterMenu.frame.width, height: self.view.frame.height / 2)
         
         original = planView.frame.minY
         originalFilterMenuY = self.view.frame.maxY - filterMenu.frame.height

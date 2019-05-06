@@ -63,8 +63,8 @@ class reg_detail: UIViewController, UITextFieldDelegate{
             //            lname.becomeFirstResponder()
             return
         }
-        Session.shared.regFname = fname.text!
-        Session.shared.regLname = lname.text!
+        Session.shared.regFname = (fname.text?.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed))!
+        Session.shared.regLname = (lname.text?.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed))!
         
         let reg_int = storyboard?.instantiateViewController(withIdentifier: "interest") as! reg_interestChoice
         

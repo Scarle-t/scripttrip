@@ -19,9 +19,11 @@
 		A64BD9F02268B9E900E29669 /* Trip.swift in Sources */ = {isa = PBXBuildFile; fileRef = A64BD9EF2268B9E900E29669 /* Trip.swift */; };
 		A64BD9F22268BA6800E29669 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = A64BD9F12268BA6800E29669 /* Item.swift */; };
 		A6719E26226236E000483AFC /* Photo.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6719E25226236E000483AFC /* Photo.swift */; };
+		A680EC3E2280AF6A006E116E /* Category.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A680EC3D2280AF6A006E116E /* Category.xcassets */; };
+		A680EC402280B732006E116E /* Bookmarks.swift in Sources */ = {isa = PBXBuildFile; fileRef = A680EC3F2280B732006E116E /* Bookmarks.swift */; };
+		A680EC422280C0EA006E116E /* About.swift in Sources */ = {isa = PBXBuildFile; fileRef = A680EC412280C0EA006E116E /* About.swift */; };
 		A6836A36226B5165008F75EB /* reg.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6836A35226B5165008F75EB /* reg.swift */; };
 		A6856A2F2232C65F0036A677 /* Search.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6856A2E2232C65F0036A677 /* Search.swift */; };
-		A6856A312232CCD60036A677 /* Bookmarks.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6856A302232CCD60036A677 /* Bookmarks.swift */; };
 		A68BFAFF2265043100BAF061 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A68BFAFE2265043100BAF061 /* Extensions.swift */; };
 		A695797D223422F0008F79C4 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = A695797C223422F0008F79C4 /* Settings.swift */; };
 		A6A502092275E6620003463F /* TripView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6A502082275E6620003463F /* TripView.swift */; };
@@ -58,10 +60,12 @@
 		A64BD9EF2268B9E900E29669 /* Trip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Trip.swift; sourceTree = "<group>"; };
 		A64BD9F12268BA6800E29669 /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
 		A6719E25226236E000483AFC /* Photo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Photo.swift; sourceTree = "<group>"; };
+		A680EC3D2280AF6A006E116E /* Category.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Category.xcassets; sourceTree = "<group>"; };
+		A680EC3F2280B732006E116E /* Bookmarks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bookmarks.swift; sourceTree = "<group>"; };
+		A680EC412280C0EA006E116E /* About.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = About.swift; sourceTree = "<group>"; };
 		A6836A34226B4E41008F75EB /* fyp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = fyp.entitlements; sourceTree = "<group>"; };
 		A6836A35226B5165008F75EB /* reg.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = reg.swift; sourceTree = "<group>"; };
 		A6856A2E2232C65F0036A677 /* Search.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Search.swift; sourceTree = "<group>"; };
-		A6856A302232CCD60036A677 /* Bookmarks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bookmarks.swift; sourceTree = "<group>"; };
 		A68BFAFE2265043100BAF061 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		A695797C223422F0008F79C4 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		A6A502082275E6620003463F /* TripView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripView.swift; sourceTree = "<group>"; };
@@ -123,7 +127,6 @@
 		A68BFAF9226503A400BAF061 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				A6856A302232CCD60036A677 /* Bookmarks.swift */,
 				A6B77B1C22302A3600DA4543 /* CategoryView.swift */,
 				A63CE3C3223423EE00F62E1F /* Explore.swift */,
 				A6B77B182230192600DA4543 /* Featured.swift */,
@@ -139,6 +142,8 @@
 				A613B4832276364400947AA0 /* reg_password.swift */,
 				A6C94FEB227A103F00C5F35E /* Profile.swift */,
 				A6C2BAAA227F615900BC19F7 /* CategoryTrip.swift */,
+				A680EC3F2280B732006E116E /* Bookmarks.swift */,
+				A680EC412280C0EA006E116E /* About.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -205,21 +210,22 @@
 		A6A67CF7222FE9A600D82479 /* fyp */ = {
 			isa = PBXGroup;
 			children = (
-				A6CFC61A2278CF53002DB6E3 /* Frameworks */,
-				A68BFAFB2265040200BAF061 /* Action */,
+				A6836A34226B4E41008F75EB /* fyp.entitlements */,
+				A6A67D04222FE9A800D82479 /* Info.plist */,
 				A6A67CF8222FE9A700D82479 /* AppDelegate.swift */,
 				A6A67CFF222FE9A800D82479 /* Assets.xcassets */,
+				A680EC3D2280AF6A006E116E /* Category.xcassets */,
+				A68BFAFB2265040200BAF061 /* Action */,
 				A68BFAFA226503F700BAF061 /* Cell */,
 				A68BFAFC2265040800BAF061 /* Class */,
 				A68BFAF9226503A400BAF061 /* Controller */,
 				A68BFAFD2265041600BAF061 /* Extension */,
-				A6836A34226B4E41008F75EB /* fyp.entitlements */,
-				A6A67D04222FE9A800D82479 /* Info.plist */,
+				A6CFC61A2278CF53002DB6E3 /* Frameworks */,
 				A6A67D01222FE9A800D82479 /* LaunchScreen.storyboard */,
+				A6C94FF3227BED7800C5F35E /* Localizable.strings */,
 				A6A67CFC222FE9A700D82479 /* Main.storyboard */,
 				A6216A342265E3E20073CE1F /* Object */,
 				A6A502072275E6400003463F /* View */,
-				A6C94FF3227BED7800C5F35E /* Localizable.strings */,
 			);
 			path = fyp;
 			sourceTree = "<group>";
@@ -303,6 +309,7 @@
 				A6A67D03222FE9A800D82479 /* LaunchScreen.storyboard in Resources */,
 				A6C94FF5227BED7800C5F35E /* Localizable.strings in Resources */,
 				A6A67D00222FE9A800D82479 /* Assets.xcassets in Resources */,
+				A680EC3E2280AF6A006E116E /* Category.xcassets in Resources */,
 				A6A67CFE222FE9A700D82479 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -318,6 +325,7 @@
 				A64BD9F02268B9E900E29669 /* Trip.swift in Sources */,
 				A6A67CFB222FE9A700D82479 /* mainScreen.swift in Sources */,
 				A6A502092275E6620003463F /* TripView.swift in Sources */,
+				A680EC402280B732006E116E /* Bookmarks.swift in Sources */,
 				A6216A332265E3C80073CE1F /* Session.swift in Sources */,
 				A6216A3A226691340073CE1F /* Category.swift in Sources */,
 				A64BD9F22268BA6800E29669 /* Item.swift in Sources */,
@@ -338,7 +346,7 @@
 				A6216A2D2265DED30073CE1F /* Reachability.swift in Sources */,
 				A6B77B192230192600DA4543 /* Featured.swift in Sources */,
 				A63CE3C4223423EE00F62E1F /* Explore.swift in Sources */,
-				A6856A312232CCD60036A677 /* Bookmarks.swift in Sources */,
+				A680EC422280C0EA006E116E /* About.swift in Sources */,
 				A6B28A822274EACA00A6E708 /* User.swift in Sources */,
 				A695797D223422F0008F79C4 /* Settings.swift in Sources */,
 				A6B77B1D22302A3600DA4543 /* CategoryView.swift in Sources */,

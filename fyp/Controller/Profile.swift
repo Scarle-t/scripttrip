@@ -99,8 +99,6 @@ class Profile: UITableViewController {
         lname.layer.shadowOpacity = 0
         email.layer.shadowOpacity = 0
         
-        userIcon.layer.cornerRadius = userIcon.frame.width / 2
-        
     }
     
     func setup(){

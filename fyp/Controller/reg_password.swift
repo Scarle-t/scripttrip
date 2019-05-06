@@ -67,6 +67,12 @@ class reg_password: UIViewController, UITextFieldDelegate{
             return
         }
         
+        if !(mail.text?.validateEmail())!{
+            mail.layer.borderWidth = 1
+            mail.layer.borderColor = "FF697B".toUIColor.cgColor
+            return
+        }
+        
         if pwd.text != verPwd.text {
             pwd.layer.borderWidth = 1
             pwd.layer.borderColor = "FF697B".toUIColor.cgColor

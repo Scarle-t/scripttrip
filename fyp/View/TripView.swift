@@ -140,7 +140,7 @@ class TripView: NSObject, UICollectionViewDelegateFlowLayout, UICollectionViewDe
     var dimBg: UIView!
     
     //INIT
-    init(delegate: UIViewController){
+    init(delegate: UIViewController, haveTabBar: Bool){
         super.init()
         DispatchQueue.main.async {
             self.delegate = delegate
@@ -184,8 +184,13 @@ class TripView: NSObject, UICollectionViewDelegateFlowLayout, UICollectionViewDe
             
             self.contents.fillSuperview()
             
-            UIApplication.shared.keyWindow?.addSubview(self.dimBg)
-            UIApplication.shared.keyWindow?.addSubview(self.view)
+            if haveTabBar{
+                UIApplication.shared.keyWindow?.rootViewController?.presentedViewController?.view.addSubview(self.dimBg)
+                UIApplication.shared.keyWindow?.rootViewController?.presentedViewController?.view.addSubview(self.view)
+            }else{
+                delegate.view.addSubview(self.dimBg)
+                delegate.view.addSubview(self.view)
+            }
 
             self.contents.reloadData()
         }
