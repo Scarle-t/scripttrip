@@ -99,7 +99,11 @@ class Featured: UIViewController, UICollectionViewDataSource, UICollectionViewDe
 
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        network.send(url: "https://scripttrip.scarletsc.net/iOS/addHistory.php", method: "POST", query: "user=\(session.usr.UID)&trip=\(session.getTrips()[indexPath.row].TID)", completion: nil)
+        if UserDefaults.standard.bool(forKey: "history") {
+            network.send(url: "https://scripttrip.scarletsc.net/iOS/history.php", method: "POST", query: "user=\(session.usr.UID)&trip=\(session.getTrips()[indexPath.row].TID)") { (_) in
+            }
+        }
+        
         tripView.displayTrip = session.getTrips()[indexPath.row]
         tripView.headerImg = imgs[session.getTrips()[indexPath.row]]
         tripView.show()
@@ -119,43 +123,6 @@ class Featured: UIViewController, UICollectionViewDataSource, UICollectionViewDe
                 self.cv.reloadData()
             }
         }
-//        }else if state == "addBookmark"{
-//            guard let result = parser.parse(data) else {return}
-//            for item in result{
-//                if (item["Result"] as! String) == "OK"{
-//                    let alert = UIAlertController(title: "Added to bookmarks.", message: nil, preferredStyle: .alert)
-//                    alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
-//                    self.present(alert, animated: true, completion: nil)
-//                    DispatchQueue.main.async {
-//                        self.plusBtn.alpha = 0
-//                    }
-//                }else{
-//                    let alert = UIAlertController(title: "Error when adding bookmarks.", message: (item["Reason"] as? String), preferredStyle: .alert)
-//                    alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
-//                    self.present(alert, animated: true, completion: nil)
-//                }
-//            }
-//        }else if state == "checkBookmark"{
-//            guard let result = parser.parse(data) else {return}
-//            for item in result{
-//                if (item["Result"] as! String) == "Exist"{
-//                    DispatchQueue.main.async {
-//                        self.plusBtn.alpha = 0
-//                    }
-//                }else{
-//                    DispatchQueue.main.async {
-//                        self.plusBtn.alpha = 1
-//                    }
-//
-//                }
-//            }
-//            DispatchQueue.main.async {
-//                self.plusBtn.layoutIfNeeded()
-//            }
-//
-//        }
-        
-        
     }
     
         //SCROLL VIEW

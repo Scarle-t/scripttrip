@@ -73,6 +73,10 @@ class Search: UIViewController, UITableViewDelegate, UITableViewDataSource, UISe
         return 162
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if UserDefaults.standard.bool(forKey: "history") {
+            network.send(url: "https://scripttrip.scarletsc.net/iOS/history.php", method: "POST", query: "user=\(Session.user.UID)&trip=\(results![indexPath.row].TID)") { (_) in
+            }
+        }
         tripView.displayTrip = results?[indexPath.row]
         tripView.show()
     }

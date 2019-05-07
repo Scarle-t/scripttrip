@@ -89,6 +89,10 @@ class CategoryTrip: UIViewController, UICollectionViewDelegate, UICollectionView
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let trip = trips?[indexPath.row] else {return}
+        if UserDefaults.standard.bool(forKey: "history") {
+            network.send(url: "https://scripttrip.scarletsc.net/iOS/history.php", method: "POST", query: "user=\(Session.user.UID)&trip=\(trip.TID)") { (_) in
+            }
+        }
         tripView.displayTrip = trip
         tripView.headerImg = imgs[trip]
         tripView.show()

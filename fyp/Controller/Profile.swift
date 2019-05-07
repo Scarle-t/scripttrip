@@ -19,6 +19,7 @@ class Profile: UITableViewController {
     @IBOutlet weak var email: UITextField!
     @IBOutlet weak var left: UIBarButtonItem!
     @IBOutlet weak var right: UIBarButtonItem!
+    @IBOutlet weak var history: UISwitch!
     
     //IBACTION
     @IBAction func leftItem(_ sender: UIBarButtonItem) {
@@ -42,7 +43,7 @@ class Profile: UITableViewController {
         
     }
     
-    @IBAction @objc func rightItem(_ sender: UIBarButtonItem) {
+    @IBAction func rightItem(_ sender: UIBarButtonItem) {
         
         if sender.tag == 0{
             fname.layer.shadowOpacity = 1
@@ -74,15 +75,41 @@ class Profile: UITableViewController {
         
     }
     
+    @IBAction func historySwitch(_ sender: UISwitch) {
+        UserDefaults.standard.set(sender.isOn, forKey: "history")
+    }
+    
     //DELEGATE
     override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 1
+        return 2
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
         return 2
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if indexPath.section == 1 && indexPath.row == 1{
+            let alert = UIAlertController(title: "Are you sure you want to clear your history? This cannot be undo!", message: nil, preferredStyle: .actionSheet)
+            alert.addAction(UIAlertAction(title: "Yes", style: .destructive, handler: { (_) in
+                Network().send(url: "https://scripttrip.scarletsc.net/iOS/history.php?user=\(Session.user.UID)", method: "DELETE", query: nil, completion: { (data) in
+                    guard let d = data, let result = Session.parser.parse(d) else {return}
+                    for item in result{
+                        if (item["Result"] as! String) == "OK"{
+                            let alert2 = UIAlertController(title: "Completed.", message: nil, preferredStyle: .alert)
+                            alert2.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                            self.present(alert2, animated: true, completion: nil)
+                        }else{
+                            let alert2 = UIAlertController(title: "Fail.", message: "\(item["Reason"]!)", preferredStyle: .alert)
+                            alert2.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                            self.present(alert2, animated: true, completion: nil)
+                        }
+                    }
+                })
+            }))
+            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+        }
     }
     
     //FUNC
@@ -110,6 +137,8 @@ class Profile: UITableViewController {
         fname.isUserInteractionEnabled = false
         lname.isUserInteractionEnabled = false
         email.isUserInteractionEnabled = false
+        
+        history.setOn(UserDefaults.standard.bool(forKey: "history"), animated: false)
     }
     
     //VIEW CONTROLLER

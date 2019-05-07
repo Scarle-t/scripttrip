@@ -806,7 +806,7 @@ Join us now</string>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" keyboardDismissMode="interactive" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="TAJ-zD-yml">
-                                <rect key="frame" x="0.0" y="10" width="375" height="598"/>
+                                <rect key="frame" x="0.0" y="10" width="375" height="608"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="separatorColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
@@ -825,7 +825,7 @@ Join us now</string>
                         <constraints>
                             <constraint firstItem="TAJ-zD-yml" firstAttribute="leading" secondItem="Eak-Pe-xo4" secondAttribute="leading" id="JGx-9l-eS9"/>
                             <constraint firstItem="Eak-Pe-xo4" firstAttribute="trailing" secondItem="TAJ-zD-yml" secondAttribute="trailing" id="PLj-L1-cY5"/>
-                            <constraint firstItem="Eak-Pe-xo4" firstAttribute="bottom" secondItem="TAJ-zD-yml" secondAttribute="bottom" constant="10" id="XoL-dl-BLJ"/>
+                            <constraint firstItem="Eak-Pe-xo4" firstAttribute="bottom" secondItem="TAJ-zD-yml" secondAttribute="bottom" id="XoL-dl-BLJ"/>
                             <constraint firstItem="Eak-Pe-xo4" firstAttribute="top" secondItem="TAJ-zD-yml" secondAttribute="top" constant="10" id="wMZ-7x-ckr"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Eak-Pe-xo4"/>
@@ -1447,7 +1447,7 @@ Join us now</string>
         <scene sceneID="nJS-UG-d7J">
             <objects>
                 <tableViewController id="9el-3i-Wpt" customClass="Profile" customModule="fyp" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="static" style="grouped" separatorStyle="none" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="bbk-rs-mcd">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="static" style="grouped" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="bbk-rs-mcd">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -1459,7 +1459,7 @@ Join us now</string>
                         <sections>
                             <tableViewSection id="xJg-3u-9Ez">
                                 <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="65" id="fh6-b0-w7p">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" rowHeight="65" id="fh6-b0-w7p">
                                         <rect key="frame" x="0.0" y="300" width="375" height="65"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="fh6-b0-w7p" id="SIx-Ik-JhW">
@@ -1483,7 +1483,7 @@ Join us now</string>
                                             </subviews>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="sBF-32-Dkz">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" id="sBF-32-Dkz">
                                         <rect key="frame" x="0.0" y="365" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="sBF-32-Dkz" id="4VD-rM-0pl">
@@ -1497,6 +1497,54 @@ Join us now</string>
                                                     <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="17"/>
                                                     <textInputTraits key="textInputTraits"/>
                                                 </textField>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                            <tableViewSection id="1CF-2K-8Tg">
+                                <string key="footerTitle">Enabling History allows you to find trips you have browsed before.
+History works across devices.</string>
+                                <cells>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" rowHeight="44" id="zNG-7A-i26">
+                                        <rect key="frame" x="0.0" y="445" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="zNG-7A-i26" id="v8C-SY-KTt">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="iRd-rb-69g">
+                                                    <rect key="frame" x="312" y="7" width="49" height="31"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <color key="onTintColor" red="0.25882352939999997" green="0.7843137255" blue="0.61568627450000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <connections>
+                                                        <action selector="historySwitch:" destination="9el-3i-Wpt" eventType="valueChanged" id="WpM-vZ-JJJ"/>
+                                                    </connections>
+                                                </switch>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="History" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gZj-kP-urr">
+                                                    <rect key="frame" x="16" y="10" width="55" height="24"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="44" id="4hv-KY-2Ce">
+                                        <rect key="frame" x="0.0" y="489" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="4hv-KY-2Ce" id="faQ-m9-Byp">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Clear History" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="twU-yy-LUm">
+                                                    <rect key="frame" x="16" y="10" width="100" height="24"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="17"/>
+                                                    <color key="textColor" red="1" green="0.2784313725" blue="0.25098039220000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
                                             </subviews>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -1523,6 +1571,7 @@ Join us now</string>
                     <connections>
                         <outlet property="email" destination="o2u-JE-TQk" id="Q5N-wy-dve"/>
                         <outlet property="fname" destination="mR8-ZX-59V" id="boo-ib-VnL"/>
+                        <outlet property="history" destination="iRd-rb-69g" id="7Vx-ak-PAQ"/>
                         <outlet property="left" destination="ncC-Ah-9ZS" id="2yn-o9-Qys"/>
                         <outlet property="lname" destination="BSN-5g-Ukz" id="ceN-60-Pe1"/>
                         <outlet property="right" destination="LzL-Nn-bhj" id="AxF-zs-rei"/>
@@ -1531,7 +1580,7 @@ Join us now</string>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wDD-Gz-0Vh" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="609" y="1555"/>
+            <point key="canvasLocation" x="608.79999999999995" y="1554.872563718141"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="4JK-yS-Qfs">

@@ -121,7 +121,12 @@ class Explore: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, U
         
         dest.selectedTrip = selectedTrips[indexPath.row]
         
-        self.present(dest, animated: true, completion: nil)
+        self.present(dest, animated: true, completion: {
+            if UserDefaults.standard.bool(forKey: "history") {
+                self.network.send(url: "https://scripttrip.scarletsc.net/iOS/history.php", method: "POST", query: "user=\(Session.user.UID)&trip=\(self.selectedTrips[indexPath.row].TID)") { (_) in
+                }
+            }
+        })
         
     }
         //LOCATION MANAGER
