@@ -90,24 +90,22 @@ class Profile: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.section == 1 && indexPath.row == 1{
-            let alert = UIAlertController(title: "Are you sure you want to clear your history? This cannot be undo!", message: nil, preferredStyle: .actionSheet)
-            alert.addAction(UIAlertAction(title: "Yes", style: .destructive, handler: { (_) in
+            let alert = UIAlertController(title: NSLocalizedString("historyClearMsg", comment: ""), message: nil, preferredStyle: .actionSheet)
+            alert.addAction(UIAlertAction(title: NSLocalizedString("Yes", comment: ""), style: .destructive, handler: { (_) in
                 Network().send(url: "https://scripttrip.scarletsc.net/iOS/history.php?user=\(Session.user.UID)", method: "DELETE", query: nil, completion: { (data) in
                     guard let d = data, let result = Session.parser.parse(d) else {return}
                     for item in result{
                         if (item["Result"] as! String) == "OK"{
-                            let alert2 = UIAlertController(title: "Completed.", message: nil, preferredStyle: .alert)
-                            alert2.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-                            self.present(alert2, animated: true, completion: nil)
+                            SVProgressHUD.showSuccess(withStatus: NSLocalizedString("Success", comment: ""))
+                            SVProgressHUD.dismiss(withDelay: 1.5)
                         }else{
-                            let alert2 = UIAlertController(title: "Fail.", message: "\(item["Reason"]!)", preferredStyle: .alert)
-                            alert2.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-                            self.present(alert2, animated: true, completion: nil)
+                            SVProgressHUD.showError(withStatus: NSLocalizedString("Fail", comment: ""))
+                            SVProgressHUD.dismiss(withDelay: 1.5)
                         }
                     }
                 })
             }))
-            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+            alert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel, handler: nil))
             self.present(alert, animated: true, completion: nil)
         }
     }

@@ -1,0 +1,54 @@
+/* 
+  Localizable.strings
+  fyp
+
+  Created by Scarlet on 5/3/31 H.
+  Copyright © 31 Scarlet. All rights reserved.
+*/
+
+"resetTitle" = "Please enter your email and new password to reset";
+"failLoginTitle" = "Failed to login.";
+"failLoginMsg" = "Please try again.";
+"resetSuccess" = "Successful. You can now longin with new password.";
+"resetFail" = "Failed to reset password.";
+
+"regFNMsg" = "First Name is missing!";
+"regLNMsg" = "Last Name is missing!";
+"regItemMsg" = "Please select 3 or more items.";
+"regEmailMsg" = "Email is missing!";
+"regPwdMsg" = "Password is missing!";
+"regVerPwdMsg" = "Please verify your password!";
+"regEmailRegexMsg" = "This is not an Email!";
+
+"regError" = "Oops.";
+
+"email" = "Email";
+"password" = "Password";
+"newPassword" = "New Password";
+"verifyPassword" = "Verify Password";
+"firstName" = "First Name";
+"lastName" = "Last Name";
+
+"Yes" = "Yes";
+"OK" = "OK";
+"Cancel" = "Cancel";
+"Success" = "Success";
+"Completed" = "Completed";
+"Fail" = "Fail";
+"Logout" = "Logout";
+
+"hideKB" = "Hide Keyboard";
+
+"bookmarks" = "Bookmarks";
+"history" = "History";
+"accountSettings" = "Account Settings";
+"about" = "About";
+"category" = "Category";
+"explore" = "Explore";
+"search" = "Search";
+"searchTrip" = "Trip";
+"searchLocation" = "Location";
+"searchPH" = "Search for...";
+
+"removeBKMsg" = "Are you sure you want to remove this bookmark?";
+"historyClearMsg" = "Are you sure you want to clear your history? This cannot be undo!";

@@ -331,7 +331,7 @@ class Explore: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, U
         menu.addTarget(self, action: #selector(userMenu(_:)), for: .touchUpInside)
         
         let text = UILabel(frame: header.frame)
-        text.text = "Explore"
+        text.text = NSLocalizedString("explore", comment: "")
         text.textColor = "42C89D".toUIColor
         text.font = UIFont(name: "AvenirNext-Heavy", size: 30)
         

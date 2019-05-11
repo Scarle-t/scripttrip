@@ -46,7 +46,7 @@ class Search: UIViewController, UITableViewDelegate, UITableViewDataSource, UISe
         menu.addTarget(self, action: #selector(userMenu(_:)), for: .touchUpInside)
         
         let text = UILabel(frame: CGRect(x: 0, y: 0, width: header.frame.width, height: 63))
-        text.text = "Search"
+        text.text = NSLocalizedString("search", comment: "")
         text.textColor = "42C89D".toUIColor
         text.font = UIFont(name: "AvenirNext-Heavy", size: 30)
         text.frame.origin.x = 63
@@ -57,10 +57,10 @@ class Search: UIViewController, UITableViewDelegate, UITableViewDataSource, UISe
         searchBar.tintColor = "42D89D".toUIColor
         searchBar.barTintColor = .white
         searchBar.searchBarStyle = .minimal
-        searchBar.scopeButtonTitles = ["Trip", "Location"]
-        searchBar.placeholder = "Search for ..."
-        searchBar.setScopeBarButtonTitleTextAttributes([NSAttributedString.Key.font : UIFont(name: "AvenirNext-Regular", size: 15)], for: .normal)
-        searchBar.setScopeBarButtonTitleTextAttributes([NSAttributedString.Key.font : UIFont(name: "AvenirNext-Regular", size: 15)], for: .selected)
+        searchBar.scopeButtonTitles = [NSLocalizedString("searchTrip", comment: ""), NSLocalizedString("searchLocation", comment: "")]
+        searchBar.placeholder = NSLocalizedString("searchPH", comment: "")
+        searchBar.setScopeBarButtonTitleTextAttributes([NSAttributedString.Key.font : UIFont(name: "AvenirNext-Regular", size: 15)!], for: .normal)
+        searchBar.setScopeBarButtonTitleTextAttributes([NSAttributedString.Key.font : UIFont(name: "AvenirNext-Regular", size: 15)!], for: .selected)
         
         for view : UIView in (searchBar.subviews[0]).subviews {
             

@@ -16,6 +16,7 @@ class Bookmarks: UIViewController, UICollectionViewDelegate, UICollectionViewDat
     var trips: [Trip]?
     var imgs = [Trip : UIImage]()
     var tripView: TripView!
+    var btnTrip = [UIButton : Trip]()
     
     //IBOUTLET
     @IBOutlet weak var cv: UICollectionView!
@@ -40,6 +41,10 @@ class Bookmarks: UIViewController, UICollectionViewDelegate, UICollectionViewDat
         cell.layer.masksToBounds = false
         cell.layer.shadowColor = UIColor.lightGray.cgColor
         cell.layer.shadowOpacity = 0.1
+        
+        cell.removeBK.layer.cornerRadius = 44 / 2
+        btnTrip[cell.removeBK] = trip
+        cell.removeBK.addTarget(self, action: #selector(removeBk(_:)), for: .touchUpInside)
         
         cell.title.text = trips?[indexPath.row].T_Title
         
@@ -101,7 +106,15 @@ class Bookmarks: UIViewController, UICollectionViewDelegate, UICollectionViewDat
     }
     
     //OBJC FUNC
-    
+    @objc func removeBk(_ sender: UIButton){
+        let alert = UIAlertController(title: NSLocalizedString("removeBKMsg", comment: ""), message: btnTrip[sender]?.T_Title, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: NSLocalizedString("Yes", comment: ""), style: .default, handler: { _ in
+            SVProgressHUD.showSuccess(withStatus: nil)
+            SVProgressHUD.dismiss(withDelay: 1.5)
+        }))
+        alert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel, handler: nil))
+        self.present(alert, animated: true, completion: nil)
+    }
     
     //FUNC
     func delegate(){

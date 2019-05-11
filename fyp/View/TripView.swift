@@ -209,7 +209,7 @@ class TripView: NSObject, UICollectionViewDelegateFlowLayout, UICollectionViewDe
                     SVProgressHUD.showSuccess(withStatus: nil)
                     SVProgressHUD.dismiss(withDelay: 1.5)
                 }else{
-                    SVProgressHUD.showInfo(withStatus: "Fail to add bookmarks.\n\(item["Reason"] as! String)")
+                    SVProgressHUD.showInfo(withStatus: NSLocalizedString("Fail", comment: "") + "\n\(item["Reason"] as! String)")
                     SVProgressHUD.dismiss(withDelay: 1.5)
                 }
             }

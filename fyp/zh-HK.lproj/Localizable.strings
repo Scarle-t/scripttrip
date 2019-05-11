@@ -1,0 +1,52 @@
+/* 
+  Localizable.strings
+  fyp
+
+  Created by Scarlet on 5/3/31 H.
+  Copyright © 31 Scarlet. All rights reserved.
+*/
+
+"resetTitle" = "請輸入電郵地址及新密碼以重設密碼";
+"failLoginTitle" = "登入失敗";
+"failLoginMsg" = "請重試";
+"resetSuccess" = "成功。您可使用新密碼登入。";
+"resetFail" = "重設密碼失敗。";
+
+"regFNMsg" = "名字不能為空";
+"regLNMsg" = "姓氏不能為空";
+"regItemMsg" = "請選擇三個或以上喜好";
+"regEmailMsg" = "電郵地址不能為空";
+"regPwdMsg" = "密碼不能為空";
+"regVerPwdMsg" = "請確認您的密碼";
+"regEmailRegexMsg" = "這個不像電郵地址喔";
+
+"email" = "電郵地址";
+"password" = "密碼";
+"newPassword" = "新密碼";
+"verifyPassword" = "確認密碼";
+"firstName" = "名";
+"lastName" = "姓";
+
+"Yes" = "是";
+"OK" = "好";
+"Cancel" = "取消";
+"Success" = "成功";
+"Completed" = "完成";
+"Fail" = "失敗";
+"Logout" = "登出";
+
+"hideKB" = "隱藏鍵盤";
+
+"bookmarks" = "書籤";
+"history" = "紀錄";
+"accountSettings" = "帳戶設定";
+"about" = "關於";
+"category" = "類別";
+"explore" = "探索";
+"search" = "搜尋";
+"searchTrip" = "旅程";
+"searchLocation" = "地點";
+"searchPH" = "在找。。。";
+
+"removeBKMsg" = "您是否確定要刪除此書籤？";
+"historyClearMsg" = "您是否確定要清除紀錄？這項操作不能復原！";

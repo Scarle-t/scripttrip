@@ -82,7 +82,7 @@ class Session: NSObject, UITableViewDelegate, UITableViewDataSource, UICollectio
     fileprivate let dimView = UIView()
     fileprivate var mainCollectionView: UICollectionView!
     fileprivate let blurBg = UIVisualEffectView(effect: UIBlurEffect(style: .extraLight))
-    fileprivate var settings = ["", "Bookmarks", "History", "Account Settings", "About"]
+    fileprivate var settings = ["", NSLocalizedString("bookmarks", comment: ""), NSLocalizedString("history", comment: ""), NSLocalizedString("accountSettings", comment: ""), NSLocalizedString("about", comment: "")]
     fileprivate let group = DispatchGroup()
     fileprivate let loginButton = FBSDKLoginButton()
     func setupUserView(){
@@ -199,7 +199,7 @@ class Session: NSObject, UITableViewDelegate, UITableViewDataSource, UICollectio
             }else{
                 loginButton.removeFromSuperview()
                 loginButton.alpha = 0
-                cell.textLabel?.text = "Logout"
+                cell.textLabel?.text = NSLocalizedString("Logout", comment: "")
                 cell.textLabel?.font = UIFont(name: "AvenirNext-Regular", size: 17)
                 cell.textLabel?.textColor = "FF697B".toUIColor
                 cell.textLabel?.textAlignment = .left

@@ -52,21 +52,21 @@ class reg_password: UIViewController, UITextFieldDelegate{
     //FUNC
     func nextCheck(){
         if mail.text == "" || mail.text == nil{
-            SVProgressHUD.showInfo(withStatus: "Email is missing!")
+            SVProgressHUD.showInfo(withStatus: NSLocalizedString("regEmailMsg", comment: ""))
             SVProgressHUD.dismiss(withDelay: 1.5)
             mail.layer.borderWidth = 1
             mail.layer.borderColor = "FF697B".toUIColor.cgColor
             return
         }
         if pwd.text == "" || pwd.text == nil{
-            SVProgressHUD.showInfo(withStatus: "Password is missing!")
+            SVProgressHUD.showInfo(withStatus: NSLocalizedString("regPwdMsg", comment: ""))
             SVProgressHUD.dismiss(withDelay: 1.5)
             pwd.layer.borderWidth = 1
             pwd.layer.borderColor = "FF697B".toUIColor.cgColor
             return
         }
         if verPwd.text == "" || verPwd.text == nil{
-            SVProgressHUD.showInfo(withStatus: "Please verify your password!")
+            SVProgressHUD.showInfo(withStatus: NSLocalizedString("regVerPwdMsg", comment: ""))
             SVProgressHUD.dismiss(withDelay: 1.5)
             verPwd.layer.borderWidth = 1
             verPwd.layer.borderColor = "FF697B".toUIColor.cgColor
@@ -76,7 +76,7 @@ class reg_password: UIViewController, UITextFieldDelegate{
         if !(mail.text?.validateEmail())!{
             mail.layer.borderWidth = 1
             mail.layer.borderColor = "FF697B".toUIColor.cgColor
-            SVProgressHUD.showInfo(withStatus: "This is not an Email!")
+            SVProgressHUD.showInfo(withStatus: NSLocalizedString("regEmailRegexMsg", comment: ""))
             SVProgressHUD.dismiss(withDelay: 1.5)
             return
         }
@@ -86,7 +86,7 @@ class reg_password: UIViewController, UITextFieldDelegate{
             pwd.layer.borderColor = "FF697B".toUIColor.cgColor
             verPwd.layer.borderWidth = 1
             verPwd.layer.borderColor = "FF697B".toUIColor.cgColor
-            SVProgressHUD.showInfo(withStatus: "Please verify your password!")
+            SVProgressHUD.showInfo(withStatus: NSLocalizedString("regVerPwdMsg", comment: ""))
             SVProgressHUD.dismiss(withDelay: 1.5)
             return
         }
@@ -113,9 +113,9 @@ class reg_password: UIViewController, UITextFieldDelegate{
         pwd.setBottomBorder()
         verPwd.setBottomBorder()
         
-        let mPH = NSAttributedString(string: "Email", attributes: [NSAttributedString.Key.foregroundColor : UIColor.black])
-        let pPh = NSAttributedString(string: "Password", attributes: [NSAttributedString.Key.foregroundColor : UIColor.black])
-        let vPH = NSAttributedString(string: "Verify Password", attributes: [NSAttributedString.Key.foregroundColor : UIColor.black])
+        let mPH = NSAttributedString(string: NSLocalizedString("email", comment: ""), attributes: [NSAttributedString.Key.foregroundColor : UIColor.black])
+        let pPh = NSAttributedString(string: NSLocalizedString("password", comment: ""), attributes: [NSAttributedString.Key.foregroundColor : UIColor.black])
+        let vPH = NSAttributedString(string: NSLocalizedString("verifyPassword", comment: ""), attributes: [NSAttributedString.Key.foregroundColor : UIColor.black])
         
         mail.backgroundColor = "D3F2FF".toUIColor
         pwd.backgroundColor = "D3F2FF".toUIColor
@@ -130,7 +130,7 @@ class reg_password: UIViewController, UITextFieldDelegate{
     func setup(){
         let toolBar = UIToolbar()
         let spaceButton = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-        let cancelButton = UIBarButtonItem(title: "Hide Keyboard", style: .plain, target: self, action: #selector(dismissKb))
+        let cancelButton = UIBarButtonItem(title: NSLocalizedString("hideKB", comment: ""), style: .plain, target: self, action: #selector(dismissKb))
         toolBar.barStyle = .default
         toolBar.isTranslucent = true
         toolBar.sizeToFit()
