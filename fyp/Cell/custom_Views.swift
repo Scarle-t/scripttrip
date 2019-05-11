@@ -78,6 +78,7 @@ class cateChoiceCell: UICollectionViewCell{
     
     @IBOutlet weak var catImg: UIImageView!
     @IBOutlet weak var catName: UILabel!
+    @IBOutlet weak var white: UIView!
     
 }
 

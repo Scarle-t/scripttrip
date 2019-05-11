@@ -158,6 +158,7 @@ class Featured: UIViewController, UICollectionViewDataSource, UICollectionViewDe
     }
     
     func layout(){
+        SVProgressHUD.dismiss()
 //        let layout = cv.collectionViewLayout as! UICollectionViewFlowLayout
 //        layout.sectionHeadersPinToVisibleBounds = true
 //        cv.collectionViewLayout = layout
@@ -175,7 +176,7 @@ class Featured: UIViewController, UICollectionViewDataSource, UICollectionViewDe
         DispatchQueue.main.async {
             self.mainRefresh = UIRefreshControl()
             self.mainRefresh!.addTarget(self, action: #selector(self.refreshFeatured(_:)), for: .valueChanged)
-            self.mainRefresh!.tintColor = "42C89D".toUIColor
+            self.mainRefresh!.tintColor = "42DA9D".toUIColor
             self.cv.refreshControl = self.mainRefresh
         }
     }

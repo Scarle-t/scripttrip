@@ -47,6 +47,7 @@ class mainScreen: UIViewController, UITextFieldDelegate, NetworkDelegate, FBSDKL
         }else if state == "login"{
             view.endEditing(true)
             networkState = "login"
+            SVProgressHUD.show()
             network.send(url: "https://scripttrip.scarletsc.net/iOS/login.php", method: "POST", query: "email=\(usr.text!)&pass=\(pwd.text!.sha1())")
 
         }
@@ -153,13 +154,8 @@ class mainScreen: UIViewController, UITextFieldDelegate, NetworkDelegate, FBSDKL
                     }
                     
                 }else{
-                    let alert = UIAlertController(title: NSLocalizedString("failLoginTitle", comment: ""), message: NSLocalizedString("failLoginMsg", comment: ""), preferredStyle: .alert)
-                    alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .cancel, handler: ({ _ in
-                        DispatchQueue.main.async {
-                            self.whiteView.alpha = 0
-                        }
-                    })))
-                    self.present(alert, animated: true, completion: nil)
+                    SVProgressHUD.showError(withStatus: NSLocalizedString("failLoginTitle", comment: ""))
+                    SVProgressHUD.dismiss(withDelay: 1.5)
                 }
             }
         }else if networkState == "reset"{
@@ -228,10 +224,12 @@ class mainScreen: UIViewController, UITextFieldDelegate, NetworkDelegate, FBSDKL
             
         }
         state = ""
+        SVProgressHUD.dismiss()
     }
     
     func handleFbLogin(){
 //        let options = ["fields": "id, email, first_name, last_name, picture.type(large)"]
+        SVProgressHUD.show()
         networkState = "login"
         let options = ["fields": "id, email, picture.type(large)"]
         FBSDKGraphRequest(graphPath: "me", parameters: options)?.start(completionHandler: { (con, result, err) in
@@ -317,7 +315,9 @@ class mainScreen: UIViewController, UITextFieldDelegate, NetworkDelegate, FBSDKL
         if FBSDKAccessToken.current() != nil{
             handleFbLogin()
         }
-        
+        SVProgressHUD.setHapticsEnabled(true)
+        SVProgressHUD.setMinimumSize(CGSize(width: 175, height: 175))
+        SVProgressHUD.setFont(UIFont(name: "AvenirNext-Medium", size: 20)!)
     }
     
     //VIEW CONTROLLER

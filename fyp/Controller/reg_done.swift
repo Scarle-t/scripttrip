@@ -17,8 +17,6 @@ class reg_done: UIViewController, NetworkDelegate {
     //IBOUTLET
     @IBOutlet weak var txt: UILabel!
     @IBOutlet weak var btn: UIButton!
-    @IBOutlet weak var loadingTxt: UILabel!
-    @IBOutlet weak var loadingWheel: UIActivityIndicatorView!
     
     //IBACTION
     @IBAction func finishBtn(_ sender: UIButton) {
@@ -39,16 +37,13 @@ class reg_done: UIViewController, NetworkDelegate {
             
             for item in result{
                 if (item["Result"] as! String) != "OK"{
-                    let alert = UIAlertController(title: "Sorry!", message: (item["Reason"] as! String), preferredStyle: .alert)
-                    alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: { _ in
-                        self.navigationController?.popViewController(animated: true)
-                    }))
-                    self.present(alert, animated: true, completion: nil)
+                    SVProgressHUD.showError(withStatus: "Oops.\n\(item["Reason"] as! String)")
+                    SVProgressHUD.dismiss(withDelay: 1.5)
+                    self.navigationController?.popViewController(animated: true)
                 }else if (item["Result"] as! String) == "OK"{
                     DispatchQueue.main.async {
                         UIView.animate(withDuration: 0.2) {
-                            self.loadingTxt.alpha = 0
-                            self.loadingWheel.alpha = 0
+                            SVProgressHUD.dismiss()
                             self.txt.alpha = 1
                             self.btn.alpha = 1
                         }
@@ -65,9 +60,9 @@ class reg_done: UIViewController, NetworkDelegate {
                     self.navigationController?.dismiss(animated: false, completion: nil)
                     UIApplication.shared.keyWindow?.rootViewController!.present(vct, animated: false, completion: nil)
                 }else{
-                    let alert = UIAlertController(title: "Failed to login.", message: "Please try again.", preferredStyle: .alert)
-                    alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
-                    self.present(alert, animated: true, completion: nil)
+                    SVProgressHUD.showError(withStatus: "Failed to login. Please try again.")
+                    SVProgressHUD.dismiss(withDelay: 1.5)
+                    self.navigationController?.popViewController(animated: true)
                 }
             }
         }
@@ -87,12 +82,18 @@ class reg_done: UIViewController, NetworkDelegate {
     }
     
     func setup(){
-        
+        SVProgressHUD.show()
+        state = session.regState
+        var interest = ""
+        for i in session.regInterest{
+            interest += "\(i.CID),"
+        }
+        interest = String(interest.dropLast())
         if state == "regFb"{
-            network.send(url: "https://scripttrip.scarletsc.net/iOS/register.php", method: "POST", query: "email=\(session.regEmail)&&fname=\(session.regFname)&lname=\(session.regLname)&fb=\(session.regFbId)")
+            network.send(url: "https://scripttrip.scarletsc.net/iOS/register.php", method: "POST", query: "email=\(session.regEmail)&&fname=\(session.regFname)&lname=\(session.regLname)&interest=\(interest)&fb=\(session.regFbId)")
         }else{
             state = "reg"
-            network.send(url: "https://scripttrip.scarletsc.net/iOS/register.php", method: "POST", query: "email=\(session.regEmail)&pass=\(session.regPass.sha1())&fname=\(session.regFname)&lname=\(session.regLname)")
+            network.send(url: "https://scripttrip.scarletsc.net/iOS/register.php", method: "POST", query: "email=\(session.regEmail)&pass=\(session.regPass.sha1())&fname=\(session.regFname)&lname=\(session.regLname)&interest=\(interest)")
         }
         
     }

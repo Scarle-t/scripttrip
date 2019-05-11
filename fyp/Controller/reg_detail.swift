@@ -52,12 +52,16 @@ class reg_detail: UIViewController, UITextFieldDelegate{
         fname.layer.borderWidth = 0
         lname.layer.borderWidth = 0
         if fname.text == "" || fname.text == nil{
+            SVProgressHUD.showInfo(withStatus: "First Name is missing!")
+            SVProgressHUD.dismiss(withDelay: 1.5)
             fname.layer.borderWidth = 1
             fname.layer.borderColor = "FF697B".toUIColor.cgColor
             //            fname.becomeFirstResponder()
             return
         }
         if lname.text == "" || lname.text == nil{
+            SVProgressHUD.showInfo(withStatus: "Last Name is missing!")
+            SVProgressHUD.dismiss(withDelay: 1.5)
             lname.layer.borderWidth = 1
             lname.layer.borderColor = "FF697B".toUIColor.cgColor
             //            lname.becomeFirstResponder()

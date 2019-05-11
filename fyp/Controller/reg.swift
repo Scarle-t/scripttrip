@@ -48,9 +48,9 @@ class reg: UIViewController, FBSDKLoginButtonDelegate{
                 self.session.usr.icon = url
             }
             
-            let finish = self.storyboard?.instantiateViewController(withIdentifier: "vc3") as! reg_done
+            let finish = self.storyboard?.instantiateViewController(withIdentifier: "interest") as! reg_interestChoice
             
-            finish.state = "regFb"
+            self.session.regState = "regFb"
             self.navigationController?.pushViewController(finish, animated: true)
             
         })

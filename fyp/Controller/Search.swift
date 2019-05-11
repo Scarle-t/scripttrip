@@ -57,8 +57,17 @@ class Search: UIViewController, UITableViewDelegate, UITableViewDataSource, UISe
         searchBar.tintColor = "42D89D".toUIColor
         searchBar.barTintColor = .white
         searchBar.searchBarStyle = .minimal
-        searchBar.scopeButtonTitles = ["Trip", "Category", "Location"]
+        searchBar.scopeButtonTitles = ["Trip", "Location"]
         searchBar.placeholder = "Search for ..."
+        searchBar.setScopeBarButtonTitleTextAttributes([NSAttributedString.Key.font : UIFont(name: "AvenirNext-Regular", size: 15)], for: .normal)
+        searchBar.setScopeBarButtonTitleTextAttributes([NSAttributedString.Key.font : UIFont(name: "AvenirNext-Regular", size: 15)], for: .selected)
+        
+        for view : UIView in (searchBar.subviews[0]).subviews {
+            
+            if let textField = view as? UITextField {
+                textField.font = UIFont(name: "AvenirNext-Medium", size: 15)
+            }
+        }
         
         header.backgroundColor = .white
         
@@ -112,9 +121,9 @@ class Search: UIViewController, UITableViewDelegate, UITableViewDataSource, UISe
         switch sender.selectedScopeButtonIndex{
         case 0:
             query += "&trip=1"
+//        case 1:
+//            query += "&category=1"
         case 1:
-            query += "&category=1"
-        case 2:
             query += "&location=1"
         default:
             break

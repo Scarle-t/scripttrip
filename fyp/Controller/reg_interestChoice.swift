@@ -23,6 +23,18 @@ class reg_interestChoice: UIViewController, UICollectionViewDelegate, UICollecti
     @IBAction func back(_ sender: UIButton) {
         self.navigationController?.popViewController(animated: true)
     }
+    @IBAction func next(_ sender: UIButton) {
+        
+        
+        if session.regInterest.count < 3{
+            SVProgressHUD.showInfo(withStatus: "Please select 3 or more items.")
+            SVProgressHUD.dismiss(withDelay: 1.5)
+        }else{
+           let reg_secure = storyboard?.instantiateViewController(withIdentifier: "reg_secure") as! reg_password
+            self.navigationController?.pushViewController(reg_secure, animated: true)
+        }
+        
+    }
     
     //DELEGATION
         //COLLECTION VIEW
@@ -47,6 +59,22 @@ class reg_interestChoice: UIViewController, UICollectionViewDelegate, UICollecti
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize.init(width: (view.frame.width / 2) - 20 - 5, height: (view.frame.width / 2) - 20 - 5)
+    }
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        let cell = collectionView.cellForItem(at: indexPath) as! cateChoiceCell
+        
+        switch cell.white.alpha{
+        case 0:
+            cell.white.alpha = 1
+            session.regInterest.insert(session.getCategories()[indexPath.row])
+        case 1:
+            cell.white.alpha = 0
+            session.regInterest.remove(session.getCategories()[indexPath.row])
+        default:
+            break
+        }
+        
     }
     
         //NETWORK

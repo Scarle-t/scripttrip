@@ -206,15 +206,11 @@ class TripView: NSObject, UICollectionViewDelegateFlowLayout, UICollectionViewDe
             guard let result = Session.parser.parse(data!) else {return}
             for item in result{
                 if (item["Result"] as! String) == "OK"{
-                    let alert = UIAlertController(title: "Successful", message: nil, preferredStyle: .alert)
-                    alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: { (_) in
-                        self.addBookmark.alpha = 0
-                    }))
-                    self.delegate?.present(alert, animated: true, completion: nil)
+                    SVProgressHUD.showSuccess(withStatus: nil)
+                    SVProgressHUD.dismiss(withDelay: 1.5)
                 }else{
-                    let alert = UIAlertController(title: "Failed", message: "\(item["Reason"])", preferredStyle: .alert)
-                    alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
-                    self.delegate?.present(alert, animated: true, completion: nil)
+                    SVProgressHUD.showInfo(withStatus: "Fail to add bookmarks.\n\(item["Reason"] as! String)")
+                    SVProgressHUD.dismiss(withDelay: 1.5)
                 }
             }
         }

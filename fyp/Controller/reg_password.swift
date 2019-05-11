@@ -52,16 +52,22 @@ class reg_password: UIViewController, UITextFieldDelegate{
     //FUNC
     func nextCheck(){
         if mail.text == "" || mail.text == nil{
+            SVProgressHUD.showInfo(withStatus: "Email is missing!")
+            SVProgressHUD.dismiss(withDelay: 1.5)
             mail.layer.borderWidth = 1
             mail.layer.borderColor = "FF697B".toUIColor.cgColor
             return
         }
         if pwd.text == "" || pwd.text == nil{
+            SVProgressHUD.showInfo(withStatus: "Password is missing!")
+            SVProgressHUD.dismiss(withDelay: 1.5)
             pwd.layer.borderWidth = 1
             pwd.layer.borderColor = "FF697B".toUIColor.cgColor
             return
         }
-        if verPwd.text == "" || pwd.text == nil{
+        if verPwd.text == "" || verPwd.text == nil{
+            SVProgressHUD.showInfo(withStatus: "Please verify your password!")
+            SVProgressHUD.dismiss(withDelay: 1.5)
             verPwd.layer.borderWidth = 1
             verPwd.layer.borderColor = "FF697B".toUIColor.cgColor
             return
@@ -70,6 +76,8 @@ class reg_password: UIViewController, UITextFieldDelegate{
         if !(mail.text?.validateEmail())!{
             mail.layer.borderWidth = 1
             mail.layer.borderColor = "FF697B".toUIColor.cgColor
+            SVProgressHUD.showInfo(withStatus: "This is not an Email!")
+            SVProgressHUD.dismiss(withDelay: 1.5)
             return
         }
         
@@ -78,6 +86,8 @@ class reg_password: UIViewController, UITextFieldDelegate{
             pwd.layer.borderColor = "FF697B".toUIColor.cgColor
             verPwd.layer.borderWidth = 1
             verPwd.layer.borderColor = "FF697B".toUIColor.cgColor
+            SVProgressHUD.showInfo(withStatus: "Please verify your password!")
+            SVProgressHUD.dismiss(withDelay: 1.5)
             return
         }
         
@@ -134,6 +144,10 @@ class reg_password: UIViewController, UITextFieldDelegate{
         let tap = UITapGestureRecognizer(target: self, action: #selector(dismissKb))
         
         view.addGestureRecognizer(tap)
+        
+        if Session.shared.regState == "regFb"{
+            mail.text = Session.shared.regEmail
+        }
         
     }
     

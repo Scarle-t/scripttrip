@@ -19,6 +19,8 @@ class Session: NSObject, UITableViewDelegate, UITableViewDataSource, UICollectio
     var regEmail = String()
     var regPass = String()
     var regFbId = String()
+    var regState = String()
+    var regInterest : Set<Category> = []
     
     //USER INFO
     static let user = User()
