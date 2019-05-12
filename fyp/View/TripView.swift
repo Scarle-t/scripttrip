@@ -129,6 +129,7 @@ class TripView: NSObject, UICollectionViewDelegateFlowLayout, UICollectionViewDe
     var displayTrip: Trip?
     var headerImg: UIImage?
     var imgs = [Item : UIImage]()
+    var isShown = false
     var tapImgs = [UITapGestureRecognizer : UIImage]()
     let group = DispatchGroup()
     let network = Network()
@@ -194,7 +195,7 @@ class TripView: NSObject, UICollectionViewDelegateFlowLayout, UICollectionViewDe
                 delegate.view.addSubview(self.dimBg)
                 delegate.view.addSubview(self.view)
             }
-
+            self.isShown = false
             self.contents.reloadData()
         }
         
@@ -221,6 +222,7 @@ class TripView: NSObject, UICollectionViewDelegateFlowLayout, UICollectionViewDe
         delegate?.present(photo, animated: true, completion: nil)
     }
     func show(){
+        isShown = true
         contents.setContentOffset(CGPoint(x: 0,y: 0), animated: false)
         for item in displayTrip!.Items{
             let height = Float(item.I_Content.count / 16)
@@ -251,10 +253,61 @@ class TripView: NSObject, UICollectionViewDelegateFlowLayout, UICollectionViewDe
         }, completion: nil)
     }
     
+    func shakeShow(){
+        let originalAnchor = view.layer.anchorPoint
+        let originalTransform = view.transform
+        if isShown {
+            view.layer.anchorPoint = CGPoint(x: window!.center.x, y: view.frame.maxY)
+            UIView.animate(withDuration: 0.07) {
+                self.view.transform = CGAffineTransform(rotationAngle: -0.05)
+            }
+            UIView.animate(withDuration: 0.07, delay: 0.08, options: .curveLinear, animations: {
+                self.view.transform = CGAffineTransform(rotationAngle: 0.1)
+            }, completion: nil)
+            UIView.animate(withDuration: 0.07, delay: 0.16, options: .curveLinear, animations: {
+                self.view.transform = originalTransform
+            }, completion: nil)
+        }else{
+            view.frame.origin.x = window!.frame.maxX
+            view.frame.origin.y = 75
+            UIView.animate(withDuration: 0.075, delay: 0, options: .curveEaseIn, animations: {
+                self.view.frame.origin.x = self.window!.frame.minY
+            }, completion: nil)
+            view.layer.anchorPoint = CGPoint(x: window!.center.x, y: view.frame.maxY)
+            UIView.animate(withDuration: 0.07, delay: 0.08, options: .curveLinear, animations: {
+                self.view.transform = CGAffineTransform(rotationAngle: -0.05)
+            }, completion: nil)
+            UIView.animate(withDuration: 0.07, delay: 0.08, options: .curveLinear, animations: {
+                self.view.transform = CGAffineTransform(rotationAngle: 0.1)
+            }, completion: nil)
+            UIView.animate(withDuration: 0.07, delay: 0.16, options: .curveLinear, animations: {
+                self.view.transform = originalTransform
+                self.dimBg.alpha = 0.4
+            }, completion: nil)
+        }
+        contents.setContentOffset(CGPoint(x: 0,y: 0), animated: false)
+        for item in displayTrip!.Items{
+            let height = Float(item.I_Content.count / 16)
+            heightForItem.append(CGFloat(floor(height < 1 ? 1 : height) * 20))
+        }
+        if headerImg == nil {
+            Network().getPhoto(url: "https://scripttrip.scarletasc.net/img/\(displayTrip!.Items[0].I_Image)") { (data, response, error) in
+                guard let imgData = data, error != nil else {return}
+                self.headerImg = UIImage(data: imgData)
+            }
+        }
+        DispatchQueue.main.async {
+            self.contents.reloadData()
+        }
+        view.layer.anchorPoint = originalAnchor
+        isShown = true
+    }
+    
     @objc func hide(){
         UIView.animate(withDuration: 0.25, delay: 0, options: .curveEaseOut, animations: {
             self.view.frame.origin.y = (self.window?.frame.height)!
             self.dimBg.alpha = 0
+            self.isShown = false
         }, completion: nil)
     }
 }

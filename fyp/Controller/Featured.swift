@@ -218,7 +218,7 @@ class Featured: UIViewController, UICollectionViewDataSource, UICollectionViewDe
             
             tripView.displayTrip = trip
             tripView.headerImg = imgs[trip]
-            tripView.show()
+            tripView.shakeShow()
         }
     }
 
