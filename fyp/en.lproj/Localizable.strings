@@ -5,6 +5,10 @@
   Created by Scarlet on 5/3/31 H.
   Copyright © 31 Scarlet. All rights reserved.
 */
+"system" = "System Default";
+"en" = "English";
+"zhHK" = "Chinese (Hong Kong)";
+"ja" = "Japanese";
 
 "resetTitle" = "Please enter your email and new password to reset";
 "failLoginTitle" = "Failed to login.";
@@ -36,6 +40,7 @@
 "Completed" = "Completed";
 "Fail" = "Fail";
 "Logout" = "Logout";
+"Confirm" = "Confirm";
 
 "hideKB" = "Hide Keyboard";
 
@@ -49,6 +54,7 @@
 "searchTrip" = "Trip";
 "searchLocation" = "Location";
 "searchPH" = "Search for...";
+"languages" = "Languages";
 
 "removeBKMsg" = "Are you sure you want to remove this bookmark?";
 "historyClearMsg" = "Are you sure you want to clear your history? This cannot be undo!";

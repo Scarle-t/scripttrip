@@ -107,12 +107,12 @@ class Bookmarks: UIViewController, UICollectionViewDelegate, UICollectionViewDat
     
     //OBJC FUNC
     @objc func removeBk(_ sender: UIButton){
-        let alert = UIAlertController(title: NSLocalizedString("removeBKMsg", comment: ""), message: btnTrip[sender]?.T_Title, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: NSLocalizedString("Yes", comment: ""), style: .default, handler: { _ in
+        let alert = UIAlertController(title: Localized.removeBKMsg.rawValue.localized(), message: btnTrip[sender]?.T_Title, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: Localized.Yes.rawValue.localized(), style: .default, handler: { _ in
             SVProgressHUD.showSuccess(withStatus: nil)
             SVProgressHUD.dismiss(withDelay: 1.5)
         }))
-        alert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: Localized.Cancel.rawValue.localized(), style: .cancel, handler: nil))
         self.present(alert, animated: true, completion: nil)
     }
     

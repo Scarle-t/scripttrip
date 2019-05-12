@@ -5,6 +5,10 @@
   Created by Scarlet on 5/3/31 H.
   Copyright © 31 Scarlet. All rights reserved.
 */
+"system" = "系統預設";
+"en" = "英文";
+"zhHK" = "中文（香港）";
+"ja" = "日文";
 
 "resetTitle" = "請輸入電郵地址及新密碼以重設密碼";
 "failLoginTitle" = "登入失敗";
@@ -34,6 +38,7 @@
 "Completed" = "完成";
 "Fail" = "失敗";
 "Logout" = "登出";
+"Confirm" = "確定";
 
 "hideKB" = "隱藏鍵盤";
 
@@ -47,6 +52,7 @@
 "searchTrip" = "旅程";
 "searchLocation" = "地點";
 "searchPH" = "在找。。。";
+"languages" = "語言";
 
 "removeBKMsg" = "您是否確定要刪除此書籤？";
 "historyClearMsg" = "您是否確定要清除紀錄？這項操作不能復原！";

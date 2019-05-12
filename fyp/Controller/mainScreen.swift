@@ -62,9 +62,9 @@ class mainScreen: UIViewController, UITextFieldDelegate, NetworkDelegate, FBSDKL
     }
     
     @IBAction func forgotPass(_ sender: UIButton) {
-        let alert = UIAlertController(title: nil, message: NSLocalizedString("resetTitle", comment: ""), preferredStyle: .alert)
+        let alert = UIAlertController(title: nil, message: Localized.resetTitle.rawValue.localized(), preferredStyle: .alert)
         alert.addTextField { (email) in
-            email.placeholder = "Email"
+            email.placeholder = Localized.email.rawValue.localized()
             email.keyboardType = .emailAddress
             email.textContentType = .emailAddress
             email.returnKeyType = .next
@@ -73,7 +73,7 @@ class mainScreen: UIViewController, UITextFieldDelegate, NetworkDelegate, FBSDKL
             email.tag = 10
         }
         alert.addTextField { (pass) in
-            pass.placeholder = NSLocalizedString("newPassword", comment: "")
+            pass.placeholder = Localized.newPassword.rawValue.localized()
             pass.keyboardType = .asciiCapable
             pass.textContentType = .newPassword
             pass.isSecureTextEntry = true
@@ -83,7 +83,7 @@ class mainScreen: UIViewController, UITextFieldDelegate, NetworkDelegate, FBSDKL
             pass.tag = 11
         }
         alert.addTextField { (verPass) in
-            verPass.placeholder = "Verify Password"
+            verPass.placeholder = Localized.verifyPassword.rawValue.localized()
             verPass.keyboardType = .asciiCapable
             verPass.textContentType = .newPassword
             verPass.isSecureTextEntry = true
@@ -92,7 +92,7 @@ class mainScreen: UIViewController, UITextFieldDelegate, NetworkDelegate, FBSDKL
             verPass.font = UIFont(name: "AvenirNext-Regular", size: 17)
             verPass.tag = 12
         }
-        alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .default, handler: { [weak alert] _ in
+        alert.addAction(UIAlertAction(title: Localized.OK.rawValue.localized(), style: .default, handler: { [weak alert] _ in
             let emailTxt = alert!.textFields![0]
             let passTxt = alert!.textFields![1]
             let verTxt = alert!.textFields![2]
@@ -130,7 +130,7 @@ class mainScreen: UIViewController, UITextFieldDelegate, NetworkDelegate, FBSDKL
             alert?.dismiss(animated: true, completion: nil)
             
         }))
-        alert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: Localized.Cancel.rawValue.localized(), style: .cancel, handler: nil))
         self.present(alert, animated: true, completion: nil)
         
     }
@@ -154,7 +154,7 @@ class mainScreen: UIViewController, UITextFieldDelegate, NetworkDelegate, FBSDKL
                     }
                     
                 }else{
-                    SVProgressHUD.showError(withStatus: NSLocalizedString("failLoginTitle", comment: ""))
+                    SVProgressHUD.showError(withStatus: Localized.failLoginMsg.rawValue.localized())
                     SVProgressHUD.dismiss(withDelay: 1.5)
                 }
             }
@@ -162,13 +162,13 @@ class mainScreen: UIViewController, UITextFieldDelegate, NetworkDelegate, FBSDKL
             for item in result{
                 if (item["Result"] as! String) == "OK"{
                     
-                    let alert = UIAlertController(title: NSLocalizedString("resetSuccess", comment: ""), message: nil, preferredStyle: .alert)
-                    alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .cancel, handler: nil))
+                    let alert = UIAlertController(title: Localized.resetSuccess.rawValue.localized(), message: nil, preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: Localized.OK.rawValue.localized(), style: .cancel, handler: nil))
                     self.present(alert, animated: true, completion: nil)
                     
                 }else{
-                    let alert = UIAlertController(title: NSLocalizedString("resetFail", comment: ""), message: "\(item["Reason"]!)", preferredStyle: .alert)
-                    alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .cancel, handler: nil))
+                    let alert = UIAlertController(title: Localized.resetFail.rawValue.localized(), message: "\(item["Reason"]!)", preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: Localized.OK.rawValue.localized(), style: .cancel, handler: nil))
                     self.present(alert, animated: true, completion: nil)
                 }
             }
@@ -253,7 +253,7 @@ class mainScreen: UIViewController, UITextFieldDelegate, NetworkDelegate, FBSDKL
     func layout(){
         let toolBar = UIToolbar()
         let spaceButton = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-        let cancelButton = UIBarButtonItem(title: NSLocalizedString("hideKB", comment: ""), style: .plain, target: self, action: #selector(dismissKb))
+        let cancelButton = UIBarButtonItem(title: Localized.hideKB.rawValue.localized(), style: .plain, target: self, action: #selector(dismissKb))
         toolBar.barStyle = .default
         toolBar.isTranslucent = true
         toolBar.sizeToFit()
@@ -268,8 +268,8 @@ class mainScreen: UIViewController, UITextFieldDelegate, NetworkDelegate, FBSDKL
         usr.setBottomBorder()
         pwd.setBottomBorder()
         
-        let usrPH = NSAttributedString(string: NSLocalizedString("email", comment: ""), attributes: [NSAttributedString.Key.foregroundColor : UIColor.black])
-        let pwdPH = NSAttributedString(string: NSLocalizedString("password", comment: ""), attributes: [NSAttributedString.Key.foregroundColor : UIColor.black])
+        let usrPH = NSAttributedString(string: Localized.email.rawValue.localized(), attributes: [NSAttributedString.Key.foregroundColor : UIColor.black])
+        let pwdPH = NSAttributedString(string: Localized.password.rawValue.localized(), attributes: [NSAttributedString.Key.foregroundColor : UIColor.black])
         
         usr.backgroundColor = "42E89D".toUIColor
         pwd.backgroundColor = "42E89D".toUIColor

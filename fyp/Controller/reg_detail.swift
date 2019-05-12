@@ -52,7 +52,7 @@ class reg_detail: UIViewController, UITextFieldDelegate{
         fname.layer.borderWidth = 0
         lname.layer.borderWidth = 0
         if fname.text == "" || fname.text == nil{
-            SVProgressHUD.showInfo(withStatus: NSLocalizedString("regFNMsg", comment: ""))
+            SVProgressHUD.showInfo(withStatus: Localized.regFNMsg.rawValue.localized())
             SVProgressHUD.dismiss(withDelay: 1.5)
             fname.layer.borderWidth = 1
             fname.layer.borderColor = "FF697B".toUIColor.cgColor
@@ -60,7 +60,7 @@ class reg_detail: UIViewController, UITextFieldDelegate{
             return
         }
         if lname.text == "" || lname.text == nil{
-            SVProgressHUD.showInfo(withStatus: NSLocalizedString("regLNMsg", comment: ""))
+            SVProgressHUD.showInfo(withStatus: Localized.regLNMsg.rawValue.localized())
             SVProgressHUD.dismiss(withDelay: 1.5)
             lname.layer.borderWidth = 1
             lname.layer.borderColor = "FF697B".toUIColor.cgColor
@@ -87,8 +87,8 @@ class reg_detail: UIViewController, UITextFieldDelegate{
         fname.setBottomBorder()
         lname.setBottomBorder()
         
-        let fPH = NSAttributedString(string: NSLocalizedString("firstName", comment: ""), attributes: [NSAttributedString.Key.foregroundColor : UIColor.black])
-        let lPH = NSAttributedString(string: NSLocalizedString("lastName", comment: ""), attributes: [NSAttributedString.Key.foregroundColor : UIColor.black])
+        let fPH = NSAttributedString(string: Localized.firstName.rawValue.localized(), attributes: [NSAttributedString.Key.foregroundColor : UIColor.black])
+        let lPH = NSAttributedString(string: Localized.lastName.rawValue.localized(), attributes: [NSAttributedString.Key.foregroundColor : UIColor.black])
         
         fname.backgroundColor = "D3F2FF".toUIColor
         lname.backgroundColor = "D3F2FF".toUIColor
@@ -101,7 +101,7 @@ class reg_detail: UIViewController, UITextFieldDelegate{
     func setup(){
         let toolBar = UIToolbar()
         let spaceButton = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-        let cancelButton = UIBarButtonItem(title: NSLocalizedString("hideKB", comment: ""), style: .plain, target: self, action: #selector(dismissKb))
+        let cancelButton = UIBarButtonItem(title: Localized.hideKB.rawValue.localized(), style: .plain, target: self, action: #selector(dismissKb))
         toolBar.barStyle = .default
         toolBar.isTranslucent = true
         toolBar.sizeToFit()

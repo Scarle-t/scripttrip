@@ -27,7 +27,7 @@ class reg_interestChoice: UIViewController, UICollectionViewDelegate, UICollecti
         
         
         if session.regInterest.count < 3{
-            SVProgressHUD.showInfo(withStatus: NSLocalizedString("regItemMsg", comment: ""))
+            SVProgressHUD.showInfo(withStatus: Localized.regItemMsg.rawValue.localized())
             SVProgressHUD.dismiss(withDelay: 1.5)
         }else{
            let reg_secure = storyboard?.instantiateViewController(withIdentifier: "reg_secure") as! reg_password

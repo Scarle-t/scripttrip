@@ -49,6 +49,14 @@ extension String{
         return NSPredicate(format: "SELF MATCHES %@", emailRegex).evaluate(with: self)
     }
     
+    func localized(_ locale: String? = UserDefaults.standard.string(forKey: "locale"))->String{
+        guard let locale = locale, locale != "system" else {return NSLocalizedString(self, comment: "")}
+        let path = Bundle.main.path(forResource: locale, ofType: "lproj")
+        let bundle = Bundle(path: path!)
+        
+        return NSLocalizedString(self, tableName: nil, bundle: bundle!, value: "", comment: "")
+    }
+    
 }
 
 struct AnchoredConstraints {

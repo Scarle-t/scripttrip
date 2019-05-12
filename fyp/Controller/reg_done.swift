@@ -37,7 +37,7 @@ class reg_done: UIViewController, NetworkDelegate {
             
             for item in result{
                 if (item["Result"] as! String) != "OK"{
-                    SVProgressHUD.showError(withStatus: NSLocalizedString("regError", comment: "") + "\n\(item["Reason"] as! String)")
+                    SVProgressHUD.showError(withStatus: Localized.regError.rawValue.localized() + "\n\(item["Reason"] as! String)")
                     SVProgressHUD.dismiss(withDelay: 1.5)
                     self.navigationController?.popViewController(animated: true)
                 }else if (item["Result"] as! String) == "OK"{
@@ -60,7 +60,7 @@ class reg_done: UIViewController, NetworkDelegate {
                     self.navigationController?.dismiss(animated: false, completion: nil)
                     UIApplication.shared.keyWindow?.rootViewController!.present(vct, animated: false, completion: nil)
                 }else{
-                    SVProgressHUD.showError(withStatus: NSLocalizedString("failLoginTitle", comment: "") + " " + NSLocalizedString("failLoginMsg", comment: ""))
+                    SVProgressHUD.showError(withStatus: Localized.failLoginTitle.rawValue.localized() + " " + Localized.failLoginMsg.rawValue.localized())
                     SVProgressHUD.dismiss(withDelay: 1.5)
                     self.navigationController?.popViewController(animated: true)
                 }

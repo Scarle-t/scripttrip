@@ -82,7 +82,7 @@ class Session: NSObject, UITableViewDelegate, UITableViewDataSource, UICollectio
     fileprivate let dimView = UIView()
     fileprivate var mainCollectionView: UICollectionView!
     fileprivate let blurBg = UIVisualEffectView(effect: UIBlurEffect(style: .extraLight))
-    fileprivate var settings = ["", NSLocalizedString("bookmarks", comment: ""), NSLocalizedString("history", comment: ""), NSLocalizedString("accountSettings", comment: ""), NSLocalizedString("about", comment: "")]
+    fileprivate var settings = ["", Localized.bookmarks.rawValue.localized(), Localized.history.rawValue.localized(), Localized.accountSettings.rawValue.localized(), Localized.about.rawValue.localized()]
     fileprivate let group = DispatchGroup()
     fileprivate let loginButton = FBSDKLoginButton()
     func setupUserView(){
@@ -199,7 +199,7 @@ class Session: NSObject, UITableViewDelegate, UITableViewDataSource, UICollectio
             }else{
                 loginButton.removeFromSuperview()
                 loginButton.alpha = 0
-                cell.textLabel?.text = NSLocalizedString("Logout", comment: "")
+                cell.textLabel?.text = Localized.Logout.rawValue.localized()
                 cell.textLabel?.font = UIFont(name: "AvenirNext-Regular", size: 17)
                 cell.textLabel?.textColor = "FF697B".toUIColor
                 cell.textLabel?.textAlignment = .left
@@ -335,6 +335,13 @@ class Session: NSObject, UITableViewDelegate, UITableViewDataSource, UICollectio
             self.userView.frame.origin.x = 0
             self.dimView.alpha = 0.3
         }, completion: nil)
+    }
+    func reloadLocale(){
+        settings[1] = Localized.bookmarks.rawValue.localized()
+        settings[2] = Localized.history.rawValue.localized()
+        settings[3] = Localized.accountSettings.rawValue.localized()
+        settings[4] = Localized.about.rawValue.localized()
+        userTable.reloadData()
     }
     
     //CATEGORY

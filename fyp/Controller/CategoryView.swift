@@ -47,7 +47,7 @@ class CategoryView: UIViewController, UITableViewDataSource, UITableViewDelegate
         menu.addTarget(self, action: #selector(userMenu(_:)), for: .touchUpInside)
         
         let text = UILabel(frame: header.frame)
-        text.text = NSLocalizedString("category", comment: "")
+        text.text = Localized.category.rawValue.localized()
         text.textColor = "42C89D".toUIColor
         text.font = UIFont(name: "AvenirNext-Heavy", size: 30)
         
