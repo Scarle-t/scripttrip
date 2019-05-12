@@ -201,7 +201,7 @@ class Session: NSObject, UITableViewDelegate, UITableViewDataSource, UICollectio
                 loginButton.alpha = 0
                 cell.textLabel?.text = Localized.Logout.rawValue.localized()
                 cell.textLabel?.font = UIFont(name: "AvenirNext-Regular", size: 17)
-                cell.textLabel?.textColor = "FF697B".toUIColor
+                cell.textLabel?.textColor = "FF697B".uiColor
                 cell.textLabel?.textAlignment = .left
                 cell.backgroundColor = UIColor.clear
                 

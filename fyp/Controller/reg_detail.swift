@@ -55,7 +55,7 @@ class reg_detail: UIViewController, UITextFieldDelegate{
             SVProgressHUD.showInfo(withStatus: Localized.regFNMsg.rawValue.localized())
             SVProgressHUD.dismiss(withDelay: 1.5)
             fname.layer.borderWidth = 1
-            fname.layer.borderColor = "FF697B".toUIColor.cgColor
+            fname.layer.borderColor = "FF697B".uiColor.cgColor
             //            fname.becomeFirstResponder()
             return
         }
@@ -63,7 +63,7 @@ class reg_detail: UIViewController, UITextFieldDelegate{
             SVProgressHUD.showInfo(withStatus: Localized.regLNMsg.rawValue.localized())
             SVProgressHUD.dismiss(withDelay: 1.5)
             lname.layer.borderWidth = 1
-            lname.layer.borderColor = "FF697B".toUIColor.cgColor
+            lname.layer.borderColor = "FF697B".uiColor.cgColor
             //            lname.becomeFirstResponder()
             return
         }
@@ -90,8 +90,8 @@ class reg_detail: UIViewController, UITextFieldDelegate{
         let fPH = NSAttributedString(string: Localized.firstName.rawValue.localized(), attributes: [NSAttributedString.Key.foregroundColor : UIColor.black])
         let lPH = NSAttributedString(string: Localized.lastName.rawValue.localized(), attributes: [NSAttributedString.Key.foregroundColor : UIColor.black])
         
-        fname.backgroundColor = "D3F2FF".toUIColor
-        lname.backgroundColor = "D3F2FF".toUIColor
+        fname.backgroundColor = "D3F2FF".uiColor
+        lname.backgroundColor = "D3F2FF".uiColor
         
         fname.attributedPlaceholder = fPH
         lname.attributedPlaceholder = lPH
@@ -103,10 +103,12 @@ class reg_detail: UIViewController, UITextFieldDelegate{
         let spaceButton = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
         let cancelButton = UIBarButtonItem(title: Localized.hideKB.rawValue.localized(), style: .plain, target: self, action: #selector(dismissKb))
         toolBar.barStyle = .default
+        toolBar.tintColor = "42C89D".uiColor
         toolBar.isTranslucent = true
         toolBar.sizeToFit()
         toolBar.setItems([spaceButton, cancelButton], animated: false)
         toolBar.isUserInteractionEnabled = true
+        cancelButton.setTitleTextAttributes([NSAttributedString.Key.font : UIFont(name: "AvenirNext-DemiBold", size: 17)!], for: .normal)
         
         fname.inputAccessoryView = toolBar
         lname.inputAccessoryView = toolBar

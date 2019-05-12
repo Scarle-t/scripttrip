@@ -332,7 +332,7 @@ class Explore: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, U
         
         let text = UILabel(frame: header.frame)
         text.text = Localized.explore.rawValue.localized()
-        text.textColor = "42C89D".toUIColor
+        text.textColor = "42C89D".uiColor
         text.font = UIFont(name: "AvenirNext-Heavy", size: 30)
         
         text.frame.origin.x = 63

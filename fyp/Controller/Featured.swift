@@ -165,7 +165,7 @@ class Featured: UIViewController, UICollectionViewDataSource, UICollectionViewDe
 
 //        let statusBar: UIView = UIApplication.shared.value(forKey: "statusBar") as! UIView
 //        if statusBar.responds(to: #selector(setter: UIView.backgroundColor)) {
-//            statusBar.backgroundColor = "42E89D".toUIColor
+//            statusBar.backgroundColor = "42E89D".uiColor
 //        }
         
     }
@@ -176,7 +176,7 @@ class Featured: UIViewController, UICollectionViewDataSource, UICollectionViewDe
         DispatchQueue.main.async {
             self.mainRefresh = UIRefreshControl()
             self.mainRefresh!.addTarget(self, action: #selector(self.refreshFeatured(_:)), for: .valueChanged)
-            self.mainRefresh!.tintColor = "42DA9D".toUIColor
+            self.mainRefresh!.tintColor = "42DA9D".uiColor
             self.cv.refreshControl = self.mainRefresh
         }
     }

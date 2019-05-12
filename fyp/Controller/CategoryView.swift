@@ -48,7 +48,7 @@ class CategoryView: UIViewController, UITableViewDataSource, UITableViewDelegate
         
         let text = UILabel(frame: header.frame)
         text.text = Localized.category.rawValue.localized()
-        text.textColor = "42C89D".toUIColor
+        text.textColor = "42C89D".uiColor
         text.font = UIFont(name: "AvenirNext-Heavy", size: 30)
         
         text.frame.origin.x = 63

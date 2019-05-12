@@ -63,7 +63,7 @@ class reg: UIViewController, FBSDKLoginButtonDelegate{
     func layout(){
         
         UIView.animate(withDuration: 1) {
-            self.view.layer.backgroundColor = "D3F2FF".toUIColor.cgColor
+            self.view.layer.backgroundColor = "D3F2FF".uiColor.cgColor
         }
         
         regBtn.layer.cornerRadius = 12

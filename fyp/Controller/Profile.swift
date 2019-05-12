@@ -178,10 +178,13 @@ class Profile: UITableViewController, UIPickerViewDelegate, UIPickerViewDataSour
         let spaceButton = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
         let cancelButton = UIBarButtonItem(title: Localized.Cancel.rawValue.localized(), style: .plain, target: self, action: #selector(dismissKb))
         toolBar.barStyle = .default
+        toolBar.tintColor = "42C89D".uiColor
         toolBar.isTranslucent = true
         toolBar.sizeToFit()
         toolBar.setItems([cancelButton, spaceButton, confirmButton], animated: false)
         toolBar.isUserInteractionEnabled = true
+        cancelButton.setTitleTextAttributes([NSAttributedString.Key.font : UIFont(name: "AvenirNext-DemiBold", size: 17)!], for: .normal)
+        confirmButton.setTitleTextAttributes([NSAttributedString.Key.font : UIFont(name: "AvenirNext-DemiBold", size: 17)!], for: .normal)
         
         history.setOn(userDefault.bool(forKey: "history"), animated: false)
         

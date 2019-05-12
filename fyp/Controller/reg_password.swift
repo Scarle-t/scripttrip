@@ -55,27 +55,27 @@ class reg_password: UIViewController, UITextFieldDelegate{
             SVProgressHUD.showInfo(withStatus: Localized.regEmailMsg.rawValue.localized())
             SVProgressHUD.dismiss(withDelay: 1.5)
             mail.layer.borderWidth = 1
-            mail.layer.borderColor = "FF697B".toUIColor.cgColor
+            mail.layer.borderColor = "FF697B".uiColor.cgColor
             return
         }
         if pwd.text == "" || pwd.text == nil{
             SVProgressHUD.showInfo(withStatus: Localized.regPwdMsg.rawValue.localized())
             SVProgressHUD.dismiss(withDelay: 1.5)
             pwd.layer.borderWidth = 1
-            pwd.layer.borderColor = "FF697B".toUIColor.cgColor
+            pwd.layer.borderColor = "FF697B".uiColor.cgColor
             return
         }
         if verPwd.text == "" || verPwd.text == nil{
             SVProgressHUD.showInfo(withStatus: Localized.regVerPwdMsg.rawValue.localized())
             SVProgressHUD.dismiss(withDelay: 1.5)
             verPwd.layer.borderWidth = 1
-            verPwd.layer.borderColor = "FF697B".toUIColor.cgColor
+            verPwd.layer.borderColor = "FF697B".uiColor.cgColor
             return
         }
         
         if !(mail.text?.validateEmail())!{
             mail.layer.borderWidth = 1
-            mail.layer.borderColor = "FF697B".toUIColor.cgColor
+            mail.layer.borderColor = "FF697B".uiColor.cgColor
             SVProgressHUD.showInfo(withStatus: Localized.regEmailRegexMsg.rawValue.localized())
             SVProgressHUD.dismiss(withDelay: 1.5)
             return
@@ -83,9 +83,9 @@ class reg_password: UIViewController, UITextFieldDelegate{
         
         if pwd.text != verPwd.text {
             pwd.layer.borderWidth = 1
-            pwd.layer.borderColor = "FF697B".toUIColor.cgColor
+            pwd.layer.borderColor = "FF697B".uiColor.cgColor
             verPwd.layer.borderWidth = 1
-            verPwd.layer.borderColor = "FF697B".toUIColor.cgColor
+            verPwd.layer.borderColor = "FF697B".uiColor.cgColor
             SVProgressHUD.showInfo(withStatus: Localized.regVerPwdMsg.rawValue.localized())
             SVProgressHUD.dismiss(withDelay: 1.5)
             return
@@ -117,9 +117,9 @@ class reg_password: UIViewController, UITextFieldDelegate{
         let pPh = NSAttributedString(string: Localized.password.rawValue.localized(), attributes: [NSAttributedString.Key.foregroundColor : UIColor.black])
         let vPH = NSAttributedString(string: Localized.verifyPassword.rawValue.localized(), attributes: [NSAttributedString.Key.foregroundColor : UIColor.black])
         
-        mail.backgroundColor = "D3F2FF".toUIColor
-        pwd.backgroundColor = "D3F2FF".toUIColor
-        verPwd.backgroundColor = "D3F2FF".toUIColor
+        mail.backgroundColor = "D3F2FF".uiColor
+        pwd.backgroundColor = "D3F2FF".uiColor
+        verPwd.backgroundColor = "D3F2FF".uiColor
         
         mail.attributedPlaceholder = mPH
         pwd.attributedPlaceholder = pPh
@@ -132,8 +132,10 @@ class reg_password: UIViewController, UITextFieldDelegate{
         let spaceButton = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
         let cancelButton = UIBarButtonItem(title: Localized.hideKB.rawValue.localized(), style: .plain, target: self, action: #selector(dismissKb))
         toolBar.barStyle = .default
+        toolBar.tintColor = "42C89D".uiColor
         toolBar.isTranslucent = true
         toolBar.sizeToFit()
+        cancelButton.setTitleTextAttributes([NSAttributedString.Key.font : UIFont(name: "AvenirNext-DemiBold", size: 17)!], for: .normal)
         toolBar.setItems([spaceButton, cancelButton], animated: false)
         toolBar.isUserInteractionEnabled = true
         

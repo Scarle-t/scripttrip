@@ -98,26 +98,26 @@ class mainScreen: UIViewController, UITextFieldDelegate, NetworkDelegate, FBSDKL
             let verTxt = alert!.textFields![2]
             
             if emailTxt.text == "" || emailTxt.text == nil{
-                emailTxt.layer.borderColor = "FF697B".toUIColor.cgColor
+                emailTxt.layer.borderColor = "FF697B".uiColor.cgColor
                 emailTxt.layer.borderWidth = 1
                 alert!.actions[0].isEnabled = false
             }
             
             if passTxt.text == "" || passTxt.text == nil{
-                passTxt.layer.borderColor = "FF697B".toUIColor.cgColor
+                passTxt.layer.borderColor = "FF697B".uiColor.cgColor
                 passTxt.layer.borderWidth = 1
                 alert!.actions[0].isEnabled = false
             }
             
             if verTxt.text == "" || verTxt.text == nil{
-                verTxt.layer.borderColor = "FF697B".toUIColor.cgColor
+                verTxt.layer.borderColor = "FF697B".uiColor.cgColor
                 verTxt.layer.borderWidth = 1
                 alert!.actions[0].isEnabled = false
             }
             
             if passTxt.text != verTxt.text {
-                passTxt.layer.borderColor = "FF697B".toUIColor.cgColor
-                verTxt.layer.borderColor = "FF697B".toUIColor.cgColor
+                passTxt.layer.borderColor = "FF697B".uiColor.cgColor
+                verTxt.layer.borderColor = "FF697B".uiColor.cgColor
                 passTxt.layer.borderWidth = 1
                 verTxt.layer.borderWidth = 1
                 alert!.actions[0].isEnabled = false
@@ -255,10 +255,12 @@ class mainScreen: UIViewController, UITextFieldDelegate, NetworkDelegate, FBSDKL
         let spaceButton = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
         let cancelButton = UIBarButtonItem(title: Localized.hideKB.rawValue.localized(), style: .plain, target: self, action: #selector(dismissKb))
         toolBar.barStyle = .default
+        toolBar.tintColor = "42C89D".uiColor
         toolBar.isTranslucent = true
         toolBar.sizeToFit()
         toolBar.setItems([spaceButton, cancelButton], animated: false)
         toolBar.isUserInteractionEnabled = true
+        cancelButton.setTitleTextAttributes([NSAttributedString.Key.font : UIFont(name: "AvenirNext-DemiBold", size: 17)!], for: .normal)
         
         login.layer.cornerRadius = 12
         register.layer.cornerRadius = 12
@@ -271,8 +273,8 @@ class mainScreen: UIViewController, UITextFieldDelegate, NetworkDelegate, FBSDKL
         let usrPH = NSAttributedString(string: Localized.email.rawValue.localized(), attributes: [NSAttributedString.Key.foregroundColor : UIColor.black])
         let pwdPH = NSAttributedString(string: Localized.password.rawValue.localized(), attributes: [NSAttributedString.Key.foregroundColor : UIColor.black])
         
-        usr.backgroundColor = "42E89D".toUIColor
-        pwd.backgroundColor = "42E89D".toUIColor
+        usr.backgroundColor = "42E89D".uiColor
+        pwd.backgroundColor = "42E89D".uiColor
         
         usr.attributedPlaceholder = usrPH
         pwd.attributedPlaceholder = pwdPH
@@ -282,7 +284,7 @@ class mainScreen: UIViewController, UITextFieldDelegate, NetworkDelegate, FBSDKL
         
 //        let statusBar: UIView = UIApplication.shared.value(forKey: "statusBar") as! UIView
 //        if statusBar.responds(to: #selector(setter: UIView.backgroundColor)) {
-//            statusBar.backgroundColor = "42E89D".toUIColor
+//            statusBar.backgroundColor = "42E89D".uiColor
 //        }
     }
     

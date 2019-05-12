@@ -47,14 +47,14 @@ class Search: UIViewController, UITableViewDelegate, UITableViewDataSource, UISe
         
         let text = UILabel(frame: CGRect(x: 0, y: 0, width: header.frame.width, height: 63))
         text.text = Localized.search.rawValue.localized()
-        text.textColor = "42C89D".toUIColor
+        text.textColor = "42C89D".uiColor
         text.font = UIFont(name: "AvenirNext-Heavy", size: 30)
         text.frame.origin.x = 63
         
         searchBar.frame = CGRect(x: 0, y: 62, width: header.frame.width, height: 100)
         searchBar.isTranslucent = false
         searchBar.showsScopeBar = true
-        searchBar.tintColor = "42D89D".toUIColor
+        searchBar.tintColor = "42D89D".uiColor
         searchBar.barTintColor = .white
         searchBar.searchBarStyle = .minimal
         searchBar.scopeButtonTitles = [Localized.searchTrip.rawValue.localized(), Localized.searchLocation.rawValue.localized()]

@@ -10,7 +10,7 @@ import UIKit
 import CommonCrypto
 
 extension String{
-    var toUIColor: UIColor{
+    var uiColor: UIColor{
         
         var r = 0.0, g = 0.0, b = 0.0
         let charset = CharacterSet(charactersIn: "abcdefABCDEF1234567890")
