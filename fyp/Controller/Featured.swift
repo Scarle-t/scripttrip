@@ -179,6 +179,7 @@ class Featured: UIViewController, UICollectionViewDataSource, UICollectionViewDe
             self.mainRefresh!.tintColor = "42DA9D".uiColor
             self.cv.refreshControl = self.mainRefresh
         }
+        self.becomeFirstResponder()
     }
     
     //VIEW CONTROLLER
@@ -201,6 +202,24 @@ class Featured: UIViewController, UICollectionViewDataSource, UICollectionViewDe
             self.cv.reloadData()
         }
         
+    }
+    
+    override var canBecomeFirstResponder: Bool{
+        return true
+    }
+    
+    override func motionEnded(_ motion: UIEvent.EventSubtype, with event: UIEvent?) {
+        if motion == .motionShake{
+            let trip = session.getTrips().randomElement()!
+            if UserDefaults.standard.bool(forKey: "history") {
+                network.send(url: "https://scripttrip.scarletsc.net/iOS/history.php", method: "POST", query: "user=\(session.usr.UID)&trip=\(trip.TID)") { (_) in
+                }
+            }
+            
+            tripView.displayTrip = trip
+            tripView.headerImg = imgs[trip]
+            tripView.show()
+        }
     }
 
 }
