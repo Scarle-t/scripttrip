@@ -79,6 +79,8 @@ class reg_done: UIViewController, NetworkDelegate {
     func layout(){
         btn.layer.cornerRadius = 12
         btn.backgroundColor = UIColor(white: 1, alpha: 0.7)
+        btn.setTitle(Localized.letsgo.rawValue.localized(), for: .normal)
+        txt.text = Localized.welcomeText.rawValue.localized()
     }
     
     func setup(){

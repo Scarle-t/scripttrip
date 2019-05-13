@@ -256,7 +256,7 @@ class mainScreen: UIViewController, UITextFieldDelegate, NetworkDelegate, FBSDKL
         let cancelButton = UIBarButtonItem(title: Localized.hideKB.rawValue.localized(), style: .plain, target: self, action: #selector(dismissKb))
         toolBar.barStyle = .default
         toolBar.tintColor = "42C89D".uiColor
-        toolBar.isTranslucent = true
+        toolBar.isTranslucent = false
         toolBar.sizeToFit()
         toolBar.setItems([spaceButton, cancelButton], animated: false)
         toolBar.isUserInteractionEnabled = true
@@ -281,6 +281,11 @@ class mainScreen: UIViewController, UITextFieldDelegate, NetworkDelegate, FBSDKL
         
         usr.inputAccessoryView = toolBar
         pwd.inputAccessoryView = toolBar
+        
+        backBtn.setTitle(Localized.Back.rawValue.localized(), for: .normal)
+        forgot.setTitle(Localized.forgotPassword.rawValue.localized(), for: .normal)
+        login.setTitle(Localized.Login.rawValue.localized(), for: .normal)
+        register.setTitle(Localized.Register.rawValue.localized(), for: .normal)
         
 //        let statusBar: UIView = UIApplication.shared.value(forKey: "statusBar") as! UIView
 //        if statusBar.responds(to: #selector(setter: UIView.backgroundColor)) {

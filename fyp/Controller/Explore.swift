@@ -39,6 +39,8 @@ class Explore: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, U
     @IBOutlet weak var filterMenu: UIVisualEffectView!
     @IBOutlet weak var closeBtn: UIButton!
     @IBOutlet weak var locationLabel: UILabel!
+    @IBOutlet weak var clearBtn: UIButton!
+    @IBOutlet weak var filterText: UILabel!
     
     //IBACTION
     @IBAction func refreshLoc(_ sender: UIButton) {
@@ -346,6 +348,8 @@ class Explore: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, U
         let span = MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05)
         let region = MKCoordinateRegion(center: coordinate, span: span)
         mk.setRegion(region, animated: true)
+        filterText.text = Localized.Filter.rawValue.localized()
+        clearBtn.setTitle(Localized.Clear.rawValue.localized(), for: .normal)
     }
     
     func setup(){

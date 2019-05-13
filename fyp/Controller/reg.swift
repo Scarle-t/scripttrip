@@ -14,6 +14,8 @@ class reg: UIViewController, FBSDKLoginButtonDelegate{
     
     //IBOUTLET
     @IBOutlet weak var regBtn: UIButton!
+    @IBOutlet weak var introText: UILabel!
+    @IBOutlet weak var backBtn: UIButton!
     
     //IBACTION
     @IBAction func back(_ sender: UIButton) {
@@ -69,6 +71,9 @@ class reg: UIViewController, FBSDKLoginButtonDelegate{
         regBtn.layer.cornerRadius = 12
         regBtn.backgroundColor = UIColor(white: 1, alpha: 0.7)
         
+        regBtn.setTitle(Localized.Register.rawValue.localized(), for: .normal)
+        introText.text = Localized.introText.rawValue.localized()
+        backBtn.setTitle(Localized.Back.rawValue.localized(), for: .normal)
     }
     
     func setup(){

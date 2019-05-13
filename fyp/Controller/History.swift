@@ -20,6 +20,7 @@ class History: UIViewController, UICollectionViewDelegate, UICollectionViewDataS
     
     //IBOUTLET
     @IBOutlet weak var cv: UICollectionView!
+    @IBOutlet weak var heading: UILabel!
     
     //IBACTION
     @IBAction func back(_ sender: UIButton) {
@@ -140,6 +141,7 @@ class History: UIViewController, UICollectionViewDelegate, UICollectionViewDataS
         layout.sectionHeadersPinToVisibleBounds = true
         layout.headerReferenceSize = .init(width: self.view.frame.width, height: 62)
         cv.collectionViewLayout = layout
+        heading.text = Localized.history.rawValue.localized()
     }
     
     func setup(){

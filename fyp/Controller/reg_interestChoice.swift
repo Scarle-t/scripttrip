@@ -18,6 +18,7 @@ class reg_interestChoice: UIViewController, UICollectionViewDelegate, UICollecti
     @IBOutlet weak var interestTxt: UILabel!
     @IBOutlet weak var finishBtn: UIButton!
     @IBOutlet weak var catChoice: UICollectionView!
+    @IBOutlet weak var backbtn: UIButton!
     
     //IBACTION
     @IBAction func back(_ sender: UIButton) {
@@ -98,6 +99,9 @@ class reg_interestChoice: UIViewController, UICollectionViewDelegate, UICollecti
     
     func layout(){
         interestTxt.frame = CGRect(x: interestTxt.frame.minX, y: interestTxt.frame.minY + 30, width: interestTxt.frame.width, height: interestTxt.frame.height)
+        interestTxt.text = Localized.interestIntro.rawValue.localized()
+        finishBtn.setTitle(Localized.Next.rawValue.localized(), for: .normal)
+        backbtn.setTitle(Localized.Back.rawValue.localized(), for: .normal)
     }
     
     func setup(){

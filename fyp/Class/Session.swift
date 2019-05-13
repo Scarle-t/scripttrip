@@ -82,7 +82,7 @@ class Session: NSObject, UITableViewDelegate, UITableViewDataSource, UICollectio
     fileprivate let dimView = UIView()
     fileprivate var mainCollectionView: UICollectionView!
     fileprivate let blurBg = UIVisualEffectView(effect: UIBlurEffect(style: .extraLight))
-    fileprivate var settings = ["", Localized.bookmarks.rawValue.localized(), Localized.history.rawValue.localized(), Localized.accountSettings.rawValue.localized(), Localized.about.rawValue.localized()]
+    fileprivate var settings = ["", Localized.bookmarks.rawValue.localized(), Localized.history.rawValue.localized(), Localized.accountSettings.rawValue.localized(), Localized.deviceSettings.rawValue.localized(), Localized.about.rawValue.localized()]
     fileprivate let group = DispatchGroup()
     fileprivate let loginButton = FBSDKLoginButton()
     func setupUserView(){
@@ -146,7 +146,7 @@ class Session: NSObject, UITableViewDelegate, UITableViewDataSource, UICollectio
         if section == 0{
             return 3
         }else if section == 1{
-            return 2
+            return 3
         }else if section == 2{
             return 1
         }
@@ -214,14 +214,20 @@ class Session: NSObject, UITableViewDelegate, UITableViewDataSource, UICollectio
         
     }
     internal func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.cellForRow(at: indexPath)?.setSelected(false, animated: true)
         if indexPath.section == 0 && indexPath.row == 1{
             let bookmarkView = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "bookmarks") as! Bookmarks
             UIApplication.shared.keyWindow?.rootViewController?.presentedViewController?.present(bookmarkView, animated: true, completion: nil)
         }
         
         if indexPath.section == 0 && indexPath.row == 2{
-            let historyView = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "history") as! History
-            UIApplication.shared.keyWindow?.rootViewController?.presentedViewController?.present(historyView, animated: true, completion: nil)
+            if !UserDefaults.standard.bool(forKey: "history"){
+                SVProgressHUD.showInfo(withStatus: Localized.historyError.rawValue.localized())
+                SVProgressHUD.dismiss(withDelay: 1.5)
+            }else{
+                let historyView = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "history") as! History
+                UIApplication.shared.keyWindow?.rootViewController?.presentedViewController?.present(historyView, animated: true, completion: nil)
+            }
         }
         
         if indexPath.section == 1 && indexPath.row == 0 {
@@ -230,6 +236,11 @@ class Session: NSObject, UITableViewDelegate, UITableViewDataSource, UICollectio
         }
         
         if indexPath.section == 1 && indexPath.row == 1 {
+            let deviceSetting = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "deviceSetting") as! DeviceSettings
+            UIApplication.shared.keyWindow?.rootViewController?.presentedViewController?.present(deviceSetting, animated: true, completion: nil)
+        }
+        
+        if indexPath.section == 1 && indexPath.row == 2 {
             let aboutView = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "about") as! About
             UIApplication.shared.keyWindow?.rootViewController?.presentedViewController?.present(aboutView, animated: true, completion: nil)
         }
@@ -237,6 +248,8 @@ class Session: NSObject, UITableViewDelegate, UITableViewDataSource, UICollectio
         if loginState == ""{
             if indexPath.section == 2 && indexPath.row == 0{
                 iconImg = nil
+                userDefault.set(true, forKey: "shake")
+                userDefault.set(true, forKey: "history")
                 userView.removeFromSuperview()
                 dimView.removeFromSuperview()
                 userDefault.set(false, forKey: "isLoggedIn")
@@ -340,7 +353,8 @@ class Session: NSObject, UITableViewDelegate, UITableViewDataSource, UICollectio
         settings[1] = Localized.bookmarks.rawValue.localized()
         settings[2] = Localized.history.rawValue.localized()
         settings[3] = Localized.accountSettings.rawValue.localized()
-        settings[4] = Localized.about.rawValue.localized()
+        settings[4] = Localized.deviceSettings.rawValue.localized()
+        settings[5] = Localized.about.rawValue.localized()
         userTable.reloadData()
     }
     

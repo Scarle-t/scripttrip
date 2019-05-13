@@ -209,17 +209,20 @@ class Featured: UIViewController, UICollectionViewDataSource, UICollectionViewDe
     }
     
     override func motionEnded(_ motion: UIEvent.EventSubtype, with event: UIEvent?) {
-        if motion == .motionShake{
-            let trip = session.getTrips().randomElement()!
-            if UserDefaults.standard.bool(forKey: "history") {
-                network.send(url: "https://scripttrip.scarletsc.net/iOS/history.php", method: "POST", query: "user=\(session.usr.UID)&trip=\(trip.TID)") { (_) in
+        if UserDefaults.standard.bool(forKey: "shake") {
+            if motion == .motionShake{
+                let trip = session.getTrips().randomElement()!
+                if UserDefaults.standard.bool(forKey: "history") {
+                    network.send(url: "https://scripttrip.scarletsc.net/iOS/history.php", method: "POST", query: "user=\(session.usr.UID)&trip=\(trip.TID)") { (_) in
+                    }
                 }
+                
+                tripView.displayTrip = trip
+                tripView.headerImg = imgs[trip]
+                tripView.shakeShow()
             }
-            
-            tripView.displayTrip = trip
-            tripView.headerImg = imgs[trip]
-            tripView.shakeShow()
         }
+        
     }
 
 }

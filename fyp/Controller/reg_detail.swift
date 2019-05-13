@@ -16,6 +16,8 @@ class reg_detail: UIViewController, UITextFieldDelegate{
     @IBOutlet weak var regBtn: UIButton!
     @IBOutlet weak var fname: UITextField!
     @IBOutlet weak var lname: UITextField!
+    @IBOutlet weak var backBtn: UIButton!
+    @IBOutlet weak var headingText: UILabel!
     
     //IBACTION
     @IBAction func back(_ sender: UIButton) {
@@ -96,6 +98,10 @@ class reg_detail: UIViewController, UITextFieldDelegate{
         fname.attributedPlaceholder = fPH
         lname.attributedPlaceholder = lPH
         
+        backBtn.setTitle(Localized.Back.rawValue.localized(), for: .normal)
+        regBtn.setTitle(Localized.getStarted.rawValue.localized(), for: .normal)
+        headingText.text = Localized.nameIntro.rawValue.localized()
+        
     }
     
     func setup(){
@@ -104,7 +110,7 @@ class reg_detail: UIViewController, UITextFieldDelegate{
         let cancelButton = UIBarButtonItem(title: Localized.hideKB.rawValue.localized(), style: .plain, target: self, action: #selector(dismissKb))
         toolBar.barStyle = .default
         toolBar.tintColor = "42C89D".uiColor
-        toolBar.isTranslucent = true
+        toolBar.isTranslucent = false
         toolBar.sizeToFit()
         toolBar.setItems([spaceButton, cancelButton], animated: false)
         toolBar.isUserInteractionEnabled = true

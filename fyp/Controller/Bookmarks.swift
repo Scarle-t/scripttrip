@@ -81,6 +81,8 @@ class Bookmarks: UIViewController, UICollectionViewDelegate, UICollectionViewDat
 
             header.frame = CGRect(x: 0 , y: 0, width: collectionView.frame.width, height: 62)
             
+            header.title.text = Localized.bookmarks.rawValue.localized()
+            
             return header
 
         default:

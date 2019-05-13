@@ -18,6 +18,8 @@ class reg_password: UIViewController, UITextFieldDelegate{
     @IBOutlet weak var mail: UITextField!
     @IBOutlet weak var pwd: UITextField!
     @IBOutlet weak var verPwd: UITextField!
+    @IBOutlet weak var backBtn: UIButton!
+    @IBOutlet weak var heading: UILabel!
     
     //IBACTION
     @IBAction func back(_ sender: UIButton) {
@@ -125,6 +127,10 @@ class reg_password: UIViewController, UITextFieldDelegate{
         pwd.attributedPlaceholder = pPh
         verPwd.attributedPlaceholder = vPH
         
+        backBtn.setTitle(Localized.Back.rawValue.localized(), for: .normal)
+        regBtn.setTitle(Localized.hereYouGo.rawValue.localized(), for: .normal)
+        heading.text = Localized.secureText.rawValue.localized()
+        
     }
     
     func setup(){
@@ -133,7 +139,7 @@ class reg_password: UIViewController, UITextFieldDelegate{
         let cancelButton = UIBarButtonItem(title: Localized.hideKB.rawValue.localized(), style: .plain, target: self, action: #selector(dismissKb))
         toolBar.barStyle = .default
         toolBar.tintColor = "42C89D".uiColor
-        toolBar.isTranslucent = true
+        toolBar.isTranslucent = false
         toolBar.sizeToFit()
         cancelButton.setTitleTextAttributes([NSAttributedString.Key.font : UIFont(name: "AvenirNext-DemiBold", size: 17)!], for: .normal)
         toolBar.setItems([spaceButton, cancelButton], animated: false)

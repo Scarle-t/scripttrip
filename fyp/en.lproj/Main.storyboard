@@ -169,6 +169,8 @@ Join us now</string>
                     </view>
                     <navigationItem key="navigationItem" id="Grq-BE-0Jp"/>
                     <connections>
+                        <outlet property="backBtn" destination="YkQ-LT-fkk" id="X01-zc-XZs"/>
+                        <outlet property="introText" destination="1vg-mh-OJB" id="yEK-vT-9DQ"/>
                         <outlet property="regBtn" destination="txi-fq-ioV" id="7ua-WF-KXO"/>
                     </connections>
                 </viewController>
@@ -255,7 +257,9 @@ Join us now</string>
                         <viewLayoutGuide key="safeArea" id="Vcg-bB-3Pd"/>
                     </view>
                     <connections>
+                        <outlet property="backBtn" destination="28Q-Dn-h5u" id="E0S-sh-1ZU"/>
                         <outlet property="fname" destination="wjk-Hw-88a" id="22u-Gx-GRG"/>
+                        <outlet property="headingText" destination="mdZ-Sf-i1B" id="bj5-DE-ASf"/>
                         <outlet property="lname" destination="0Wz-Go-ccH" id="LqN-MQ-LlF"/>
                         <outlet property="regBtn" destination="A5b-eS-xJA" id="Pe0-pA-shN"/>
                     </connections>
@@ -383,6 +387,7 @@ Join us now</string>
                         <viewLayoutGuide key="safeArea" id="E2w-4F-5gC"/>
                     </view>
                     <connections>
+                        <outlet property="backbtn" destination="P5E-gd-5t5" id="fV0-5b-KSs"/>
                         <outlet property="catChoice" destination="gtg-ef-3X1" id="BAK-Yh-rKX"/>
                         <outlet property="finishBtn" destination="iNK-2i-KGN" id="EQV-u9-yRD"/>
                         <outlet property="interestTxt" destination="ZC9-Oz-VdM" id="gk4-Mw-nVW"/>
@@ -801,10 +806,12 @@ Join us now</string>
                     </tabBarItem>
                     <connections>
                         <outlet property="blurView" destination="lvv-ov-Gr0" id="pvM-nT-aDK"/>
+                        <outlet property="clearBtn" destination="03c-Ec-CcQ" id="CNa-Nc-iP5"/>
                         <outlet property="closeBtn" destination="UFY-4u-94A" id="IcL-EO-mKg"/>
                         <outlet property="cv" destination="Bx6-1r-ydC" id="lBm-xy-wtf"/>
                         <outlet property="filterList" destination="Kzx-QG-AbK" id="20g-Iz-FnV"/>
                         <outlet property="filterMenu" destination="qeW-S8-Yc2" id="UXJ-O3-8rD"/>
+                        <outlet property="filterText" destination="ZRv-FY-ufj" id="eDl-8H-hdl"/>
                         <outlet property="filterView" destination="ahF-SX-R6k" id="avV-Fc-rUI"/>
                         <outlet property="locationLabel" destination="P6t-dV-ogs" id="owd-Fe-z57"/>
                         <outlet property="mk" destination="7N1-Y1-JEF" id="06h-AL-e9v"/>
@@ -1023,6 +1030,8 @@ Join us now</string>
                         <viewLayoutGuide key="safeArea" id="ACR-bo-2Ul"/>
                     </view>
                     <connections>
+                        <outlet property="backBtn" destination="wvv-a3-h3B" id="ao1-4c-fPH"/>
+                        <outlet property="heading" destination="ah0-fu-6ep" id="qW4-oS-SvW"/>
                         <outlet property="mail" destination="ZTq-QR-uhV" id="dVq-gf-MAx"/>
                         <outlet property="pwd" destination="ghS-ZL-Oct" id="KDd-RC-27S"/>
                         <outlet property="regBtn" destination="zl8-Gs-ydj" id="hOP-uC-dJz"/>
@@ -1502,7 +1511,7 @@ Join us now</string>
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Email" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aaV-Wm-2VZ">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Email" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="aaV-Wm-2VZ">
                                                     <rect key="frame" x="16" y="5" width="51" height="28"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="20"/>
@@ -1516,83 +1525,6 @@ Join us now</string>
                                                     <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="17"/>
                                                     <textInputTraits key="textInputTraits"/>
                                                 </textField>
-                                            </subviews>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
-                                </cells>
-                            </tableViewSection>
-                            <tableViewSection id="1CF-2K-8Tg">
-                                <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" rowHeight="44" id="zNG-7A-i26">
-                                        <rect key="frame" x="0.0" y="445" width="375" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="zNG-7A-i26" id="v8C-SY-KTt">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Languages" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gZj-kP-urr">
-                                                    <rect key="frame" x="16" y="10" width="86" height="24"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="17"/>
-                                                    <color key="textColor" red="0.25882352939999997" green="0.7843137255" blue="0.61568627450000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="right" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="ZWn-Tp-lbw">
-                                                    <rect key="frame" x="262" y="10" width="97" height="24"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                    <color key="textColor" red="0.25882352939999997" green="0.7843137255" blue="0.61568627450000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                    <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="17"/>
-                                                    <textInputTraits key="textInputTraits"/>
-                                                </textField>
-                                            </subviews>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
-                                </cells>
-                            </tableViewSection>
-                            <tableViewSection id="KHu-VU-nBE">
-                                <string key="footerTitle">Enabling History allows you to find trips you have browsed before.
-History works across devices.</string>
-                                <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" rowHeight="44" id="vB6-yd-xDZ">
-                                        <rect key="frame" x="0.0" y="525" width="375" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="vB6-yd-xDZ" id="hDk-g5-wNw">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="K0x-ja-jiS">
-                                                    <rect key="frame" x="312" y="7" width="49" height="31"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <color key="onTintColor" red="0.25882352939999997" green="0.7843137255" blue="0.61568627450000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                    <connections>
-                                                        <action selector="historySwitch:" destination="9el-3i-Wpt" eventType="valueChanged" id="rax-mV-Qbq"/>
-                                                    </connections>
-                                                </switch>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="History" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QJY-Jc-FY9">
-                                                    <rect key="frame" x="16" y="10" width="56" height="24"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="17"/>
-                                                    <color key="textColor" red="0.25882352939999997" green="0.7843137255" blue="0.61568627450000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="44" id="4qa-4k-GAk">
-                                        <rect key="frame" x="0.0" y="569" width="375" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="4qa-4k-GAk" id="KgC-uW-AUr">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Clear History" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Msd-gz-2O6">
-                                                    <rect key="frame" x="16" y="10" width="100" height="24"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="17"/>
-                                                    <color key="textColor" red="1" green="0.2784313725" blue="0.25098039220000001" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
                                             </subviews>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -1618,11 +1550,11 @@ History works across devices.</string>
                     </navigationItem>
                     <connections>
                         <outlet property="email" destination="o2u-JE-TQk" id="Q5N-wy-dve"/>
+                        <outlet property="emailText" destination="aaV-Wm-2VZ" id="vG1-Ac-x9z"/>
                         <outlet property="fname" destination="mR8-ZX-59V" id="boo-ib-VnL"/>
-                        <outlet property="history" destination="K0x-ja-jiS" id="bko-3Q-rkG"/>
                         <outlet property="left" destination="ncC-Ah-9ZS" id="2yn-o9-Qys"/>
                         <outlet property="lname" destination="BSN-5g-Ukz" id="ceN-60-Pe1"/>
-                        <outlet property="localeLabel" destination="ZWn-Tp-lbw" id="7v6-ok-8f5"/>
+                        <outlet property="naemText" destination="0Hf-8J-L4r" id="nI7-gr-Z11"/>
                         <outlet property="right" destination="LzL-Nn-bhj" id="AxF-zs-rei"/>
                         <outlet property="userIcon" destination="DjN-CS-0mf" id="L0z-oY-yud"/>
                     </connections>
@@ -1630,6 +1562,191 @@ History works across devices.</string>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wDD-Gz-0Vh" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="608.79999999999995" y="1554.872563718141"/>
+        </scene>
+        <!--Device Settings-->
+        <scene sceneID="ihq-6Y-NGM">
+            <objects>
+                <tableViewController storyboardIdentifier="deviceSetting" id="DlC-ru-Odv" customClass="DeviceSettings" customModule="fyp" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" dataMode="static" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="kCq-m6-UNs">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <view key="tableHeaderView" contentMode="scaleToFill" id="YBr-eB-8SW">
+                            <rect key="frame" x="0.0" y="0.0" width="375" height="62"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <subviews>
+                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8rd-pi-Urd">
+                                    <rect key="frame" x="18" y="16" width="30" height="30"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <color key="tintColor" red="0.25882352939999997" green="0.7843137255" blue="0.61568627450000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <state key="normal" image="down_tint">
+                                        <color key="titleColor" red="0.25882352939999997" green="0.7843137255" blue="0.61568627450000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    </state>
+                                    <connections>
+                                        <action selector="close:" destination="DlC-ru-Odv" eventType="touchUpInside" id="7lA-Ji-H6Z"/>
+                                    </connections>
+                                </button>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Settings" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LYS-2T-J1M">
+                                    <rect key="frame" x="63" y="0.0" width="304" height="62"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <fontDescription key="fontDescription" name="AvenirNext-Heavy" family="Avenir Next" pointSize="30"/>
+                                    <color key="textColor" red="0.25882352939999997" green="0.7843137255" blue="0.61568627450000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                            </subviews>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </view>
+                        <sections>
+                            <tableViewSection headerTitle=" " footerTitle="Restart app is recommended for language change." id="wWT-x2-gWP">
+                                <cells>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" rowHeight="44" id="q5i-UI-yLb">
+                                        <rect key="frame" x="0.0" y="117.5" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="q5i-UI-yLb" id="0W2-bM-aGb">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Languages" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="46v-3o-0iB">
+                                                    <rect key="frame" x="16" y="7" width="101" height="28"/>
+                                                    <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="20"/>
+                                                    <color key="textColor" red="0.25882352939999997" green="0.7843137255" blue="0.61568627450000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="right" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="Jvy-O8-qfA">
+                                                    <rect key="frame" x="219" y="8" width="140" height="28"/>
+                                                    <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <color key="textColor" red="0.25882352939999997" green="0.7843137255" blue="0.61568627450000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="20"/>
+                                                    <textInputTraits key="textInputTraits"/>
+                                                </textField>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="Jvy-O8-qfA" firstAttribute="leading" secondItem="46v-3o-0iB" secondAttribute="trailing" constant="102" id="0Xv-YN-7vy"/>
+                                                <constraint firstAttribute="trailing" secondItem="Jvy-O8-qfA" secondAttribute="trailing" constant="16" id="Elz-G4-fkq"/>
+                                                <constraint firstItem="46v-3o-0iB" firstAttribute="top" secondItem="0W2-bM-aGb" secondAttribute="top" constant="7" id="dWN-zv-U9q"/>
+                                                <constraint firstAttribute="bottom" secondItem="Jvy-O8-qfA" secondAttribute="bottom" constant="7.5" id="evB-9g-1pc"/>
+                                                <constraint firstItem="46v-3o-0iB" firstAttribute="leading" secondItem="0W2-bM-aGb" secondAttribute="leading" constant="16" id="oeY-YY-g3R"/>
+                                                <constraint firstItem="Jvy-O8-qfA" firstAttribute="top" secondItem="0W2-bM-aGb" secondAttribute="top" constant="8" id="qJu-XU-sCa"/>
+                                                <constraint firstAttribute="bottom" secondItem="46v-3o-0iB" secondAttribute="bottom" constant="8.5" id="ugS-mq-9X4"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                            <tableViewSection headerTitle=" " footerTitle="Are you feeling lucky?" id="prn-ws-fiG">
+                                <cells>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" rowHeight="44" id="UHJ-2l-D86">
+                                        <rect key="frame" x="0.0" y="237" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="UHJ-2l-D86" id="ik2-Or-nbR">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Shake for Trip" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="goq-7X-0Ta">
+                                                    <rect key="frame" x="16" y="7" width="228" height="28"/>
+                                                    <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="20"/>
+                                                    <color key="textColor" red="0.25882352939999997" green="0.7843137255" blue="0.61568627450000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0Ix-4n-mFf">
+                                                    <rect key="frame" x="310" y="6" width="51" height="31"/>
+                                                    <color key="onTintColor" red="0.25882352939999997" green="0.7843137255" blue="0.61568627450000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <connections>
+                                                        <action selector="shakeSwitch:" destination="DlC-ru-Odv" eventType="valueChanged" id="5tC-a2-3KZ"/>
+                                                    </connections>
+                                                </switch>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="bottom" secondItem="0Ix-4n-mFf" secondAttribute="bottom" constant="6.5" id="TsE-bg-eu0"/>
+                                                <constraint firstAttribute="bottom" secondItem="goq-7X-0Ta" secondAttribute="bottom" constant="8.5" id="ZJ7-SV-kbS"/>
+                                                <constraint firstItem="goq-7X-0Ta" firstAttribute="top" secondItem="ik2-Or-nbR" secondAttribute="top" constant="7" id="aAH-oZ-3do"/>
+                                                <constraint firstItem="0Ix-4n-mFf" firstAttribute="leading" secondItem="goq-7X-0Ta" secondAttribute="trailing" constant="66" id="dxg-4j-XFF"/>
+                                                <constraint firstAttribute="trailing" secondItem="0Ix-4n-mFf" secondAttribute="trailing" constant="16" id="jvd-j1-SLd"/>
+                                                <constraint firstItem="0Ix-4n-mFf" firstAttribute="top" secondItem="ik2-Or-nbR" secondAttribute="top" constant="6" id="p7w-e0-ECI"/>
+                                                <constraint firstItem="goq-7X-0Ta" firstAttribute="leading" secondItem="ik2-Or-nbR" secondAttribute="leading" constant="16" id="qC1-Dp-KhM"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                            <tableViewSection headerTitle=" " id="TBh-co-AhZ">
+                                <string key="footerTitle">Enabling History allows you to find trips you have browsed before.
+History works across devices.</string>
+                                <cells>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" rowHeight="44" id="9zm-3q-lwE">
+                                        <rect key="frame" x="0.0" y="356.5" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="9zm-3q-lwE" id="A5M-Mn-Zlm">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="History" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ex1-aV-crB">
+                                                    <rect key="frame" x="16" y="7" width="65" height="28"/>
+                                                    <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="20"/>
+                                                    <color key="textColor" red="0.25882352939999997" green="0.7843137255" blue="0.61568627450000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gfT-XU-YpV">
+                                                    <rect key="frame" x="310" y="6" width="51" height="31"/>
+                                                    <color key="onTintColor" red="0.25882352939999997" green="0.7843137255" blue="0.61568627450000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <connections>
+                                                        <action selector="historySwitch:" destination="DlC-ru-Odv" eventType="valueChanged" id="MzT-C5-p6Q"/>
+                                                    </connections>
+                                                </switch>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="bottom" secondItem="gfT-XU-YpV" secondAttribute="bottom" constant="6.5" id="9BZ-nb-mOv"/>
+                                                <constraint firstAttribute="trailing" secondItem="gfT-XU-YpV" secondAttribute="trailing" constant="16" id="Ijh-km-1Tk"/>
+                                                <constraint firstAttribute="bottom" secondItem="ex1-aV-crB" secondAttribute="bottom" constant="8.5" id="JOt-lt-cLw"/>
+                                                <constraint firstItem="ex1-aV-crB" firstAttribute="leading" secondItem="A5M-Mn-Zlm" secondAttribute="leading" constant="16" id="WQL-hg-AW3"/>
+                                                <constraint firstItem="ex1-aV-crB" firstAttribute="top" secondItem="A5M-Mn-Zlm" secondAttribute="top" constant="7" id="dSt-XD-16Q"/>
+                                                <constraint firstItem="gfT-XU-YpV" firstAttribute="top" secondItem="A5M-Mn-Zlm" secondAttribute="top" constant="6" id="loM-Q3-KBS"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="44" id="vtA-ut-rPh">
+                                        <rect key="frame" x="0.0" y="400.5" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="vtA-ut-rPh" id="r6u-fB-gXa">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Clear History" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ULx-ky-BKG">
+                                                    <rect key="frame" x="16" y="7" width="119" height="28"/>
+                                                    <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="20"/>
+                                                    <color key="textColor" red="1" green="0.2784313725" blue="0.25098039220000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="bottom" secondItem="ULx-ky-BKG" secondAttribute="bottom" constant="8.5" id="5Em-Of-gdJ"/>
+                                                <constraint firstItem="ULx-ky-BKG" firstAttribute="top" secondItem="r6u-fB-gXa" secondAttribute="top" constant="7" id="KJO-wy-y8n"/>
+                                                <constraint firstItem="ULx-ky-BKG" firstAttribute="leading" secondItem="r6u-fB-gXa" secondAttribute="leading" constant="16" id="iRr-QR-YPE"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                        </sections>
+                        <connections>
+                            <outlet property="dataSource" destination="DlC-ru-Odv" id="fXE-gd-8Vs"/>
+                            <outlet property="delegate" destination="DlC-ru-Odv" id="bx4-ZJ-h2x"/>
+                        </connections>
+                    </tableView>
+                    <connections>
+                        <outlet property="clearHistoryText" destination="ULx-ky-BKG" id="gmx-cy-hIm"/>
+                        <outlet property="heading" destination="LYS-2T-J1M" id="feT-yu-5o4"/>
+                        <outlet property="history" destination="gfT-XU-YpV" id="c8Y-An-5yD"/>
+                        <outlet property="historyText" destination="ex1-aV-crB" id="MaR-vd-Kd9"/>
+                        <outlet property="langText" destination="46v-3o-0iB" id="dcO-cZ-G0T"/>
+                        <outlet property="localeLabel" destination="Jvy-O8-qfA" id="tke-or-oT5"/>
+                        <outlet property="shake" destination="0Ix-4n-mFf" id="Wec-Qi-dqR"/>
+                        <outlet property="shakeText" destination="goq-7X-0Ta" id="Ukc-sp-2lg"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="uNf-z9-Ei2" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="608.79999999999995" y="2247.5262368815593"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="4JK-yS-Qfs">
@@ -1900,6 +2017,7 @@ History works across devices.</string>
                     </view>
                     <connections>
                         <outlet property="cv" destination="ANY-UX-J48" id="UD9-dd-z4j"/>
+                        <outlet property="heading" destination="omD-oW-WET" id="CLW-bH-xa4"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iey-uJ-u0b" userLabel="First Responder" sceneMemberID="firstResponder"/>

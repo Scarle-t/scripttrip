@@ -23,6 +23,7 @@
 "regPwdMsg" = "密碼不能為空";
 "regVerPwdMsg" = "請確認您的密碼";
 "regEmailRegexMsg" = "這個不像電郵地址喔";
+"historyError" = "未啟用歷程紀錄";
 
 "email" = "電郵地址";
 "password" = "密碼";
@@ -30,6 +31,7 @@
 "verifyPassword" = "確認密碼";
 "firstName" = "名";
 "lastName" = "姓";
+"name" = "姓名";
 
 "Yes" = "是";
 "OK" = "好";
@@ -39,12 +41,31 @@
 "Fail" = "失敗";
 "Logout" = "登出";
 "Confirm" = "確定";
+"Back" = "返回";
+"forgotPassword" = "忘記密碼？";
+"Login" = "登入";
+"Register" = "注冊";
+"Next" = "下一步";
+"Clear" = "清除";
+"Filter" = "過濾";
+"clearHistory" = "清除紀錄";
+"shakeForTrips" = "搖晃以抽選旅程";
+
+"introText" = "ScriptTrip 為您帶來嶄新的外出體驗\n\n加入我們";
+"getStarted" = "現在開始";
+"nameIntro" = "請自我介紹";
+"interestIntro" = "我們想了解您的興趣\n請從下列選出3個喜好";
+"hereYouGo" = "好";
+"letsgo" = "起行！";
+"welcomeText" = "大功告成！\n歡迎來到 Script Trip";
+"secureText" = "最後一步！\n請保護您的帳號";
 
 "hideKB" = "隱藏鍵盤";
 
 "bookmarks" = "書籤";
 "history" = "紀錄";
 "accountSettings" = "帳戶設定";
+"deviceSettings" = "裝置設定";
 "about" = "關於";
 "category" = "類別";
 "explore" = "探索";
@@ -53,6 +74,7 @@
 "searchLocation" = "地點";
 "searchPH" = "在找。。。";
 "languages" = "語言";
+"Settings" = "設定";
 
 "removeBKMsg" = "您是否確定要刪除此書籤？";
 "historyClearMsg" = "您是否確定要清除紀錄？這項操作不能復原！";

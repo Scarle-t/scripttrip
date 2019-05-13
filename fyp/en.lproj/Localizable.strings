@@ -23,6 +23,7 @@
 "regPwdMsg" = "Password is missing!";
 "regVerPwdMsg" = "Please verify your password!";
 "regEmailRegexMsg" = "This is not an Email!";
+"historyError" = "History is not enabled!";
 
 "regError" = "Oops.";
 
@@ -32,6 +33,7 @@
 "verifyPassword" = "Verify Password";
 "firstName" = "First Name";
 "lastName" = "Last Name";
+"name" = "Name";
 
 "Yes" = "Yes";
 "OK" = "OK";
@@ -41,12 +43,31 @@
 "Fail" = "Fail";
 "Logout" = "Logout";
 "Confirm" = "Confirm";
+"Back" = "Back";
+"forgotPassword" = "Forgot Password?";
+"Login" = "Login";
+"Register" = "Register";
+"Next" = "Next";
+"Clear" = "Clear";
+"Filter" = "Filter";
+"clearHistory" = "Clear History";
+"shakeForTrips" = "Shake for Trips";
+
+"introText" = "ScriptTrip provides an entire new way to experience outgoing\n\nJoin us now";
+"getStarted" = "Get Started";
+"nameIntro" = "Please tell us about yourself";
+"interestIntro" = "We want to understand you more\nPlease choose 3 from below";
+"hereYouGo" = "Here you go";
+"letsgo" = "Let's Go!";
+"welcomeText" = "You're all set!\nWelcome to Script Trip";
+"secureText" = "One more step!\nPlease secure your account";
 
 "hideKB" = "Hide Keyboard";
 
 "bookmarks" = "Bookmarks";
 "history" = "History";
 "accountSettings" = "Account Settings";
+"deviceSettings" = "Device Settings";
 "about" = "About";
 "category" = "Category";
 "explore" = "Explore";
@@ -55,6 +76,7 @@
 "searchLocation" = "Location";
 "searchPH" = "Search for...";
 "languages" = "Languages";
+"Settings" = "Settings";
 
 "removeBKMsg" = "Are you sure you want to remove this bookmark?";
 "historyClearMsg" = "Are you sure you want to clear your history? This cannot be undo!";

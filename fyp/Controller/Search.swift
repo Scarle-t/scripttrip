@@ -106,6 +106,9 @@ class Search: UIViewController, UITableViewDelegate, UITableViewDataSource, UISe
     @objc func userMenu(_ sender: UIButton){
         session.showUserMenu()
     }
+    @objc func dismissKb(){
+        view.endEditing(true)
+    }
     
     //FUNC
     func search(_ sender: UISearchBar){
@@ -147,7 +150,17 @@ class Search: UIViewController, UITableViewDelegate, UITableViewDataSource, UISe
     }
     
     func layout(){
-        
+        let toolBar = UIToolbar()
+        let spaceButton = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        let cancelButton = UIBarButtonItem(title: Localized.hideKB.rawValue.localized(), style: .plain, target: self, action: #selector(dismissKb))
+        toolBar.barStyle = .default
+        toolBar.tintColor = "42C89D".uiColor
+        toolBar.isTranslucent = false
+        toolBar.sizeToFit()
+        toolBar.setItems([spaceButton, cancelButton], animated: false)
+        toolBar.isUserInteractionEnabled = true
+        cancelButton.setTitleTextAttributes([NSAttributedString.Key.font : UIFont(name: "AvenirNext-DemiBold", size: 17)!], for: .normal)
+        searchBar.inputAccessoryView = toolBar
     }
     
     func setup(){

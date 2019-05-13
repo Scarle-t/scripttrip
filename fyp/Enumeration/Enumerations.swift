@@ -55,6 +55,27 @@ enum Localized: String{
     case historyClearMsg
     case languages
     case Confirm
+    case deviceSettings
+    case Back
+    case forgotPassword
+    case Login
+    case Register
+    case introText
+    case getStarted
+    case nameIntro
+    case interestIntro
+    case Next
+    case hereYouGo
+    case letsgo
+    case welcomeText
+    case Filter
+    case Clear
+    case secureText
+    case name
+    case Settings
+    case clearHistory
+    case shakeForTrips
+    case historyError
 }
 
 enum locale: String, CaseIterable{
