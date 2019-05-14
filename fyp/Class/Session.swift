@@ -355,6 +355,10 @@ class Session: NSObject, UITableViewDelegate, UITableViewDataSource, UICollectio
         settings[3] = Localized.accountSettings.rawValue.localized()
         settings[4] = Localized.deviceSettings.rawValue.localized()
         settings[5] = Localized.about.rawValue.localized()
+        reloadUserTable()
+    }
+    func reloadUserTable(){
+        settings[0] = usr.Fname + " " + usr.Lname
         userTable.reloadData()
     }
     

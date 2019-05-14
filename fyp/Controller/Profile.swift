@@ -8,11 +8,12 @@
 
 import UIKit
 
-class Profile: UITableViewController {
+class Profile: UITableViewController, NetworkDelegate {
     
     //VARIABLE
     let session = Session.shared
     let userDefault = UserDefaults.standard
+    let network = Network()
     
     //IBOUTLET
     @IBOutlet weak var userIcon: UIImageView!
@@ -37,10 +38,8 @@ class Profile: UITableViewController {
             sender.image = #imageLiteral(resourceName: "small_tick_pdf")
             fname.layer.shadowOpacity = 0
             lname.layer.shadowOpacity = 0
-            email.layer.shadowOpacity = 0
             fname.isUserInteractionEnabled = false
             lname.isUserInteractionEnabled = false
-            email.isUserInteractionEnabled = false
             return
         }
         
@@ -51,10 +50,8 @@ class Profile: UITableViewController {
         if sender.tag == 0{
             fname.layer.shadowOpacity = 1
             lname.layer.shadowOpacity = 1
-            email.layer.shadowOpacity = 1
             fname.isUserInteractionEnabled = true
             lname.isUserInteractionEnabled = true
-            email.isUserInteractionEnabled = true
             sender.tag = -1
             left.tag = -1
             sender.image = #imageLiteral(resourceName: "small_tick_pdf")
@@ -69,10 +66,15 @@ class Profile: UITableViewController {
             left.image = #imageLiteral(resourceName: "small_tick_pdf")
             fname.layer.shadowOpacity = 0
             lname.layer.shadowOpacity = 0
-            email.layer.shadowOpacity = 0
             fname.isUserInteractionEnabled = false
             lname.isUserInteractionEnabled = false
-            email.isUserInteractionEnabled = false
+            
+            var query = "user=\(session.usr.UID)&fname=\(fname.text!)&lname=\(lname.text!)"
+            
+            query = query.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
+            
+            network.send(url: "https://scripttrip.scarletsc.net/iOS/profile.php?\(query)", method: "UPDATE", query: nil)
+            SVProgressHUD.show()
             return
         }
         
@@ -92,6 +94,32 @@ class Profile: UITableViewController {
         }
     }
     
+        //NETWORK
+    func ResponseHandle(data: Data) {
+        guard let result = Session.parser.parse(data) else { SVProgressHUD.showError(withStatus: nil)
+            return
+        }
+        
+        for item in result{
+            if (item["Result"] as! String) == "OK"{
+                SVProgressHUD.showSuccess(withStatus: nil)
+                DispatchQueue.main.async {
+                    self.session.usr.Fname = self.fname.text!
+                    self.session.usr.Lname = self.lname.text!
+                    self.session.reloadUserTable()
+                }
+            }else{
+                SVProgressHUD.showError(withStatus: item["Reason"] as? String)
+                DispatchQueue.main.async {
+                    self.fname.text = self.session.usr.Fname
+                    self.lname.text = self.session.usr.Lname
+                }
+            }
+        }
+        SVProgressHUD.dismiss(withDelay: 1.5)
+        
+    }
+    
     //OBJC FUNC
     @objc func dismissKb(){
         view.endEditing(true)
@@ -99,6 +127,7 @@ class Profile: UITableViewController {
     
     //FUNC
     func delegate(){
+        network.delegate = self
     }
     
     func layout(){
@@ -115,11 +144,9 @@ class Profile: UITableViewController {
         
         fname.inputAccessoryView = toolBar
         lname.inputAccessoryView = toolBar
-        email.inputAccessoryView = toolBar
         
         fname.setBottomBorder()
         lname.setBottomBorder()
-        email.setBottomBorder()
         
         fname.layer.shadowOpacity = 0
         lname.layer.shadowOpacity = 0

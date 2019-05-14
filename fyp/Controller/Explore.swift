@@ -89,7 +89,7 @@ class Explore: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, U
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell")
         
-        cell?.textLabel?.text = session.getCategories()[indexPath.row].C_Name
+        cell?.textLabel?.text = "\(cateEnum.init(rawValue: session.getCategories()[indexPath.row].CID)!)".localized()
         
         let img = UIImageView(image: session.cate_icons[session.getCategories()[indexPath.row].CID - 1])
         
