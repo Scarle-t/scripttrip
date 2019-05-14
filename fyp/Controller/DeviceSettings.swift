@@ -75,6 +75,27 @@ class DeviceSettings: UITableViewController, UIPickerViewDelegate, UIPickerViewD
             self.present(alert, animated: true, completion: nil)
         }
     }
+    override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        let footer = UILabel()
+        
+        footer.font = UIFont(name: "AvenirNext-Medium", size: 12)
+        footer.textColor = .lightGray
+        footer.textAlignment = .center
+        footer.numberOfLines = 0
+        
+        switch section{
+        case 0:
+            footer.text = Localized.langFooter.rawValue.localized()
+        case 1:
+            footer.text = Localized.shakeFooter.rawValue.localized()
+        case 2:
+            footer.text = Localized.historyFooter.rawValue.localized()
+        default:
+            return UIView()
+        }
+        
+        return footer
+    }
     
         //PICKER VIEW
     func numberOfComponents(in pickerView: UIPickerView) -> Int {

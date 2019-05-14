@@ -30,7 +30,7 @@ class CategoryView: UIViewController, UITableViewDataSource, UITableViewDelegate
         
         cell.alpha = 0
         
-        cell.catName.text = session.getCategories()[indexPath.row].C_Name
+        cell.catName.text = "\(cateEnum.init(rawValue: session.getCategories()[indexPath.row].CID)!)".localized()
         cell.catImg.image = session.cate_icons[session.getCategories()[indexPath.row].CID -  1]
         
         UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseIn, animations: {

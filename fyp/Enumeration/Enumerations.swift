@@ -76,6 +76,9 @@ enum Localized: String{
     case clearHistory
     case shakeForTrips
     case historyError
+    case langFooter
+    case shakeFooter
+    case historyFooter
 }
 
 enum locale: String, CaseIterable{
@@ -83,4 +86,8 @@ enum locale: String, CaseIterable{
     case en = "en"
     case zhHK = "zh-HK"
 //    case ja = "ja"
+}
+
+enum cateEnum: Int{
+    case fun = 1, dining, relax, sightseeing, artsAndCulture, gathering, hiking, workout, handicraft, hobby, landscape
 }

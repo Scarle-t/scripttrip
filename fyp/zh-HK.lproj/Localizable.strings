@@ -23,7 +23,12 @@
 "regPwdMsg" = "密碼不能為空";
 "regVerPwdMsg" = "請確認您的密碼";
 "regEmailRegexMsg" = "這個不像電郵地址喔";
+"regError" = "糟糕了！";
+
 "historyError" = "未啟用歷程紀錄";
+"langFooter" = "更改語言後建議重啟程式";
+"shakeFooter" = "覺得幸運嗎？";
+"historyFooter" = "開啟歷程紀錄能讓您更容易尋找看過的旅程。\n歷程紀錄與您的帳戶同步";
 
 "email" = "電郵地址";
 "password" = "密碼";
@@ -78,3 +83,15 @@
 
 "removeBKMsg" = "您是否確定要刪除此書籤？";
 "historyClearMsg" = "您是否確定要清除紀錄？這項操作不能復原！";
+
+"fun" = "玩樂";
+"dining" = "飲食";
+"relax" = "享受";
+"sightseeing" = "觀光";
+"artsAndCulture" = "藝術與文化";
+"gathering" = "聚首一堂";
+"hiking" = "遠足";
+"workout" = "鍛煉";
+"handicraft" = "手工藝";
+"hobby" = "愛好";
+"landscape" = "山水風景";

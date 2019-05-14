@@ -76,7 +76,7 @@ class CategoryTrip: UIViewController, UICollectionViewDelegate, UICollectionView
             
             header.frame = CGRect(x: 0 , y: 0, width: collectionView.frame.width, height: 62)
             
-            header.title.text = selectedCategory?.C_Name
+            header.title.text = "\(cateEnum.init(rawValue: selectedCategory!.CID)!)".localized()
             
             return header
             

@@ -23,9 +23,13 @@
 "regPwdMsg" = "Password is missing!";
 "regVerPwdMsg" = "Please verify your password!";
 "regEmailRegexMsg" = "This is not an Email!";
+"regError" = "Oops.";
+
 "historyError" = "History is not enabled!";
 
-"regError" = "Oops.";
+"langFooter" = "Restart app is recommended for language change.";
+"shakeFooter" = "Are you feeling lucky?";
+"historyFooter" = "Enabling History allows you to find trips you have browsed before.\nHistory syncs with your account.";
 
 "email" = "Email";
 "password" = "Password";
@@ -80,3 +84,15 @@
 
 "removeBKMsg" = "Are you sure you want to remove this bookmark?";
 "historyClearMsg" = "Are you sure you want to clear your history? This cannot be undo!";
+
+"fun" = "Fun";
+"dining" = "Dining";
+"relax" = "Relax";
+"sightseeing" = "Sightseeing";
+"artsAndCulture" = "Arts and Culture";
+"gathering" = "Gathering";
+"hiking" = "Hiking";
+"workout" = "Workout";
+"handicraft" = "Handicraft";
+"hobby" = "Hobby";
+"landscape" = "Landscape";
