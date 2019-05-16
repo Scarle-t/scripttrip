@@ -98,7 +98,7 @@ class CategoryView: UIViewController, UITableViewDataSource, UITableViewDelegate
     }
     
     func setup(){
-        
+        network.send(url: "https://scripttrip.scarletsc.net/iOS/getCategory.php", method: "GET", query: nil)
     }
     
     
@@ -114,11 +114,6 @@ class CategoryView: UIViewController, UITableViewDataSource, UITableViewDelegate
         
         setup()
         
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        network.send(url: "https://scripttrip.scarletsc.net/iOS/getCategory.php", method: "GET", query: nil)
     }
 
 }

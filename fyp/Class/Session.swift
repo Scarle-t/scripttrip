@@ -158,6 +158,7 @@ class Session: NSObject, UITableViewDelegate, UITableViewDataSource, UICollectio
         switch indexPath.section{
         case 0:
             cell.textLabel?.text = settings[indexPath.row]
+            cell.textLabel?.textColor = .black
             if indexPath.row == 0{
                 cell.textLabel?.font = UIFont(name: "AvenirNext-Heavy", size: 27)
                 cell.textLabel?.textAlignment = .center
@@ -200,7 +201,7 @@ class Session: NSObject, UITableViewDelegate, UITableViewDataSource, UICollectio
                 loginButton.removeFromSuperview()
                 loginButton.alpha = 0
                 cell.textLabel?.text = Localized.Logout.rawValue.localized()
-                cell.textLabel?.font = UIFont(name: "AvenirNext-Regular", size: 17)
+                cell.textLabel?.font = UIFont(name: "AvenirNext-Medium", size: 17)
                 cell.textLabel?.textColor = "FF697B".uiColor
                 cell.textLabel?.textAlignment = .left
                 cell.backgroundColor = UIColor.clear

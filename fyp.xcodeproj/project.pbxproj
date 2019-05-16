@@ -34,6 +34,7 @@
 		A6856A2F2232C65F0036A677 /* Search.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6856A2E2232C65F0036A677 /* Search.swift */; };
 		A68BFAFF2265043100BAF061 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A68BFAFE2265043100BAF061 /* Extensions.swift */; };
 		A695797D223422F0008F79C4 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = A695797C223422F0008F79C4 /* Settings.swift */; };
+		A69B9BEC228D038400FCE27E /* otp_authentication.swift in Sources */ = {isa = PBXBuildFile; fileRef = A69B9BEB228D038400FCE27E /* otp_authentication.swift */; };
 		A6A502092275E6620003463F /* TripView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6A502082275E6620003463F /* TripView.swift */; };
 		A6A67CF9222FE9A700D82479 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6A67CF8222FE9A700D82479 /* AppDelegate.swift */; };
 		A6A67CFB222FE9A700D82479 /* mainScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6A67CFA222FE9A700D82479 /* mainScreen.swift */; };
@@ -94,6 +95,7 @@
 		A6856A2E2232C65F0036A677 /* Search.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Search.swift; sourceTree = "<group>"; };
 		A68BFAFE2265043100BAF061 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		A695797C223422F0008F79C4 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
+		A69B9BEB228D038400FCE27E /* otp_authentication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = otp_authentication.swift; sourceTree = "<group>"; };
 		A6A502082275E6620003463F /* TripView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripView.swift; sourceTree = "<group>"; };
 		A6A67CF5222FE9A600D82479 /* fyp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = fyp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A6A67CF8222FE9A700D82479 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -196,6 +198,7 @@
 				A695797C223422F0008F79C4 /* Settings.swift */,
 				A612D417226EC61F004BF88F /* tripDetail.swift */,
 				A61FFBD22289885500E00513 /* DeviceSettings.swift */,
+				A69B9BEB228D038400FCE27E /* otp_authentication.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -395,6 +398,7 @@
 				A6A67CFB222FE9A700D82479 /* mainScreen.swift in Sources */,
 				A6A502092275E6620003463F /* TripView.swift in Sources */,
 				A622590B2286C92100B72578 /* SVIndefiniteAnimatedView.m in Sources */,
+				A69B9BEC228D038400FCE27E /* otp_authentication.swift in Sources */,
 				A622590A2286C92100B72578 /* SVProgressHUD.m in Sources */,
 				A680EC402280B732006E116E /* Bookmarks.swift in Sources */,
 				A6216A332265E3C80073CE1F /* Session.swift in Sources */,

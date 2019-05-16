@@ -25,6 +25,8 @@
 "regEmailRegexMsg" = "This is not an Email!";
 "regError" = "Oops.";
 
+"otpTitle" = "2-Factor Authentication enabled\n\nPlease provide the 6-digit code";
+
 "historyError" = "History is not enabled!";
 
 "langFooter" = "Restart app is recommended for language change.";
@@ -56,6 +58,7 @@
 "Filter" = "Filter";
 "clearHistory" = "Clear History";
 "shakeForTrips" = "Shake for Trips";
+"Authenticate" = "Authenticate";
 
 "introText" = "ScriptTrip provides an entire new way to experience outgoing\n\nJoin us now";
 "getStarted" = "Get Started";

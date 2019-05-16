@@ -332,6 +332,9 @@ class mainScreen: UIViewController, UITextFieldDelegate, NetworkDelegate, FBSDKL
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
+        let otp_auth = storyboard?.instantiateViewController(withIdentifier: "otp_auth") as! otp_authentication
+        self.navigationController?.pushViewController(otp_auth, animated: true)
+        
         delegate()
         layout()
         setup()

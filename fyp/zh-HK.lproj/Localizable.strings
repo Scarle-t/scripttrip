@@ -25,7 +25,10 @@
 "regEmailRegexMsg" = "這個不像電郵地址喔";
 "regError" = "糟糕了！";
 
+"otpTitle" = "已啟用雙重認證\n\n請輸入六位數驗證碼";
+
 "historyError" = "未啟用歷程紀錄";
+
 "langFooter" = "更改語言後建議重啟程式";
 "shakeFooter" = "覺得幸運嗎？";
 "historyFooter" = "開啟歷程紀錄能讓您更容易尋找看過的旅程。\n歷程紀錄與您的帳戶同步";
@@ -55,6 +58,7 @@
 "Filter" = "過濾";
 "clearHistory" = "清除紀錄";
 "shakeForTrips" = "搖晃以抽選旅程";
+"Authenticate" = "驗證";
 
 "introText" = "ScriptTrip 為您帶來嶄新的外出體驗\n\n加入我們";
 "getStarted" = "現在開始";

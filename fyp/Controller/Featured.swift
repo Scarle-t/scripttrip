@@ -180,6 +180,12 @@ class Featured: UIViewController, UICollectionViewDataSource, UICollectionViewDe
             self.cv.refreshControl = self.mainRefresh
         }
         self.becomeFirstResponder()
+        state = "trip"
+        network.send(url: "https://scripttrip.scarletsc.net/iOS/getTrips.php", method: "GET", query: nil)
+        
+        DispatchQueue.main.async {
+            self.cv.reloadData()
+        }
     }
     
     //VIEW CONTROLLER
@@ -191,17 +197,6 @@ class Featured: UIViewController, UICollectionViewDataSource, UICollectionViewDe
         layout()
         setup()
 
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        state = "trip"
-        network.send(url: "https://scripttrip.scarletsc.net/iOS/getTrips.php", method: "GET", query: nil)
-        
-        DispatchQueue.main.async {
-            self.cv.reloadData()
-        }
-        
     }
     
     override var canBecomeFirstResponder: Bool{

@@ -79,6 +79,8 @@ enum Localized: String{
     case langFooter
     case shakeFooter
     case historyFooter
+    case otpTitle
+    case Authenticate
 }
 
 enum locale: String, CaseIterable{
@@ -90,4 +92,11 @@ enum locale: String, CaseIterable{
 
 enum cateEnum: Int{
     case fun = 1, dining, relax, sightseeing, artsAndCulture, gathering, hiking, workout, handicraft, hobby, landscape
+}
+
+enum color: String{
+    case darkGreen = "42C89D"
+    case lightGreen = "42E89D"
+    case red = "FF697B"
+    case blue = "D3F2FF"
 }

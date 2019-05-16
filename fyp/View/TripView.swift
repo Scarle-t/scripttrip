@@ -275,10 +275,10 @@ class TripView: NSObject, UICollectionViewDelegateFlowLayout, UICollectionViewDe
             }, completion: nil)
             view.layer.anchorPoint = CGPoint(x: window!.center.x, y: view.frame.maxY)
             UIView.animate(withDuration: 0.07, delay: 0.08, options: .curveLinear, animations: {
-                self.view.transform = CGAffineTransform(rotationAngle: -0.05)
+                self.view.transform = CGAffineTransform(rotationAngle: -0.03)
             }, completion: nil)
             UIView.animate(withDuration: 0.07, delay: 0.08, options: .curveLinear, animations: {
-                self.view.transform = CGAffineTransform(rotationAngle: 0.1)
+                self.view.transform = CGAffineTransform(rotationAngle: 0.06)
             }, completion: nil)
             UIView.animate(withDuration: 0.07, delay: 0.16, options: .curveLinear, animations: {
                 self.view.transform = originalTransform
