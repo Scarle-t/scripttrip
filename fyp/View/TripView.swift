@@ -138,6 +138,8 @@ class TripView: NSObject, UICollectionViewDelegateFlowLayout, UICollectionViewDe
     var view: UIView!
     var contents: UICollectionView!
     var addBookmark: UIButton!
+    var actionBtn: UIButton!
+    var shareBtn: UIButton!
     var heightForItem = [CGFloat]()
     var dimBg: UIView!
     
@@ -149,6 +151,8 @@ class TripView: NSObject, UICollectionViewDelegateFlowLayout, UICollectionViewDe
             self.window = UIApplication.shared.keyWindow
             self.view = UIView()
             self.addBookmark = UIButton()
+            self.actionBtn = UIButton()
+            self.shareBtn = UIButton()
             self.dimBg = UIView()
             self.contents = UICollectionView(frame: CGRect.zero, collectionViewLayout: StretchyHeaderLayout())
             self.contents.delegate = self
@@ -172,9 +176,23 @@ class TripView: NSObject, UICollectionViewDelegateFlowLayout, UICollectionViewDe
             
             self.addBookmark.setImage(#imageLiteral(resourceName: "plus"), for: .normal)
             self.addBookmark.backgroundColor = .init(white: 1, alpha: 0.9)
-            self.addBookmark.frame = CGRect(x: self.view.frame.maxX - 17 - 35, y: 17, width: 35, height: 35)
+            self.addBookmark.frame = CGRect(x: self.view.frame.maxX - 17 - 35, y: 17, width: 45, height: 45)
             self.addBookmark.layer.cornerRadius = 35 / 2
             self.addBookmark.addTarget(self, action: #selector(self.addBk(_:)), for: .touchUpInside)
+            self.addBookmark.alpha = 0
+            
+            self.actionBtn.setImage(#imageLiteral(resourceName: "action"), for: .normal)
+            self.actionBtn.backgroundColor = .init(white: 1, alpha: 0.9)
+            self.actionBtn.frame = CGRect(x: self.view.frame.maxX - 17 - 35, y: 17, width: 45, height: 45)
+            self.actionBtn.layer.cornerRadius = 35 / 2
+            self.actionBtn.addTarget(self, action: #selector(self.showAction(_:)), for: .touchUpInside)
+            
+            self.shareBtn.setImage(#imageLiteral(resourceName: "share"), for: .normal)
+            self.shareBtn.backgroundColor = .init(white: 1, alpha: 0.9)
+            self.shareBtn.frame = CGRect(x: self.view.frame.maxX - 17 - 35, y: 17, width: 45, height: 45)
+            self.shareBtn.layer.cornerRadius = 35 / 2
+            self.shareBtn.addTarget(self, action: #selector(self.share(_:)), for: .touchUpInside)
+            self.shareBtn.alpha = 0
             
             self.dimBg.frame = (self.window?.frame)!
             self.dimBg.backgroundColor = .black
@@ -184,7 +202,9 @@ class TripView: NSObject, UICollectionViewDelegateFlowLayout, UICollectionViewDe
             self.dimBg.addGestureRecognizer(tapDismiss)
             
             self.view.addSubview(self.contents)
+            self.view.addSubview(self.shareBtn)
             self.view.addSubview(self.addBookmark)
+            self.view.addSubview(self.actionBtn)
             
             self.contents.fillSuperview()
             
@@ -202,6 +222,52 @@ class TripView: NSObject, UICollectionViewDelegateFlowLayout, UICollectionViewDe
     }
     
     //ACTION
+    @objc func showAction(_ sender: UIButton){
+        
+        switch sender.tag{
+        case 0:
+            UIView.animate(withDuration: 0.15, delay: 0, options: .curveEaseOut, animations: {
+                self.addBookmark.alpha = 1
+                self.shareBtn.alpha = 1
+                
+                self.addBookmark.frame.origin.x -= 60
+                self.addBookmark.frame.origin.y += 10
+                
+                self.shareBtn.frame.origin.x -= 25
+                self.shareBtn.frame.origin.y += 60
+                
+                self.actionBtn.frame = CGRect(x: self.actionBtn.frame.minX, y: self.actionBtn.frame.minY, width: 35, height: 35)
+                self.actionBtn.frame.origin.y += 10
+                
+                self.actionBtn.setImage(#imageLiteral(resourceName: "cross"), for: .normal)
+                
+            }, completion: nil)
+            sender.tag = 1
+        case 1:
+            UIView.animate(withDuration: 0.15, delay: 0, options: .curveEaseOut, animations: {
+                
+                self.actionBtn.frame = CGRect(x: self.actionBtn.frame.minX, y: self.actionBtn.frame.minY, width: 45, height: 45)
+                self.actionBtn.frame.origin.y -= 10
+                
+                self.actionBtn.setImage(#imageLiteral(resourceName: "action"), for: .normal)
+                
+                self.addBookmark.frame.origin.x += 60
+                self.addBookmark.frame.origin.y -= 10
+                
+                self.shareBtn.frame.origin.x += 25
+                self.shareBtn.frame.origin.y -= 60
+                
+                self.addBookmark.alpha = 0
+                self.shareBtn.alpha = 0
+            }, completion: nil)
+            sender.tag = 0
+        default:
+            break
+        }
+        
+        
+        
+    }
     @objc func addBk(_ sender: UIButton){
         network.send(url: "https://scripttrip.scarletsc.net/iOS/addBookmark.php", method: "POST", query: "user=\(Session.user.UID)&trip=\(displayTrip!.TID)") { (data) in
             guard let result = Session.parser.parse(data!) else {return}
@@ -215,6 +281,20 @@ class TripView: NSObject, UICollectionViewDelegateFlowLayout, UICollectionViewDe
                 }
             }
         }
+    }
+    @objc func share(_ sender: UIButton){
+        let text = "Let's go together! - \(displayTrip!.T_Title)\nhttps://scripttrip.scarletsc.net"
+        
+        // set up activity view controller
+        let textToShare = [ text ]
+        let activityViewController = UIActivityViewController(activityItems: textToShare, applicationActivities: nil)
+        activityViewController.popoverPresentationController?.sourceView = self.view // so that iPads won't crash
+        
+        // exclude some activity types from the list (optional)
+        
+        
+        // present the view controller
+        UIApplication.shared.keyWindow?.rootViewController?.presentedViewController?.present(activityViewController, animated: true, completion: nil)
     }
     @objc func showImg(_ sender: UITapGestureRecognizer){
         let photo = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "imgZoom") as! Photo
@@ -309,5 +389,24 @@ class TripView: NSObject, UICollectionViewDelegateFlowLayout, UICollectionViewDe
             self.dimBg.alpha = 0
             self.isShown = false
         }, completion: nil)
+        
+        if actionBtn.tag == 1{
+                
+            actionBtn.frame = CGRect(x: self.actionBtn.frame.minX, y: self.actionBtn.frame.minY, width: 45, height: 45)
+            actionBtn.frame.origin.y -= 10
+            
+            actionBtn.setImage(#imageLiteral(resourceName: "action"), for: .normal)
+            
+            addBookmark.frame.origin.x += 60
+            addBookmark.frame.origin.y -= 10
+            
+            shareBtn.frame.origin.x += 25
+            shareBtn.frame.origin.y -= 60
+            
+            addBookmark.alpha = 0
+            shareBtn.alpha = 0
+            actionBtn.tag = 0
+        }
+        
     }
 }

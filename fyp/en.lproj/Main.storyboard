@@ -452,48 +452,31 @@ Join us now</string>
                                             <rect key="frame" x="0.0" y="0.0" width="150" height="150"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="JWg-Ky-65h">
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JWg-Ky-65h">
                                                     <rect key="frame" x="0.0" y="0.0" width="150" height="126"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hgc-dM-C3t">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hgc-dM-C3t">
                                                     <rect key="frame" x="0.0" y="126" width="150" height="24"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QRD-t9-swY">
+                                                <view alpha="0.0" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="QRD-t9-swY">
                                                     <rect key="frame" x="0.0" y="0.0" width="150" height="150"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <subviews>
-                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.84999999999999998" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="heart" translatesAutoresizingMaskIntoConstraints="NO" id="SyS-vu-xvv">
+                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.84999999999999998" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="heart" translatesAutoresizingMaskIntoConstraints="NO" id="SyS-vu-xvv">
                                                             <rect key="frame" x="112" y="8" width="30" height="30"/>
-                                                            <constraints>
-                                                                <constraint firstAttribute="width" constant="30" id="5xQ-qE-wXd"/>
-                                                                <constraint firstAttribute="height" constant="30" id="goD-u2-LrP"/>
-                                                            </constraints>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                         </imageView>
                                                     </subviews>
                                                     <color key="backgroundColor" white="1" alpha="0.5" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="trailing" secondItem="SyS-vu-xvv" secondAttribute="trailing" constant="8" id="k3P-Yg-iy8"/>
-                                                        <constraint firstItem="SyS-vu-xvv" firstAttribute="top" secondItem="QRD-t9-swY" secondAttribute="top" constant="8" id="y9K-wT-Eqv"/>
-                                                    </constraints>
                                                 </view>
                                             </subviews>
                                         </view>
                                         <color key="backgroundColor" white="1" alpha="0.69793450342465757" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <constraints>
-                                            <constraint firstAttribute="trailing" secondItem="QRD-t9-swY" secondAttribute="trailing" id="5lg-hZ-g1C"/>
-                                            <constraint firstItem="hgc-dM-C3t" firstAttribute="top" secondItem="JWg-Ky-65h" secondAttribute="bottom" id="6sr-cg-hwm"/>
-                                            <constraint firstItem="JWg-Ky-65h" firstAttribute="top" secondItem="eL3-0j-Vr0" secondAttribute="top" id="ET5-dY-73y"/>
-                                            <constraint firstItem="QRD-t9-swY" firstAttribute="top" secondItem="eL3-0j-Vr0" secondAttribute="top" id="Ep2-s6-Cs5"/>
-                                            <constraint firstItem="QRD-t9-swY" firstAttribute="leading" secondItem="eL3-0j-Vr0" secondAttribute="leading" id="Wwp-OL-hKZ"/>
-                                            <constraint firstAttribute="bottom" secondItem="hgc-dM-C3t" secondAttribute="bottom" id="bbt-K2-oT2"/>
-                                            <constraint firstAttribute="trailing" secondItem="hgc-dM-C3t" secondAttribute="trailing" id="bgE-3T-8fT"/>
-                                            <constraint firstItem="JWg-Ky-65h" firstAttribute="leading" secondItem="eL3-0j-Vr0" secondAttribute="leading" id="jhq-0B-dOH"/>
-                                            <constraint firstItem="hgc-dM-C3t" firstAttribute="leading" secondItem="eL3-0j-Vr0" secondAttribute="leading" id="rUq-ZX-AT6"/>
-                                            <constraint firstAttribute="trailing" secondItem="JWg-Ky-65h" secondAttribute="trailing" id="sZ7-3u-8aK"/>
-                                            <constraint firstAttribute="bottom" secondItem="QRD-t9-swY" secondAttribute="bottom" id="yDt-LL-ZRD"/>
-                                        </constraints>
                                         <connections>
                                             <outlet property="catImg" destination="JWg-Ky-65h" id="mYK-1J-KVQ"/>
                                             <outlet property="catName" destination="hgc-dM-C3t" id="Ba8-e1-BQI"/>

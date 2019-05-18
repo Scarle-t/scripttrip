@@ -144,13 +144,20 @@ class mainScreen: UIViewController, UITextFieldDelegate, NetworkDelegate, FBSDKL
             for item in result{
                 if (item["Result"] as! String) == "OK"{
                     session.parseUser([item["Reason"] as! NSDictionary])
-                    let vct = storyboard?.instantiateViewController(withIdentifier: "vct") as! UITabBarController
-                    if whiteView.alpha == 1{
-                        self.present(vct, animated: false, completion: {
-                            self.whiteView.alpha = 0
-                        })
+                    
+                    if !userDefault.bool(forKey: "isLoggedIn"){
+                        networkState = "otp"
+                        network.send(url: "https://scripttrip.scarletsc.net/iOS/otp.php?mode=check&user=\(session.usr.UID)", method: "POST", query: nil)
                     }else{
-                        self.present(vct, animated: false, completion: backFunc)
+                        userDefault.set(true, forKey: "isLoggedIn")
+                        let vct = storyboard?.instantiateViewController(withIdentifier: "vct") as! UITabBarController
+                        if whiteView.alpha == 1{
+                            self.present(vct, animated: false, completion: {
+                                self.whiteView.alpha = 0
+                            })
+                        }else{
+                            self.present(vct, animated: false, completion: backFunc)
+                        }
                     }
                     
                 }else{
@@ -170,6 +177,25 @@ class mainScreen: UIViewController, UITextFieldDelegate, NetworkDelegate, FBSDKL
                     let alert = UIAlertController(title: Localized.resetFail.rawValue.localized(), message: "\(item["Reason"]!)", preferredStyle: .alert)
                     alert.addAction(UIAlertAction(title: Localized.OK.rawValue.localized(), style: .cancel, handler: nil))
                     self.present(alert, animated: true, completion: nil)
+                }
+            }
+        }else if networkState == "otp"{
+            SVProgressHUD.dismiss()
+            for item in result{
+                if (item["Result"] as! String) == "Yes"{
+                    DispatchQueue.main.async {
+                        let otp_auth = self.storyboard?.instantiateViewController(withIdentifier: "otp_auth") as! otp_authentication
+                        self.navigationController?.pushViewController(otp_auth, animated: true)
+                    }
+                }else{
+                    let vct = storyboard?.instantiateViewController(withIdentifier: "vct") as! UITabBarController
+                    if whiteView.alpha == 1{
+                        self.present(vct, animated: false, completion: {
+                            self.whiteView.alpha = 0
+                        })
+                    }else{
+                        self.present(vct, animated: false, completion: backFunc)
+                    }
                 }
             }
         }
@@ -294,9 +320,13 @@ class mainScreen: UIViewController, UITextFieldDelegate, NetworkDelegate, FBSDKL
     }
     
     func setup(){
+        SVProgressHUD.setHapticsEnabled(true)
+        SVProgressHUD.setMinimumSize(CGSize(width: 175, height: 175))
+        SVProgressHUD.setFont(UIFont(name: "AvenirNext-Medium", size: 20)!)
         if userDefault.bool(forKey: "isLoggedIn"){
             let uuid = userDefault.value(forKey: "uuid") as! String
             let sessID = userDefault.value(forKey: "sessid") as! String
+            SVProgressHUD.show()
             networkState = "login"
             network.send(url: "https://scripttrip.scarletsc.net/iOS/login.php", method: "POST", query: "uuid=\(uuid.sha1())&sessID=\(sessID.sha1())")
         }else{
@@ -318,22 +348,12 @@ class mainScreen: UIViewController, UITextFieldDelegate, NetworkDelegate, FBSDKL
         loginButton.alpha = 0
         
         view.addSubview(loginButton)
-        
-        if FBSDKAccessToken.current() != nil{
-            handleFbLogin()
-        }
-        SVProgressHUD.setHapticsEnabled(true)
-        SVProgressHUD.setMinimumSize(CGSize(width: 175, height: 175))
-        SVProgressHUD.setFont(UIFont(name: "AvenirNext-Medium", size: 20)!)
     }
     
     //VIEW CONTROLLER
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        
-        let otp_auth = storyboard?.instantiateViewController(withIdentifier: "otp_auth") as! otp_authentication
-        self.navigationController?.pushViewController(otp_auth, animated: true)
         
         delegate()
         layout()

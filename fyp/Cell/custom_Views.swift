@@ -16,6 +16,7 @@ class categoryCell: UITableViewCell {
     
     @IBOutlet weak var catImg: UIImageView!
     @IBOutlet weak var catName: UILabel!
+    @IBOutlet weak var catGrad: UIView!
     
 }
 

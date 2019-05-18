@@ -65,7 +65,6 @@ class Session: NSObject, UITableViewDelegate, UITableViewDataSource, UICollectio
             
             userDefault.set(uuid, forKey: "uuid")
             userDefault.set(sessID, forKey: "sessid")
-            userDefault.set(true, forKey: "isLoggedIn")
             
             Network().send(url: "https://scripttrip.scarletsc.net/iOS/session.php", method: "POST", query: "user=\(usr.UID)&uuid=\(uuid!.sha1())&sessID=\(sessID.sha1())")
             
@@ -321,7 +320,7 @@ class Session: NSObject, UITableViewDelegate, UITableViewDataSource, UICollectio
         return .init(width: userView.frame.width, height: userView.frame.height - userView.frame.width)
     }
     @objc func closeMenu(){
-        UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut, animations: {
+        UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseOut, animations: {
             self.dimView.alpha = 0
             self.userView.frame.origin.x -= self.userView.frame.width
         }, completion: nil)
@@ -345,7 +344,7 @@ class Session: NSObject, UITableViewDelegate, UITableViewDataSource, UICollectio
             self.mainCollectionView.reloadData()
             self.userTable.reloadData()
         }
-        UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseIn, animations: {
+        UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseOut, animations: {
             self.userView.frame.origin.x = 0
             self.dimView.alpha = 0.3
         }, completion: nil)
@@ -364,7 +363,7 @@ class Session: NSObject, UITableViewDelegate, UITableViewDataSource, UICollectio
     }
     
     //CATEGORY
-    let cate_icons: [UIImage] = [#imageLiteral(resourceName: "fun.pdf"), #imageLiteral(resourceName: "dining.pdf"), #imageLiteral(resourceName: "relax.pdf"), UIImage(), #imageLiteral(resourceName: "art_culture.pdf"), #imageLiteral(resourceName: "gathering.pdf"), #imageLiteral(resourceName: "hiking.pdf"), #imageLiteral(resourceName: "workout.pdf"), #imageLiteral(resourceName: "handicraft.pdf"), UIImage(), #imageLiteral(resourceName: "landscape.pdf")]
+    let cate_icons: [UIImage] = [#imageLiteral(resourceName: "fun.pdf"), #imageLiteral(resourceName: "dining.pdf"), #imageLiteral(resourceName: "relax.pdf"), #imageLiteral(resourceName: "Sightseeing.pdf"), #imageLiteral(resourceName: "art_culture.pdf"), #imageLiteral(resourceName: "gathering.pdf"), #imageLiteral(resourceName: "hiking.pdf"), #imageLiteral(resourceName: "workout.pdf"), #imageLiteral(resourceName: "handicraft.pdf"), #imageLiteral(resourceName: "Hobby.pdf"), #imageLiteral(resourceName: "landscape.pdf")]
     fileprivate var categories = [Category]()
     func getCategories()->[Category]{
         return categories

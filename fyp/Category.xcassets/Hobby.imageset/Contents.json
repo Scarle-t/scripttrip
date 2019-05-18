@@ -2,17 +2,17 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "Workout@1x.png",
+      "filename" : "Hobby@1x.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "Workout@2x.png",
+      "filename" : "Hobby@2x.png",
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
-      "filename" : "Workout@3x.png",
+      "filename" : "Hobby@3x-1.png",
       "scale" : "3x"
     }
   ],

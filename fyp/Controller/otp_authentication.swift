@@ -11,6 +11,7 @@ import UIKit
 class otp_authentication: UIViewController, UITextFieldDelegate, NetworkDelegate{
     //VARIABLE
     let network = Network()
+    let session = Session.shared
     
     //IBOUTLET
     @IBOutlet weak var heading: UILabel!
@@ -35,8 +36,8 @@ class otp_authentication: UIViewController, UITextFieldDelegate, NetworkDelegate
             }
             c += field.text!
         }
-        SVProgressHUD.showInfo(withStatus: c)
-        SVProgressHUD.dismiss(withDelay: 1.5)
+        SVProgressHUD.show()
+        network.send(url: "https://scripttrip.scarletsc.net/iOS/otp.php?mode=validate&user=\(Session.shared.usr.UID)&otp=\(c)", method: "POST", query: nil)
     }
     
     //DELEGATION
@@ -52,18 +53,25 @@ class otp_authentication: UIViewController, UITextFieldDelegate, NetworkDelegate
         }
         return true
     }
-    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
-        for field in code{
-            field.layer.shadowOpacity = 0
-        }
-        textField.layer.shadowOpacity = 1
-        
-        return true
-    }
     
         //NETWORK
     func ResponseHandle(data: Data) {
-        return
+        guard let result = Session.parser.parse(data) else {return}
+        
+        for item in result{
+            if (item["Result"] as! String) == "OK"{
+                UserDefaults.standard.set(true, forKey: "isLoggedIn")
+                
+                DispatchQueue.main.async {
+                    let vct = self.storyboard?.instantiateViewController(withIdentifier: "vct") as! UITabBarController
+                    self.present(vct, animated: false, completion: self.backFunc)
+                }
+            }else{
+                SVProgressHUD.showError(withStatus: Localized.failLoginMsg.rawValue.localized())
+                SVProgressHUD.dismiss(withDelay: 1.5)
+            }
+        }
+        
     }
     
     //OBJC FUNC
@@ -72,6 +80,10 @@ class otp_authentication: UIViewController, UITextFieldDelegate, NetworkDelegate
     }
     
     //FUNC
+    func backFunc(){
+        self.navigationController?.popViewController(animated: false)
+    }
+    
     func delegate(){
         let toolBar = UIToolbar()
         let spaceButton = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
@@ -87,7 +99,6 @@ class otp_authentication: UIViewController, UITextFieldDelegate, NetworkDelegate
             field.delegate = self
             field.inputAccessoryView = toolBar
             field.setBottomBorder(strokeColor: UIColor.black.cgColor, backgroundColor: color.blue.rawValue.uiColor.cgColor)
-            field.layer.shadowOpacity = 0
         }
         network.delegate = self
     }

@@ -33,6 +33,13 @@ class CategoryView: UIViewController, UITableViewDataSource, UITableViewDelegate
         cell.catName.text = "\(cateEnum.init(rawValue: session.getCategories()[indexPath.row].CID)!)".localized()
         cell.catImg.image = session.cate_icons[session.getCategories()[indexPath.row].CID -  1]
         
+//        let grad = CAGradientLayer()
+//        grad.colors = [color.lightGreen.rawValue.uiColor.cgColor, color.blue.rawValue.uiColor.cgColor]
+//        grad.startPoint = CGPoint(x: 0, y: 0)
+//        grad.endPoint = CGPoint(x: 1, y: 1)
+//        
+//        grad.frame = cell.catImg.bounds
+        
         UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseIn, animations: {
             cell.alpha = 1
         }, completion: nil)
