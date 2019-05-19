@@ -7,7 +7,6 @@
 	<key>com.apple.developer.associated-domains</key>
 	<array>
 		<string>webcredentials:scripttrip.scarletsc.net</string>
-		<string>applinks://scripttrip.scarletsc.net</string>
 	</array>
 </dict>
 </plist>
