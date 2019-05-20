@@ -51,7 +51,7 @@ class TripView: NSObject, UICollectionViewDelegateFlowLayout, UICollectionViewDe
             cell.img.isUserInteractionEnabled = true
             cell.img.addGestureRecognizer(imgTap)
             
-            cell.content.frame = CGRect(x: 0, y: cell.img.frame.maxY, width: cell.contentView.frame.width, height: cell.contentView.frame.height - cell.img.frame.height)
+            cell.content.frame = CGRect(x: 0, y: cell.img.frame.maxY, width: cell.contentView.frame.width, height: heightForItem[indexPath.row - 1])
             cell.content.font = UIFont(name: "AnevirNext-Regular", size: 18)
             cell.content.numberOfLines = 0
             cell.content.text = displayTrip?.Items[indexPath.row - 1].I_Content
@@ -157,6 +157,10 @@ class TripView: NSObject, UICollectionViewDelegateFlowLayout, UICollectionViewDe
             self.contents = UICollectionView(frame: CGRect.zero, collectionViewLayout: StretchyHeaderLayout())
             self.contents.delegate = self
             self.contents.dataSource = self
+            if let layout = self.contents.collectionViewLayout as? StretchyHeaderLayout {
+                layout.minimumLineSpacing = 50
+                self.contents.collectionViewLayout = layout
+            }
         
             self.displayTrip = nil
             self.contents.register(mainContent.self, forCellWithReuseIdentifier: "mainContent")
@@ -300,9 +304,9 @@ class TripView: NSObject, UICollectionViewDelegateFlowLayout, UICollectionViewDe
     }
     
     func calculateTextHeight(){
+        heightForItem.removeAll()
         for item in displayTrip!.Items{
-            let height = Float(item.I_Content.count / 16)
-            heightForItem.append(CGFloat(floor(height < 1 ? 1 : height) * 20))
+            heightForItem.append(item.I_Content.calculateHeight(width: contents.frame.width, font: UIFont(name: "AvenirNext-Regular", size: 18)!))
         }
     }
     
