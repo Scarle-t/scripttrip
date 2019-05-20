@@ -12,6 +12,7 @@ class Session: NSObject, UITableViewDelegate, UITableViewDataSource, UICollectio
     
     static let shared = Session()
     static let parser = JSONParser()
+    static var imgCache = NSCache<AnyObject, UIImage>()
     
     //REGISTER INFO
     var regFname = String()
@@ -253,6 +254,7 @@ class Session: NSObject, UITableViewDelegate, UITableViewDataSource, UICollectio
                 userView.removeFromSuperview()
                 dimView.removeFromSuperview()
                 userDefault.set(false, forKey: "isLoggedIn")
+                userDefault.set(false, forKey: "reduceMotion")
                 UIApplication.shared.keyWindow?.rootViewController?.dismiss(animated: false, completion: nil)
                 return
             }
@@ -337,6 +339,9 @@ class Session: NSObject, UITableViewDelegate, UITableViewDataSource, UICollectio
         dimView.removeFromSuperview()
         loginState = ""
         userDefault.set(false, forKey: "isLoggedIn")
+        userDefault.set(true, forKey: "shake")
+        userDefault.set(true, forKey: "history")
+        userDefault.set(false, forKey: "reduceMotion")
         UIApplication.shared.keyWindow?.rootViewController?.dismiss(animated: false, completion: nil)
     }
     func showUserMenu(){
@@ -346,7 +351,7 @@ class Session: NSObject, UITableViewDelegate, UITableViewDataSource, UICollectio
         }
         UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseOut, animations: {
             self.userView.frame.origin.x = 0
-            self.dimView.alpha = 0.3
+            self.dimView.alpha = dimViewAlpha
         }, completion: nil)
     }
     func reloadLocale(){

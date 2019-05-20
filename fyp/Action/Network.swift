@@ -17,25 +17,16 @@ protocol NetworkDelegate: class{
 
 extension NetworkDelegate{
     func httpErrorHandle(httpStatus: HTTPURLResponse){
-        let alert = UIAlertController(title: "HTTP Error", message: "\(httpStatus.statusCode).", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-        DispatchQueue.main.async {
-            UIApplication.shared.keyWindow?.window?.rootViewController?.present(alert, animated: true, completion: nil)
-        }
+        SVProgressHUD.showInfo(withStatus: "\(Localized.httpErrorMsg.rawValue.localized())\n\(httpStatus.statusCode)")
+        SVProgressHUD.dismiss(withDelay: 1.5)
     }
     func reachabilityError(){
-        let alert = UIAlertController(title: "Network unavailable, please try again later.", message: nil, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-        DispatchQueue.main.async {
-            UIApplication.shared.keyWindow?.window?.rootViewController?.present(alert, animated: true, completion: nil)
-        }
+        SVProgressHUD.showError(withStatus: Localized.networkErrorMsg.rawValue.localized())
+        SVProgressHUD.dismiss(withDelay: 1.5)
     }
     func URLSessionError(error: Error?){
-        let alert = UIAlertController(title: "URL Session Error", message: "\(error ?? Error.self as! Error).", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-        DispatchQueue.main.async {
-            UIApplication.shared.keyWindow?.window?.rootViewController?.present(alert, animated: true, completion: nil)
-        }
+        SVProgressHUD.showInfo(withStatus: "\(Localized.urlSessionErrorMsg.rawValue.localized())\n\(error ?? Error.self as! Error)")
+        SVProgressHUD.dismiss(withDelay: 1.5)
     }
 }
 

@@ -49,6 +49,8 @@
 		A6B77B192230192600DA4543 /* Featured.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6B77B182230192600DA4543 /* Featured.swift */; };
 		A6B77B1B22301CDF00DA4543 /* custom_Views.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6B77B1A22301CDF00DA4543 /* custom_Views.swift */; };
 		A6B77B1D22302A3600DA4543 /* CategoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6B77B1C22302A3600DA4543 /* CategoryView.swift */; };
+		A6BE20982291CFEF00546311 /* otp_setup.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6BE20972291CFEF00546311 /* otp_setup.swift */; };
+		A6BE76DC22919C0A007856D6 /* GlobalVars.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6BE76DB22919C0A007856D6 /* GlobalVars.swift */; };
 		A6C2BAAB227F615900BC19F7 /* CategoryTrip.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6C2BAAA227F615900BC19F7 /* CategoryTrip.swift */; };
 		A6C94FEC227A103F00C5F35E /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6C94FEB227A103F00C5F35E /* Profile.swift */; };
 		A6C94FF5227BED7800C5F35E /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = A6C94FF3227BED7800C5F35E /* Localizable.strings */; };
@@ -111,6 +113,8 @@
 		A6B77B182230192600DA4543 /* Featured.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Featured.swift; sourceTree = "<group>"; };
 		A6B77B1A22301CDF00DA4543 /* custom_Views.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = custom_Views.swift; sourceTree = "<group>"; };
 		A6B77B1C22302A3600DA4543 /* CategoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryView.swift; sourceTree = "<group>"; };
+		A6BE20972291CFEF00546311 /* otp_setup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = otp_setup.swift; sourceTree = "<group>"; };
+		A6BE76DB22919C0A007856D6 /* GlobalVars.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalVars.swift; sourceTree = "<group>"; };
 		A6C2BAAA227F615900BC19F7 /* CategoryTrip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryTrip.swift; sourceTree = "<group>"; };
 		A6C94FEB227A103F00C5F35E /* Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
 		A6C94FF4227BED7800C5F35E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -199,6 +203,7 @@
 				A612D417226EC61F004BF88F /* tripDetail.swift */,
 				A61FFBD22289885500E00513 /* DeviceSettings.swift */,
 				A69B9BEB228D038400FCE27E /* otp_authentication.swift */,
+				A6BE20972291CFEF00546311 /* otp_setup.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -269,6 +274,7 @@
 				A6836A34226B4E41008F75EB /* fyp.entitlements */,
 				A6A67D04222FE9A800D82479 /* Info.plist */,
 				A6A67CF8222FE9A700D82479 /* AppDelegate.swift */,
+				A6BE76DB22919C0A007856D6 /* GlobalVars.swift */,
 				A6A67CFF222FE9A800D82479 /* Assets.xcassets */,
 				A680EC3D2280AF6A006E116E /* Category.xcassets */,
 				A6D2620B2282738D00E00EAB /* Glyph.xcassets */,
@@ -410,6 +416,7 @@
 				A64BD9F22268BA6800E29669 /* Item.swift in Sources */,
 				A6216A362265E56F0073CE1F /* JSONParser.swift in Sources */,
 				A613B4842276364400947AA0 /* reg_password.swift in Sources */,
+				A6BE20982291CFEF00546311 /* otp_setup.swift in Sources */,
 				A6C2BAAB227F615900BC19F7 /* CategoryTrip.swift in Sources */,
 				A6AECE992287CE9000B3E68B /* Enumerations.swift in Sources */,
 				A6A67CF9222FE9A700D82479 /* AppDelegate.swift in Sources */,
@@ -419,6 +426,7 @@
 				A6AECE96228703A800B3E68B /* Credit.swift in Sources */,
 				A6B77B172230172D00DA4543 /* reg_done.swift in Sources */,
 				A6B77B15223002D000DA4543 /* reg_interestChoice.swift in Sources */,
+				A6BE76DC22919C0A007856D6 /* GlobalVars.swift in Sources */,
 				A6719E26226236E000483AFC /* Photo.swift in Sources */,
 				A613B4822276310400947AA0 /* reg_detail.swift in Sources */,
 				A62259082286C92100B72578 /* SVRadialGradientLayer.m in Sources */,
@@ -520,7 +528,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -577,7 +585,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				OTHER_LDFLAGS = "-ObjC";

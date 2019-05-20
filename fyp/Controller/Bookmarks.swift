@@ -35,6 +35,9 @@ class Bookmarks: UIViewController, UICollectionViewDelegate, UICollectionViewDat
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! featuredCell
         
         cell.alpha = 0
+        if !UserDefaults.standard.bool(forKey: "reduceMotion"){
+            cell.contentView.frame.origin.x += 500
+        }
         
         guard let trip = trips?[indexPath.row], trip.TID != 0 else {return cell}
         
@@ -42,7 +45,7 @@ class Bookmarks: UIViewController, UICollectionViewDelegate, UICollectionViewDat
         cell.layer.shadowColor = UIColor.lightGray.cgColor
         cell.layer.shadowOpacity = 0.1
         
-        cell.removeBK.layer.cornerRadius = 44 / 2
+        cell.removeBK.layer.cornerRadius = 35 / 2
         btnTrip[cell.removeBK] = trip
         cell.removeBK.addTarget(self, action: #selector(removeBk(_:)), for: .touchUpInside)
         
@@ -50,19 +53,20 @@ class Bookmarks: UIViewController, UICollectionViewDelegate, UICollectionViewDat
         
         cell.view.layer.cornerRadius = 15
         
-        UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseIn, animations: {
-            cell.alpha = 1
-        }, completion: nil)
-        
         if imgs[trip] == nil{
-            group.enter()
-            network.getPhoto(url: "https://scripttrip.scarletsc.net/img/\(trip.Items[0].I_Image)") { (data, response, error) in
-                guard let data = data, error == nil else {return}
-                self.imgs[trip] = UIImage(data: data)!
-                self.group.leave()
-            }
-            group.notify(queue: .main) {
-                self.cv.reloadItems(at: [indexPath])
+            if Session.imgCache.object(forKey: trip) == nil{
+                group.enter()
+                network.getPhoto(url: "https://scripttrip.scarletsc.net/img/\(trip.Items[0].I_Image)") { (data, response, error) in
+                    guard let data = data, error == nil else {return}
+                    self.imgs[trip] = UIImage(data: data)!
+                    Session.imgCache.setObject(UIImage(data: data)!, forKey: trip)
+                    self.group.leave()
+                }
+                group.notify(queue: .main) {
+                    self.cv.reloadItems(at: [indexPath])
+                }
+            }else{
+                self.imgs[trip] = Session.imgCache.object(forKey: trip)
             }
         }
         
@@ -70,6 +74,17 @@ class Bookmarks: UIViewController, UICollectionViewDelegate, UICollectionViewDat
             UIView.animate(withDuration: 0.2, animations: {
                 cell.img.image = self.imgs[trip]
             })
+        }
+        
+        if !UserDefaults.standard.bool(forKey: "reduceMotion"){
+            UIView.animate(withDuration: slideAnimationTime, delay: slideAnimationDelay, options: .curveEaseOut, animations: {
+                cell.alpha = 1
+                cell.contentView.frame.origin.x -= 500
+            }, completion: nil)
+        }else{
+            UIView.animate(withDuration: fadeAnimationTime, delay: 0, options: .curveEaseOut, animations: {
+                cell.alpha = 1
+            }, completion: nil)
         }
         
         return cell
@@ -111,8 +126,17 @@ class Bookmarks: UIViewController, UICollectionViewDelegate, UICollectionViewDat
     @objc func removeBk(_ sender: UIButton){
         let alert = UIAlertController(title: Localized.removeBKMsg.rawValue.localized(), message: btnTrip[sender]?.T_Title, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: Localized.Yes.rawValue.localized(), style: .default, handler: { _ in
-            SVProgressHUD.showSuccess(withStatus: nil)
-            SVProgressHUD.dismiss(withDelay: 1.5)
+            self.network.send(url: "https://scripttrip.scarletsc.net/iOS/bookmark.php?user=\(Session.user.UID)&trip=\(self.btnTrip[sender]!.TID)", method: "DELETE", query: nil) { (data) in
+                guard let result = Session.parser.parse(data!) else {return}
+                for item in result{
+                    if (item["Result"] as! String) == "OK"{
+                        self.setup()
+                    }else{
+                        SVProgressHUD.showInfo(withStatus: Localized.Fail.rawValue.localized() + "\n\(item["Reason"] as! String)")
+                        SVProgressHUD.dismiss(withDelay: 1.5)
+                    }
+                }
+            }
         }))
         alert.addAction(UIAlertAction(title: Localized.Cancel.rawValue.localized(), style: .cancel, handler: nil))
         self.present(alert, animated: true, completion: nil)

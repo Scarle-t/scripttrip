@@ -163,6 +163,10 @@ class mainScreen: UIViewController, UITextFieldDelegate, NetworkDelegate, FBSDKL
                 }else{
                     SVProgressHUD.showError(withStatus: Localized.failLoginMsg.rawValue.localized())
                     SVProgressHUD.dismiss(withDelay: 1.5)
+                    DispatchQueue.main.async {
+                        self.whiteView.alpha = 0
+                    }
+                    
                 }
             }
         }else if networkState == "reset"{

@@ -45,6 +45,9 @@ class Featured: UIViewController, UICollectionViewDataSource, UICollectionViewDe
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! featuredCell
         
         cell.alpha = 0
+        if !UserDefaults.standard.bool(forKey: "reduceMotion"){
+            cell.contentView.frame.origin.x += 500
+        }
         
         cell.layer.masksToBounds = false
         cell.layer.shadowColor = UIColor.lightGray.cgColor
@@ -54,20 +57,23 @@ class Featured: UIViewController, UICollectionViewDataSource, UICollectionViewDe
 
         cell.view.layer.cornerRadius = 15
         
-        UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseIn, animations: {
-            cell.alpha = 1
-        }, completion: nil)
-        
         if imgs[self.session.getTrips()[indexPath.row]] == nil{
-            group.enter()
-            network.getPhoto(url: "https://scripttrip.scarletsc.net/img/\(session.getTrips()[indexPath.row].Items[0].I_Image)") { (data, response, error) in
-                guard let data = data, error == nil else {return}
-                self.imgs[self.session.getTrips()[indexPath.row]] = UIImage(data: data)!
-                self.group.leave()
+            
+            if Session.imgCache.object(forKey: self.session.getTrips()[indexPath.row]) == nil{
+                group.enter()
+                network.getPhoto(url: "https://scripttrip.scarletsc.net/img/\(session.getTrips()[indexPath.row].Items[0].I_Image)") { (data, response, error) in
+                    guard let data = data, error == nil else {return}
+                    self.imgs[self.session.getTrips()[indexPath.row]] = UIImage(data: data)!
+                    Session.imgCache.setObject(UIImage(data: data)!, forKey: self.session.getTrips()[indexPath.row])
+                    self.group.leave()
+                }
+                group.notify(queue: .main) {
+                    self.cv.reloadItems(at: [indexPath])
+                }
+            }else{
+                self.imgs[self.session.getTrips()[indexPath.row]] = Session.imgCache.object(forKey: self.session.getTrips()[indexPath.row])
             }
-            group.notify(queue: .main) {
-                self.cv.reloadItems(at: [indexPath])
-            }
+            
         }
         
         DispatchQueue.main.async {
@@ -76,10 +82,20 @@ class Featured: UIViewController, UICollectionViewDataSource, UICollectionViewDe
             })
         }
         
+        if !UserDefaults.standard.bool(forKey: "reduceMotion"){
+            UIView.animate(withDuration: slideAnimationTime, delay: slideAnimationDelay, options: .curveEaseOut, animations: {
+                cell.alpha = 1
+                cell.contentView.frame.origin.x -= 500
+            }, completion: nil)
+        }else{
+            UIView.animate(withDuration: fadeAnimationTime, delay: 0, options: .curveEaseOut, animations: {
+                cell.alpha = 1
+            }, completion: nil)
+        }
+        
         return cell
         
     }
-    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
         return .init(width: self.view.frame.width, height: 62)
 
@@ -108,6 +124,9 @@ class Featured: UIViewController, UICollectionViewDataSource, UICollectionViewDe
         tripView.headerImg = imgs[session.getTrips()[indexPath.row]]
         tripView.show()
     }
+    func collectionView(_ collectionView: UICollectionView, shouldSpringLoadItemAt indexPath: IndexPath, with context: UISpringLoadedInteractionContext) -> Bool {
+        return true
+    }
     
         //NETWORK
     func ResponseHandle(data: Data) {
@@ -122,6 +141,27 @@ class Featured: UIViewController, UICollectionViewDataSource, UICollectionViewDe
             DispatchQueue.main.async {
                 self.cv.reloadData()
             }
+        }
+    }
+    func httpErrorHandle(httpStatus: HTTPURLResponse) {
+        SVProgressHUD.showInfo(withStatus: "\(Localized.httpErrorMsg.rawValue.localized())\n\(httpStatus.statusCode)")
+        SVProgressHUD.dismiss(withDelay: 1.5)
+        DispatchQueue.main.async {
+            self.cv.refreshControl?.endRefreshing()
+        }
+    }
+    func reachabilityError() {
+        SVProgressHUD.showError(withStatus: Localized.networkErrorMsg.rawValue.localized())
+        SVProgressHUD.dismiss(withDelay: 1.5)
+        DispatchQueue.main.async {
+            self.cv.refreshControl?.endRefreshing()
+        }
+    }
+    func URLSessionError(error: Error?) {
+        SVProgressHUD.showInfo(withStatus: "\(Localized.urlSessionErrorMsg.rawValue.localized())\n\(error ?? Error.self as! Error)")
+        SVProgressHUD.dismiss(withDelay: 1.5)
+        DispatchQueue.main.async {
+            self.cv.refreshControl?.endRefreshing()
         }
     }
     

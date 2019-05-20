@@ -39,6 +39,9 @@ class History: UIViewController, UICollectionViewDelegate, UICollectionViewDataS
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! featuredCell
         
         cell.alpha = 0
+        if !UserDefaults.standard.bool(forKey: "reduceMotion"){
+            cell.contentView.frame.origin.x += 500
+        }
         
         let trip = groupedTrip[indexPath.section][indexPath.row]
         
@@ -54,19 +57,20 @@ class History: UIViewController, UICollectionViewDelegate, UICollectionViewDataS
         
         cell.view.layer.cornerRadius = 15
         
-        UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseIn, animations: {
-            cell.alpha = 1
-        }, completion: nil)
-        
         if imgs[trip] == nil{
-            group.enter()
-            network.getPhoto(url: "https://scripttrip.scarletsc.net/img/\(trip.Items[0].I_Image)") { (data, response, error) in
-                guard let data = data, error == nil else {return}
-                self.imgs[trip] = UIImage(data: data)!
-                self.group.leave()
-            }
-            group.notify(queue: .main) {
-                self.cv.reloadItems(at: [indexPath])
+            if Session.imgCache.object(forKey: trip) == nil{
+                group.enter()
+                network.getPhoto(url: "https://scripttrip.scarletsc.net/img/\(trip.Items[0].I_Image)") { (data, response, error) in
+                    guard let data = data, error == nil else {return}
+                    self.imgs[trip] = UIImage(data: data)!
+                    Session.imgCache.setObject(UIImage(data: data)!, forKey: trip)
+                    self.group.leave()
+                }
+                group.notify(queue: .main) {
+                    self.cv.reloadItems(at: [indexPath])
+                }
+            }else{
+                self.imgs[trip] = Session.imgCache.object(forKey: trip)
             }
         }
         
@@ -74,6 +78,17 @@ class History: UIViewController, UICollectionViewDelegate, UICollectionViewDataS
             UIView.animate(withDuration: 0.2, animations: {
                 cell.img.image = self.imgs[trip]
             })
+        }
+        
+        if !UserDefaults.standard.bool(forKey: "reduceMotion"){
+            UIView.animate(withDuration: slideAnimationTime, delay: slideAnimationDelay, options: .curveEaseOut, animations: {
+                cell.alpha = 1
+                cell.contentView.frame.origin.x -= 500
+            }, completion: nil)
+        }else{
+            UIView.animate(withDuration: fadeAnimationTime, delay: 0, options: .curveEaseOut, animations: {
+                cell.alpha = 1
+            }, completion: nil)
         }
         
         return cell

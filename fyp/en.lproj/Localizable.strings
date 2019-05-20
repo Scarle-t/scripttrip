@@ -59,6 +59,8 @@
 "clearHistory" = "Clear History";
 "shakeForTrips" = "Shake for Trips";
 "Authenticate" = "Authenticate";
+"reduceMotion" = "Reduce Motion";
+"tfaText" = "2-Factor Authentication";
 
 "introText" = "ScriptTrip provides an entire new way to experience outgoing\n\nJoin us now";
 "getStarted" = "Get Started";
@@ -99,3 +101,7 @@
 "handicraft" = "Handicraft";
 "hobby" = "Hobby";
 "landscape" = "Landscape";
+
+"networkErrorMsg" = "Network unavailable, please try again later.";
+"urlSessionErrorMsg" = "Network Error";
+"httpErrorMsg" = "HTTP Error";

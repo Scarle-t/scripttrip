@@ -22,7 +22,7 @@ class otp_authentication: UIViewController, UITextFieldDelegate, NetworkDelegate
     //IBACTION
     @IBAction func close(_ sender: UIButton) {
         UIView.animate(withDuration: 0.5) {
-            self.view.layer.backgroundColor = color.lightGreen.rawValue.uiColor.cgColor
+            self.view.layer.backgroundColor = lightGreen.uiColor.cgColor
         }
         self.navigationController?.popViewController(animated: true)
     }
@@ -98,7 +98,7 @@ class otp_authentication: UIViewController, UITextFieldDelegate, NetworkDelegate
         for field in code{
             field.delegate = self
             field.inputAccessoryView = toolBar
-            field.setBottomBorder(strokeColor: UIColor.black.cgColor, backgroundColor: color.blue.rawValue.uiColor.cgColor)
+            field.setBottomBorder(strokeColor: UIColor.black.cgColor, backgroundColor: blue.uiColor.cgColor)
         }
         network.delegate = self
     }
@@ -111,7 +111,7 @@ class otp_authentication: UIViewController, UITextFieldDelegate, NetworkDelegate
         authBtn.layer.cornerRadius = 12
         
         UIView.animate(withDuration: 0.5) {
-            self.view.layer.backgroundColor = color.blue.rawValue.uiColor.cgColor
+            self.view.layer.backgroundColor = blue.uiColor.cgColor
         }
     }
     

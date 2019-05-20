@@ -184,7 +184,7 @@ class TripView: NSObject, UICollectionViewDelegateFlowLayout, UICollectionViewDe
             self.actionBtn.setImage(#imageLiteral(resourceName: "action"), for: .normal)
             self.actionBtn.backgroundColor = .init(white: 1, alpha: 0.9)
             self.actionBtn.frame = CGRect(x: self.view.frame.maxX - 17 - 35, y: 17, width: 45, height: 45)
-            self.actionBtn.layer.cornerRadius = 35 / 2
+            self.actionBtn.layer.cornerRadius = 45 / 2
             self.actionBtn.addTarget(self, action: #selector(self.showAction(_:)), for: .touchUpInside)
             
             self.shareBtn.setImage(#imageLiteral(resourceName: "share"), for: .normal)
@@ -241,10 +241,13 @@ class TripView: NSObject, UICollectionViewDelegateFlowLayout, UICollectionViewDe
                 
                 self.actionBtn.setImage(#imageLiteral(resourceName: "cross"), for: .normal)
                 
+                self.actionBtn.layer.cornerRadius = 35 / 2
+                
             }, completion: nil)
             sender.tag = 1
         case 1:
             UIView.animate(withDuration: 0.15, delay: 0, options: .curveEaseOut, animations: {
+                self.actionBtn.layer.cornerRadius = 45 / 2
                 
                 self.actionBtn.frame = CGRect(x: self.actionBtn.frame.minX, y: self.actionBtn.frame.minY, width: 45, height: 45)
                 self.actionBtn.frame.origin.y -= 10
@@ -269,12 +272,13 @@ class TripView: NSObject, UICollectionViewDelegateFlowLayout, UICollectionViewDe
         
     }
     @objc func addBk(_ sender: UIButton){
-        network.send(url: "https://scripttrip.scarletsc.net/iOS/addBookmark.php", method: "POST", query: "user=\(Session.user.UID)&trip=\(displayTrip!.TID)") { (data) in
+        network.send(url: "https://scripttrip.scarletsc.net/iOS/bookmark.php", method: "POST", query: "user=\(Session.user.UID)&trip=\(displayTrip!.TID)") { (data) in
             guard let result = Session.parser.parse(data!) else {return}
             for item in result{
                 if (item["Result"] as! String) == "OK"{
                     SVProgressHUD.showSuccess(withStatus: nil)
                     SVProgressHUD.dismiss(withDelay: 1.5)
+                    self.checkBookmark()
                 }else{
                     SVProgressHUD.showInfo(withStatus: Localized.Fail.rawValue.localized() + "\n\(item["Reason"] as! String)")
                     SVProgressHUD.dismiss(withDelay: 1.5)
@@ -284,16 +288,9 @@ class TripView: NSObject, UICollectionViewDelegateFlowLayout, UICollectionViewDe
     }
     @objc func share(_ sender: UIButton){
         let text = "Let's go together! - \(displayTrip!.T_Title)\nhttps://scripttrip.scarletsc.net"
-        
-        // set up activity view controller
         let textToShare = [ text ]
         let activityViewController = UIActivityViewController(activityItems: textToShare, applicationActivities: nil)
-        activityViewController.popoverPresentationController?.sourceView = self.view // so that iPads won't crash
-        
-        // exclude some activity types from the list (optional)
-        
-        
-        // present the view controller
+        activityViewController.popoverPresentationController?.sourceView = self.view
         UIApplication.shared.keyWindow?.rootViewController?.presentedViewController?.present(activityViewController, animated: true, completion: nil)
     }
     @objc func showImg(_ sender: UITapGestureRecognizer){
@@ -301,41 +298,72 @@ class TripView: NSObject, UICollectionViewDelegateFlowLayout, UICollectionViewDe
         photo.img = tapImgs[sender]
         delegate?.present(photo, animated: true, completion: nil)
     }
-    func show(){
-        isShown = true
-        contents.setContentOffset(CGPoint(x: 0,y: 0), animated: false)
+    
+    func calculateTextHeight(){
         for item in displayTrip!.Items{
             let height = Float(item.I_Content.count / 16)
             heightForItem.append(CGFloat(floor(height < 1 ? 1 : height) * 20))
         }
-        if headerImg == nil {
-            Network().getPhoto(url: "https://scripttrip.scarletasc.net/img/\(displayTrip!.Items[0].I_Image)") { (data, response, error) in
-                guard let imgData = data, error != nil else {return}
-                self.headerImg = UIImage(data: imgData)
+    }
+    
+    func checkBookmark(){
+        network.send(url: "https://scripttrip.scarletsc.net/iOS/bookmark.php?user=\(Session.user.UID)&trip=\(displayTrip!.TID)", method: "GET", query: nil) { (data) in
+            guard let result = Session.parser.parse(data!) else {return}
+            DispatchQueue.main.async {
+                for item in result{
+                    if (item["Result"] as! String) == "Exist"{
+                        self.addBookmark.removeFromSuperview()
+                    }else{
+                        self.view.addSubview(self.addBookmark)
+                    }
+                }
             }
         }
-        network.send(url: "https://scripttrip.scarletsc.net/iOS/checkBookmark?user=\(Session.user.UID)&trip=\(displayTrip!.TID)", method: "GET", query: nil) { (data) in
-            guard let result = Session.parser.parse(data!) else {return}
-            for item in result{
-                if (item["Result"] as! String) == "Exist"{
-                    self.addBookmark.alpha = 0
-                }else{
-                    self.addBookmark.alpha = 1
+    }
+    
+    func show(){
+        isShown = true
+        contents.setContentOffset(CGPoint(x: 0,y: 0), animated: false)
+        calculateTextHeight()
+        checkBookmark()
+        if headerImg == nil {
+            if Session.imgCache.object(forKey: displayTrip!) == nil{
+                Network().getPhoto(url: "https://scripttrip.scarletasc.net/img/\(displayTrip!.Items[0].I_Image)") { (data, response, error) in
+                    guard let imgData = data, error != nil else {return}
+                    self.headerImg = UIImage(data: imgData)
+                    Session.imgCache.setObject(UIImage(data: imgData)!, forKey: self.displayTrip!)
+                    self.contents.reloadData()
                 }
+            }else{
+                headerImg = Session.imgCache.object(forKey: displayTrip!)
             }
         }
         DispatchQueue.main.async {
             self.contents.reloadData()
         }
-        UIView.animate(withDuration: 0.25, delay: 0, options: .curveEaseIn, animations: {
+        
+        if !UserDefaults.standard.bool(forKey: "reduceMotion"){
+            self.view.alpha = 1
+            UIView.animate(withDuration: slideAnimationTime, delay: 0, options: .curveEaseOut, animations: {
+                self.view.frame.origin.y = 75
+                self.dimBg.alpha = dimViewAlpha
+            }, completion: nil)
+        }else{
             self.view.frame.origin.y = 75
-            self.dimBg.alpha = 0.4
-        }, completion: nil)
+            self.view.alpha = 0
+            UIView.animate(withDuration: slideAnimationTime, delay: 0, options: .curveEaseOut, animations: {
+                self.view.alpha = 1
+                self.dimBg.alpha = dimViewAlpha
+            }, completion: nil)
+        }
+        
+        
     }
-    
     func shakeShow(){
         let originalAnchor = view.layer.anchorPoint
         let originalTransform = view.transform
+        calculateTextHeight()
+        checkBookmark()
         if isShown {
             view.layer.anchorPoint = CGPoint(x: window!.center.x, y: view.frame.maxY)
             UIView.animate(withDuration: 0.07) {
@@ -366,14 +394,16 @@ class TripView: NSObject, UICollectionViewDelegateFlowLayout, UICollectionViewDe
             }, completion: nil)
         }
         contents.setContentOffset(CGPoint(x: 0,y: 0), animated: false)
-        for item in displayTrip!.Items{
-            let height = Float(item.I_Content.count / 16)
-            heightForItem.append(CGFloat(floor(height < 1 ? 1 : height) * 20))
-        }
         if headerImg == nil {
-            Network().getPhoto(url: "https://scripttrip.scarletasc.net/img/\(displayTrip!.Items[0].I_Image)") { (data, response, error) in
-                guard let imgData = data, error != nil else {return}
-                self.headerImg = UIImage(data: imgData)
+            if Session.imgCache.object(forKey: displayTrip!) == nil{
+                Network().getPhoto(url: "https://scripttrip.scarletasc.net/img/\(displayTrip!.Items[0].I_Image)") { (data, response, error) in
+                    guard let imgData = data, error != nil else {return}
+                    self.headerImg = UIImage(data: imgData)
+                    Session.imgCache.setObject(UIImage(data: imgData)!, forKey: self.displayTrip!)
+                    self.contents.reloadData()
+                }
+            }else{
+                headerImg = Session.imgCache.object(forKey: displayTrip!)
             }
         }
         DispatchQueue.main.async {
@@ -384,11 +414,21 @@ class TripView: NSObject, UICollectionViewDelegateFlowLayout, UICollectionViewDe
     }
     
     @objc func hide(){
-        UIView.animate(withDuration: 0.25, delay: 0, options: .curveEaseOut, animations: {
-            self.view.frame.origin.y = (self.window?.frame.height)!
-            self.dimBg.alpha = 0
-            self.isShown = false
-        }, completion: nil)
+        if !UserDefaults.standard.bool(forKey: "reduceMotion"){
+            UIView.animate(withDuration: slideAnimationTime, delay: 0, options: .curveEaseOut, animations: {
+                self.view.frame.origin.y = (self.window?.frame.height)!
+                self.dimBg.alpha = 0
+                self.isShown = false
+            }, completion: nil)
+        }else{
+            UIView.animate(withDuration: slideAnimationTime, delay: 0, options: .curveEaseOut, animations: {
+                self.view.alpha = 0
+                self.dimBg.alpha = 0
+                self.isShown = false
+            }, completion: { _ in
+                self.view.frame.origin.y = (self.window?.frame.height)!
+            })
+        }
         
         if actionBtn.tag == 1{
                 
@@ -407,6 +447,6 @@ class TripView: NSObject, UICollectionViewDelegateFlowLayout, UICollectionViewDe
             shareBtn.alpha = 0
             actionBtn.tag = 0
         }
-        
+        headerImg = nil
     }
 }

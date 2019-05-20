@@ -24,6 +24,8 @@ class Profile: UITableViewController, NetworkDelegate {
     @IBOutlet weak var right: UIBarButtonItem!
     @IBOutlet weak var naemText: UILabel!
     @IBOutlet weak var emailText: UILabel!
+    @IBOutlet weak var tfaText: UILabel!
+    @IBOutlet weak var tfa: UISwitch!
     
     //IBACTION
     @IBAction func leftItem(_ sender: UIBarButtonItem) {
@@ -79,16 +81,26 @@ class Profile: UITableViewController, NetworkDelegate {
         }
         
     }
+    @IBAction func tfaSwitch(_ sender: UISwitch) {
+        let setup = storyboard?.instantiateViewController(withIdentifier: "otp_setup") as! otp_setup
+        
+        sender.isOn ? (setup.mode = "create") : (setup.mode = "remove")
+        
+        self.present(setup, animated: true, completion: nil)
+        
+    }
     
     //DELEGATE
         //TABLE VIEW
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
+        return 2
     }
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section{
         case 0:
             return 2
+        case 1:
+            return 1
         default:
             return 0
         }
@@ -158,6 +170,10 @@ class Profile: UITableViewController, NetworkDelegate {
         emailText.text = Localized.email.rawValue.localized()
         naemText.text = Localized.name.rawValue.localized()
         
+        tfaText.text = Localized.tfaText.rawValue.localized()
+        
+        tfa.isEnabled = false
+        
     }
     
     func setup(){
@@ -180,6 +196,25 @@ class Profile: UITableViewController, NetworkDelegate {
         setup()
     }
 
-    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        network.send(url: "https://scripttrip.scarletsc.net/iOS/otp.php?mode=check&user=\(session.usr.UID)", method: "POST", query: nil) { (data) in
+            guard let result = Session.parser.parse(data!) else {
+                self.tfa.setOn(false, animated: false)
+                return
+            }
+            for item in result{
+                DispatchQueue.main.async {
+                    if (item["Result"] as! String) == "Yes"{
+                        self.tfa.setOn(true, animated: true)
+                        self.tfa.isEnabled = true
+                    }else if (item["Result"] as! String) == "No"{
+                        self.tfa.setOn(false, animated: true)
+                        self.tfa.isEnabled = true
+                    }
+                }
+            }
+        }
+    }
 
 }

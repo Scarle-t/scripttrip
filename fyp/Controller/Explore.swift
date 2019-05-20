@@ -16,14 +16,18 @@ class Explore: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, U
     let locationManager = CLLocationManager()
     let network = Network()
     let session = Session.shared
+    let group = DispatchGroup()
     var originalFilterMenuY: CGFloat = 0.0
     var original: CGFloat = 0.0
     var initialTouchPoint = CGPoint.zero
     var locNames = [String]()
     var selectedTrips = [Trip]()
+    var imgs = [Trip : UIImage]()
     var trips = [MKPointAnnotation : Trip]()
     var pins = [UITapGestureRecognizer : MKPointAnnotation]()
     var taps = 0
+    var tripView: TripView!
+    
     
     //IBOUTLET
     @IBOutlet weak var mk: MKMapView!
@@ -67,8 +71,7 @@ class Explore: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, U
     }
     
     @IBAction func xClose(_ sender: UIButton) {
-        
-        UIView.animate(withDuration: 0.3) {
+        UIView.animate(withDuration: slideAnimationTime, delay: 0, options: .curveEaseOut, animations: {
             self.blurView.alpha = 0
             self.planView.frame = CGRect(x: self.planView.frame.minX,
                                          y: self.view.frame.maxY,
@@ -76,7 +79,7 @@ class Explore: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, U
                                          height: self.planView.frame.size.height)
             self.tabBarController?.tabBar.frame = CGRect(x: (self.tabBarController?.tabBar.frame.minX)!, y: (self.tabBarController?.tabBar.frame.minY)! - (self.tabBarController?.tabBar.frame.height)!, width: (self.tabBarController?.tabBar.frame.width)!, height: (self.tabBarController?.tabBar.frame.height)!)
             self.planView.alpha = 0
-        }
+        }, completion: nil)
         
     }
     
@@ -115,20 +118,36 @@ class Explore: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, U
         
         cell.title.text = selectedTrips[indexPath.row].T_Title
         
+        if imgs[selectedTrips[indexPath.row]] == nil{
+            if Session.imgCache.object(forKey: selectedTrips[indexPath.row]) == nil{
+                group.enter()
+                network.getPhoto(url: "https://scripttrip.scarletsc.net/img/\(selectedTrips[indexPath.row].Items[0].I_Image)") { (data, response, error) in
+                    guard let data = data, error == nil else {return}
+                    self.imgs[self.selectedTrips[indexPath.row]] = UIImage(data: data)!
+                    Session.imgCache.setObject(UIImage(data: data)!, forKey: self.selectedTrips[indexPath.row])
+                    self.group.leave()
+                }
+                group.notify(queue: .main) {
+                    self.cv.reloadItems(at: [indexPath])
+                }
+            }else{
+                self.imgs[selectedTrips[indexPath.row]] = Session.imgCache.object(forKey: selectedTrips[indexPath.row])
+            }
+        }
+        
+        DispatchQueue.main.async {
+            UIView.animate(withDuration: 0.2, animations: {
+                cell.img.image = self.imgs[self.selectedTrips[indexPath.row]]
+            })
+        }
+        
         return cell
         
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let dest = storyboard?.instantiateViewController(withIdentifier: "tripDetail") as! tripDetail
         
-        dest.selectedTrip = selectedTrips[indexPath.row]
-        
-        self.present(dest, animated: true, completion: {
-            if UserDefaults.standard.bool(forKey: "history") {
-                self.network.send(url: "https://scripttrip.scarletsc.net/iOS/history.php", method: "POST", query: "user=\(Session.user.UID)&trip=\(self.selectedTrips[indexPath.row].TID)") { (_) in
-                }
-            }
-        })
+        tripView.displayTrip = selectedTrips[indexPath.row]
+        tripView.show()
         
     }
         //LOCATION MANAGER
@@ -207,7 +226,7 @@ class Explore: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, U
             
             planView.frame = CGRect(x: planView.frame.minX, y: self.view.frame.height, width: planView.frame.width, height: planView.frame.height)
             
-            UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseIn, animations: {
+            UIView.animate(withDuration: slideAnimationTime, delay: 0, options: .curveEaseOut, animations: {
                 self.tabBarController?.tabBar.frame = CGRect(x: (self.tabBarController?.tabBar.frame.minX)!, y: (self.tabBarController?.tabBar.frame.minY)! + (self.tabBarController?.tabBar.frame.height)!, width: (self.tabBarController?.tabBar.frame.width)!, height: (self.tabBarController?.tabBar.frame.height)!)
                 self.planView.frame = CGRect(x: self.planView.frame.minX, y: self.original, width: self.planView.frame.width, height: self.planView.frame.height)
                 self.planView.alpha = 1
@@ -228,6 +247,7 @@ class Explore: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, U
         case .changed:
             if touchPoint.y > initialTouchPoint.y {
                 planView.frame.origin.y = touchPoint.y - initialTouchPoint.y
+                blurView.alpha = 1 - (touchPoint.y / blurView.frame.maxY)
             }
         case .ended, .cancelled:
             if touchPoint.y - initialTouchPoint.y > self.view.frame.width {
@@ -238,6 +258,7 @@ class Explore: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, U
                 }
             } else {
                 UIView.animate(withDuration: 0.2, animations: {
+                    self.blurView.alpha = 1
                     self.planView.frame = CGRect(x: self.planView.frame.minX,
                                                  y: self.original,
                                                  width: self.planView.frame.size.width,
@@ -245,6 +266,8 @@ class Explore: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, U
                 })
             }
         case .failed, .possible:
+            break
+        @unknown default:
             break
         }
     }
@@ -356,6 +379,7 @@ class Explore: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, U
         let pan = UIPanGestureRecognizer(target: self, action: #selector(dismissPlan(_:)))
         navBar.addGestureRecognizer(pan)
         mk.register(AnnotationView.self, forAnnotationViewWithReuseIdentifier: "AnnotationIdentifier")
+        tripView = TripView(delegate: self, haveTabBar: true)
     }
     
     //VIEW CONTROLLER

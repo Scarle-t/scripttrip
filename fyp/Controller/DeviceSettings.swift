@@ -25,6 +25,8 @@ class DeviceSettings: UITableViewController, UIPickerViewDelegate, UIPickerViewD
     @IBOutlet weak var historyText: UILabel!
     @IBOutlet weak var clearHistoryText: UILabel!
     @IBOutlet weak var heading: UILabel!
+    @IBOutlet weak var reduceMotion: UISwitch!
+    @IBOutlet weak var reduceMotionText: UILabel!
     
     //IBACTION
     @IBAction func historySwitch(_ sender: UISwitch) {
@@ -33,6 +35,9 @@ class DeviceSettings: UITableViewController, UIPickerViewDelegate, UIPickerViewD
     @IBAction func shakeSwitch(_ sender: UISwitch) {
         userDefault.set(sender.isOn, forKey: "shake")
     }
+    @IBAction func reduceMotionSwitch(_ sender: UISwitch) {
+        userDefault.set(sender.isOn, forKey: "reduceMotion")
+    }
     @IBAction func close(_ sender: UIButton) {
         self.dismiss(animated: true, completion: nil)
     }
@@ -40,20 +45,21 @@ class DeviceSettings: UITableViewController, UIPickerViewDelegate, UIPickerViewD
     //DELEGATION
         //TABLE VIEW
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 3
+        return 4
     }
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section{
-        case 0, 1:
+        case 0, 1, 2:
             return 1
-        case 2:
+        case 3:
             return 2
         default:
             return 0
         }
     }
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if indexPath.section == 1 && indexPath.row == 1{
+        if indexPath.section == 3 && indexPath.row == 1{
+            tableView.cellForRow(at: indexPath)?.setSelected(false, animated: true)
             let alert = UIAlertController(title: Localized.historyClearMsg.rawValue.localized(), message: nil, preferredStyle: .actionSheet)
             alert.addAction(UIAlertAction(title: Localized.Yes.rawValue.localized(), style: .destructive, handler: { (_) in
                 Network().send(url: "https://scripttrip.scarletsc.net/iOS/history.php?user=\(Session.user.UID)", method: "DELETE", query: nil, completion: { (data) in
@@ -88,10 +94,10 @@ class DeviceSettings: UITableViewController, UIPickerViewDelegate, UIPickerViewD
             footer.text = Localized.langFooter.rawValue.localized()
         case 1:
             footer.text = Localized.shakeFooter.rawValue.localized()
-        case 2:
+        case 3:
             footer.text = Localized.historyFooter.rawValue.localized()
         default:
-            return UIView()
+            return nil
         }
         
         return footer
@@ -130,12 +136,12 @@ class DeviceSettings: UITableViewController, UIPickerViewDelegate, UIPickerViewD
         //TEXT FIELD
     func textFieldDidBeginEditing(_ textField: UITextField) {
         UIView.animate(withDuration: 0.2) {
-            self.dimBg.alpha = 0.3
+            self.dimBg.alpha = dimViewAlpha
         }
     }
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
         UIView.animate(withDuration: 0.2) {
-            self.dimBg.alpha = 0.3
+            self.dimBg.alpha = dimViewAlpha
         }
         return true
     }
@@ -178,6 +184,7 @@ class DeviceSettings: UITableViewController, UIPickerViewDelegate, UIPickerViewD
         historyText.text = Localized.history.rawValue.localized()
         clearHistoryText.text = Localized.clearHistory.rawValue.localized()
         heading.text = Localized.Settings.rawValue.localized()
+        reduceMotionText.text = Localized.reduceMotion.rawValue.localized()
     }
     
     func setup(){
@@ -201,6 +208,8 @@ class DeviceSettings: UITableViewController, UIPickerViewDelegate, UIPickerViewD
         history.setOn(userDefault.bool(forKey: "history"), animated: false)
         
         shake.setOn(userDefault.bool(forKey: "shake"), animated: false)
+        
+        reduceMotion.setOn(userDefault.bool(forKey: "reduceMotion"), animated: false)
         
         localeLabel.text = Localized.init(rawValue: "\(locale.init(rawValue: (userDefault.string(forKey: "locale") ?? "system"))!)")?.rawValue.localized()
         localeLabel.inputView = langPicker

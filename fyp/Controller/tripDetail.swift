@@ -125,6 +125,9 @@ class tripDetail: UIViewController, UICollectionViewDataSource, UICollectionView
             let height = Float(item.I_Content.count / 16)
             textHeight[item] = CGFloat(floor(height < 1 ? 1 : height) * 14)
         }
+        
+        
+        
     }
     
     //VIEW CONTROLLER
