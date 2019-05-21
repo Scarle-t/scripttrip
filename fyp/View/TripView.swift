@@ -46,6 +46,7 @@ class TripView: NSObject, UICollectionViewDelegateFlowLayout, UICollectionViewDe
             
             let imgTap = UITapGestureRecognizer(target: self, action: #selector(showImg(_:)))
             
+            cell.img.image = UIImage()
             cell.img.frame = CGRect(x: 0, y: 0, width: cell.contentView.frame.width, height: cell.contentView.frame.width / 3 * 2)
             cell.img.contentMode = .scaleAspectFit
             cell.img.isUserInteractionEnabled = true
@@ -61,7 +62,11 @@ class TripView: NSObject, UICollectionViewDelegateFlowLayout, UICollectionViewDe
             if imgs[displayTrip!.Items[indexPath.row - 1]] == nil{
                 group.enter()
                 Network().getPhoto(url: "https://scripttrip.scarletsc.net/img/\(displayTrip!.Items[indexPath.row - 1].I_Image)") { (data, response, error) in
-                    guard let data = data, error == nil else {return}
+                    guard let data = data, error == nil else {
+                        cell.img.image = UIImage()
+                        self.group.leave()
+                        return
+                    }
                     self.imgs[self.displayTrip!.Items[indexPath.row - 1]] = UIImage(data: data)
                     self.group.leave()
                 }
@@ -368,35 +373,38 @@ class TripView: NSObject, UICollectionViewDelegateFlowLayout, UICollectionViewDe
         let originalTransform = view.transform
         calculateTextHeight()
         checkBookmark()
-        if isShown {
-            view.layer.anchorPoint = CGPoint(x: window!.center.x, y: view.frame.maxY)
-            UIView.animate(withDuration: 0.07) {
-                self.view.transform = CGAffineTransform(rotationAngle: -0.05)
+        if !UserDefaults.standard.bool(forKey: "reduceMotion"){
+            if isShown {
+                view.layer.anchorPoint = CGPoint(x: window!.center.x, y: view.frame.maxY)
+                UIView.animate(withDuration: 0.07) {
+                    self.view.transform = CGAffineTransform(rotationAngle: -0.05)
+                }
+                UIView.animate(withDuration: 0.07, delay: 0.08, options: .curveLinear, animations: {
+                    self.view.transform = CGAffineTransform(rotationAngle: 0.1)
+                }, completion: nil)
+                UIView.animate(withDuration: 0.07, delay: 0.16, options: .curveLinear, animations: {
+                    self.view.transform = originalTransform
+                }, completion: nil)
+            }else{
+                view.frame.origin.x = window!.frame.maxX
+                view.frame.origin.y = 75
+                UIView.animate(withDuration: 0.075, delay: 0, options: .curveEaseIn, animations: {
+                    self.view.frame.origin.x = self.window!.frame.minY
+                }, completion: nil)
+                view.layer.anchorPoint = CGPoint(x: window!.center.x, y: view.frame.maxY)
+                UIView.animate(withDuration: 0.07, delay: 0.08, options: .curveLinear, animations: {
+                    self.view.transform = CGAffineTransform(rotationAngle: -0.03)
+                }, completion: nil)
+                UIView.animate(withDuration: 0.07, delay: 0.08, options: .curveLinear, animations: {
+                    self.view.transform = CGAffineTransform(rotationAngle: 0.06)
+                }, completion: nil)
+                UIView.animate(withDuration: 0.07, delay: 0.16, options: .curveLinear, animations: {
+                    self.view.transform = originalTransform
+                    self.dimBg.alpha = 0.4
+                }, completion: nil)
             }
-            UIView.animate(withDuration: 0.07, delay: 0.08, options: .curveLinear, animations: {
-                self.view.transform = CGAffineTransform(rotationAngle: 0.1)
-            }, completion: nil)
-            UIView.animate(withDuration: 0.07, delay: 0.16, options: .curveLinear, animations: {
-                self.view.transform = originalTransform
-            }, completion: nil)
-        }else{
-            view.frame.origin.x = window!.frame.maxX
-            view.frame.origin.y = 75
-            UIView.animate(withDuration: 0.075, delay: 0, options: .curveEaseIn, animations: {
-                self.view.frame.origin.x = self.window!.frame.minY
-            }, completion: nil)
-            view.layer.anchorPoint = CGPoint(x: window!.center.x, y: view.frame.maxY)
-            UIView.animate(withDuration: 0.07, delay: 0.08, options: .curveLinear, animations: {
-                self.view.transform = CGAffineTransform(rotationAngle: -0.03)
-            }, completion: nil)
-            UIView.animate(withDuration: 0.07, delay: 0.08, options: .curveLinear, animations: {
-                self.view.transform = CGAffineTransform(rotationAngle: 0.06)
-            }, completion: nil)
-            UIView.animate(withDuration: 0.07, delay: 0.16, options: .curveLinear, animations: {
-                self.view.transform = originalTransform
-                self.dimBg.alpha = 0.4
-            }, completion: nil)
         }
+        
         contents.setContentOffset(CGPoint(x: 0,y: 0), animated: false)
         if headerImg == nil {
             if Session.imgCache.object(forKey: displayTrip!) == nil{
@@ -411,7 +419,33 @@ class TripView: NSObject, UICollectionViewDelegateFlowLayout, UICollectionViewDe
             }
         }
         DispatchQueue.main.async {
+            
+            if UserDefaults.standard.bool(forKey: "reduceMotion"){
+                if self.isShown{
+                    UIView.animate(withDuration: fadeAnimationTime, delay: 0, options: .curveEaseOut, animations: {
+                        self.contents.alpha = 0
+                    }, completion: nil)
+                }
+            }
+            
             self.contents.reloadData()
+            
+            if UserDefaults.standard.bool(forKey: "reduceMotion"){
+                if self.isShown{
+                    UIView.animate(withDuration: fadeAnimationTime, delay: 0, options: .curveEaseOut, animations: {
+                        self.contents.alpha = 1
+                        self.dimBg.alpha = 0.4
+                    }, completion: nil)
+                }else{
+                    self.view.alpha = 0
+                    self.view.frame.origin.y = 75
+                    self.view.frame.origin.x = 0
+                    UIView.animate(withDuration: fadeAnimationTime, delay: 0.07, options: .curveEaseOut, animations: {
+                        self.view.alpha = 1
+                        self.dimBg.alpha = 0.4
+                    }, completion: nil)
+                }
+            }
         }
         view.layer.anchorPoint = originalAnchor
         isShown = true

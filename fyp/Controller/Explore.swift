@@ -226,13 +226,23 @@ class Explore: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, U
             
             planView.frame = CGRect(x: planView.frame.minX, y: self.view.frame.height, width: planView.frame.width, height: planView.frame.height)
             
-            UIView.animate(withDuration: slideAnimationTime, delay: 0, options: .curveEaseOut, animations: {
+            if UserDefaults.standard.bool(forKey: "reduceMotion"){
                 self.tabBarController?.tabBar.frame = CGRect(x: (self.tabBarController?.tabBar.frame.minX)!, y: (self.tabBarController?.tabBar.frame.minY)! + (self.tabBarController?.tabBar.frame.height)!, width: (self.tabBarController?.tabBar.frame.width)!, height: (self.tabBarController?.tabBar.frame.height)!)
                 self.planView.frame = CGRect(x: self.planView.frame.minX, y: self.original, width: self.planView.frame.width, height: self.planView.frame.height)
-                self.planView.alpha = 1
-                self.blurView.alpha = 1
-                
-            }, completion: nil)
+                self.planView.alpha = 0
+                UIView.animate(withDuration: fadeAnimationTime, delay: 0, options: .curveEaseOut, animations: {
+                    self.planView.alpha = 1
+                    self.blurView.alpha = 1
+                }, completion: nil)
+            }else{
+                UIView.animate(withDuration: slideAnimationTime, delay: 0, options: .curveEaseOut, animations: {
+                    self.tabBarController?.tabBar.frame = CGRect(x: (self.tabBarController?.tabBar.frame.minX)!, y: (self.tabBarController?.tabBar.frame.minY)! + (self.tabBarController?.tabBar.frame.height)!, width: (self.tabBarController?.tabBar.frame.width)!, height: (self.tabBarController?.tabBar.frame.height)!)
+                    self.planView.frame = CGRect(x: self.planView.frame.minX, y: self.original, width: self.planView.frame.width, height: self.planView.frame.height)
+                    self.planView.alpha = 1
+                    self.blurView.alpha = 1
+                }, completion: nil)
+            }
+            
         }
         
         

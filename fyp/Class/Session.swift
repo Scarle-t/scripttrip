@@ -322,10 +322,20 @@ class Session: NSObject, UITableViewDelegate, UITableViewDataSource, UICollectio
         return .init(width: userView.frame.width, height: userView.frame.height - userView.frame.width)
     }
     @objc func closeMenu(){
-        UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseOut, animations: {
-            self.dimView.alpha = 0
-            self.userView.frame.origin.x -= self.userView.frame.width
-        }, completion: nil)
+        if userDefault.bool(forKey: "reduceMotion"){
+            UIView.animate(withDuration: fadeAnimationTime, delay: 0, options: .curveEaseOut, animations: {
+                self.dimView.alpha = 0
+                self.userView.alpha = 0
+            }, completion: { _ in
+                self.userView.frame.origin.x -= self.userView.frame.width
+                self.userView.alpha = 1
+            })
+        }else{
+            UIView.animate(withDuration: slideAnimationTime, delay: 0, options: .curveEaseOut, animations: {
+                self.dimView.alpha = 0
+                self.userView.frame.origin.x -= self.userView.frame.width
+            }, completion: nil)
+        }
         
     }
     func loginButton(_ loginButton: FBSDKLoginButton!, didCompleteWith result: FBSDKLoginManagerLoginResult!, error: Error!) {
@@ -349,10 +359,22 @@ class Session: NSObject, UITableViewDelegate, UITableViewDataSource, UICollectio
             self.mainCollectionView.reloadData()
             self.userTable.reloadData()
         }
-        UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseOut, animations: {
+        
+        if userDefault.bool(forKey: "reduceMotion"){
+            self.userView.alpha = 0
             self.userView.frame.origin.x = 0
-            self.dimView.alpha = dimViewAlpha
-        }, completion: nil)
+            UIView.animate(withDuration: fadeAnimationTime, delay: 0, options: .curveEaseOut, animations: {
+                self.userView.alpha = 1
+                self.dimView.alpha = dimViewAlpha
+            }, completion: nil)
+        }else{
+            self.userView.alpha = 1
+            UIView.animate(withDuration: slideAnimationTime, delay: 0, options: .curveEaseOut, animations: {
+                self.userView.frame.origin.x = 0
+                self.dimView.alpha = dimViewAlpha
+            }, completion: nil)
+        }
+        
     }
     func reloadLocale(){
         settings[1] = Localized.bookmarks.rawValue.localized()
