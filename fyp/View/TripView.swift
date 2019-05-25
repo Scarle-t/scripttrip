@@ -235,7 +235,7 @@ class TripView: NSObject, UICollectionViewDelegateFlowLayout, UICollectionViewDe
         
         switch sender.tag{
         case 0:
-            UIView.animate(withDuration: 0.15, delay: 0, options: .curveEaseOut, animations: {
+            UIView.animate(withDuration: 0.2, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
                 self.addBookmark.alpha = 1
                 self.shareBtn.alpha = 1
                 
@@ -251,7 +251,6 @@ class TripView: NSObject, UICollectionViewDelegateFlowLayout, UICollectionViewDe
                 self.actionBtn.setImage(#imageLiteral(resourceName: "cross"), for: .normal)
                 
                 self.actionBtn.layer.cornerRadius = 35 / 2
-                
             }, completion: nil)
             sender.tag = 1
         case 1:
@@ -276,9 +275,6 @@ class TripView: NSObject, UICollectionViewDelegateFlowLayout, UICollectionViewDe
         default:
             break
         }
-        
-        
-        
     }
     @objc func addBk(_ sender: UIButton){
         network.send(url: "https://scripttrip.scarletsc.net/iOS/bookmark.php", method: "POST", query: "user=\(Session.user.UID)&trip=\(displayTrip!.TID)") { (data) in
@@ -337,11 +333,15 @@ class TripView: NSObject, UICollectionViewDelegateFlowLayout, UICollectionViewDe
         checkBookmark()
         if headerImg == nil {
             if Session.imgCache.object(forKey: displayTrip!) == nil{
+                group.enter()
                 Network().getPhoto(url: "https://scripttrip.scarletasc.net/img/\(displayTrip!.Items[0].I_Image)") { (data, response, error) in
                     guard let imgData = data, error != nil else {return}
                     self.headerImg = UIImage(data: imgData)
                     Session.imgCache.setObject(UIImage(data: imgData)!, forKey: self.displayTrip!)
-                    self.contents.reloadData()
+                    self.group.leave()
+                }
+                group.notify(queue: .main) {
+                    self.contents.reloadSections(IndexSet(arrayLiteral: 0))
                 }
             }else{
                 headerImg = Session.imgCache.object(forKey: displayTrip!)
@@ -353,7 +353,7 @@ class TripView: NSObject, UICollectionViewDelegateFlowLayout, UICollectionViewDe
         
         if !UserDefaults.standard.bool(forKey: "reduceMotion"){
             self.view.alpha = 1
-            UIView.animate(withDuration: slideAnimationTime, delay: 0, options: .curveEaseOut, animations: {
+            UIView.animate(withDuration: slideAnimationTime, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
                 self.view.frame.origin.y = 75
                 self.dimBg.alpha = dimViewAlpha
             }, completion: nil)

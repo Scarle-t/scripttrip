@@ -66,6 +66,7 @@ class Session: NSObject, UITableViewDelegate, UITableViewDataSource, UICollectio
             
             userDefault.set(uuid, forKey: "uuid")
             userDefault.set(sessID, forKey: "sessid")
+            userDefault.set(true, forKey: "isLoggedIn")
             
             Network().send(url: "https://scripttrip.scarletsc.net/iOS/session.php", method: "POST", query: "user=\(usr.UID)&uuid=\(uuid!.sha1())&sessID=\(sessID.sha1())")
             
@@ -82,7 +83,7 @@ class Session: NSObject, UITableViewDelegate, UITableViewDataSource, UICollectio
     fileprivate let dimView = UIView()
     fileprivate var mainCollectionView: UICollectionView!
     fileprivate let blurBg = UIVisualEffectView(effect: UIBlurEffect(style: .extraLight))
-    fileprivate var settings = ["", Localized.bookmarks.rawValue.localized(), Localized.history.rawValue.localized(), Localized.accountSettings.rawValue.localized(), Localized.deviceSettings.rawValue.localized(), Localized.about.rawValue.localized()]
+    fileprivate var settings = ["", Localized.bookmarks.rawValue.localized(), Localized.history.rawValue.localized(), Localized.plans.rawValue.localized(), Localized.accountSettings.rawValue.localized(), Localized.deviceSettings.rawValue.localized(), Localized.about.rawValue.localized()]
     fileprivate let group = DispatchGroup()
     fileprivate let loginButton = FBSDKLoginButton()
     func setupUserView(){
@@ -144,7 +145,7 @@ class Session: NSObject, UITableViewDelegate, UITableViewDataSource, UICollectio
     }
     internal func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0{
-            return 3
+            return 4
         }else if section == 1{
             return 3
         }else if section == 2{
@@ -174,11 +175,13 @@ class Session: NSObject, UITableViewDelegate, UITableViewDataSource, UICollectio
                 cell.accessoryView = UIImageView(image: #imageLiteral(resourceName: "bookmark_pdf"))
             }else if indexPath.row == 2{
                 cell.accessoryView = UIImageView(image: #imageLiteral(resourceName: "history_pdf"))
+            }else if indexPath.row == 3{
+                cell.accessoryView = UIImageView(image: #imageLiteral(resourceName: "plan.png"))
             }
             
             return cell
         case 1:
-            cell.textLabel?.text = settings[indexPath.row + 3]
+            cell.textLabel?.text = settings[indexPath.row + 4]
             cell.textLabel?.font = UIFont(name: "AvenirNext-DemiBold", size: 17)
             cell.textLabel?.textAlignment = .left
             cell.accessoryType = .disclosureIndicator
@@ -229,6 +232,11 @@ class Session: NSObject, UITableViewDelegate, UITableViewDataSource, UICollectio
                 let historyView = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "history") as! History
                 UIApplication.shared.keyWindow?.rootViewController?.presentedViewController?.present(historyView, animated: true, completion: nil)
             }
+        }
+        
+        if indexPath.section == 0 && indexPath.row == 3{
+            let planView = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "planNav") as! UINavigationController
+            UIApplication.shared.keyWindow?.rootViewController?.presentedViewController?.present(planView, animated: true, completion: nil)
         }
         
         if indexPath.section == 1 && indexPath.row == 0 {
@@ -457,6 +465,50 @@ class Session: NSObject, UITableViewDelegate, UITableViewDataSource, UICollectio
                 
             }
             returnItem.append(trip)
+        }
+        return returnItem
+    }
+    
+    //PLAN PARSER
+    func parsePlan(_ item: [NSDictionary]?)->[Trip]?{
+        guard let data = item else {return nil}
+        
+        var returnItem = [Trip]()
+        
+        for item in data{
+            let trip = Trip()
+            
+            guard let pid = item["PID"] as? Int else {return nil}
+            guard let p_title = item["P_Title"] as? String else {return nil}
+            
+            trip.TID = pid
+            trip.T_Title = p_title
+            
+            returnItem.append(trip)
+        }
+        return returnItem
+    }
+    func parsePlanItem(_ item: [NSDictionary]?)->[Item]?{
+        guard let data = item else {return nil}
+        
+        var returnItem = [Item]()
+        
+        for item in data{
+            let itm = Item()
+            
+            guard let iid = item["IID"] as? Int else {return nil}
+            guard let i_content = item["I_Content"] as? String else {return nil}
+            guard let i_image = item["I_Image"] as? String else {return nil}
+            guard let i_lat = item["I_Lat"] as? Double else {return nil}
+            guard let i_longt = item["I_Longt"] as? Double else {return nil}
+            
+            itm.IID = iid
+            itm.I_Content = i_content
+            itm.I_Image = i_image
+            itm.I_Lat = i_lat
+            itm.I_Longt = i_longt
+            
+            returnItem.append(itm)
         }
         return returnItem
     }

@@ -86,6 +86,7 @@ enum Localized: String{
     case httpErrorMsg
     case reduceMotion
     case tfaText
+    case plans
 }
 
 enum locale: String, CaseIterable{

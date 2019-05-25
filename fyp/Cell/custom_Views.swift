@@ -26,6 +26,8 @@ class featuredCell: UICollectionViewCell {
     @IBOutlet weak var img: UIImageView!
     @IBOutlet weak var title: UILabel!
     @IBOutlet weak var removeBK: UIButton!
+    @IBOutlet weak var gradView: UIView!
+    @IBOutlet weak var newtitle: UITextField!
     
 }
 

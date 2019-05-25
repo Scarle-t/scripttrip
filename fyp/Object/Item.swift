@@ -11,6 +11,7 @@ import Foundation
 class Item: NSObject{
     
     //ATTRIBUTE
+    var IID: Int
     var I_Content: String
     var I_Image: String
     var I_Lat: Double
@@ -19,6 +20,7 @@ class Item: NSObject{
     
     //INIT
     override init(){
+        IID = 0
         I_Content = ""
         I_Image = ""
         I_Lat = 0.0
