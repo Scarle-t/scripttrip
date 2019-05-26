@@ -65,13 +65,15 @@ class reg_interestChoice: UIViewController, UICollectionViewDelegate, UICollecti
         
         let cell = collectionView.cellForItem(at: indexPath) as! cateChoiceCell
         
-        switch cell.white.alpha{
+        switch cell.tag{
         case 0:
             cell.white.alpha = 1
             session.regInterest.insert(session.getCategories()[indexPath.row])
+            cell.tag = 1
         case 1:
             cell.white.alpha = 0
             session.regInterest.remove(session.getCategories()[indexPath.row])
+            cell.tag = 0
         default:
             break
         }

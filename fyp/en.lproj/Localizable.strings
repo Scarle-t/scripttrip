@@ -61,6 +61,7 @@
 "Authenticate" = "Authenticate";
 "reduceMotion" = "Reduce Motion";
 "tfaText" = "2-Factor Authentication";
+"Delete" = "Delete";
 
 "introText" = "ScriptTrip provides an entire new way to experience outgoing\n\nJoin us now";
 "getStarted" = "Get Started";
@@ -90,6 +91,7 @@
 
 "removeBKMsg" = "Are you sure you want to remove this bookmark?";
 "removePlanMsg" = "Are you sure you want to remove this Plan? This will also remove all items in the Plan!";
+"removeItemMsg" = "Are you sure you want to remove this item?";
 "historyClearMsg" = "Are you sure you want to clear your history? This cannot be undo!";
 
 "fun" = "Fun";

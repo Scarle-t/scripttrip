@@ -88,6 +88,8 @@ enum Localized: String{
     case tfaText
     case plans
     case removePlanMsg
+    case removeItemMsg
+    case Delete
 }
 
 enum locale: String, CaseIterable{

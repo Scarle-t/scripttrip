@@ -156,6 +156,7 @@ class Plans: UIViewController, UICollectionViewDelegate, UICollectionViewDataSou
             removePlan[cell.removeBK] = cell.delete
             
             cell.viewPost.tag = indexPath.row
+            cell.edit.tag = indexPath.row
             
             planTripBtn[cell.viewPost] = plan
             
@@ -196,9 +197,25 @@ class Plans: UIViewController, UICollectionViewDelegate, UICollectionViewDataSou
         return .init(width: collectionView.frame.width, height: 62)
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let viewPlan = storyboard?.instantiateViewController(withIdentifier: "viewPlan") as! viewPlan
-        viewPlan.selectedPlan = plans![indexPath.row]
-        self.navigationController?.pushViewController(viewPlan, animated: true)
+        network.send(url: "https://scripttrip.scarletsc.net/iOS/plan.php?user=\(session.usr.UID)&PID=\(plans![indexPath.row].TID)&mode=item", method: "GET", query: nil, completion: { data in
+            
+            guard let data = data else {return}
+            
+            self.plans?[indexPath.row].Items = self.session.parsePlanItem(Session.parser.parse(data))!
+            self.tripView.displayTrip = self.plans?[indexPath.row]
+            self.tripView.headerImg = UIImage()
+            let gradient = CAGradientLayer()
+            gradient.frame = CGRect(x: 0, y: 0, width: 800, height: 800)
+            gradient.colors = self.colors[indexPath.row % self.colors.count]
+            gradient.startPoint = CGPoint(x: 0, y: 0)
+            gradient.endPoint = CGPoint(x: 1, y: 1)
+            self.tripView.gradientMask = gradient
+            self.tripView.isCustomPlan = true
+            DispatchQueue.main.async {
+                self.tripView.show()
+            }
+            
+        })
     }
     
     	//NETWORK
@@ -242,11 +259,11 @@ class Plans: UIViewController, UICollectionViewDelegate, UICollectionViewDataSou
                 sender.transform = CGAffineTransform(rotationAngle: 2 * CGFloat.pi / 4)
                 self.editPlan[sender]?.alpha = 1
                 self.removePlan[sender]?.alpha = 1
-                self.viewPlanBtn[sender]?.alpha = 1
+//                self.viewPlanBtn[sender]?.alpha = 1
                 
-                self.removePlan[sender]?.frame.origin.x -= 150
-                self.editPlan[sender]?.frame.origin.x -= 100
-                self.viewPlanBtn[sender]?.frame.origin.x -= 50
+                self.removePlan[sender]?.frame.origin.x -= 100
+                self.editPlan[sender]?.frame.origin.x -= 50
+//                self.viewPlanBtn[sender]?.frame.origin.x -= 50
                 
             }, completion: nil)
             sender.tag = 1
@@ -255,10 +272,10 @@ class Plans: UIViewController, UICollectionViewDelegate, UICollectionViewDataSou
                 sender.transform = CGAffineTransform(rotationAngle: 2 * CGFloat.pi / 2)
                 self.editPlan[sender]?.frame.origin.x = sender.frame.origin.x
                 self.removePlan[sender]?.frame.origin.x = sender.frame.origin.x
-                self.viewPlanBtn[sender]?.frame.origin.x = sender.frame.origin.x
+//                self.viewPlanBtn[sender]?.frame.origin.x = sender.frame.origin.x
                 self.editPlan[sender]?.alpha = 0
                 self.removePlan[sender]?.alpha = 0
-                self.viewPlanBtn[sender]?.alpha = 0
+//                self.viewPlanBtn[sender]?.alpha = 0
             }, completion: nil)
             sender.tag = 0
         }
@@ -266,7 +283,7 @@ class Plans: UIViewController, UICollectionViewDelegate, UICollectionViewDataSou
     @objc func remove(_ sender: UIButton){
         let alert = UIAlertController(title: Localized.removePlanMsg.rawValue.localized(), message: btnTrip[sender]?.T_Title, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: Localized.Yes.rawValue.localized(), style: .default, handler: { _ in
-            self.network.send(url: "https://scripttrip.scarletsc.net/iOS/plan.php?user=\(Session.user.UID)&plan=\(self.btnTrip[sender]!.TID)", method: "DELETE", query: nil) { (data) in
+            self.network.send(url: "https://scripttrip.scarletsc.net/iOS/plan.php?user=\(Session.user.UID)&id=\(self.btnTrip[sender]!.TID)&mode=plan", method: "DELETE", query: nil) { (data) in
                 guard let result = Session.parser.parse(data!) else {return}
                 for item in result{
                     if (item["Result"] as! String) == "OK"{
@@ -282,7 +299,9 @@ class Plans: UIViewController, UICollectionViewDelegate, UICollectionViewDataSou
         self.present(alert, animated: true, completion: nil)
     }
     @objc func edit(_ sender: UIButton){
-        
+        let viewPlan = storyboard?.instantiateViewController(withIdentifier: "viewPlan") as! viewPlan
+        viewPlan.selectedPlan = plans![sender.tag]
+        self.navigationController?.pushViewController(viewPlan, animated: true)
     }
     @objc func viewPlan(_ sender: UIButton){
         network.send(url: "https://scripttrip.scarletsc.net/iOS/plan.php?user=\(session.usr.UID)&PID=\(planTripBtn[sender]!.TID)&mode=item", method: "GET", query: nil, completion: { data in
@@ -304,7 +323,6 @@ class Plans: UIViewController, UICollectionViewDelegate, UICollectionViewDataSou
             }
             
         })
-        
     }
     
     //FUNC

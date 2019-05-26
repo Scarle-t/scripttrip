@@ -24,7 +24,6 @@
 		A622590C2286C92100B72578 /* SVProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A62259062286C92000B72578 /* SVProgressHUD.bundle */; };
 		A622590F2286C94900B72578 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A622590E2286C94800B72578 /* QuartzCore.framework */; };
 		A639DAE82296E03900CBAAAF /* Plans.swift in Sources */ = {isa = PBXBuildFile; fileRef = A639DAE72296E03900CBAAAF /* Plans.swift */; };
-		A639DAEA2296E05100CBAAAF /* createPlan.swift in Sources */ = {isa = PBXBuildFile; fileRef = A639DAE92296E05100CBAAAF /* createPlan.swift */; };
 		A639DAEC2296E05B00CBAAAF /* createItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = A639DAEB2296E05B00CBAAAF /* createItem.swift */; };
 		A639DAEE2299670900CBAAAF /* viewPlan.swift in Sources */ = {isa = PBXBuildFile; fileRef = A639DAED2299670900CBAAAF /* viewPlan.swift */; };
 		A63CE3C4223423EE00F62E1F /* Explore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A63CE3C3223423EE00F62E1F /* Explore.swift */; };
@@ -90,7 +89,6 @@
 		A62259072286C92000B72578 /* SVProgressAnimatedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVProgressAnimatedView.h; sourceTree = "<group>"; };
 		A622590E2286C94800B72578 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		A639DAE72296E03900CBAAAF /* Plans.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Plans.swift; sourceTree = "<group>"; };
-		A639DAE92296E05100CBAAAF /* createPlan.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = createPlan.swift; sourceTree = "<group>"; };
 		A639DAEB2296E05B00CBAAAF /* createItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = createItem.swift; sourceTree = "<group>"; };
 		A639DAED2299670900CBAAAF /* viewPlan.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = viewPlan.swift; sourceTree = "<group>"; };
 		A63CE3C3223423EE00F62E1F /* Explore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Explore.swift; sourceTree = "<group>"; };
@@ -195,7 +193,6 @@
 				A6C2BAAA227F615900BC19F7 /* CategoryTrip.swift */,
 				A6B77B1C22302A3600DA4543 /* CategoryView.swift */,
 				A639DAEB2296E05B00CBAAAF /* createItem.swift */,
-				A639DAE92296E05100CBAAAF /* createPlan.swift */,
 				A6AECE95228703A800B3E68B /* Credit.swift */,
 				A61FFBD22289885500E00513 /* DeviceSettings.swift */,
 				A63CE3C3223423EE00F62E1F /* Explore.swift */,
@@ -418,7 +415,6 @@
 				A61FFBD32289885500E00513 /* DeviceSettings.swift in Sources */,
 				A62259092286C92100B72578 /* SVProgressAnimatedView.m in Sources */,
 				A6A67CFB222FE9A700D82479 /* mainScreen.swift in Sources */,
-				A639DAEA2296E05100CBAAAF /* createPlan.swift in Sources */,
 				A6A502092275E6620003463F /* TripView.swift in Sources */,
 				A622590B2286C92100B72578 /* SVIndefiniteAnimatedView.m in Sources */,
 				A69B9BEC228D038400FCE27E /* otp_authentication.swift in Sources */,

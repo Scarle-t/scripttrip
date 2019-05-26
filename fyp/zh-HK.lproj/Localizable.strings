@@ -61,6 +61,7 @@
 "Authenticate" = "驗證";
 "reduceMotion" = "減少動態效果";
 "tfaText" = "雙重認證";
+"Delete" = "刪除";
 
 "introText" = "ScriptTrip 為您帶來嶄新的外出體驗\n\n加入我們";
 "getStarted" = "現在開始";
@@ -90,6 +91,7 @@
 
 "removeBKMsg" = "您是否確定要刪除此書籤？";
 "removePlanMsg" = "您是否確定要刪除此行程？將會刪除行程內所有項目！";
+"removeItemMsg" = "您是否確定要刪除此項目？";
 "historyClearMsg" = "您是否確定要清除紀錄？這項操作不能復原！";
 
 "fun" = "玩樂";

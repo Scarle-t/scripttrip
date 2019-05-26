@@ -69,6 +69,32 @@ class viewPlan: UIViewController, UITableViewDelegate, UITableViewDataSource, Ne
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 62
     }
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    func tableView(_ tableView: UITableView, titleForDeleteConfirmationButtonForRowAt indexPath: IndexPath) -> String? {
+        return Localized.Delete.rawValue.localized()
+    }
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if (editingStyle == .delete) {
+            let alert = UIAlertController(title: Localized.removeItemMsg.rawValue.localized(), message: nil, preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: Localized.Yes.rawValue.localized(), style: .default, handler: { _ in
+                self.network.send(url: "https://scripttrip.scarletsc.net/iOS/plan.php?user=\(Session.user.UID)&id=\(self.selectedPlan.Items[indexPath.row].IID)&mode=item", method: "DELETE", query: nil) { (data) in
+                    guard let result = Session.parser.parse(data!) else {return}
+                    for item in result{
+                        if (item["Result"] as! String) == "OK"{
+                            self.setup()
+                        }else{
+                            SVProgressHUD.showInfo(withStatus: Localized.Fail.rawValue.localized() + "\n\(item["Reason"] as! String)")
+                            SVProgressHUD.dismiss(withDelay: 1.5)
+                        }
+                    }
+                }
+            }))
+            alert.addAction(UIAlertAction(title: Localized.Cancel.rawValue.localized(), style: .cancel, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+        }
+    }
     
         //NETWORK
     func ResponseHandle(data: Data) {
