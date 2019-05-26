@@ -59,28 +59,33 @@ class TripView: NSObject, UICollectionViewDelegateFlowLayout, UICollectionViewDe
             
             cell.contentView.addSubview(cell.img)
             cell.contentView.addSubview(cell.content)
-            if imgs[displayTrip!.Items[indexPath.row - 1]] == nil{
-                group.enter()
-                Network().getPhoto(url: "https://scripttrip.scarletsc.net/img/\(displayTrip!.Items[indexPath.row - 1].I_Image)") { (data, response, error) in
-                    guard let data = data, error == nil else {
-                        cell.img.image = UIImage()
+            if displayTrip!.Items[indexPath.row - 1].I_Image != "0"{
+                if imgs[displayTrip!.Items[indexPath.row - 1]] == nil{
+                    group.enter()
+                    Network().getPhoto(url: "https://scripttrip.scarletsc.net/img/\(displayTrip!.Items[indexPath.row - 1].I_Image)") { (data, response, error) in
+                        guard let data = data, error == nil else {
+                            cell.img.image = UIImage()
+                            self.group.leave()
+                            return
+                        }
+                        self.imgs[self.displayTrip!.Items[indexPath.row - 1]] = UIImage(data: data)
                         self.group.leave()
-                        return
                     }
-                    self.imgs[self.displayTrip!.Items[indexPath.row - 1]] = UIImage(data: data)
-                    self.group.leave()
+                    group.notify(queue: .main) {
+                        self.contents.reloadItems(at: [indexPath])
+                    }
                 }
-                group.notify(queue: .main) {
-                    self.contents.reloadItems(at: [indexPath])
+                
+                DispatchQueue.main.async {
+                    UIView.animate(withDuration: 0.2, animations: {
+                        cell.img.image = self.imgs[self.displayTrip!.Items[indexPath.row - 1]]
+                        self.tapImgs[imgTap] = self.imgs[self.displayTrip!.Items[indexPath.row - 1]]
+                    })
                 }
+            }else{
+                cell.img.alpha = 0
             }
             
-            DispatchQueue.main.async {
-                UIView.animate(withDuration: 0.2, animations: {
-                    cell.img.image = self.imgs[self.displayTrip!.Items[indexPath.row - 1]]
-                    self.tapImgs[imgTap] = self.imgs[self.displayTrip!.Items[indexPath.row - 1]]
-                })
-            }
             
             return cell
         }
@@ -112,6 +117,10 @@ class TripView: NSObject, UICollectionViewDelegateFlowLayout, UICollectionViewDe
         header.addSubview(header.close)
         
         header.img.fillSuperview()
+        
+        if gradientMask != nil {
+            header.img.layer.addSublayer(gradientMask!)
+        }
         
         return header
     }
@@ -147,6 +156,7 @@ class TripView: NSObject, UICollectionViewDelegateFlowLayout, UICollectionViewDe
     var shareBtn: UIButton!
     var heightForItem = [CGFloat]()
     var dimBg: UIView!
+    var gradientMask: CAGradientLayer?
     
     //INIT
     init(delegate: UIViewController, haveTabBar: Bool){
@@ -486,5 +496,6 @@ class TripView: NSObject, UICollectionViewDelegateFlowLayout, UICollectionViewDe
             actionBtn.tag = 0
         }
         headerImg = nil
+        gradientMask = nil
     }
 }

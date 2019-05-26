@@ -1820,6 +1820,30 @@ History works across devices.</string>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
+                                                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="97S-XP-jFH">
+                                                            <rect key="frame" x="298" y="8" width="35" height="35"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                            <color key="backgroundColor" white="1" alpha="0.90285209759999996" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                            <state key="normal" image="view">
+                                                                <color key="titleColor" red="0.25882352939999997" green="0.7843137255" blue="0.61568627450000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            </state>
+                                                        </button>
+                                                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jKb-dH-0d7">
+                                                            <rect key="frame" x="298" y="8" width="35" height="35"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                            <color key="backgroundColor" white="1" alpha="0.90285209759999996" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                            <state key="normal" image="Edit_pdf">
+                                                                <color key="titleColor" red="0.25882352939999997" green="0.7843137255" blue="0.61568627450000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            </state>
+                                                        </button>
+                                                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lu1-UI-Xm7">
+                                                            <rect key="frame" x="298" y="8" width="35" height="35"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                            <color key="backgroundColor" white="1" alpha="0.90285209759999996" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                            <state key="normal" image="cross_tint_red">
+                                                                <color key="titleColor" red="0.25882352939999997" green="0.7843137255" blue="0.61568627450000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            </state>
+                                                        </button>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wJf-ww-KhV">
                                                             <rect key="frame" x="298" y="8" width="35" height="35"/>
                                                             <color key="backgroundColor" white="1" alpha="0.90285209759999996" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -1827,7 +1851,7 @@ History works across devices.</string>
                                                                 <constraint firstAttribute="height" constant="35" id="ajy-KZ-EyU"/>
                                                                 <constraint firstAttribute="width" constant="35" id="dON-LW-UBz"/>
                                                             </constraints>
-                                                            <state key="normal" image="cross">
+                                                            <state key="normal" image="more_tint">
                                                                 <color key="titleColor" red="0.25882352939999997" green="0.7843137255" blue="0.61568627450000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             </state>
                                                         </button>
@@ -1854,10 +1878,13 @@ History works across devices.</string>
                                             <constraint firstItem="ewI-U0-cWq" firstAttribute="top" secondItem="9gg-5K-70w" secondAttribute="top" id="h4o-1K-VKN"/>
                                         </constraints>
                                         <connections>
+                                            <outlet property="delete" destination="lu1-UI-Xm7" id="GIo-ah-pgK"/>
+                                            <outlet property="edit" destination="jKb-dH-0d7" id="llD-Xq-RWS"/>
                                             <outlet property="gradView" destination="9lE-ED-lHh" id="K8B-Vh-amg"/>
                                             <outlet property="removeBK" destination="wJf-ww-KhV" id="zmX-c1-AVr"/>
                                             <outlet property="title" destination="i44-Yg-aQ0" id="4Kn-qd-JNR"/>
                                             <outlet property="view" destination="ewI-U0-cWq" id="phQ-40-Nbj"/>
+                                            <outlet property="viewPost" destination="97S-XP-jFH" id="9Aq-aH-OWa"/>
                                         </connections>
                                     </collectionViewCell>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="newCell" id="h2c-9B-rb7" customClass="featuredCell" customModule="fyp" customModuleProvider="target">
@@ -1880,26 +1907,13 @@ History works across devices.</string>
                                                             <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="30"/>
                                                             <textInputTraits key="textInputTraits"/>
                                                         </textField>
-                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AKb-Nl-72n">
-                                                            <rect key="frame" x="298" y="8" width="35" height="35"/>
-                                                            <color key="backgroundColor" white="1" alpha="0.90285209759999996" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                            <constraints>
-                                                                <constraint firstAttribute="width" constant="35" id="Pc2-ew-0eP"/>
-                                                                <constraint firstAttribute="height" constant="35" id="QKQ-Ih-PSQ"/>
-                                                            </constraints>
-                                                            <state key="normal" image="cross">
-                                                                <color key="titleColor" red="0.25882352939999997" green="0.7843137255" blue="0.61568627450000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                            </state>
-                                                        </button>
                                                     </subviews>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <constraints>
                                                         <constraint firstAttribute="bottom" secondItem="NB3-pq-GqG" secondAttribute="bottom" constant="8" id="0La-qn-e5V"/>
                                                         <constraint firstItem="1FM-O2-3I5" firstAttribute="top" secondItem="elb-YK-EbZ" secondAttribute="top" id="CPK-Wy-p9R"/>
-                                                        <constraint firstItem="AKb-Nl-72n" firstAttribute="top" secondItem="elb-YK-EbZ" secondAttribute="top" constant="8" id="XKo-MD-Zze"/>
                                                         <constraint firstItem="NB3-pq-GqG" firstAttribute="leading" secondItem="elb-YK-EbZ" secondAttribute="leading" constant="8" id="XQD-fA-Mfp"/>
                                                         <constraint firstItem="1FM-O2-3I5" firstAttribute="leading" secondItem="elb-YK-EbZ" secondAttribute="leading" id="gg4-2m-8eu"/>
-                                                        <constraint firstAttribute="trailing" secondItem="AKb-Nl-72n" secondAttribute="trailing" constant="8" id="j4Q-Ty-jZf"/>
                                                         <constraint firstAttribute="trailing" secondItem="1FM-O2-3I5" secondAttribute="trailing" id="kYg-Pq-QCS"/>
                                                         <constraint firstAttribute="trailing" secondItem="NB3-pq-GqG" secondAttribute="trailing" constant="8" id="nJ4-gM-2bl"/>
                                                         <constraint firstAttribute="bottom" secondItem="1FM-O2-3I5" secondAttribute="bottom" id="upe-zk-b59"/>
@@ -1916,7 +1930,6 @@ History works across devices.</string>
                                         <connections>
                                             <outlet property="gradView" destination="1FM-O2-3I5" id="sag-aS-O17"/>
                                             <outlet property="newtitle" destination="NB3-pq-GqG" id="vlw-WS-252"/>
-                                            <outlet property="removeBK" destination="AKb-Nl-72n" id="HRg-rX-JM0"/>
                                             <outlet property="view" destination="elb-YK-EbZ" id="c9R-So-PMg"/>
                                         </connections>
                                     </collectionViewCell>
@@ -2613,29 +2626,76 @@ SOFTWARE.
             </objects>
             <point key="canvasLocation" x="2005.5999999999999" y="2945.577211394303"/>
         </scene>
-        <!--View Controller-->
+        <!--Create Item-->
         <scene sceneID="mEz-km-iAU">
             <objects>
-                <viewController storyboardIdentifier="viewItem" id="ql8-lD-0rg" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="viewItem" id="ql8-lD-0rg" customClass="createItem" customModule="fyp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="b9e-A8-bNs">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="view item" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="r0u-7z-oZv">
-                                <rect key="frame" x="79" y="285" width="232" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="A3F-m6-ASd">
+                                <rect key="frame" x="0.0" y="20" width="375" height="62"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ACN-x8-mPx">
+                                        <rect key="frame" x="18" y="8" width="46" height="46"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="46" id="M8m-KT-2Uv"/>
+                                            <constraint firstAttribute="height" constant="46" id="WPz-yQ-MV0"/>
+                                        </constraints>
+                                        <state key="normal" image="cross_tint"/>
+                                        <connections>
+                                            <action selector="close:" destination="ql8-lD-0rg" eventType="touchUpInside" id="7Zy-mG-Qgw"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="r4n-QT-uSp">
+                                        <rect key="frame" x="308" y="8" width="46" height="46"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="46" id="SeH-fe-uV1"/>
+                                            <constraint firstAttribute="width" constant="46" id="Z9a-LS-U0I"/>
+                                        </constraints>
+                                        <state key="normal" image="small_tick_tint"/>
+                                        <connections>
+                                            <action selector="save:" destination="ql8-lD-0rg" eventType="touchUpInside" id="ME5-IX-7eA"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstItem="r4n-QT-uSp" firstAttribute="top" secondItem="A3F-m6-ASd" secondAttribute="top" constant="8" id="7mJ-aZ-XXc"/>
+                                    <constraint firstItem="ACN-x8-mPx" firstAttribute="top" secondItem="A3F-m6-ASd" secondAttribute="top" constant="8" id="BU3-HV-Cet"/>
+                                    <constraint firstItem="ACN-x8-mPx" firstAttribute="leading" secondItem="A3F-m6-ASd" secondAttribute="leading" constant="18" id="N86-p9-HiS"/>
+                                    <constraint firstAttribute="height" constant="62" id="Wam-2u-yOR"/>
+                                    <constraint firstAttribute="trailing" secondItem="r4n-QT-uSp" secondAttribute="trailing" constant="21" id="XmY-kA-Lq0"/>
+                                </constraints>
+                            </view>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="9dl-o0-MoU">
+                                <rect key="frame" x="16" y="90" width="343" height="577"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="17"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences" returnKeyType="done"/>
+                                <dataDetectorType key="dataDetectorTypes" phoneNumber="YES" link="YES" address="YES" calendarEvent="YES" shipmentTrackingNumber="YES" flightNumber="YES" lookupSuggestion="YES"/>
+                            </textView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="A3F-m6-ASd" firstAttribute="leading" secondItem="T3E-zR-385" secondAttribute="leading" id="1pD-FU-Zk3"/>
+                            <constraint firstItem="9dl-o0-MoU" firstAttribute="top" secondItem="A3F-m6-ASd" secondAttribute="bottom" constant="8" id="4jU-5d-tnZ"/>
+                            <constraint firstItem="T3E-zR-385" firstAttribute="bottom" secondItem="9dl-o0-MoU" secondAttribute="bottom" id="AwG-I7-9mU"/>
+                            <constraint firstItem="A3F-m6-ASd" firstAttribute="top" secondItem="T3E-zR-385" secondAttribute="top" id="QVF-sB-47y"/>
+                            <constraint firstItem="9dl-o0-MoU" firstAttribute="leading" secondItem="T3E-zR-385" secondAttribute="leading" constant="16" id="b7J-6C-6zk"/>
+                            <constraint firstItem="T3E-zR-385" firstAttribute="trailing" secondItem="A3F-m6-ASd" secondAttribute="trailing" id="hfj-7U-7tt"/>
+                            <constraint firstItem="T3E-zR-385" firstAttribute="trailing" secondItem="9dl-o0-MoU" secondAttribute="trailing" constant="16" id="vmD-4W-cyB"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="T3E-zR-385"/>
                     </view>
+                    <connections>
+                        <outlet property="content" destination="9dl-o0-MoU" id="QlD-vq-CWX"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KYK-AF-FH1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2718" y="2946"/>
+            <point key="canvasLocation" x="2717.5999999999999" y="2945.577211394303"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="epQ-Zu-ybE">
@@ -2660,6 +2720,8 @@ SOFTWARE.
         <image name="Image" width="4032" height="3024"/>
         <image name="cateory_pdf" width="30" height="30"/>
         <image name="cross" width="800" height="800"/>
+        <image name="cross_tint" width="800" height="800"/>
+        <image name="cross_tint_red" width="800" height="800"/>
         <image name="cross_white" width="800" height="800"/>
         <image name="down_tint" width="800" height="800"/>
         <image name="explore_pdf" width="30" height="30"/>
@@ -2671,8 +2733,11 @@ SOFTWARE.
         <image name="loc_outline" width="800" height="800"/>
         <image name="logo" width="2048" height="733"/>
         <image name="menu_tint" width="800" height="800"/>
+        <image name="more_tint" width="30" height="30"/>
         <image name="plus_tint" width="800" height="800"/>
         <image name="search_pdf" width="30" height="30"/>
         <image name="small_tick_pdf" width="30" height="30"/>
+        <image name="small_tick_tint" width="800" height="800"/>
+        <image name="view" width="30" height="30"/>
     </resources>
 </document>

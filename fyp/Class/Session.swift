@@ -499,14 +499,10 @@ class Session: NSObject, UITableViewDelegate, UITableViewDataSource, UICollectio
             guard let iid = item["IID"] as? Int else {return nil}
             guard let i_content = item["I_Content"] as? String else {return nil}
             guard let i_image = item["I_Image"] as? String else {return nil}
-            guard let i_lat = item["I_Lat"] as? Double else {return nil}
-            guard let i_longt = item["I_Longt"] as? Double else {return nil}
             
             itm.IID = iid
             itm.I_Content = i_content
             itm.I_Image = i_image
-            itm.I_Lat = i_lat
-            itm.I_Longt = i_longt
             
             returnItem.append(itm)
         }

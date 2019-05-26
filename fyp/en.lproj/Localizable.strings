@@ -89,6 +89,7 @@
 "Settings" = "Settings";
 
 "removeBKMsg" = "Are you sure you want to remove this bookmark?";
+"removePlanMsg" = "Are you sure you want to remove this Plan? This will also remove all items in the Plan!";
 "historyClearMsg" = "Are you sure you want to clear your history? This cannot be undo!";
 
 "fun" = "Fun";

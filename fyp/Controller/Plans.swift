@@ -17,7 +17,12 @@ class Plans: UIViewController, UICollectionViewDelegate, UICollectionViewDataSou
     var btnTrip = [UIButton : Trip]()
     var tripView: TripView!
     let colors: [[CGColor]] = [[lightGreen.uiColor.cgColor, blue.uiColor.cgColor], [blue.uiColor.cgColor, lightGreen.uiColor.cgColor]]
+    var removePlan = [UIButton : UIButton]()
+    var editPlan = [UIButton : UIButton]()
+    var viewPlanBtn = [UIButton : UIButton]()
+    var planTripBtn = [UIButton : Trip]()
     var mode = ""
+    var addBtn: UIButton?
     
     //IBOUTLET
     @IBOutlet weak var cv: UICollectionView!
@@ -28,6 +33,8 @@ class Plans: UIViewController, UICollectionViewDelegate, UICollectionViewDataSou
         self.dismiss(animated: true, completion: nil)
     }
     @IBAction func addPlan(_ sender: UIButton) {
+        addBtn = sender
+        sender.alpha = 0
         plans?.insert(Trip(), at: 0)
         mode = "add"
         cv.isScrollEnabled = false
@@ -74,8 +81,6 @@ class Plans: UIViewController, UICollectionViewDelegate, UICollectionViewDataSou
             
             cell.gradView.layer.addSublayer(gradient)
             
-            cell.removeBK.alpha = 0
-            
             if !UserDefaults.standard.bool(forKey: "reduceMotion"){
                 UIView.animate(withDuration: slideAnimationTime, delay: slideAnimationDelay, options: .curveEaseOut, animations: {
                     cell.alpha = 1
@@ -86,8 +91,6 @@ class Plans: UIViewController, UICollectionViewDelegate, UICollectionViewDataSou
                     cell.alpha = 1
                 }, completion: nil)
             }
-            
-            cell.isUserInteractionEnabled = true
             
             mode = ""
             
@@ -121,8 +124,44 @@ class Plans: UIViewController, UICollectionViewDelegate, UICollectionViewDataSou
             cell.gradView.layer.addSublayer(gradient)
             
             cell.removeBK.layer.cornerRadius = 35 / 2
-            btnTrip[cell.removeBK] = plan
-            cell.removeBK.addTarget(self, action: #selector(removeBk(_:)), for: .touchUpInside)
+            cell.removeBK.layer.shadowOpacity = 0.7
+            cell.removeBK.layer.shadowColor = UIColor.lightGray.cgColor
+            cell.removeBK.layer.shadowOffset = CGSize(width: 0, height: 1)
+            cell.removeBK.tag = 0
+            cell.removeBK.transform = CGAffineTransform(rotationAngle: 2 * CGFloat.pi / 2)
+            
+            cell.edit.layer.cornerRadius = 35 / 2
+            cell.edit.layer.shadowOpacity = 0.7
+            cell.edit.layer.shadowColor = UIColor.lightGray.cgColor
+            cell.edit.layer.shadowOffset = CGSize(width: 0, height: 1)
+            
+            cell.viewPost.layer.cornerRadius = 35 / 2
+            cell.viewPost.layer.shadowOpacity = 0.7
+            cell.viewPost.layer.shadowColor = UIColor.lightGray.cgColor
+            cell.viewPost.layer.shadowOffset = CGSize(width: 0, height: 1)
+            
+            cell.delete.layer.cornerRadius = 35 / 2
+            cell.delete.layer.shadowOpacity = 0.7
+            cell.delete.layer.shadowColor = UIColor.lightGray.cgColor
+            cell.delete.layer.shadowOffset = CGSize(width: 0, height: 1)
+            
+            btnTrip[cell.delete] = plan
+            cell.removeBK.addTarget(self, action: #selector(showMenu(_:)), for: .touchUpInside)
+            cell.edit.addTarget(self, action: #selector(edit(_:)), for: .touchUpInside)
+            cell.delete.addTarget(self, action: #selector(remove(_:)), for: .touchUpInside)
+            cell.viewPost.addTarget(self, action: #selector(viewPlan(_:)), for: .touchUpInside)
+            
+            viewPlanBtn[cell.removeBK] = cell.viewPost
+            editPlan[cell.removeBK] = cell.edit
+            removePlan[cell.removeBK] = cell.delete
+            
+            cell.viewPost.tag = indexPath.row
+            
+            planTripBtn[cell.viewPost] = plan
+            
+            cell.viewPost.alpha = 0
+            cell.edit.alpha = 0
+            cell.delete.alpha = 0
             
             if !UserDefaults.standard.bool(forKey: "reduceMotion"){
                 UIView.animate(withDuration: slideAnimationTime, delay: slideAnimationDelay, options: .curveEaseOut, animations: {
@@ -182,6 +221,7 @@ class Plans: UIViewController, UICollectionViewDelegate, UICollectionViewDataSou
                     SVProgressHUD.showSuccess(withStatus: nil)
                     DispatchQueue.main.async {
                         textField.resignFirstResponder()
+                        self.addBtn?.alpha = 1
                         self.cv.isScrollEnabled = true
                         self.cv.allowsSelection = true
                         self.setup()
@@ -196,23 +236,64 @@ class Plans: UIViewController, UICollectionViewDelegate, UICollectionViewDataSou
     }
     
     //OBJC FUNC
-    @objc func removeBk(_ sender: UIButton){
-        let alert = UIAlertController(title: Localized.removeBKMsg.rawValue.localized(), message: btnTrip[sender]?.T_Title, preferredStyle: .alert)
+    @objc func showMenu(_ sender: UIButton){
+        if sender.tag == 0{
+            UIView.animate(withDuration: slideAnimationTime, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
+                sender.transform = CGAffineTransform(rotationAngle: 2 * CGFloat.pi / 4)
+                self.editPlan[sender]?.alpha = 1
+                self.removePlan[sender]?.alpha = 1
+                self.viewPlanBtn[sender]?.alpha = 1
+                
+                self.removePlan[sender]?.frame.origin.x -= 150
+                self.editPlan[sender]?.frame.origin.x -= 100
+                self.viewPlanBtn[sender]?.frame.origin.x -= 50
+                
+            }, completion: nil)
+            sender.tag = 1
+        }else if sender.tag == 1{
+            UIView.animate(withDuration: slideAnimationTime, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
+                sender.transform = CGAffineTransform(rotationAngle: 2 * CGFloat.pi / 2)
+                self.editPlan[sender]?.frame.origin.x = sender.frame.origin.x
+                self.removePlan[sender]?.frame.origin.x = sender.frame.origin.x
+                self.viewPlanBtn[sender]?.frame.origin.x = sender.frame.origin.x
+                self.editPlan[sender]?.alpha = 0
+                self.removePlan[sender]?.alpha = 0
+                self.viewPlanBtn[sender]?.alpha = 0
+            }, completion: nil)
+            sender.tag = 0
+        }
+    }
+    @objc func remove(_ sender: UIButton){
+        let alert = UIAlertController(title: Localized.removePlanMsg.rawValue.localized(), message: btnTrip[sender]?.T_Title, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: Localized.Yes.rawValue.localized(), style: .default, handler: { _ in
-//            self.network.send(url: "https://scripttrip.scarletsc.net/iOS/bookmark.php?user=\(Session.user.UID)&trip=\(self.btnTrip[sender]!.TID)", method: "DELETE", query: nil) { (data) in
-//                guard let result = Session.parser.parse(data!) else {return}
-//                for item in result{
-//                    if (item["Result"] as! String) == "OK"{
-//                        self.setup()
-//                    }else{
-//                        SVProgressHUD.showInfo(withStatus: Localized.Fail.rawValue.localized() + "\n\(item["Reason"] as! String)")
-//                        SVProgressHUD.dismiss(withDelay: 1.5)
-//                    }
-//                }
-//            }
+            self.network.send(url: "https://scripttrip.scarletsc.net/iOS/plan.php?user=\(Session.user.UID)&plan=\(self.btnTrip[sender]!.TID)", method: "DELETE", query: nil) { (data) in
+                guard let result = Session.parser.parse(data!) else {return}
+                for item in result{
+                    if (item["Result"] as! String) == "OK"{
+                        self.setup()
+                    }else{
+                        SVProgressHUD.showInfo(withStatus: Localized.Fail.rawValue.localized() + "\n\(item["Reason"] as! String)")
+                        SVProgressHUD.dismiss(withDelay: 1.5)
+                    }
+                }
+            }
         }))
         alert.addAction(UIAlertAction(title: Localized.Cancel.rawValue.localized(), style: .cancel, handler: nil))
         self.present(alert, animated: true, completion: nil)
+    }
+    @objc func edit(_ sender: UIButton){
+        
+    }
+    @objc func viewPlan(_ sender: UIButton){
+        tripView.displayTrip = planTripBtn[sender]
+        tripView.headerImg = UIImage()
+        let gradient = CAGradientLayer()
+        gradient.frame = CGRect(x: 0, y: 0, width: 800, height: 800)
+        gradient.colors = colors[sender.tag % colors.count]
+        gradient.startPoint = CGPoint(x: 0, y: 0)
+        gradient.endPoint = CGPoint(x: 1, y: 1)
+        tripView.gradientMask = gradient
+        tripView.show()
     }
     
     //FUNC
