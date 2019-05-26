@@ -285,15 +285,26 @@ class Plans: UIViewController, UICollectionViewDelegate, UICollectionViewDataSou
         
     }
     @objc func viewPlan(_ sender: UIButton){
-        tripView.displayTrip = planTripBtn[sender]
-        tripView.headerImg = UIImage()
-        let gradient = CAGradientLayer()
-        gradient.frame = CGRect(x: 0, y: 0, width: 800, height: 800)
-        gradient.colors = colors[sender.tag % colors.count]
-        gradient.startPoint = CGPoint(x: 0, y: 0)
-        gradient.endPoint = CGPoint(x: 1, y: 1)
-        tripView.gradientMask = gradient
-        tripView.show()
+        network.send(url: "https://scripttrip.scarletsc.net/iOS/plan.php?user=\(session.usr.UID)&PID=\(planTripBtn[sender]!.TID)&mode=item", method: "GET", query: nil, completion: { data in
+            
+            guard let data = data else {return}
+            
+            self.planTripBtn[sender]?.Items = self.session.parsePlanItem(Session.parser.parse(data))!
+            self.tripView.displayTrip = self.planTripBtn[sender]
+            self.tripView.headerImg = UIImage()
+            let gradient = CAGradientLayer()
+            gradient.frame = CGRect(x: 0, y: 0, width: 800, height: 800)
+            gradient.colors = self.colors[sender.tag % self.colors.count]
+            gradient.startPoint = CGPoint(x: 0, y: 0)
+            gradient.endPoint = CGPoint(x: 1, y: 1)
+            self.tripView.gradientMask = gradient
+            self.tripView.isCustomPlan = true
+            DispatchQueue.main.async {
+                self.tripView.show()
+            }
+            
+        })
+        
     }
     
     //FUNC

@@ -83,7 +83,10 @@ class TripView: NSObject, UICollectionViewDelegateFlowLayout, UICollectionViewDe
                     })
                 }
             }else{
-                cell.img.alpha = 0
+                if isCustomPlan{
+                    cell.img.alpha = 0
+                    cell.content.frame.origin.y -= (collectionView.frame.width / 3 * 2)
+                }
             }
             
             
@@ -130,7 +133,11 @@ class TripView: NSObject, UICollectionViewDelegateFlowLayout, UICollectionViewDe
         }else if indexPath.row == 1{
             return .init(width: collectionView.frame.width, height: heightForItem[0])
         }else{
-            return .init(width: collectionView.frame.width, height: heightForItem[indexPath.row - 1] + (collectionView.frame.width / 3 * 2))
+            if isCustomPlan{
+                return .init(width: collectionView.frame.width, height: heightForItem[indexPath.row - 1])
+            }else{
+                return .init(width: collectionView.frame.width, height: heightForItem[indexPath.row - 1] + (collectionView.frame.width / 3 * 2))
+            }
         }
         
     }
@@ -157,11 +164,13 @@ class TripView: NSObject, UICollectionViewDelegateFlowLayout, UICollectionViewDe
     var heightForItem = [CGFloat]()
     var dimBg: UIView!
     var gradientMask: CAGradientLayer?
+    var isCustomPlan: Bool!
     
     //INIT
     init(delegate: UIViewController, haveTabBar: Bool){
         super.init()
         DispatchQueue.main.async {
+            self.isCustomPlan = false
             self.delegate = delegate
             self.window = UIApplication.shared.keyWindow
             self.view = UIView()
@@ -357,6 +366,11 @@ class TripView: NSObject, UICollectionViewDelegateFlowLayout, UICollectionViewDe
                 headerImg = Session.imgCache.object(forKey: displayTrip!)
             }
         }
+        
+        if isCustomPlan{
+            actionBtn.alpha = 0
+        }
+        
         DispatchQueue.main.async {
             self.contents.reloadData()
         }
@@ -497,5 +511,6 @@ class TripView: NSObject, UICollectionViewDelegateFlowLayout, UICollectionViewDe
         }
         headerImg = nil
         gradientMask = nil
+        isCustomPlan = false
     }
 }
