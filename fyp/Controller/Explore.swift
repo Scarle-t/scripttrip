@@ -27,7 +27,7 @@ class Explore: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, U
     var pins = [UITapGestureRecognizer : MKPointAnnotation]()
     var taps = 0
     var tripView: TripView!
-    
+    var filters = Set<Category>()
     
     //IBOUTLET
     @IBOutlet weak var mk: MKMapView!
@@ -59,13 +59,13 @@ class Explore: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, U
     }
     
     @IBAction func closeFilter(_ sender: UIButton) {
-        UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut, animations: {
+        UIView.animate(withDuration: slideAnimationTime, delay: 0, options: .curveEaseOut, animations: {
             self.filterMenu.frame = CGRect(x: self.filterMenu.frame.minX, y: self.view.frame.maxY + 100, width: self.filterMenu.frame.width, height: self.filterMenu.frame.height)
         }, completion: nil)
     }
     
     @IBAction func openFilter(_ sender: UIButton) {
-        UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseIn, animations: {
+        UIView.animate(withDuration: slideAnimationTime, delay: 0, options: .curveEaseOut, animations: {
             self.filterMenu.frame = CGRect(x: self.filterMenu.frame.minX, y: self.originalFilterMenuY, width: self.filterMenu.frame.width, height: self.filterMenu.frame.height)
         }, completion: nil)
     }
@@ -82,6 +82,11 @@ class Explore: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, U
         }, completion: nil)
         
     }
+    @IBAction func clearFliters(_ sender: UIButton) {
+        filters.removeAll()
+        filterList.reloadData()
+        mkAnnos()
+    }
     
     //DELEGATION
         //TABLE VIEW
@@ -95,12 +100,40 @@ class Explore: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, U
         cell?.textLabel?.text = "\(cateEnum.init(rawValue: session.getCategories()[indexPath.row].CID)!)".localized()
         
         let img = UIImageView(image: session.cate_icons[session.getCategories()[indexPath.row].CID - 1])
-        
         img.frame = CGRect(x: 0, y: 0, width: 55, height: 55)
         
-        cell?.accessoryView = img
+        let tick = UIImageView(image: #imageLiteral(resourceName: "small_tick_tint"))
+        tick.frame = CGRect(x: 0, y: 0, width: 40, height: 40)
         
+        if filters.contains(session.getCategories()[indexPath.row]){
+            let tick = UIImageView(image: #imageLiteral(resourceName: "small_tick_tint"))
+            tick.frame = CGRect(x: 0, y: 0, width: 55, height: 55)
+            cell?.accessoryView = tick
+        }else{
+            let img = UIImageView(image: session.cate_icons[session.getCategories()[indexPath.row].CID - 1])
+            img.frame = CGRect(x: 0, y: 0, width: 55, height: 55)
+            cell?.accessoryView = img
+        }
         return cell!
+    }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let cell = tableView.cellForRow(at: indexPath)
+        let id = session.getCategories()[indexPath.row]
+        
+        cell?.setSelected(false, animated: true)
+        
+        if filters.contains(id){
+            let img = UIImageView(image: session.cate_icons[id.CID - 1])
+            img.frame = CGRect(x: 0, y: 0, width: 55, height: 55)
+            filters.remove(id)
+            cell?.accessoryView = img
+        }else{
+            let tick = UIImageView(image: #imageLiteral(resourceName: "small_tick_tint"))
+            tick.frame = CGRect(x: 0, y: 0, width: 55, height: 55)
+            filters.insert(id)
+            cell?.accessoryView = tick
+        }
+        mkAnnos()
     }
     
         //COLLECTION VIEW
@@ -145,10 +178,8 @@ class Explore: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, U
         
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
         tripView.displayTrip = selectedTrips[indexPath.row]
         tripView.show()
-        
     }
         //LOCATION MANAGER
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
@@ -288,7 +319,7 @@ class Explore: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, U
     
     //FUNC
     fileprivate func mkAnnos() {
-        
+        mk.removeAnnotations(mk.annotations)
         for trip in session.getTrips(){
             let anno = MKPointAnnotation()
             anno.coordinate = CLLocationCoordinate2D(latitude: trip.Items[0].I_Lat, longitude: trip.Items[0].I_Longt)
@@ -298,15 +329,20 @@ class Explore: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, U
             let search = MKLocalSearch(request: localSearch)
             search.start { (response, error) in
                 guard let res = response, error == nil else {return}
-                
                anno.title = res.mapItems.first?.name
-                
             }
             
-            self.mk.addAnnotation(anno)
+            if filters.count != 0{
+                for item in filters{
+                    if trip.Category == item.C_Name{
+                        self.mk.addAnnotation(anno)
+                    }
+                }
+            }else{
+                self.mk.addAnnotation(anno)
+            }
             trips[anno] = trip
         }
-        
     }
     
     func delegate(){

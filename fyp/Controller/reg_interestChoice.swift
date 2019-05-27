@@ -56,6 +56,12 @@ class reg_interestChoice: UIViewController, UICollectionViewDelegate, UICollecti
             cell.alpha = 1
         }
         
+        if session.regInterest.contains(session.getCategories()[indexPath.row]){
+            cell.white.alpha = 1
+        }else{
+            cell.white.alpha = 0
+        }
+        
         return cell
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -64,20 +70,16 @@ class reg_interestChoice: UIViewController, UICollectionViewDelegate, UICollecti
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
         let cell = collectionView.cellForItem(at: indexPath) as! cateChoiceCell
+        let choice = session.getCategories()[indexPath.row]
+        let set = session.regInterest
         
-        switch cell.tag{
-        case 0:
-            cell.white.alpha = 1
-            session.regInterest.insert(session.getCategories()[indexPath.row])
-            cell.tag = 1
-        case 1:
+        if set.contains(choice){
             cell.white.alpha = 0
             session.regInterest.remove(session.getCategories()[indexPath.row])
-            cell.tag = 0
-        default:
-            break
+        }else{
+            cell.white.alpha = 1
+            session.regInterest.insert(session.getCategories()[indexPath.row])
         }
-        
     }
     
         //NETWORK

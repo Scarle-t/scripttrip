@@ -377,14 +377,14 @@ class TripView: NSObject, UICollectionViewDelegateFlowLayout, UICollectionViewDe
         
         if !UserDefaults.standard.bool(forKey: "reduceMotion"){
             self.view.alpha = 1
-            UIView.animate(withDuration: slideAnimationTime, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
+            UIView.animate(withDuration: slideAnimationTime + 0.1, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
                 self.view.frame.origin.y = 75
                 self.dimBg.alpha = dimViewAlpha
             }, completion: nil)
         }else{
             self.view.frame.origin.y = 75
             self.view.alpha = 0
-            UIView.animate(withDuration: slideAnimationTime, delay: 0, options: .curveEaseOut, animations: {
+            UIView.animate(withDuration: fadeAnimationTime, delay: 0, options: .curveEaseOut, animations: {
                 self.view.alpha = 1
                 self.dimBg.alpha = dimViewAlpha
             }, completion: nil)
