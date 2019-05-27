@@ -90,6 +90,11 @@ enum Localized: String{
     case removePlanMsg
     case removeItemMsg
     case Delete
+    case myPlan
+    case Shared
+    case from
+    case created
+    case shareTo
 }
 
 enum locale: String, CaseIterable{

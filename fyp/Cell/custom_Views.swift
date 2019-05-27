@@ -28,6 +28,7 @@ class featuredCell: UICollectionViewCell {
     @IBOutlet weak var viewPost: UIButton!
     @IBOutlet weak var edit: UIButton!
     @IBOutlet weak var delete: UIButton!
+    @IBOutlet weak var sharer: UILabel!
 }
 
 class contentViewCell: UICollectionViewCell{
@@ -49,6 +50,7 @@ class HeaderView: UICollectionReusableView {
 
 class categoryTripsHeader: UICollectionReusableView{
     @IBOutlet weak var title: UILabel!
+    @IBOutlet weak var segment: UISegmentedControl!
 }
 
 class contentHeader: UICollectionReusableView{

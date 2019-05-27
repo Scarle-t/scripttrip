@@ -319,7 +319,10 @@ class Explore: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, U
     
     //FUNC
     fileprivate func mkAnnos() {
-        mk.removeAnnotations(mk.annotations)
+        DispatchQueue.main.async {
+            self.mk.removeAnnotations(self.mk.annotations)
+        }
+        
         for trip in session.getTrips(){
             let anno = MKPointAnnotation()
             anno.coordinate = CLLocationCoordinate2D(latitude: trip.Items[0].I_Lat, longitude: trip.Items[0].I_Longt)
@@ -335,11 +338,15 @@ class Explore: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, U
             if filters.count != 0{
                 for item in filters{
                     if trip.Category == item.C_Name{
-                        self.mk.addAnnotation(anno)
+                        DispatchQueue.main.async {
+                            self.mk.addAnnotation(anno)
+                        }
                     }
                 }
             }else{
-                self.mk.addAnnotation(anno)
+                DispatchQueue.main.async {
+                    self.mk.addAnnotation(anno)
+                }
             }
             trips[anno] = trip
         }

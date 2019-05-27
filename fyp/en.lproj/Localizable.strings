@@ -40,6 +40,8 @@
 "firstName" = "First Name";
 "lastName" = "Last Name";
 "name" = "Name";
+"from" = "from ";
+"created" = "";
 
 "Yes" = "Yes";
 "OK" = "OK";
@@ -62,6 +64,9 @@
 "reduceMotion" = "Reduce Motion";
 "tfaText" = "2-Factor Authentication";
 "Delete" = "Delete";
+"myPlan" = "My Plan";
+"Shared" = "Shared";
+"shareTo" = "Share to";
 
 "introText" = "ScriptTrip provides an entire new way to experience outgoing\n\nJoin us now";
 "getStarted" = "Get Started";

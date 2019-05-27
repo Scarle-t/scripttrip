@@ -1,0 +1,188 @@
+//
+//  searchShare.swift
+//  fyp
+//
+//  Created by Scarlet on R1/M/28.
+//  Copyright © 1 Scarlet. All rights reserved.
+//
+
+import UIKit
+
+class searchShare: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, NetworkDelegate {
+    
+    //VARIABLE
+    let session = Session.shared
+    let network = Network()
+    var results: [ShareUser]?
+    var searchBar: UISearchBar!
+    var postID: Int?
+    
+    //IBOUTLET
+    @IBOutlet weak var searchResult: UITableView!
+    
+    //IBACTION
+    
+    
+    //DELEGATION
+        //TABLE VIEW
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return results?.count ?? 0
+    }
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "cell")
+        
+        guard let user = results?[indexPath.row] else {return cell}
+        
+        cell.textLabel?.text = user.FullName
+        cell.detailTextLabel?.text = user.email
+        cell.detailTextLabel?.font = UIFont(name: "AvenirNext-Regular", size: 16)
+        cell.textLabel?.font = UIFont(name: "AvenirNext-DemiBold", size: 22)
+        
+        return cell
+    }
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let header = UIView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: 112))
+        
+        let menu = UIButton(frame: CGRect(x: 18, y: 16, width: 30, height: 30))
+        menu.setImage(#imageLiteral(resourceName: "left_tint"), for: .normal)
+        menu.addTarget(self, action: #selector(userMenu(_:)), for: .touchUpInside)
+        
+        let text = UILabel(frame: CGRect(x: 0, y: 0, width: header.frame.width, height: 63))
+        text.text = Localized.shareTo.rawValue.localized()
+        text.textColor = "42C89D".uiColor
+        text.font = UIFont(name: "AvenirNext-Heavy", size: 30)
+        text.frame.origin.x = 63
+        
+        searchBar.frame = CGRect(x: 0, y: 62, width: header.frame.width, height: 50)
+        searchBar.isTranslucent = false
+        searchBar.tintColor = "42D89D".uiColor
+        searchBar.barTintColor = .white
+        searchBar.searchBarStyle = .minimal
+        searchBar.placeholder = Localized.email.rawValue.localized()
+        
+        for view : UIView in (searchBar.subviews[0]).subviews {
+            if let textField = view as? UITextField {
+                textField.font = UIFont(name: "AvenirNext-Medium", size: 15)
+            }
+        }
+        
+        header.backgroundColor = .white
+        
+        header.addSubview(text)
+        header.addSubview(menu)
+        header.addSubview(searchBar)
+        
+        return header
+        
+    }
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 112
+    }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.cellForRow(at: indexPath)?.setSelected(false, animated: true)
+        let alert = UIAlertController(title: Localized.shareTo.rawValue.localized() + " " + (results?[indexPath.row].FullName)!, message: nil, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: Localized.Yes.rawValue.localized(), style: .default, handler: { (_) in
+            self.network.send(url: "https://scripttrip.scarletsc.net/iOS/share.php?user=\(self.results![indexPath.row].UID)&post=\(self.postID!)", method: "CHECK", query: nil, completion: { (data) in
+                guard let result = Session.parser.parse(data!) else {return}
+                for item in result{
+                    if (item["Result"] as! String) == "Exist"{
+                        SVProgressHUD.showInfo(withStatus: Localized.Shared.rawValue.localized())
+                        SVProgressHUD.dismiss(withDelay: 1.5)
+                    }else if (item["Result"] as! String) == "Non exist"{
+                        self.network.send(url: "https://scripttrip.scarletsc.net/iOS/share.php", method: "POST", query: "shareFrom=\(self.session.usr.UID)&shareTo=\(self.results![indexPath.row].UID)&post=\(self.postID!)", completion: { (d) in
+                            guard let result = Session.parser.parse(d!) else {return}
+                            for item in result{
+                                if (item["Result"] as! String) == "OK"{
+                                    SVProgressHUD.showSuccess(withStatus: Localized.Shared.rawValue.localized())
+                                    SVProgressHUD.dismiss(withDelay: 1.5)
+                                }else{
+                                    SVProgressHUD.showError(withStatus: item["Reason"] as? String)
+                                    SVProgressHUD.dismiss(withDelay: 1.5)
+                                }
+                            }
+                        })
+                    }
+                }
+            })
+        }))
+        alert.addAction(UIAlertAction(title: Localized.Cancel.rawValue.localized(), style: .cancel, handler: nil))
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+        //NETWORK
+    func ResponseHandle(data: Data) {
+        results = session.parseShareUser(Session.parser.parse(data))
+        DispatchQueue.main.async {
+            self.searchResult.reloadData()
+        }
+    }
+        //SEARCH
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        search(searchBar)
+    }
+    
+    //OBJC FUNC
+    @objc func userMenu(_ sender: UIButton){
+        self.navigationController?.popViewController(animated: true)
+    }
+    @objc func dismissKb(){
+        view.endEditing(true)
+    }
+    
+    //FUNC
+    func search(_ sender: UISearchBar){
+        view.endEditing(true)
+        results?.removeAll()
+        guard let text = sender.text, !text.isEmpty else {
+            searchResult.reloadData()
+            return
+        }
+        
+        var query = "query=\(text)"
+        
+        query = query.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
+        
+        network.send(url: "https://scripttrip.scarletsc.net/iOS/searchShareUser.php?\(query)", method: "GET", query: nil)
+    }
+    
+    func delegate(){
+        searchBar = UISearchBar()
+        searchBar.delegate = self
+        
+        searchResult.delegate = self
+        searchResult.dataSource = self
+        
+        network.delegate = self
+    }
+    
+    func layout(){
+        let toolBar = UIToolbar()
+        let spaceButton = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        let cancelButton = UIBarButtonItem(title: Localized.hideKB.rawValue.localized(), style: .plain, target: self, action: #selector(dismissKb))
+        toolBar.barStyle = .default
+        toolBar.tintColor = "42C89D".uiColor
+        toolBar.isTranslucent = false
+        toolBar.sizeToFit()
+        toolBar.setItems([spaceButton, cancelButton], animated: false)
+        toolBar.isUserInteractionEnabled = true
+        cancelButton.setTitleTextAttributes([NSAttributedString.Key.font : UIFont(name: "AvenirNext-DemiBold", size: 17)!], for: .normal)
+        searchBar.inputAccessoryView = toolBar
+    }
+    
+    func setup(){
+        searchBar.becomeFirstResponder()
+    }
+    
+    //VIEW CONTROLLER
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        delegate()
+        
+        layout()
+        
+        setup()
+        
+    }
+    
+}

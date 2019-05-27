@@ -387,9 +387,10 @@ class Session: NSObject, UITableViewDelegate, UITableViewDataSource, UICollectio
     func reloadLocale(){
         settings[1] = Localized.bookmarks.rawValue.localized()
         settings[2] = Localized.history.rawValue.localized()
-        settings[3] = Localized.accountSettings.rawValue.localized()
-        settings[4] = Localized.deviceSettings.rawValue.localized()
-        settings[5] = Localized.about.rawValue.localized()
+        settings[3] = Localized.plans.rawValue.localized()
+        settings[4] = Localized.accountSettings.rawValue.localized()
+        settings[5] = Localized.deviceSettings.rawValue.localized()
+        settings[6] = Localized.about.rawValue.localized()
         reloadUserTable()
     }
     func reloadUserTable(){
@@ -483,6 +484,7 @@ class Session: NSObject, UITableViewDelegate, UITableViewDataSource, UICollectio
             
             trip.TID = pid
             trip.T_Title = p_title
+            trip.sharer = (item["sharer"] as? String) ?? nil
             
             returnItem.append(trip)
         }
@@ -505,6 +507,27 @@ class Session: NSObject, UITableViewDelegate, UITableViewDataSource, UICollectio
             itm.I_Image = i_image
             
             returnItem.append(itm)
+        }
+        return returnItem
+    }
+    
+    func parseShareUser(_ item: [NSDictionary]?)->[ShareUser]?{
+        guard let data = item else {return nil}
+        
+        var returnItem = [ShareUser]()
+        
+        for item in data{
+            let user = ShareUser()
+            
+            guard let uid = item["UID"] as? Int else {return nil}
+            guard let email = item["email"] as? String else {return nil}
+            guard let fullname = item["FullName"] as? String else {return nil}
+            
+            user.UID = uid
+            user.email = email
+            user.FullName = fullname
+            
+            returnItem.append(user)
         }
         return returnItem
     }

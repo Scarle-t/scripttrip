@@ -18,6 +18,7 @@ class Trip: NSObject{
     var trends: Int
     var naturalLanguage: String?
     var ts: String?
+    var sharer: String?
     
     //INIT
     override init(){
@@ -28,6 +29,7 @@ class Trip: NSObject{
         trends = 0
         naturalLanguage = nil
         ts = nil
+        sharer = nil
     }
     
 }

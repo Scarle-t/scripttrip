@@ -23,6 +23,7 @@ class Plans: UIViewController, UICollectionViewDelegate, UICollectionViewDataSou
     var planTripBtn = [UIButton : Trip]()
     var mode = ""
     var addBtn: UIButton?
+    var seg: UISegmentedControl?
     
     //IBOUTLET
     @IBOutlet weak var cv: UICollectionView!
@@ -40,6 +41,21 @@ class Plans: UIViewController, UICollectionViewDelegate, UICollectionViewDataSou
         cv.isScrollEnabled = false
         cv.allowsSelection = false
         cv.reloadData()
+    }
+    @IBAction func listChange(_ sender: UISegmentedControl) {
+        switch sender.selectedSegmentIndex{
+        case 0:
+            setup()
+        case 1:
+            DispatchQueue.main.async {
+                self.seg?.isEnabled = false
+            }
+            SVProgressHUD.show()
+            plans?.removeAll()
+            network.send(url: "https://scripttrip.scarletsc.net/iOS/share.php?user=\(session.usr.UID)", method: "GET", query: nil)
+        default:
+            break
+        }
     }
     
     
@@ -110,6 +126,13 @@ class Plans: UIViewController, UICollectionViewDelegate, UICollectionViewDataSou
             cell.layer.shadowOpacity = 0.1
             
             cell.title.text = plan.T_Title
+            if let sharer = plan.sharer{
+                cell.sharer.text = Localized.from.rawValue.localized() + sharer + Localized.created.rawValue.localized()
+                cell.removeBK.alpha = 0
+            }else{
+                cell.sharer.text = nil
+                cell.removeBK.alpha = 1
+            }
             
             cell.view.layer.cornerRadius = 15
             
@@ -183,9 +206,16 @@ class Plans: UIViewController, UICollectionViewDelegate, UICollectionViewDataSou
         case UICollectionView.elementKindSectionHeader:
             let header = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "header", for: indexPath) as! categoryTripsHeader
             
-            header.frame = CGRect(x: 0 , y: 0, width: collectionView.frame.width, height: 62)
+            header.frame = CGRect(x: 0 , y: 0, width: collectionView.frame.width, height: 112)
+            
+            header.segment.setTitle(Localized.myPlan.rawValue.localized(), forSegmentAt: 0)
+            header.segment.setTitle(Localized.Shared.rawValue.localized(), forSegmentAt: 1)
+            
+            header.segment.setTitleTextAttributes([NSAttributedString.Key.font : UIFont(name: "AvenirNext-Medium", size: 14)!], for: .normal)
             
             header.title.text = Localized.plans.rawValue.localized()
+            
+            seg = header.segment
             
             return header
             
@@ -194,28 +224,48 @@ class Plans: UIViewController, UICollectionViewDelegate, UICollectionViewDataSou
         }
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        return .init(width: collectionView.frame.width, height: 62)
+        return .init(width: collectionView.frame.width, height: 112)
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        network.send(url: "https://scripttrip.scarletsc.net/iOS/plan.php?user=\(session.usr.UID)&PID=\(plans![indexPath.row].TID)&mode=item", method: "GET", query: nil, completion: { data in
-            
-            guard let data = data else {return}
-            
-            self.plans?[indexPath.row].Items = self.session.parsePlanItem(Session.parser.parse(data))!
-            self.tripView.displayTrip = self.plans?[indexPath.row]
-            self.tripView.headerImg = UIImage()
-            let gradient = CAGradientLayer()
-            gradient.frame = CGRect(x: 0, y: 0, width: 800, height: 800)
-            gradient.colors = self.colors[indexPath.row % self.colors.count]
-            gradient.startPoint = CGPoint(x: 0, y: 0)
-            gradient.endPoint = CGPoint(x: 1, y: 1)
-            self.tripView.gradientMask = gradient
-            self.tripView.isCustomPlan = true
-            DispatchQueue.main.async {
-                self.tripView.show()
-            }
-            
-        })
+        switch seg?.selectedSegmentIndex{
+        case 0:
+            network.send(url: "https://scripttrip.scarletsc.net/iOS/plan.php?user=\(session.usr.UID)&PID=\(plans![indexPath.row].TID)&mode=item", method: "GET", query: nil, completion: { data in
+                guard let data = data else {return}
+                self.plans?[indexPath.row].Items = self.session.parsePlanItem(Session.parser.parse(data))!
+                self.tripView.displayTrip = self.plans?[indexPath.row]
+                self.tripView.headerImg = UIImage()
+                let gradient = CAGradientLayer()
+                gradient.frame = CGRect(x: 0, y: 0, width: 800, height: 800)
+                gradient.colors = self.colors[indexPath.row % self.colors.count]
+                gradient.startPoint = CGPoint(x: 0, y: 0)
+                gradient.endPoint = CGPoint(x: 1, y: 1)
+                self.tripView.gradientMask = gradient
+                self.tripView.isCustomPlan = true
+                DispatchQueue.main.async {
+                    self.tripView.show()
+                }
+            })
+        case 1:
+            network.send(url: "https://scripttrip.scarletsc.net/iOS/plan.php?user=\(session.usr.UID)&PID=\(plans![indexPath.row].TID)&mode=shared", method: "GET", query: nil, completion: { data in
+                guard let data = data else {return}
+                self.plans?[indexPath.row].Items = self.session.parsePlanItem(Session.parser.parse(data))!
+                self.tripView.displayTrip = self.plans?[indexPath.row]
+                self.tripView.headerImg = UIImage()
+                let gradient = CAGradientLayer()
+                gradient.frame = CGRect(x: 0, y: 0, width: 800, height: 800)
+                gradient.colors = self.colors[indexPath.row % self.colors.count]
+                gradient.startPoint = CGPoint(x: 0, y: 0)
+                gradient.endPoint = CGPoint(x: 1, y: 1)
+                self.tripView.gradientMask = gradient
+                self.tripView.isCustomPlan = true
+                DispatchQueue.main.async {
+                    self.tripView.show()
+                }
+            })
+        default:
+            break
+        }
+        
     }
     
     	//NETWORK
@@ -223,6 +273,10 @@ class Plans: UIViewController, UICollectionViewDelegate, UICollectionViewDataSou
         plans = session.parsePlan(Session.parser.parse(data))
         DispatchQueue.main.async {
             self.cv.reloadData()
+        }
+        SVProgressHUD.dismiss()
+        DispatchQueue.main.async {
+            self.seg?.isEnabled = true
         }
     }
     
@@ -259,11 +313,11 @@ class Plans: UIViewController, UICollectionViewDelegate, UICollectionViewDataSou
                 sender.transform = CGAffineTransform(rotationAngle: 2 * CGFloat.pi / 4)
                 self.editPlan[sender]?.alpha = 1
                 self.removePlan[sender]?.alpha = 1
-//                self.viewPlanBtn[sender]?.alpha = 1
+                self.viewPlanBtn[sender]?.alpha = 1
                 
-                self.removePlan[sender]?.frame.origin.x -= 100
-                self.editPlan[sender]?.frame.origin.x -= 50
-//                self.viewPlanBtn[sender]?.frame.origin.x -= 50
+                self.removePlan[sender]?.frame.origin.x -= 150
+                self.editPlan[sender]?.frame.origin.x -= 100
+                self.viewPlanBtn[sender]?.frame.origin.x -= 50
                 
             }, completion: nil)
             sender.tag = 1
@@ -272,10 +326,10 @@ class Plans: UIViewController, UICollectionViewDelegate, UICollectionViewDataSou
                 sender.transform = CGAffineTransform(rotationAngle: 2 * CGFloat.pi / 2)
                 self.editPlan[sender]?.frame.origin.x = sender.frame.origin.x
                 self.removePlan[sender]?.frame.origin.x = sender.frame.origin.x
-//                self.viewPlanBtn[sender]?.frame.origin.x = sender.frame.origin.x
+                self.viewPlanBtn[sender]?.frame.origin.x = sender.frame.origin.x
                 self.editPlan[sender]?.alpha = 0
                 self.removePlan[sender]?.alpha = 0
-//                self.viewPlanBtn[sender]?.alpha = 0
+                self.viewPlanBtn[sender]?.alpha = 0
             }, completion: nil)
             sender.tag = 0
         }
@@ -304,25 +358,9 @@ class Plans: UIViewController, UICollectionViewDelegate, UICollectionViewDataSou
         self.navigationController?.pushViewController(viewPlan, animated: true)
     }
     @objc func viewPlan(_ sender: UIButton){
-        network.send(url: "https://scripttrip.scarletsc.net/iOS/plan.php?user=\(session.usr.UID)&PID=\(planTripBtn[sender]!.TID)&mode=item", method: "GET", query: nil, completion: { data in
-            
-            guard let data = data else {return}
-            
-            self.planTripBtn[sender]?.Items = self.session.parsePlanItem(Session.parser.parse(data))!
-            self.tripView.displayTrip = self.planTripBtn[sender]
-            self.tripView.headerImg = UIImage()
-            let gradient = CAGradientLayer()
-            gradient.frame = CGRect(x: 0, y: 0, width: 800, height: 800)
-            gradient.colors = self.colors[sender.tag % self.colors.count]
-            gradient.startPoint = CGPoint(x: 0, y: 0)
-            gradient.endPoint = CGPoint(x: 1, y: 1)
-            self.tripView.gradientMask = gradient
-            self.tripView.isCustomPlan = true
-            DispatchQueue.main.async {
-                self.tripView.show()
-            }
-            
-        })
+        let searchShare = storyboard?.instantiateViewController(withIdentifier: "searchShare") as! searchShare
+        searchShare.postID = plans![sender.tag].TID
+        self.navigationController?.pushViewController(searchShare, animated: true)
     }
     
     //FUNC
@@ -340,6 +378,10 @@ class Plans: UIViewController, UICollectionViewDelegate, UICollectionViewDataSou
     }
     
     func setup(){
+        SVProgressHUD.show()
+        DispatchQueue.main.async {
+            self.seg?.isEnabled = false
+        }
         plans?.removeAll()
         network.send(url: "https://scripttrip.scarletsc.net/iOS/plan.php?user=\(session.usr.UID)&mode=plan", method: "GET", query: nil)
     }

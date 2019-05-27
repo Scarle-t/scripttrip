@@ -40,6 +40,8 @@
 "firstName" = "名";
 "lastName" = "姓";
 "name" = "姓名";
+"from" = "由";
+"created" = "建立";
 
 "Yes" = "是";
 "OK" = "好";
@@ -62,6 +64,9 @@
 "reduceMotion" = "減少動態效果";
 "tfaText" = "雙重認證";
 "Delete" = "刪除";
+"myPlan" = "我的行程";
+"Shared" = "已分享";
+"shareTo" = "分享至";
 
 "introText" = "ScriptTrip 為您帶來嶄新的外出體驗\n\n加入我們";
 "getStarted" = "現在開始";
