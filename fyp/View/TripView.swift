@@ -18,7 +18,7 @@ class TripView: NSObject, UICollectionViewDelegateFlowLayout, UICollectionViewDe
         if indexPath.row == 0{
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "contentTitle", for: indexPath) as! contentTitle
             
-            cell.title.frame = CGRect(x: 0, y: 0, width: cell.frame.width, height: 45)
+            cell.title.frame = CGRect(x: 0, y: 0, width: cell.frame.width - 15, height: 45)
             cell.title.font = UIFont(name: "AvenirNext-Heavy", size: 30)
             cell.title.adjustsFontSizeToFitWidth = true
             cell.title.textAlignment = .right
@@ -32,13 +32,13 @@ class TripView: NSObject, UICollectionViewDelegateFlowLayout, UICollectionViewDe
         }else if indexPath.row == 1{
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "mainContent", for: indexPath) as! mainContent
             
-            cell.content.frame = cell.contentView.frame
+            cell.content.frame = CGRect(x: 0, y: 0, width: cell.contentView.frame.width, height: cell.contentView.frame.height)
             cell.content.font = UIFont(name: "AnevirNext-Regular", size: 18)
             cell.content.numberOfLines = 0
             cell.content.text = displayTrip?.Items[0].I_Content
             
             cell.contentView.addSubview(cell.content)
-            cell.content.fillSuperview()
+            cell.content.fillSuperview(padding: UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10))
             
             return cell
         }else{
@@ -52,7 +52,8 @@ class TripView: NSObject, UICollectionViewDelegateFlowLayout, UICollectionViewDe
             cell.img.isUserInteractionEnabled = true
             cell.img.addGestureRecognizer(imgTap)
             
-            cell.content.frame = CGRect(x: 0, y: cell.img.frame.maxY, width: cell.contentView.frame.width, height: heightForItem[indexPath.row - 1])
+            cell.content.frame = CGRect(x: 0, y: cell.img.frame.maxY, width: cell.contentView.frame.width - 20, height: heightForItem[indexPath.row - 1])
+            cell.content.frame.origin.x += 10
             cell.content.font = UIFont(name: "AnevirNext-Regular", size: 18)
             cell.content.numberOfLines = 0
             cell.content.text = displayTrip?.Items[indexPath.row - 1].I_Content
@@ -108,6 +109,9 @@ class TripView: NSObject, UICollectionViewDelegateFlowLayout, UICollectionViewDe
         header.close.setImage(#imageLiteral(resourceName: "cross"), for: .normal)
         header.close.addTarget(self, action: #selector(hide), for: .touchUpInside)
         header.close.backgroundColor = .init(white: 1, alpha: 0.9)
+        header.close.layer.shadowOpacity = 0.7
+        header.close.layer.shadowColor = UIColor.lightGray.cgColor
+        header.close.layer.shadowOffset = CGSize(width: 0, height: 1)
         
         header.img.frame = header.frame
         header.img.contentMode = .scaleAspectFill
@@ -204,23 +208,32 @@ class TripView: NSObject, UICollectionViewDelegateFlowLayout, UICollectionViewDe
             
             self.addBookmark.setImage(#imageLiteral(resourceName: "plus"), for: .normal)
             self.addBookmark.backgroundColor = .init(white: 1, alpha: 0.9)
-            self.addBookmark.frame = CGRect(x: self.view.frame.maxX - 17 - 35, y: 17, width: 45, height: 45)
+            self.addBookmark.frame = CGRect(x: self.view.frame.maxX - 17 - 35, y: 17, width: 35, height: 35)
             self.addBookmark.layer.cornerRadius = 35 / 2
             self.addBookmark.addTarget(self, action: #selector(self.addBk(_:)), for: .touchUpInside)
             self.addBookmark.alpha = 0
+            self.addBookmark.layer.shadowOpacity = 0.7
+            self.addBookmark.layer.shadowColor = UIColor.lightGray.cgColor
+            self.addBookmark.layer.shadowOffset = CGSize(width: 0, height: 1)
             
-            self.actionBtn.setImage(#imageLiteral(resourceName: "action"), for: .normal)
+            self.actionBtn.setImage(#imageLiteral(resourceName: "more"), for: .normal)
             self.actionBtn.backgroundColor = .init(white: 1, alpha: 0.9)
-            self.actionBtn.frame = CGRect(x: self.view.frame.maxX - 17 - 35, y: 17, width: 45, height: 45)
-            self.actionBtn.layer.cornerRadius = 45 / 2
+            self.actionBtn.frame = CGRect(x: self.view.frame.maxX - 17 - 35, y: 17, width: 35, height: 35)
+            self.actionBtn.layer.cornerRadius = 35 / 2
             self.actionBtn.addTarget(self, action: #selector(self.showAction(_:)), for: .touchUpInside)
+            self.actionBtn.layer.shadowOpacity = 0.7
+            self.actionBtn.layer.shadowColor = UIColor.lightGray.cgColor
+            self.actionBtn.layer.shadowOffset = CGSize(width: 0, height: 1)
             
             self.shareBtn.setImage(#imageLiteral(resourceName: "share"), for: .normal)
             self.shareBtn.backgroundColor = .init(white: 1, alpha: 0.9)
-            self.shareBtn.frame = CGRect(x: self.view.frame.maxX - 17 - 35, y: 17, width: 45, height: 45)
+            self.shareBtn.frame = CGRect(x: self.view.frame.maxX - 17 - 35, y: 17, width: 35, height: 35)
             self.shareBtn.layer.cornerRadius = 35 / 2
             self.shareBtn.addTarget(self, action: #selector(self.share(_:)), for: .touchUpInside)
             self.shareBtn.alpha = 0
+            self.shareBtn.layer.shadowOpacity = 0.7
+            self.shareBtn.layer.shadowColor = UIColor.lightGray.cgColor
+            self.shareBtn.layer.shadowOffset = CGSize(width: 0, height: 1)
             
             self.dimBg.frame = (self.window?.frame)!
             self.dimBg.backgroundColor = .black
@@ -264,22 +277,12 @@ class TripView: NSObject, UICollectionViewDelegateFlowLayout, UICollectionViewDe
                 self.shareBtn.frame.origin.x -= 25
                 self.shareBtn.frame.origin.y += 60
                 
-                self.actionBtn.frame = CGRect(x: self.actionBtn.frame.minX, y: self.actionBtn.frame.minY, width: 35, height: 35)
-                self.actionBtn.frame.origin.y += 10
-                
-                self.actionBtn.setImage(#imageLiteral(resourceName: "cross"), for: .normal)
-                
-                self.actionBtn.layer.cornerRadius = 35 / 2
+                self.actionBtn.transform = CGAffineTransform(rotationAngle: 2 * CGFloat.pi / 4)
             }, completion: nil)
             sender.tag = 1
         case 1:
             UIView.animate(withDuration: 0.15, delay: 0, options: .curveEaseOut, animations: {
-                self.actionBtn.layer.cornerRadius = 45 / 2
-                
-                self.actionBtn.frame = CGRect(x: self.actionBtn.frame.minX, y: self.actionBtn.frame.minY, width: 45, height: 45)
-                self.actionBtn.frame.origin.y -= 10
-                
-                self.actionBtn.setImage(#imageLiteral(resourceName: "action"), for: .normal)
+                self.actionBtn.transform = CGAffineTransform(rotationAngle: 2 * CGFloat.pi / 2)
                 
                 self.addBookmark.frame.origin.x += 60
                 self.addBookmark.frame.origin.y -= 10
@@ -326,7 +329,7 @@ class TripView: NSObject, UICollectionViewDelegateFlowLayout, UICollectionViewDe
     func calculateTextHeight(){
         heightForItem.removeAll()
         for item in displayTrip!.Items{
-            heightForItem.append(item.I_Content.calculateHeight(width: contents.frame.width, font: UIFont(name: "AvenirNext-Regular", size: 18)!))
+            heightForItem.append(item.I_Content.calculateHeight(width: contents.frame.width - 20, font: UIFont(name: "AvenirNext-Regular", size: 18)!))
         }
     }
     
@@ -494,10 +497,7 @@ class TripView: NSObject, UICollectionViewDelegateFlowLayout, UICollectionViewDe
         
         if actionBtn.tag == 1{
                 
-            actionBtn.frame = CGRect(x: self.actionBtn.frame.minX, y: self.actionBtn.frame.minY, width: 45, height: 45)
-            actionBtn.frame.origin.y -= 10
-            
-            actionBtn.setImage(#imageLiteral(resourceName: "action"), for: .normal)
+            self.actionBtn.transform = CGAffineTransform(rotationAngle: 2 * CGFloat.pi / 2)
             
             addBookmark.frame.origin.x += 60
             addBookmark.frame.origin.y -= 10

@@ -62,6 +62,15 @@ class createItem: UIViewController, NetworkDelegate{
     //OBJC FUNC
     @objc func dismissKb(){
         view.endEditing(true)
+        content.isEditable = false
+        content.gestureRecognizers?.first?.isEnabled = true
+    }
+    @objc func editText(){
+        if !content.isEditable{
+            content.isEditable = true
+            content.becomeFirstResponder()
+            content.gestureRecognizers?.first?.isEnabled = false
+        }
     }
     
     //FUNC
@@ -86,7 +95,13 @@ class createItem: UIViewController, NetworkDelegate{
     
     func setup(){
         content.text = item?.I_Content
-        content.becomeFirstResponder()
+        let tap = UITapGestureRecognizer(target: self, action: #selector(editText))
+        tap.numberOfTapsRequired = 2
+        content.addGestureRecognizer(tap)
+        content.isEditable = false
+        if content.text.isEmpty{
+            editText()
+        }
     }
     
     //VIEW CONTROLLER

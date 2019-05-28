@@ -75,17 +75,18 @@ class Session: NSObject, UITableViewDelegate, UITableViewDataSource, UICollectio
     
     //USER MENU
     fileprivate var window: UIWindow?
-    fileprivate var userView = UIView()
+    var userView = UIView()
     fileprivate var userTable = UITableView(frame: CGRect(origin: CGPoint.zero, size: CGSize.zero), style: .grouped)
     fileprivate let userIcon = UIImageView()
     fileprivate var iconImg: UIImage?
     fileprivate let closeUser = UIButton()
-    fileprivate let dimView = UIView()
+    let dimView = UIView()
     fileprivate var mainCollectionView: UICollectionView!
     fileprivate let blurBg = UIVisualEffectView(effect: UIBlurEffect(style: .extraLight))
     fileprivate var settings = ["", Localized.bookmarks.rawValue.localized(), Localized.history.rawValue.localized(), Localized.plans.rawValue.localized(), Localized.accountSettings.rawValue.localized(), Localized.deviceSettings.rawValue.localized(), Localized.about.rawValue.localized()]
     fileprivate let group = DispatchGroup()
     fileprivate let loginButton = FBSDKLoginButton()
+    fileprivate var isUserMenuShown = false
     func setupUserView(){
         settings[0] = usr.Fname + " " + usr.Lname
         window = UIApplication.shared.keyWindow

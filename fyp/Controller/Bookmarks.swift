@@ -45,6 +45,9 @@ class Bookmarks: UIViewController, UICollectionViewDelegate, UICollectionViewDat
         cell.layer.shadowColor = UIColor.lightGray.cgColor
         cell.layer.shadowOpacity = 0.1
         
+        cell.removeBK.layer.shadowOpacity = 0.7
+        cell.removeBK.layer.shadowColor = UIColor.lightGray.cgColor
+        cell.removeBK.layer.shadowOffset = CGSize(width: 0, height: 1)
         cell.removeBK.layer.cornerRadius = 35 / 2
         btnTrip[cell.removeBK] = trip
         cell.removeBK.addTarget(self, action: #selector(removeBk(_:)), for: .touchUpInside)

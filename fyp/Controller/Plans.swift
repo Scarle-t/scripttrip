@@ -24,6 +24,7 @@ class Plans: UIViewController, UICollectionViewDelegate, UICollectionViewDataSou
     var mode = ""
     var addBtn: UIButton?
     var seg: UISegmentedControl?
+    var isSharing = [Int : Bool]()
     
     //IBOUTLET
     @IBOutlet weak var cv: UICollectionView!
@@ -130,7 +131,25 @@ class Plans: UIViewController, UICollectionViewDelegate, UICollectionViewDataSou
                 cell.sharer.text = Localized.from.rawValue.localized() + sharer + Localized.created.rawValue.localized()
                 cell.removeBK.alpha = 0
             }else{
-                cell.sharer.text = nil
+                network.send(url: "https://scripttrip.scarletsc.net/iOS/share.php?post=\(plan.TID)", method: "CHECK", query: nil) { (data) in
+                    guard let result = Session.parser.parse(data!) else{
+                        cell.sharer.text = nil
+                        return
+                    }
+                    for item in result{
+                        if (item["Result"] as! String) == "Exist"{
+                            self.isSharing[indexPath.row] = true
+                            DispatchQueue.main.async {
+                                cell.sharer.text = Localized.Sharing.rawValue.localized()
+                            }
+                        }else{
+                            DispatchQueue.main.async {
+                                self.isSharing[indexPath.row] = false
+                                cell.sharer.text = nil
+                            }
+                        }
+                    }
+                }
                 cell.removeBK.alpha = 1
             }
             
@@ -360,6 +379,7 @@ class Plans: UIViewController, UICollectionViewDelegate, UICollectionViewDataSou
     @objc func viewPlan(_ sender: UIButton){
         let searchShare = storyboard?.instantiateViewController(withIdentifier: "searchShare") as! searchShare
         searchShare.postID = plans![sender.tag].TID
+        searchShare.isSharing = isSharing[sender.tag]
         self.navigationController?.pushViewController(searchShare, animated: true)
     }
     

@@ -95,6 +95,9 @@ enum Localized: String{
     case from
     case created
     case shareTo
+    case stopSharing
+    case stopSharingMsg
+    case Sharing
 }
 
 enum locale: String, CaseIterable{

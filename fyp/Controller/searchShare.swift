@@ -16,6 +16,7 @@ class searchShare: UIViewController, UITableViewDelegate, UITableViewDataSource,
     var results: [ShareUser]?
     var searchBar: UISearchBar!
     var postID: Int?
+    var isSharing: Bool?
     
     //IBOUTLET
     @IBOutlet weak var searchResult: UITableView!
@@ -52,6 +53,18 @@ class searchShare: UIViewController, UITableViewDelegate, UITableViewDataSource,
         text.textColor = "42C89D".uiColor
         text.font = UIFont(name: "AvenirNext-Heavy", size: 30)
         text.frame.origin.x = 63
+        
+        if isSharing ?? false{
+            let stopSharingBtn = UIButton()
+            stopSharingBtn.setAttributedTitle(NSAttributedString(string: Localized.stopSharing.rawValue.localized(), attributes: [NSAttributedString.Key.font : UIFont(name: "AvenirNext-Medium", size: 16)!,
+                                                                                                                                  NSAttributedString.Key.foregroundColor : darkGreen.uiColor]), for: .normal)
+            stopSharingBtn.addTarget(self, action: #selector(stopSharing(_:)), for: .touchUpInside)
+            stopSharingBtn.frame = CGRect(x: 0, y: 0, width: 100, height: 45)
+            stopSharingBtn.frame.origin.y = 10
+            stopSharingBtn.frame.origin.x = header.frame.width - 100
+            stopSharingBtn.tintColor = darkGreen.uiColor
+            header.addSubview(stopSharingBtn)
+        }
         
         searchBar.frame = CGRect(x: 0, y: 62, width: header.frame.width, height: 50)
         searchBar.isTranslucent = false
@@ -128,13 +141,37 @@ class searchShare: UIViewController, UITableViewDelegate, UITableViewDataSource,
     @objc func dismissKb(){
         view.endEditing(true)
     }
+    @objc func stopSharing(_ sender: UIButton){
+        let alert = UIAlertController(title: Localized.stopSharingMsg.rawValue.localized(), message: nil, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: Localized.Yes.rawValue.localized(), style: .default, handler: { (_) in
+            self.network.send(url: "https://scripttrip.scarletsc.net/iOS/share.php?user=\(Session.user.UID)&post=\(self.postID!)", method: "DELEtE", query: nil, completion: { (data) in
+                guard let result = Session.parser.parse(data!) else {return}
+                for item in result{
+                    if (item["Result"] as! String) == "OK"{
+                        SVProgressHUD.showSuccess(withStatus: nil)
+                        SVProgressHUD.dismiss(withDelay: 1.5)
+                        DispatchQueue.main.async {
+                            self.navigationController?.popViewController(animated: true)
+                        }
+                    }else{
+                        SVProgressHUD.showError(withStatus: item["Reason"] as? String)
+                        SVProgressHUD.dismiss(withDelay: 1.5)
+                    }
+                }
+            })
+        }))
+        alert.addAction(UIAlertAction(title: Localized.Cancel.rawValue.localized(), style: .cancel, handler: nil))
+        self.present(alert, animated: true, completion: nil)
+    }
     
     //FUNC
     func search(_ sender: UISearchBar){
         view.endEditing(true)
         results?.removeAll()
-        guard let text = sender.text, !text.isEmpty else {
+        guard let text = sender.text, !text.isEmpty, text.validateEmail() else {
             searchResult.reloadData()
+            SVProgressHUD.showInfo(withStatus: Localized.regEmailRegexMsg.rawValue.localized())
+            SVProgressHUD.dismiss(withDelay: 1.5)
             return
         }
         

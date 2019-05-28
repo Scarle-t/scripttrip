@@ -20,7 +20,6 @@ class Featured: UIViewController, UICollectionViewDataSource, UICollectionViewDe
     var yLoc: CGFloat = 0.0
     var timer = Timer()
     var added = false
-    var initialTouchPointSE = CGPoint.zero
     var feedItems = 3
     var state = ""
     var mainRefresh: UIRefreshControl?
@@ -199,15 +198,6 @@ class Featured: UIViewController, UICollectionViewDataSource, UICollectionViewDe
     
     func layout(){
         SVProgressHUD.dismiss()
-//        let layout = cv.collectionViewLayout as! UICollectionViewFlowLayout
-//        layout.sectionHeadersPinToVisibleBounds = true
-//        cv.collectionViewLayout = layout
-
-//        let statusBar: UIView = UIApplication.shared.value(forKey: "statusBar") as! UIView
-//        if statusBar.responds(to: #selector(setter: UIView.backgroundColor)) {
-//            statusBar.backgroundColor = "42E89D".uiColor
-//        }
-        
     }
     
     func setup(){

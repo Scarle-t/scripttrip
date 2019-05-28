@@ -67,6 +67,8 @@
 "myPlan" = "My Plan";
 "Shared" = "Shared";
 "shareTo" = "Share to";
+"stopSharing" = "Stop sharing";
+"Sharing" = "Sharing";
 
 "introText" = "ScriptTrip provides an entire new way to experience outgoing\n\nJoin us now";
 "getStarted" = "Get Started";
@@ -98,6 +100,7 @@
 "removePlanMsg" = "Are you sure you want to remove this Plan? This will also remove all items in the Plan!";
 "removeItemMsg" = "Are you sure you want to remove this item?";
 "historyClearMsg" = "Are you sure you want to clear your history? This cannot be undo!";
+"stopSharingMsg" = "Are you sure you want to stop sharing this plan？ Shared users can no longer access this plan!";
 
 "fun" = "Fun";
 "dining" = "Dining";
