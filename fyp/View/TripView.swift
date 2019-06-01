@@ -33,8 +33,11 @@ class TripView: NSObject, UICollectionViewDelegateFlowLayout, UICollectionViewDe
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "mainContent", for: indexPath) as! mainContent
             
             cell.content.frame = CGRect(x: 0, y: 0, width: cell.contentView.frame.width, height: cell.contentView.frame.height)
-            cell.content.font = UIFont(name: "AnevirNext-Regular", size: 18)
-            cell.content.numberOfLines = 0
+            cell.content.font = UIFont(name: "AvenirNext-Regular", size: 18)
+            cell.content.dataDetectorTypes = [.address, .link, .calendarEvent, .flightNumber, .phoneNumber]
+            cell.content.isEditable = false
+            cell.content.isScrollEnabled = false
+            cell.content.tintColor = darkGreen.uiColor
             cell.content.text = displayTrip?.Items[0].I_Content
             
             cell.contentView.addSubview(cell.content)
@@ -54,8 +57,11 @@ class TripView: NSObject, UICollectionViewDelegateFlowLayout, UICollectionViewDe
             
             cell.content.frame = CGRect(x: 0, y: cell.img.frame.maxY, width: cell.contentView.frame.width - 20, height: heightForItem[indexPath.row - 1])
             cell.content.frame.origin.x += 10
-            cell.content.font = UIFont(name: "AnevirNext-Regular", size: 18)
-            cell.content.numberOfLines = 0
+            cell.content.font = UIFont(name: "AvenirNext-Regular", size: 18)
+            cell.content.dataDetectorTypes = [.address, .link, .calendarEvent, .flightNumber, .phoneNumber]
+            cell.content.isEditable = false
+            cell.content.isScrollEnabled = false
+            cell.content.tintColor = darkGreen.uiColor
             cell.content.text = displayTrip?.Items[indexPath.row - 1].I_Content
             
             cell.contentView.addSubview(cell.img)
@@ -375,7 +381,7 @@ class TripView: NSObject, UICollectionViewDelegateFlowLayout, UICollectionViewDe
     func calculateTextHeight(){
         heightForItem.removeAll()
         for item in displayTrip!.Items{
-            heightForItem.append(item.I_Content.calculateHeight(width: contents.frame.width - 20, font: UIFont(name: "AvenirNext-Regular", size: 18)!))
+            heightForItem.append(item.I_Content.calculateHeight(width: contents.frame.width - 20, font: UIFont(name: "AvenirNext-Regular", size: 18)!) + 30)
         }
     }
     

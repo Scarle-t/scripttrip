@@ -63,12 +63,12 @@ class contentTitle: UICollectionViewCell{
 }
 
 class mainContent: UICollectionViewCell{
-    var content = UILabel()
+    var content = UITextView()
 }
 
 class secondaryContent: UICollectionViewCell{
     var img = UIImageView()
-    var content = UILabel()
+    var content = UITextView()
 }
 
 class cateChoiceCell: UICollectionViewCell{
