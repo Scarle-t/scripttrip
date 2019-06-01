@@ -14,12 +14,14 @@ class ShareUser: NSObject{
     var UID: Int
     var email: String
     var FullName: String
+    var icon: String?
     
     //INIT
     override init(){
         UID = 0
         email = ""
         FullName = ""
+        icon = nil
     }
     
 }

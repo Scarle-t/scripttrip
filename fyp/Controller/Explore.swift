@@ -65,9 +65,16 @@ class Explore: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, U
     }
     
     @IBAction func openFilter(_ sender: UIButton) {
-        UIView.animate(withDuration: slideAnimationTime, delay: 0, options: .curveEaseOut, animations: {
-            self.filterMenu.frame = CGRect(x: self.filterMenu.frame.minX, y: self.originalFilterMenuY, width: self.filterMenu.frame.width, height: self.filterMenu.frame.height)
-        }, completion: nil)
+        if sender.tag == 0{
+            UIView.animate(withDuration: slideAnimationTime, delay: 0, options: .curveEaseOut, animations: {
+                self.filterMenu.frame = CGRect(x: self.filterMenu.frame.minX, y: self.originalFilterMenuY, width: self.filterMenu.frame.width, height: self.filterMenu.frame.height)
+            }, completion: nil)
+            sender.tag = 1
+        }else if sender.tag == 1{
+            closeFilter(sender)
+            sender.tag = 0
+        }
+        
     }
     
     @IBAction func xClose(_ sender: UIButton) {
@@ -397,7 +404,7 @@ class Explore: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, U
         filterView.layer.shadowColor = UIColor.lightGray.cgColor
         filterView.layer.shadowOffset = CGSize(width: 0, height: 0)
         if #available(iOS 11.0, *) {
-            filterView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
+//            filterView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
         } else {
             // Fallback on earlier versions
         }

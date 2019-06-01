@@ -278,7 +278,9 @@ class TripView: NSObject, UICollectionViewDelegateFlowLayout, UICollectionViewDe
         switch sender.tag{
         case 0:
             UIView.animate(withDuration: 0.2, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
-                self.addBookmark.alpha = 1
+                if !self.isCustomPlan{
+                    self.addBookmark.alpha = 1
+                }
                 self.shareBtn.alpha = 1
                 
                 self.addBookmark.frame.origin.x -= 60
@@ -370,12 +372,14 @@ class TripView: NSObject, UICollectionViewDelegateFlowLayout, UICollectionViewDe
         let textToShare = [pdfData]
         let activityViewController = UIActivityViewController(activityItems: textToShare, applicationActivities: nil)
         activityViewController.popoverPresentationController?.sourceView = self.view
-        UIApplication.shared.keyWindow?.rootViewController?.presentedViewController?.present(activityViewController, animated: true, completion: nil)
+        delegate?.present(activityViewController, animated: true, completion: nil)
     }
     @objc func showImg(_ sender: UITapGestureRecognizer){
-        let photo = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "imgZoom") as! Photo
-        photo.img = tapImgs[sender]
-        delegate?.present(photo, animated: true, completion: nil)
+        if !isCustomPlan{
+            let photo = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "imgZoom") as! Photo
+            photo.img = tapImgs[sender]
+            delegate?.present(photo, animated: true, completion: nil)
+        }
     }
     
     func calculateTextHeight(){

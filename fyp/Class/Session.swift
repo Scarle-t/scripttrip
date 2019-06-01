@@ -525,17 +525,18 @@ class Session: NSObject, UITableViewDelegate, UITableViewDataSource, UICollectio
         var returnItem = [ShareUser]()
         
         for item in data{
-            let user = ShareUser()
+            let shareuser = ShareUser()
             
             guard let uid = item["UID"] as? Int else {return nil}
             guard let email = item["email"] as? String else {return nil}
             guard let fullname = item["FullName"] as? String else {return nil}
             
-            user.UID = uid
-            user.email = email
-            user.FullName = fullname
+            shareuser.UID = uid
+            shareuser.email = email
+            shareuser.FullName = fullname
+            shareuser.icon = (item["icon"] as? String) ?? nil
             
-            returnItem.append(user)
+            returnItem.append(shareuser)
         }
         return returnItem
     }

@@ -26,9 +26,6 @@ class searchShare: UIViewController, UITableViewDelegate, UITableViewDataSource,
     
     //DELEGATION
         //TABLE VIEW
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return (isSharing ?? false) ? 2 : 1
-    }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return results?.count ?? 0
     }
@@ -38,9 +35,20 @@ class searchShare: UIViewController, UITableViewDelegate, UITableViewDataSource,
         guard let user = results?[indexPath.row] else {return cell}
         
         cell.textLabel?.text = user.FullName
-        cell.detailTextLabel?.text = user.email
-        cell.detailTextLabel?.font = UIFont(name: "AvenirNext-Regular", size: 16)
         cell.textLabel?.font = UIFont(name: "AvenirNext-DemiBold", size: 22)
+        
+        if let icon = user.icon{
+            network.getPhoto(url: "\(icon)") { (data, response, error) in
+                guard let data = data, error == nil else {return}
+                DispatchQueue.main.async {
+                    let img = UIImageView(image: UIImage(data: data))
+                    img.frame = CGRect(x: 0, y: 0, width: 60, height: 60)
+                    img.layer.cornerRadius = 60/2
+                    img.clipsToBounds = true
+                    cell.accessoryView = img
+                }
+            }
+        }
         
         return cell
     }
@@ -171,9 +179,9 @@ class searchShare: UIViewController, UITableViewDelegate, UITableViewDataSource,
     func search(_ sender: UISearchBar){
         view.endEditing(true)
         results?.removeAll()
-        guard let text = sender.text, !text.isEmpty, text.validateEmail() else {
+        guard let text = sender.text, !text.isEmpty else {
             searchResult.reloadData()
-            SVProgressHUD.showInfo(withStatus: Localized.regEmailRegexMsg.rawValue.localized())
+            SVProgressHUD.showInfo(withStatus: nil)
             SVProgressHUD.dismiss(withDelay: 1.5)
             return
         }
