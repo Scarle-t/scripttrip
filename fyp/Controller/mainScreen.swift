@@ -75,7 +75,11 @@ class mainScreen: UIViewController, UITextFieldDelegate, NetworkDelegate, FBSDKL
         alert.addTextField { (pass) in
             pass.placeholder = Localized.newPassword.rawValue.localized()
             pass.keyboardType = .asciiCapable
-            pass.textContentType = .newPassword
+            if #available(iOS 12.0, *) {
+                pass.textContentType = .newPassword
+            } else {
+                // Fallback on earlier versions
+            }
             pass.isSecureTextEntry = true
             pass.returnKeyType = .next
             pass.enablesReturnKeyAutomatically = true
@@ -85,7 +89,11 @@ class mainScreen: UIViewController, UITextFieldDelegate, NetworkDelegate, FBSDKL
         alert.addTextField { (verPass) in
             verPass.placeholder = Localized.verifyPassword.rawValue.localized()
             verPass.keyboardType = .asciiCapable
-            verPass.textContentType = .newPassword
+            if #available(iOS 12.0, *) {
+                verPass.textContentType = .newPassword
+            } else {
+                // Fallback on earlier versions
+            }
             verPass.isSecureTextEntry = true
             verPass.returnKeyType = .send
             verPass.enablesReturnKeyAutomatically = true
@@ -192,6 +200,7 @@ class mainScreen: UIViewController, UITextFieldDelegate, NetworkDelegate, FBSDKL
                         self.navigationController?.pushViewController(otp_auth, animated: true)
                     }
                 }else{
+                    userDefault.set(true, forKey: "isLoggedIn")
                     let vct = storyboard?.instantiateViewController(withIdentifier: "vct") as! UITabBarController
                     if whiteView.alpha == 1{
                         self.present(vct, animated: false, completion: {

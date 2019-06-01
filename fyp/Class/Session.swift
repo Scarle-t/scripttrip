@@ -66,7 +66,6 @@ class Session: NSObject, UITableViewDelegate, UITableViewDataSource, UICollectio
             
             userDefault.set(uuid, forKey: "uuid")
             userDefault.set(sessID, forKey: "sessid")
-            userDefault.set(true, forKey: "isLoggedIn")
             
             Network().send(url: "https://scripttrip.scarletsc.net/iOS/session.php", method: "POST", query: "user=\(usr.UID)&uuid=\(uuid!.sha1())&sessID=\(sessID.sha1())")
             
@@ -100,7 +99,11 @@ class Session: NSObject, UITableViewDelegate, UITableViewDataSource, UICollectio
         
         mainCollectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "cell")
         mainCollectionView.register(UICollectionReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "header")
-        mainCollectionView.contentInsetAdjustmentBehavior = .always
+        if #available(iOS 11.0, *) {
+            mainCollectionView.contentInsetAdjustmentBehavior = .always
+        } else {
+            // Fallback on earlier versions
+        }
 //        let layout = mainCollectionView.collectionViewLayout as! UICollectionViewFlowLayout
 //        layout.sectionHeadersPinToVisibleBounds = true
 //        mainCollectionView.collectionViewLayout = layout
@@ -118,7 +121,11 @@ class Session: NSObject, UITableViewDelegate, UITableViewDataSource, UICollectio
         dimView.alpha = 0
         userView.frame = CGRect(x: 0, y: 0, width: (window?.frame.width)! / 3 * 2, height: (window?.frame.height)!)
         userView.layer.cornerRadius = 25
-        userView.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMaxXMaxYCorner]
+        if #available(iOS 11.0, *) {
+            userView.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMaxXMaxYCorner]
+        } else {
+            // Fallback on earlier versions
+        }
         userView.clipsToBounds = true
         userView.backgroundColor = UIColor.clear
         userIcon.frame = CGRect(x: 0, y: 0, width: userView.frame.width, height: userView.frame.width)

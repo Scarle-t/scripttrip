@@ -26,6 +26,9 @@ class searchShare: UIViewController, UITableViewDelegate, UITableViewDataSource,
     
     //DELEGATION
         //TABLE VIEW
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return (isSharing ?? false) ? 2 : 1
+    }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return results?.count ?? 0
     }

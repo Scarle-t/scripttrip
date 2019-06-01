@@ -376,22 +376,38 @@ class Explore: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, U
         closeBtn.layer.cornerRadius = closeBtn.frame.width / 2
         
         navBar.layer.cornerRadius = 12
-        navBar.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+        if #available(iOS 11.0, *) {
+            navBar.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+        } else {
+            // Fallback on earlier versions
+        }
         
         refreshView.layer.cornerRadius = 7
         refreshView.layer.shadowOpacity = 0.7
         refreshView.layer.shadowColor = UIColor.lightGray.cgColor
         refreshView.layer.shadowOffset = CGSize(width: 0, height: 0)
-        refreshView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+        if #available(iOS 11.0, *) {
+            refreshView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+        } else {
+            // Fallback on earlier versions
+        }
         
         filterView.layer.cornerRadius = 7
         filterView.layer.shadowOpacity = 0.7
         filterView.layer.shadowColor = UIColor.lightGray.cgColor
         filterView.layer.shadowOffset = CGSize(width: 0, height: 0)
-        filterView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
+        if #available(iOS 11.0, *) {
+            filterView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
+        } else {
+            // Fallback on earlier versions
+        }
         
         filterMenu.layer.cornerRadius = 23
-        filterMenu.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+        if #available(iOS 11.0, *) {
+            filterMenu.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+        } else {
+            // Fallback on earlier versions
+        }
         filterMenu.layer.shadowOpacity = 0.7
         filterMenu.layer.shadowColor = UIColor.lightGray.cgColor
         filterMenu.layer.shadowOffset = CGSize(width: 0, height: 0)
@@ -431,7 +447,12 @@ class Explore: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, U
     func setup(){
         let pan = UIPanGestureRecognizer(target: self, action: #selector(dismissPlan(_:)))
         navBar.addGestureRecognizer(pan)
-        mk.register(AnnotationView.self, forAnnotationViewWithReuseIdentifier: "AnnotationIdentifier")
+        if #available(iOS 11.0, *) {
+            mk.register(AnnotationView.self, forAnnotationViewWithReuseIdentifier: "AnnotationIdentifier")
+        } else {
+            // Fallback on earlier versions
+            
+        }
         tripView = TripView(delegate: self, haveTabBar: true)
     }
     

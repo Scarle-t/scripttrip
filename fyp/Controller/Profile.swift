@@ -93,13 +93,13 @@ class Profile: UITableViewController, NetworkDelegate {
     //DELEGATE
         //TABLE VIEW
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 2
+        return 3
     }
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section{
         case 0:
             return 2
-        case 1:
+        case 1, 2:
             return 1
         default:
             return 0

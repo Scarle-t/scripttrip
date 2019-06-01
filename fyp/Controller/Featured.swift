@@ -123,6 +123,7 @@ class Featured: UIViewController, UICollectionViewDataSource, UICollectionViewDe
         tripView.headerImg = imgs[session.getTrips()[indexPath.row]]
         tripView.show()
     }
+    @available(iOS 11.0, *)
     func collectionView(_ collectionView: UICollectionView, shouldSpringLoadItemAt indexPath: IndexPath, with context: UISpringLoadedInteractionContext) -> Bool {
         return true
     }

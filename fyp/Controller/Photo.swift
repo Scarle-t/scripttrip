@@ -25,7 +25,11 @@ class Photo: UIViewController, UIScrollViewDelegate{
         statusBar = false
         UIView.animate(withDuration: 0.3) {
             self.setNeedsStatusBarAppearanceUpdate()
-            self.setNeedsUpdateOfHomeIndicatorAutoHidden()
+            if #available(iOS 11.0, *) {
+                self.setNeedsUpdateOfHomeIndicatorAutoHidden()
+            } else {
+                // Fallback on earlier versions
+            }
         }
         self.dismiss(animated: true, completion: nil)
     }
@@ -79,7 +83,11 @@ class Photo: UIViewController, UIScrollViewDelegate{
         
         UIView.animate(withDuration: 0.2) {
             self.setNeedsStatusBarAppearanceUpdate()
-            self.setNeedsUpdateOfHomeIndicatorAutoHidden()
+            if #available(iOS 11.0, *) {
+                self.setNeedsUpdateOfHomeIndicatorAutoHidden()
+            } else {
+                // Fallback on earlier versions
+            }
         }
         
     }

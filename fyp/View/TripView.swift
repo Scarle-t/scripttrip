@@ -201,7 +201,11 @@ class TripView: NSObject, UICollectionViewDelegateFlowLayout, UICollectionViewDe
             self.view.frame = CGRect(x: 0, y: 75, width: (self.window?.frame.width)!, height: (self.window?.frame.height)! - 75)
             self.view.frame.origin.y = (self.window?.frame.height)!
             self.view.layer.cornerRadius = 17
-            self.view.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+            if #available(iOS 11.0, *) {
+                self.view.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+            } else {
+                // Fallback on earlier versions
+            }
             self.view.clipsToBounds = true
             
             self.contents.frame = self.view.frame
@@ -314,8 +318,50 @@ class TripView: NSObject, UICollectionViewDelegateFlowLayout, UICollectionViewDe
         }
     }
     @objc func share(_ sender: UIButton){
-        let text = "Let's go together! - \(displayTrip!.T_Title)\nhttps://scripttrip.scarletsc.net"
-        let textToShare = [ text ]
+//        let text = "Let's go together! - \(displayTrip!.T_Title)\nhttps://scripttrip.scarletsc.net"
+        
+        SVProgressHUD.show()
+        
+        var totalHeight = CGFloat.zero
+        for item in heightForItem{
+            totalHeight += item + 10
+        }
+        let titleHeight = displayTrip!.T_Title.calculateHeight(width: contents.frame.width - 20, font: UIFont(name: "AvenirNext-heavy", size: 30)!)
+        totalHeight += titleHeight + 10
+        var offset = CGFloat.zero
+        
+        let pdfData = NSMutableData()
+        UIGraphicsBeginPDFContextToData(pdfData, CGRect(x: 0, y: 0, width: contents.frame.width, height: totalHeight), nil)
+        let context = UIGraphicsGetCurrentContext()!
+        
+        let rendView = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.width - 20, height: totalHeight))
+        let lbl = UILabel(frame: CGRect(x: 0, y: 0, width: rendView.frame.width, height: titleHeight))
+        lbl.numberOfLines = 0
+        lbl.textAlignment = .center
+        lbl.font = UIFont(name: "AnevirNext-Heavy", size: 30)
+        lbl.text = displayTrip?.T_Title
+        rendView.addSubview(lbl)
+        
+        offset = titleHeight + 10
+        
+        for i in 0..<displayTrip!.Items.count{
+            let lbl2 = UILabel(frame: CGRect(x: 0, y: 0, width: rendView.frame.width, height: heightForItem[i]))
+            lbl2.frame.origin.y = offset
+            lbl2.numberOfLines = 0
+            lbl2.font = UIFont(name: "AnevirNext-Regular", size: 18)
+            lbl2.frame.origin.x += 10
+            lbl2.text = displayTrip?.Items[i].I_Content
+            rendView.addSubview(lbl2)
+            offset += heightForItem[i] + 10
+        }
+        
+        UIGraphicsBeginPDFPage()
+        rendView.layer.render(in: context)
+        UIGraphicsEndPDFContext()
+        
+        SVProgressHUD.dismiss()
+
+        let textToShare = [pdfData]
         let activityViewController = UIActivityViewController(activityItems: textToShare, applicationActivities: nil)
         activityViewController.popoverPresentationController?.sourceView = self.view
         UIApplication.shared.keyWindow?.rootViewController?.presentedViewController?.present(activityViewController, animated: true, completion: nil)
@@ -371,7 +417,7 @@ class TripView: NSObject, UICollectionViewDelegateFlowLayout, UICollectionViewDe
         }
         
         if isCustomPlan{
-            actionBtn.alpha = 0
+            addBookmark.alpha = 0
         }
         
         DispatchQueue.main.async {

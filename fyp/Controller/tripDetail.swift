@@ -85,7 +85,11 @@ class tripDetail: UIViewController, UICollectionViewDataSource, UICollectionView
                 header.plus.addTarget(self, action: #selector(plus(_:)), for: .touchUpInside)
                 
                 header.gradient.layer.cornerRadius = 12
-                header.gradient.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+                if #available(iOS 11.0, *) {
+                    header.gradient.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+                } else {
+                    // Fallback on earlier versions
+                }
                 
                 header.title.text = trip.T_Title
                 
@@ -113,7 +117,11 @@ class tripDetail: UIViewController, UICollectionViewDataSource, UICollectionView
     }
     
     func layout(){
-        contents.contentInsetAdjustmentBehavior = .always
+        if #available(iOS 11.0, *) {
+            contents.contentInsetAdjustmentBehavior = .always
+        } else {
+            // Fallback on earlier versions
+        }
         contents.collectionViewLayout = StretchyHeaderLayout()
     }
     
