@@ -16,7 +16,7 @@ class Plans: UIViewController, UICollectionViewDelegate, UICollectionViewDataSou
     var plans: [Trip]?
     var btnTrip = [UIButton : Trip]()
     var tripView: TripView!
-    let colors: [[CGColor]] = [[lightGreen.uiColor.cgColor, blue.uiColor.cgColor], [blue.uiColor.cgColor, lightGreen.uiColor.cgColor]]
+    let colors: [[CGColor]] = [[lightGreen.cgColor, blue.cgColor], [blue.cgColor, lightGreen.cgColor]]
     var removePlan = [UIButton : UIButton]()
     var editPlan = [UIButton : UIButton]()
     var viewPlanBtn = [UIButton : UIButton]()

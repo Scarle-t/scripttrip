@@ -37,7 +37,7 @@ class TripView: NSObject, UICollectionViewDelegateFlowLayout, UICollectionViewDe
             cell.content.dataDetectorTypes = [.address, .link, .calendarEvent, .flightNumber, .phoneNumber]
             cell.content.isEditable = false
             cell.content.isScrollEnabled = false
-            cell.content.tintColor = darkGreen.uiColor
+            cell.content.tintColor = darkGreen
             cell.content.text = displayTrip?.Items[0].I_Content
             
             cell.contentView.addSubview(cell.content)
@@ -61,7 +61,7 @@ class TripView: NSObject, UICollectionViewDelegateFlowLayout, UICollectionViewDe
             cell.content.dataDetectorTypes = [.address, .link, .calendarEvent, .flightNumber, .phoneNumber]
             cell.content.isEditable = false
             cell.content.isScrollEnabled = false
-            cell.content.tintColor = darkGreen.uiColor
+            cell.content.tintColor = darkGreen
             cell.content.text = displayTrip?.Items[indexPath.row - 1].I_Content
             
             cell.contentView.addSubview(cell.img)

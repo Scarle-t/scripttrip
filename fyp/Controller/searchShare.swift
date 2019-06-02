@@ -35,7 +35,22 @@ class searchShare: UIViewController, UITableViewDelegate, UITableViewDataSource,
         guard let user = results?[indexPath.row] else {return cell}
         
         cell.textLabel?.text = user.FullName
+        cell.detailTextLabel?.text = nil
+        cell.detailTextLabel?.font = UIFont(name: "AvenirNext-Regular", size: 16)
         cell.textLabel?.font = UIFont(name: "AvenirNext-DemiBold", size: 22)
+        
+        self.network.send(url: "https://scripttrip.scarletsc.net/iOS/share.php?user=\(self.results![indexPath.row].UID)&post=\(self.postID!)", method: "CHECK", query: nil, completion: { (data) in
+            guard let result = Session.parser.parse(data!) else {return}
+            DispatchQueue.main.async {
+                for item in result{
+                    if (item["Result"] as! String) == "Exist"{
+                        cell.detailTextLabel?.text = Localized.Sharing.rawValue.localized()
+                    }else if (item["Result"] as! String) == "Non exist"{
+                        cell.detailTextLabel?.text = nil
+                    }
+                }
+            }
+        })
         
         if let icon = user.icon{
             network.getPhoto(url: "\(icon)") { (data, response, error) in
@@ -68,12 +83,12 @@ class searchShare: UIViewController, UITableViewDelegate, UITableViewDataSource,
         if isSharing ?? false{
             let stopSharingBtn = UIButton()
             stopSharingBtn.setAttributedTitle(NSAttributedString(string: Localized.stopSharing.rawValue.localized(), attributes: [NSAttributedString.Key.font : UIFont(name: "AvenirNext-Medium", size: 16)!,
-                                                                                                                                  NSAttributedString.Key.foregroundColor : darkGreen.uiColor]), for: .normal)
+                                                                                                                                  NSAttributedString.Key.foregroundColor : darkGreen]), for: .normal)
             stopSharingBtn.addTarget(self, action: #selector(stopSharing(_:)), for: .touchUpInside)
             stopSharingBtn.frame = CGRect(x: 0, y: 0, width: 100, height: 45)
             stopSharingBtn.frame.origin.y = 10
             stopSharingBtn.frame.origin.x = header.frame.width - 100
-            stopSharingBtn.tintColor = darkGreen.uiColor
+            stopSharingBtn.tintColor = darkGreen
             header.addSubview(stopSharingBtn)
         }
         
@@ -190,7 +205,7 @@ class searchShare: UIViewController, UITableViewDelegate, UITableViewDataSource,
         
         query = query.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
         
-        network.send(url: "https://scripttrip.scarletsc.net/iOS/searchShareUser.php?\(query)", method: "GET", query: nil)
+        network.send(url: "https://scripttrip.scarletsc.net/iOS/searchShareUser.php?\(query)", method: "POST", query: nil)
     }
     
     func delegate(){

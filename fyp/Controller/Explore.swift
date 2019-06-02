@@ -28,6 +28,7 @@ class Explore: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, U
     var taps = 0
     var tripView: TripView!
     var filters = Set<Category>()
+    var pinTapped: UITapGestureRecognizer?
     
     //IBOUTLET
     @IBOutlet weak var mk: MKMapView!
@@ -221,14 +222,13 @@ class Explore: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, U
         else {
             annotationView!.annotation = annotation
             annotationView!.canShowCallout = true
-            annotationView?.rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
+            
+            annotationView?.rightCalloutAccessoryView = UIImageView(image: #imageLiteral(resourceName: "explore_pdf"))
         }
         
         let pinImage = #imageLiteral(resourceName: "mapView")
         annotationView!.image = pinImage
         annotationView?.layer.masksToBounds = false
-        //        annotationView?.layer.shadowColor = UIColor.darkGray.cgColor
-        //        annotationView?.layer.shadowOpacity = 0.7
         
         let tap = UITapGestureRecognizer(target: self, action: #selector(tapPin(_:)))
         
@@ -253,17 +253,13 @@ class Explore: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, U
         
         if taps == 0 {
             taps = 1
-        }else if taps == 1{
+            pinTapped = sender
+        }else if taps == 1 && sender == pinTapped{
             selectedTrips.removeAll()
-            
             selectedTrips.append(trips[pins[sender]!]!)
-            
             locationLabel.text = pins[sender]?.title
-            
             cv.reloadData()
-            
             planView.frame = CGRect(x: planView.frame.minX, y: self.view.frame.height, width: planView.frame.width, height: planView.frame.height)
-            
             if UserDefaults.standard.bool(forKey: "reduceMotion"){
                 self.tabBarController?.tabBar.frame = CGRect(x: (self.tabBarController?.tabBar.frame.minX)!, y: (self.tabBarController?.tabBar.frame.minY)! + (self.tabBarController?.tabBar.frame.height)!, width: (self.tabBarController?.tabBar.frame.width)!, height: (self.tabBarController?.tabBar.frame.height)!)
                 self.planView.frame = CGRect(x: self.planView.frame.minX, y: self.original, width: self.planView.frame.width, height: self.planView.frame.height)
@@ -280,9 +276,7 @@ class Explore: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, U
                     self.blurView.alpha = 1
                 }, completion: nil)
             }
-            
         }
-        
         
     }
     

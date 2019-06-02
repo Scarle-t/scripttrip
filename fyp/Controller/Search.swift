@@ -54,7 +54,7 @@ class Search: UIViewController, UITableViewDelegate, UITableViewDataSource, UISe
         searchBar.frame = CGRect(x: 0, y: 62, width: header.frame.width, height: 100)
         searchBar.isTranslucent = false
         searchBar.showsScopeBar = true
-        searchBar.tintColor = "42D89D".uiColor
+        searchBar.tintColor = darkGreen
         searchBar.barTintColor = .white
         searchBar.searchBarStyle = .minimal
         searchBar.scopeButtonTitles = [Localized.searchTrip.rawValue.localized(), Localized.searchLocation.rawValue.localized()]

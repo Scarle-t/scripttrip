@@ -135,7 +135,11 @@ class Session: NSObject, UITableViewDelegate, UITableViewDataSource, UICollectio
         mainCollectionView.frame = userView.frame
         mainCollectionView.backgroundColor = UIColor.clear
         closeUser.frame = CGRect(x: 5, y: 53, width: 50, height: 50)
-        closeUser.backgroundColor = UIColor.clear
+        closeUser.backgroundColor = bgWhite
+        closeUser.layer.cornerRadius = closeUser.frame.width / 2
+        closeUser.layer.shadowOpacity = 0.7
+        closeUser.layer.shadowColor = UIColor.lightGray.cgColor
+        closeUser.layer.shadowOffset = CGSize(width: 0, height: 1)
         
         blurBg.frame = userView.frame
         userView.addSubview(blurBg)
