@@ -127,7 +127,9 @@ class TripView: NSObject, UICollectionViewDelegateFlowLayout, UICollectionViewDe
         header.img.addGestureRecognizer(imgTap)
         
         header.addSubview(header.img)
-        header.addSubview(header.close)
+        if !haveTabBar{
+            header.addSubview(header.close)
+        }
         
         header.img.fillSuperview()
         
@@ -175,11 +177,13 @@ class TripView: NSObject, UICollectionViewDelegateFlowLayout, UICollectionViewDe
     var dimBg: UIView!
     var gradientMask: CAGradientLayer?
     var isCustomPlan: Bool!
+    var haveTabBar = false
     
     //INIT
     init(delegate: UIViewController, haveTabBar: Bool){
         super.init()
         DispatchQueue.main.async {
+            self.haveTabBar = haveTabBar
             self.isCustomPlan = false
             self.delegate = delegate
             self.window = UIApplication.shared.keyWindow
@@ -437,11 +441,11 @@ class TripView: NSObject, UICollectionViewDelegateFlowLayout, UICollectionViewDe
         if !UserDefaults.standard.bool(forKey: "reduceMotion"){
             self.view.alpha = 1
             UIView.animate(withDuration: slideAnimationTime + 0.1, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
-                self.view.frame.origin.y = 75
+                self.view.frame.origin.y = 65
                 self.dimBg.alpha = dimViewAlpha
             }, completion: nil)
         }else{
-            self.view.frame.origin.y = 75
+            self.view.frame.origin.y = 65
             self.view.alpha = 0
             UIView.animate(withDuration: fadeAnimationTime, delay: 0, options: .curveEaseOut, animations: {
                 self.view.alpha = 1

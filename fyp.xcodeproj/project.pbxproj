@@ -46,6 +46,8 @@
 		A6A67CFE222FE9A700D82479 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A6A67CFC222FE9A700D82479 /* Main.storyboard */; };
 		A6A67D00222FE9A800D82479 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A6A67CFF222FE9A800D82479 /* Assets.xcassets */; };
 		A6A67D03222FE9A800D82479 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A6A67D01222FE9A800D82479 /* LaunchScreen.storyboard */; };
+		A6A9FF5022A6B72100D2E7C5 /* userView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6A9FF4F22A6B72100D2E7C5 /* userView.swift */; };
+		A6A9FF5222A6BFFB00D2E7C5 /* postView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6A9FF5122A6BFFB00D2E7C5 /* postView.swift */; };
 		A6AECE96228703A800B3E68B /* Credit.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6AECE95228703A800B3E68B /* Credit.swift */; };
 		A6AECE992287CE9000B3E68B /* Enumerations.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6AECE982287CE9000B3E68B /* Enumerations.swift */; };
 		A6B28A822274EACA00A6E708 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6B28A812274EACA00A6E708 /* User.swift */; };
@@ -115,6 +117,8 @@
 		A6A67CFF222FE9A800D82479 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A6A67D02222FE9A800D82479 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A6A67D04222FE9A800D82479 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A6A9FF4F22A6B72100D2E7C5 /* userView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = userView.swift; sourceTree = "<group>"; };
+		A6A9FF5122A6BFFB00D2E7C5 /* postView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = postView.swift; sourceTree = "<group>"; };
 		A6AECE95228703A800B3E68B /* Credit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Credit.swift; sourceTree = "<group>"; };
 		A6AECE982287CE9000B3E68B /* Enumerations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enumerations.swift; sourceTree = "<group>"; };
 		A6B28A812274EACA00A6E708 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
@@ -219,6 +223,8 @@
 				A612D417226EC61F004BF88F /* tripDetail.swift */,
 				A639DAED2299670900CBAAAF /* viewPlan.swift */,
 				A6753A92229C870C00C20EDF /* searchShare.swift */,
+				A6A9FF4F22A6B72100D2E7C5 /* userView.swift */,
+				A6A9FF5122A6BFFB00D2E7C5 /* postView.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -421,6 +427,7 @@
 				A61FFBD32289885500E00513 /* DeviceSettings.swift in Sources */,
 				A62259092286C92100B72578 /* SVProgressAnimatedView.m in Sources */,
 				A6A67CFB222FE9A700D82479 /* mainScreen.swift in Sources */,
+				A6A9FF5022A6B72100D2E7C5 /* userView.swift in Sources */,
 				A6A502092275E6620003463F /* TripView.swift in Sources */,
 				A622590B2286C92100B72578 /* SVIndefiniteAnimatedView.m in Sources */,
 				A69B9BEC228D038400FCE27E /* otp_authentication.swift in Sources */,
@@ -457,6 +464,7 @@
 				A6B77B192230192600DA4543 /* Featured.swift in Sources */,
 				A63CE3C4223423EE00F62E1F /* Explore.swift in Sources */,
 				A680EC422280C0EA006E116E /* About.swift in Sources */,
+				A6A9FF5222A6BFFB00D2E7C5 /* postView.swift in Sources */,
 				A6B28A822274EACA00A6E708 /* User.swift in Sources */,
 				A695797D223422F0008F79C4 /* Settings.swift in Sources */,
 				A6B77B1D22302A3600DA4543 /* CategoryView.swift in Sources */,

@@ -119,7 +119,7 @@ class Session: NSObject, UITableViewDelegate, UITableViewDataSource, UICollectio
         dimView.frame = window!.frame
         dimView.backgroundColor = UIColor.black
         dimView.alpha = 0
-        userView.frame = CGRect(x: 0, y: 0, width: (window?.frame.width)! / 3 * 2, height: (window?.frame.height)!)
+        userView.frame = CGRect(x: 0, y: 0, width: (window?.frame.width)!, height: (window?.frame.height)!)
         userView.layer.cornerRadius = 25
         if #available(iOS 11.0, *) {
             userView.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMaxXMaxYCorner]
@@ -177,6 +177,11 @@ class Session: NSObject, UITableViewDelegate, UITableViewDataSource, UICollectio
                 cell.textLabel?.textAlignment = .center
                 cell.accessoryType = .none
                 cell.selectionStyle = .none
+                cell.accessoryView = userIcon
+                userIcon.frame = CGRect(x: 0, y: 0, width: 50, height: 50)
+                userIcon.image = usr.iconImage
+                userIcon.clipsToBounds = true
+                userIcon.layer.cornerRadius = userIcon.frame.width / 2
             }else{
                 cell.textLabel?.font = UIFont(name: "AvenirNext-DemiBold", size: 17)
                 cell.textLabel?.textAlignment = .left
@@ -293,7 +298,7 @@ class Session: NSObject, UITableViewDelegate, UITableViewDataSource, UICollectio
         userTable.removeFromSuperview()
         
         userTable.frame = cell.contentView.frame
-        userTable.contentInset = UIEdgeInsets(top: -35, left: 0, bottom: 0, right: 0)
+//        userTable.contentInset = UIEdgeInsets(top: -35, left: 0, bottom: 0, right: 0)
         userTable.backgroundColor = UIColor.clear
         
         cell.contentView.addSubview(userTable)
@@ -324,7 +329,7 @@ class Session: NSObject, UITableViewDelegate, UITableViewDataSource, UICollectio
             
             header.addSubview(userIcon)
 //            header.addSubview(blur)
-            header.addSubview(closeUser)
+//            header.addSubview(closeUser)
             
             userIcon.fillSuperview()
 //            blur.bottomSuperview()
@@ -336,10 +341,11 @@ class Session: NSObject, UITableViewDelegate, UITableViewDataSource, UICollectio
         }
     }
     internal func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        return .init(width: userView.frame.width, height: userView.frame.width)
+//        return .init(width: userView.frame.width, height: userView.frame.width / 2)
+        return .zero
     }
     internal func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return .init(width: userView.frame.width, height: userView.frame.height - userView.frame.width)
+        return .init(width: userView.frame.width, height: userView.frame.height)
     }
     @objc func closeMenu(){
         if userDefault.bool(forKey: "reduceMotion"){

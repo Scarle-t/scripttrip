@@ -32,7 +32,16 @@ class Featured: UIViewController, UICollectionViewDataSource, UICollectionViewDe
     
     //IBACTION
     @IBAction func userBtn(_ sender: UIButton) {
-        session.showUserMenu()
+//        session.showUserMenu()
+        DispatchQueue.main.async {
+            if #available(iOS 13.0, *) {
+                let userview = self.storyboard?.instantiateViewController(identifier: "userView") as! userView
+                self.present(userview, animated: true, completion: nil)
+            } else {
+                // Fallback on earlier versions
+            }
+            
+        }
     }
     
     //DELEGATION
@@ -102,9 +111,14 @@ class Featured: UIViewController, UICollectionViewDataSource, UICollectionViewDe
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         switch kind{
             case UICollectionView.elementKindSectionHeader:
-                let header = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "header", for: indexPath)
+                let header = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "header", for: indexPath) as! HeaderView
                 
                 header.frame = CGRect(x: 0 , y: 0, width: collectionView.frame.width, height: 62)
+                
+                header.userIcon.setImage(session.usr.iconImage, for: .normal)
+                header.userIcon.contentMode = .scaleAspectFill
+                header.userIcon.clipsToBounds = true
+                header.userIcon.layer.cornerRadius = header.userIcon.frame.width / 2
                 
                 return header
             
@@ -122,6 +136,15 @@ class Featured: UIViewController, UICollectionViewDataSource, UICollectionViewDe
         tripView.displayTrip = session.getTrips()[indexPath.row]
         tripView.headerImg = imgs[session.getTrips()[indexPath.row]]
         tripView.show()
+        DispatchQueue.main.async {
+            if #available(iOS 13.0, *) {
+                let postview = self.storyboard?.instantiateViewController(identifier: "postView") as! postView
+                postview.tripView = self.tripView
+                self.present(postview, animated: true, completion: nil)
+            } else {
+                // Fallback on earlier versions
+            }
+        }
     }
     @available(iOS 11.0, *)
     func collectionView(_ collectionView: UICollectionView, shouldSpringLoadItemAt indexPath: IndexPath, with context: UISpringLoadedInteractionContext) -> Bool {

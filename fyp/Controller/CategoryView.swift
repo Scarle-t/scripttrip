@@ -42,16 +42,18 @@ class CategoryView: UIViewController, UITableViewDataSource, UITableViewDelegate
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let header = UIView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: 62))
         
-        let menu = UIButton(frame: CGRect(x: 10, y: 16, width: 45, height: 30))
-        menu.setImage(#imageLiteral(resourceName: "menu_tint"), for: .normal)
+        let menu = UIButton(frame: CGRect(x: 306, y: 9, width: 45, height: 45))
+        menu.setImage(session.usr.iconImage, for: .normal)
         menu.addTarget(self, action: #selector(userMenu(_:)), for: .touchUpInside)
+        menu.clipsToBounds = true
+        menu.layer.cornerRadius = 45 / 2
         
         let text = UILabel(frame: header.frame)
         text.text = Localized.category.rawValue.localized()
         text.textColor = "42C89D".uiColor
         text.font = UIFont(name: "AvenirNext-Heavy", size: 30)
         
-        text.frame.origin.x = 63
+        text.frame.origin.x = 23
         
         header.backgroundColor = .white
         
@@ -83,7 +85,16 @@ class CategoryView: UIViewController, UITableViewDataSource, UITableViewDelegate
     
     //OBJC FUNC
     @objc func userMenu(_ sender: UIButton){
-        session.showUserMenu()
+//        session.showUserMenu()
+        DispatchQueue.main.async {
+            if #available(iOS 13.0, *) {
+                let userview = self.storyboard?.instantiateViewController(identifier: "userView") as! userView
+                self.present(userview, animated: true, completion: nil)
+            } else {
+                // Fallback on earlier versions
+            }
+            
+        }
     }
     
     //FUNC

@@ -41,15 +41,17 @@ class Search: UIViewController, UITableViewDelegate, UITableViewDataSource, UISe
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let header = UIView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: 162))
         
-        let menu = UIButton(frame: CGRect(x: 10, y: 16, width: 45, height: 30))
-        menu.setImage(#imageLiteral(resourceName: "menu_tint"), for: .normal)
+        let menu = UIButton(frame: CGRect(x: 306, y: 9, width: 45, height: 45))
+        menu.setImage(session.usr.iconImage, for: .normal)
         menu.addTarget(self, action: #selector(userMenu(_:)), for: .touchUpInside)
+        menu.clipsToBounds = true
+        menu.layer.cornerRadius = 45 / 2
         
         let text = UILabel(frame: CGRect(x: 0, y: 0, width: header.frame.width, height: 63))
         text.text = Localized.search.rawValue.localized()
         text.textColor = "42C89D".uiColor
         text.font = UIFont(name: "AvenirNext-Heavy", size: 30)
-        text.frame.origin.x = 63
+        text.frame.origin.x = 23
         
         searchBar.frame = CGRect(x: 0, y: 62, width: header.frame.width, height: 100)
         searchBar.isTranslucent = false
@@ -89,6 +91,15 @@ class Search: UIViewController, UITableViewDelegate, UITableViewDataSource, UISe
         }
         tripView.displayTrip = results?[indexPath.row]
         tripView.show()
+        DispatchQueue.main.async {
+            if #available(iOS 13.0, *) {
+                let postview = self.storyboard?.instantiateViewController(identifier: "postView") as! postView
+                postview.tripView = self.tripView
+                self.present(postview, animated: true, completion: nil)
+            } else {
+                // Fallback on earlier versions
+            }
+        }
     }
     
         //NETWORK
@@ -105,7 +116,16 @@ class Search: UIViewController, UITableViewDelegate, UITableViewDataSource, UISe
     
     //OBJC FUNC
     @objc func userMenu(_ sender: UIButton){
-        session.showUserMenu()
+//        session.showUserMenu()
+        DispatchQueue.main.async {
+            if #available(iOS 13.0, *) {
+                let userview = self.storyboard?.instantiateViewController(identifier: "userView") as! userView
+                self.present(userview, animated: true, completion: nil)
+            } else {
+                // Fallback on earlier versions
+            }
+            
+        }
     }
     @objc func dismissKb(){
         view.endEditing(true)

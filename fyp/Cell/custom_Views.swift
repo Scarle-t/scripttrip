@@ -46,6 +46,7 @@ class HeaderView: UICollectionReusableView {
     @IBOutlet weak var plus: UIButton!
     @IBOutlet weak var title: UILabel!
     @IBOutlet weak var gradient: UIView!
+    @IBOutlet weak var userIcon: UIButton!
 }
 
 class categoryTripsHeader: UICollectionReusableView{
