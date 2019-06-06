@@ -55,7 +55,12 @@ class CategoryView: UIViewController, UITableViewDataSource, UITableViewDelegate
         
         text.frame.origin.x = 23
         
-        header.backgroundColor = .white
+        if #available(iOS 13.0, *) {
+            header.backgroundColor = .systemBackground
+        } else {
+            // Fallback on earlier versions
+            header.backgroundColor = .white
+        }
         
         header.addSubview(text)
         header.addSubview(menu)
@@ -85,13 +90,16 @@ class CategoryView: UIViewController, UITableViewDataSource, UITableViewDelegate
     
     //OBJC FUNC
     @objc func userMenu(_ sender: UIButton){
-//        session.showUserMenu()
         DispatchQueue.main.async {
             if #available(iOS 13.0, *) {
                 let userview = self.storyboard?.instantiateViewController(identifier: "userView") as! userView
+                userview.logout = {
+                    self.navigationController?.popViewController(animated: false)
+                }
                 self.present(userview, animated: true, completion: nil)
             } else {
                 // Fallback on earlier versions
+                self.session.showUserMenu()
             }
             
         }

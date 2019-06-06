@@ -64,7 +64,8 @@ class otp_authentication: UIViewController, UITextFieldDelegate, NetworkDelegate
                 
                 DispatchQueue.main.async {
                     let vct = self.storyboard?.instantiateViewController(withIdentifier: "vct") as! UITabBarController
-                    self.present(vct, animated: false, completion: self.backFunc)
+                    self.navigationController?.pushViewController(vct, animated: false)
+//                    self.present(vct, animated: false, completion: self.backFunc)
                 }
             }else{
                 SVProgressHUD.showError(withStatus: Localized.failLoginMsg.rawValue.localized())

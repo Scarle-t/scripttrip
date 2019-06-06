@@ -157,8 +157,8 @@ class Profile: UITableViewController, NetworkDelegate {
         fname.inputAccessoryView = toolBar
         lname.inputAccessoryView = toolBar
         
-        fname.setBottomBorder()
-        lname.setBottomBorder()
+        fname.setBottomBorder(strokeColor: darkGreen.cgColor, backgroundColor: UIColor.clear.cgColor)
+        lname.setBottomBorder(strokeColor: darkGreen.cgColor, backgroundColor: UIColor.clear.cgColor)
         
         fname.layer.shadowOpacity = 0
         lname.layer.shadowOpacity = 0
@@ -186,6 +186,24 @@ class Profile: UITableViewController, NetworkDelegate {
         lname.isUserInteractionEnabled = false
         email.isUserInteractionEnabled = false
         
+        if #available(iOS 12.0, *) {
+            switch self.traitCollection.userInterfaceStyle{
+            case .light:
+                fname.textColor = .black
+                lname.textColor = .black
+                email.textColor = .black
+            case .dark:
+                fname.textColor = .white
+                lname.textColor = .white
+                email.textColor = .white
+            default:
+                fname.textColor = .black
+                lname.textColor = .black
+                email.textColor = .black
+            }
+        } else {
+            //fallback statements
+        }
     }
     
     //VIEW CONTROLLER

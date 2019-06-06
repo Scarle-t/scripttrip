@@ -172,7 +172,12 @@ class DeviceSettings: UITableViewController, UIPickerViewDelegate, UIPickerViewD
     
     func layout(){
         langPicker.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height/1.8)
-        langPicker.backgroundColor = .white
+        if #available(iOS 13.0, *) {
+            langPicker.backgroundColor = .systemBackground
+        } else {
+            // Fallback on earlier versions
+            langPicker.backgroundColor = .white
+        }
         
         dimBg.frame = view.frame
         dimBg.backgroundColor = .black

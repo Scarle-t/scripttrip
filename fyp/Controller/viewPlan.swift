@@ -52,13 +52,21 @@ class viewPlan: UIViewController, UITableViewDelegate, UITableViewDataSource, Ne
         add.addTarget(self, action: #selector(addItem(_:)), for: .touchUpInside)
         
         let text = UILabel(frame: header.frame)
+        text.frame = CGRect(x: 0, y: 0, width: text.frame.width - 150, height: text.frame.height)
         text.text = selectedPlan.T_Title
         text.textColor = "42C89D".uiColor
         text.font = UIFont(name: "AvenirNext-Heavy", size: 30)
+        text.minimumScaleFactor = 0.5
+        text.adjustsFontSizeToFitWidth = true
         
         text.frame.origin.x = 63
         
-        header.backgroundColor = .white
+        if #available(iOS 13.0, *) {
+            header.backgroundColor = .systemBackground
+        } else {
+            // Fallback on earlier versions
+            header.backgroundColor = .white
+        }
         
         header.addSubview(text)
         header.addSubview(menu)

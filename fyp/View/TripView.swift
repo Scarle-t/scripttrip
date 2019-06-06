@@ -24,7 +24,7 @@ class TripView: NSObject, UICollectionViewDelegateFlowLayout, UICollectionViewDe
             cell.title.textAlignment = .right
             cell.title.numberOfLines = 0
             cell.title.text = displayTrip?.T_Title
-            cell.title.backgroundColor = .white
+            cell.title.backgroundColor = .clear
             
             cell.addSubview(cell.title)
             
@@ -112,9 +112,16 @@ class TripView: NSObject, UICollectionViewDelegateFlowLayout, UICollectionViewDe
         
         header.close.frame = CGRect(x: 17, y: 17, width: 35, height: 35)
         header.close.layer.cornerRadius = 35 / 2
-        header.close.setImage(#imageLiteral(resourceName: "cross"), for: .normal)
+        header.close.setImage(#imageLiteral(resourceName: "cross_tint"), for: .normal)
         header.close.addTarget(self, action: #selector(hide), for: .touchUpInside)
-        header.close.backgroundColor = .init(white: 1, alpha: 0.9)
+        
+        if #available(iOS 13.0, *) {
+            header.close.backgroundColor = .systemBackground
+        } else {
+            //fallback statements
+            header.close.backgroundColor = .white
+        }
+        
         header.close.layer.shadowOpacity = 0.7
         header.close.layer.shadowColor = UIColor.lightGray.cgColor
         header.close.layer.shadowOffset = CGSize(width: 0, height: 1)
@@ -205,7 +212,12 @@ class TripView: NSObject, UICollectionViewDelegateFlowLayout, UICollectionViewDe
             self.contents.register(secondaryContent.self, forCellWithReuseIdentifier: "otherContent")
             self.contents.register(contentTitle.self, forCellWithReuseIdentifier: "contentTitle")
             self.contents.register(contentHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "header")
-            self.contents.backgroundColor = .white
+            if #available(iOS 13.0, *) {
+                self.contents.backgroundColor = .systemBackground
+            } else {
+                // Fallback on earlier versions
+                self.contents.backgroundColor = .white
+            }
             self.contents.alwaysBounceVertical = true
             
             self.view.frame = CGRect(x: 0, y: 75, width: (self.window?.frame.width)!, height: (self.window?.frame.height)! - 75)
@@ -220,8 +232,7 @@ class TripView: NSObject, UICollectionViewDelegateFlowLayout, UICollectionViewDe
             
             self.contents.frame = self.view.frame
             
-            self.addBookmark.setImage(#imageLiteral(resourceName: "plus"), for: .normal)
-            self.addBookmark.backgroundColor = .init(white: 1, alpha: 0.9)
+            self.addBookmark.setImage(#imageLiteral(resourceName: "plus_tint"), for: .normal)
             self.addBookmark.frame = CGRect(x: self.view.frame.maxX - 17 - 35, y: 17, width: 35, height: 35)
             self.addBookmark.layer.cornerRadius = 35 / 2
             self.addBookmark.addTarget(self, action: #selector(self.addBk(_:)), for: .touchUpInside)
@@ -230,8 +241,7 @@ class TripView: NSObject, UICollectionViewDelegateFlowLayout, UICollectionViewDe
             self.addBookmark.layer.shadowColor = UIColor.lightGray.cgColor
             self.addBookmark.layer.shadowOffset = CGSize(width: 0, height: 1)
             
-            self.actionBtn.setImage(#imageLiteral(resourceName: "more"), for: .normal)
-            self.actionBtn.backgroundColor = .init(white: 1, alpha: 0.9)
+            self.actionBtn.setImage(#imageLiteral(resourceName: "more_tint"), for: .normal)
             self.actionBtn.frame = CGRect(x: self.view.frame.maxX - 17 - 35, y: 17, width: 35, height: 35)
             self.actionBtn.layer.cornerRadius = 35 / 2
             self.actionBtn.addTarget(self, action: #selector(self.showAction(_:)), for: .touchUpInside)
@@ -239,8 +249,7 @@ class TripView: NSObject, UICollectionViewDelegateFlowLayout, UICollectionViewDe
             self.actionBtn.layer.shadowColor = UIColor.lightGray.cgColor
             self.actionBtn.layer.shadowOffset = CGSize(width: 0, height: 1)
             
-            self.shareBtn.setImage(#imageLiteral(resourceName: "share"), for: .normal)
-            self.shareBtn.backgroundColor = .init(white: 1, alpha: 0.9)
+            self.shareBtn.setImage(#imageLiteral(resourceName: "action_tint"), for: .normal)
             self.shareBtn.frame = CGRect(x: self.view.frame.maxX - 17 - 35, y: 17, width: 35, height: 35)
             self.shareBtn.layer.cornerRadius = 35 / 2
             self.shareBtn.addTarget(self, action: #selector(self.share(_:)), for: .touchUpInside)
@@ -248,6 +257,17 @@ class TripView: NSObject, UICollectionViewDelegateFlowLayout, UICollectionViewDe
             self.shareBtn.layer.shadowOpacity = 0.7
             self.shareBtn.layer.shadowColor = UIColor.lightGray.cgColor
             self.shareBtn.layer.shadowOffset = CGSize(width: 0, height: 1)
+            
+            if #available(iOS 13.0, *) {
+                self.addBookmark.backgroundColor = .systemBackground
+                self.actionBtn.backgroundColor = .systemBackground
+                self.shareBtn.backgroundColor = .systemBackground
+            } else {
+                //fallback statements
+                self.addBookmark.backgroundColor = .white
+                self.actionBtn.backgroundColor = .white
+                self.shareBtn.backgroundColor = .white
+            }
             
             self.dimBg.frame = (self.window?.frame)!
             self.dimBg.backgroundColor = .black
@@ -297,7 +317,7 @@ class TripView: NSObject, UICollectionViewDelegateFlowLayout, UICollectionViewDe
             }, completion: nil)
             sender.tag = 1
         case 1:
-            UIView.animate(withDuration: 0.15, delay: 0, options: .curveEaseOut, animations: {
+            UIView.animate(withDuration: 0.2, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
                 self.actionBtn.transform = CGAffineTransform(rotationAngle: 2 * CGFloat.pi / 2)
                 
                 self.addBookmark.frame.origin.x += 60
@@ -346,7 +366,12 @@ class TripView: NSObject, UICollectionViewDelegateFlowLayout, UICollectionViewDe
         UIGraphicsBeginPDFContextToData(pdfData, CGRect(x: 0, y: 0, width: contents.frame.width, height: totalHeight), nil)
         let context = UIGraphicsGetCurrentContext()!
         
-        let rendView = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.width - 20, height: totalHeight))
+        let rendView = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: totalHeight))
+        if #available(iOS 13.0, *) {
+            rendView.backgroundColor = .systemBackground
+        } else {
+            //fallback statements
+        }
         let lbl = UILabel(frame: CGRect(x: 0, y: 0, width: rendView.frame.width, height: titleHeight))
         lbl.numberOfLines = 0
         lbl.textAlignment = .center
@@ -452,8 +477,6 @@ class TripView: NSObject, UICollectionViewDelegateFlowLayout, UICollectionViewDe
                 self.dimBg.alpha = dimViewAlpha
             }, completion: nil)
         }
-        
-        
     }
     func shakeShow(){
         let originalAnchor = view.layer.anchorPoint

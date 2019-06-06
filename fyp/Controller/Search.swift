@@ -57,7 +57,12 @@ class Search: UIViewController, UITableViewDelegate, UITableViewDataSource, UISe
         searchBar.isTranslucent = false
         searchBar.showsScopeBar = true
         searchBar.tintColor = darkGreen
-        searchBar.barTintColor = .white
+        if #available(iOS 13.0, *) {
+            searchBar.barTintColor = .systemBackground
+        } else {
+            // Fallback on earlier versions
+            searchBar.barTintColor = .white
+        }
         searchBar.searchBarStyle = .minimal
         searchBar.scopeButtonTitles = [Localized.searchTrip.rawValue.localized(), Localized.searchLocation.rawValue.localized()]
         searchBar.placeholder = Localized.searchPH.rawValue.localized()
@@ -71,7 +76,12 @@ class Search: UIViewController, UITableViewDelegate, UITableViewDataSource, UISe
             }
         }
         
-        header.backgroundColor = .white
+        if #available(iOS 13.0, *) {
+            header.backgroundColor = .systemBackground
+        } else {
+            // Fallback on earlier versions
+            header.backgroundColor = .white
+        }
         
         header.addSubview(text)
         header.addSubview(menu)
@@ -116,13 +126,16 @@ class Search: UIViewController, UITableViewDelegate, UITableViewDataSource, UISe
     
     //OBJC FUNC
     @objc func userMenu(_ sender: UIButton){
-//        session.showUserMenu()
         DispatchQueue.main.async {
             if #available(iOS 13.0, *) {
                 let userview = self.storyboard?.instantiateViewController(identifier: "userView") as! userView
+                userview.logout = {
+                    self.navigationController?.popViewController(animated: false)
+                }
                 self.present(userview, animated: true, completion: nil)
             } else {
                 // Fallback on earlier versions
+                self.session.showUserMenu()
             }
             
         }

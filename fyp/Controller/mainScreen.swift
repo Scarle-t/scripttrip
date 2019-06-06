@@ -198,14 +198,12 @@ class mainScreen: UIViewController, UITextFieldDelegate, NetworkDelegate, FBSDKL
                     }
                 }else{
                     userDefault.set(true, forKey: "isLoggedIn")
-                    let vct = storyboard?.instantiateViewController(withIdentifier: "vct") as! UITabBarController
-                    if whiteView.alpha == 1{
-                        self.present(vct, animated: false, completion: {
-                            self.whiteView.alpha = 0
-                        })
-                    }else{
-                        self.present(vct, animated: false, completion: backFunc)
+                    DispatchQueue.main.async {
+                        let vct = self.storyboard?.instantiateViewController(withIdentifier: "vct") as! UITabBarController
+                        self.whiteView.alpha = 0
+                        self.navigationController?.pushViewController(vct, animated: false)
                     }
+                    
                 }
             }
         }

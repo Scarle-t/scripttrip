@@ -32,13 +32,16 @@ class Featured: UIViewController, UICollectionViewDataSource, UICollectionViewDe
     
     //IBACTION
     @IBAction func userBtn(_ sender: UIButton) {
-//        session.showUserMenu()
         DispatchQueue.main.async {
             if #available(iOS 13.0, *) {
                 let userview = self.storyboard?.instantiateViewController(identifier: "userView") as! userView
+                userview.logout = {
+                    self.navigationController?.popViewController(animated: false)
+                }
                 self.present(userview, animated: true, completion: nil)
             } else {
                 // Fallback on earlier versions
+                self.session.showUserMenu()
             }
             
         }
@@ -268,7 +271,16 @@ class Featured: UIViewController, UICollectionViewDataSource, UICollectionViewDe
                 
                 tripView.displayTrip = trip
                 tripView.headerImg = imgs[trip]
-                tripView.shakeShow()
+                tripView.show()
+                DispatchQueue.main.async {
+                    if #available(iOS 13.0, *) {
+                        let postview = self.storyboard?.instantiateViewController(identifier: "postView") as! postView
+                        postview.tripView = self.tripView
+                        self.present(postview, animated: true, completion: nil)
+                    } else {
+                        // Fallback on earlier versions
+                    }
+                }
             }
         }
         

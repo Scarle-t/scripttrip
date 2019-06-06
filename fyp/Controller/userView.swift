@@ -12,6 +12,7 @@ class userView: UIViewController{
     
     //VARIABLE
     let session = Session.shared
+    var logout = {}
     
     //IBOUTLET
     

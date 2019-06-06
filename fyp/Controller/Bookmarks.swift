@@ -17,6 +17,7 @@ class Bookmarks: UIViewController, UICollectionViewDelegate, UICollectionViewDat
     var imgs = [Trip : UIImage]()
     var tripView: TripView!
     var btnTrip = [UIButton : Trip]()
+    var mainRefresh: UIRefreshControl?
     
     //IBOUTLET
     @IBOutlet weak var cv: UICollectionView!
@@ -121,6 +122,9 @@ class Bookmarks: UIViewController, UICollectionViewDelegate, UICollectionViewDat
     func ResponseHandle(data: Data) {
         trips = Session.shared.parseTrip(Session.parser.parseNested(data))
         DispatchQueue.main.async {
+            if self.mainRefresh!.isRefreshing{
+                self.mainRefresh?.endRefreshing()
+            }
             self.cv.reloadData()
         }
     }
@@ -144,6 +148,9 @@ class Bookmarks: UIViewController, UICollectionViewDelegate, UICollectionViewDat
         alert.addAction(UIAlertAction(title: Localized.Cancel.rawValue.localized(), style: .cancel, handler: nil))
         self.present(alert, animated: true, completion: nil)
     }
+    @objc func refreshFeatured(_ sender: UIRefreshControl){
+        setup()
+    }
     
     //FUNC
     func delegate(){
@@ -159,6 +166,12 @@ class Bookmarks: UIViewController, UICollectionViewDelegate, UICollectionViewDat
         let layout = cv.collectionViewLayout as! UICollectionViewFlowLayout
         layout.sectionHeadersPinToVisibleBounds = true
         cv.collectionViewLayout = layout
+        DispatchQueue.main.async {
+            self.mainRefresh = UIRefreshControl()
+            self.mainRefresh!.addTarget(self, action: #selector(self.refreshFeatured(_:)), for: .valueChanged)
+            self.mainRefresh!.tintColor = "42DA9D".uiColor
+            self.cv.refreshControl = self.mainRefresh
+        }
     }
     
     func setup(){

@@ -25,6 +25,7 @@ class Plans: UIViewController, UICollectionViewDelegate, UICollectionViewDataSou
     var addBtn: UIButton?
     var seg: UISegmentedControl?
     var isSharing = [Int : Bool]()
+    var mainRefresh: UIRefreshControl?
     
     //IBOUTLET
     @IBOutlet weak var cv: UICollectionView!
@@ -291,6 +292,9 @@ class Plans: UIViewController, UICollectionViewDelegate, UICollectionViewDataSou
     func ResponseHandle(data: Data) {
         plans = session.parsePlan(Session.parser.parse(data))
         DispatchQueue.main.async {
+            if self.mainRefresh!.isRefreshing{
+                self.mainRefresh?.endRefreshing()
+            }
             self.cv.reloadData()
         }
         SVProgressHUD.dismiss()
@@ -382,6 +386,21 @@ class Plans: UIViewController, UICollectionViewDelegate, UICollectionViewDataSou
         searchShare.isSharing = isSharing[sender.tag]
         self.navigationController?.pushViewController(searchShare, animated: true)
     }
+    @objc func refreshFeatured(_ sender: UIRefreshControl){
+        switch seg?.selectedSegmentIndex{
+        case 0:
+            setup()
+        case 1:
+            DispatchQueue.main.async {
+                self.seg?.isEnabled = false
+            }
+            SVProgressHUD.show()
+            plans?.removeAll()
+            network.send(url: "https://scripttrip.scarletsc.net/iOS/share.php?user=\(session.usr.UID)", method: "GET", query: nil)
+        default:
+            break
+        }
+    }
     
     //FUNC
     func delegate(){
@@ -395,6 +414,12 @@ class Plans: UIViewController, UICollectionViewDelegate, UICollectionViewDataSou
         let layout = cv.collectionViewLayout as! UICollectionViewFlowLayout
         layout.sectionHeadersPinToVisibleBounds = true
         cv.collectionViewLayout = layout
+        DispatchQueue.main.async {
+            self.mainRefresh = UIRefreshControl()
+            self.mainRefresh!.addTarget(self, action: #selector(self.refreshFeatured(_:)), for: .valueChanged)
+            self.mainRefresh!.tintColor = "42DA9D".uiColor
+            self.cv.refreshControl = self.mainRefresh
+        }
     }
     
     func setup(){

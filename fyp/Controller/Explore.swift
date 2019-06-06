@@ -324,13 +324,16 @@ class Explore: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, U
     }
     
     @objc func userMenu(_ sender: UIButton){
-//        session.showUserMenu()
         DispatchQueue.main.async {
             if #available(iOS 13.0, *) {
                 let userview = self.storyboard?.instantiateViewController(identifier: "userView") as! userView
+                userview.logout = {
+                    self.navigationController?.popViewController(animated: false)
+                }
                 self.present(userview, animated: true, completion: nil)
             } else {
                 // Fallback on earlier versions
+                self.session.showUserMenu()
             }
             
         }
@@ -437,7 +440,12 @@ class Explore: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, U
         originalFilterMenuY = self.view.frame.maxY - filterMenu.frame.height
         
         let header = UIView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: 62))
-        header.backgroundColor = .white
+        if #available(iOS 13.0, *) {
+            header.backgroundColor = .systemBackground
+        } else {
+            // Fallback on earlier versions
+            header.backgroundColor = .white
+        }
         
         let menu = UIButton(frame: CGRect(x: 306, y: 9, width: 45, height: 45))
         menu.setImage(session.usr.iconImage, for: .normal)
@@ -463,6 +471,23 @@ class Explore: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, U
         mk.setRegion(region, animated: true)
         filterText.text = Localized.Filter.rawValue.localized()
         clearBtn.setTitle(Localized.Clear.rawValue.localized(), for: .normal)
+        
+        if #available(iOS 12.0, *) {
+            switch traitCollection.userInterfaceStyle{
+            case .light:
+                filterMenu.effect = UIBlurEffect(style: .extraLight)
+                blurView.effect = UIBlurEffect(style: .extraLight)
+            case .dark:
+                filterMenu.effect = UIBlurEffect(style: .dark)
+                blurView.effect = UIBlurEffect(style: .dark)
+            default:
+                filterMenu.effect = UIBlurEffect(style: .extraLight)
+                blurView.effect = UIBlurEffect(style: .extraLight)
+            }
+        } else {
+            // Fallback on earlier versions
+        }
+        
     }
     
     func setup(){

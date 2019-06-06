@@ -31,6 +31,7 @@ class postView: UIViewController{
     }
     
     func layout(){
+        tripView?.delegate = self
         tripView?.view.frame.origin.y = 0
         self.view.addSubview(tripView!.view)
     }

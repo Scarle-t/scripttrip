@@ -95,7 +95,12 @@ class searchShare: UIViewController, UITableViewDelegate, UITableViewDataSource,
         searchBar.frame = CGRect(x: 0, y: 62, width: header.frame.width, height: 50)
         searchBar.isTranslucent = false
         searchBar.tintColor = "42D89D".uiColor
-        searchBar.barTintColor = .white
+        if #available(iOS 13.0, *) {
+            searchBar.barTintColor = .systemBackground
+        } else {
+            // Fallback on earlier versions
+            searchBar.barTintColor = .white
+        }
         searchBar.searchBarStyle = .minimal
         searchBar.placeholder = Localized.email.rawValue.localized()
         
@@ -105,7 +110,12 @@ class searchShare: UIViewController, UITableViewDelegate, UITableViewDataSource,
             }
         }
         
-        header.backgroundColor = .white
+        if #available(iOS 13.0, *) {
+            header.backgroundColor = .systemBackground
+        } else {
+            // Fallback on earlier versions
+            header.backgroundColor = .white
+        }
         
         header.addSubview(text)
         header.addSubview(menu)

@@ -17,6 +17,7 @@ class History: UIViewController, UICollectionViewDelegate, UICollectionViewDataS
     var groupedTrip = [[Trip]]()
     var imgs = [Trip : UIImage]()
     var tripView: TripView!
+    var mainRefresh: UIRefreshControl?
     
     //IBOUTLET
     @IBOutlet weak var cv: UICollectionView!
@@ -133,13 +134,18 @@ class History: UIViewController, UICollectionViewDelegate, UICollectionViewDataS
                 prevTS = (trips?[i].ts)!
             }
             DispatchQueue.main.async {
+                if self.mainRefresh!.isRefreshing{
+                    self.mainRefresh?.endRefreshing()
+                }
                 self.cv.reloadData()
             }
         }
     }
     
     //OBJC FUNC
-    
+    @objc func refreshFeatured(_ sender: UIRefreshControl){
+        setup()
+    }
     
     //FUNC
     func delegate(){
@@ -157,6 +163,12 @@ class History: UIViewController, UICollectionViewDelegate, UICollectionViewDataS
         layout.headerReferenceSize = .init(width: self.view.frame.width, height: 62)
         cv.collectionViewLayout = layout
         heading.text = Localized.history.rawValue.localized()
+        DispatchQueue.main.async {
+            self.mainRefresh = UIRefreshControl()
+            self.mainRefresh!.addTarget(self, action: #selector(self.refreshFeatured(_:)), for: .valueChanged)
+            self.mainRefresh!.tintColor = "42DA9D".uiColor
+            self.cv.refreshControl = self.mainRefresh
+        }
     }
     
     func setup(){

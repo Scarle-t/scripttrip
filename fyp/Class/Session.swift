@@ -143,6 +143,18 @@ class Session: NSObject, UITableViewDelegate, UITableViewDataSource, UICollectio
         
         blurBg.frame = userView.frame
         userView.addSubview(blurBg)
+        if #available(iOS 12.0, *) {
+            switch userView.traitCollection.userInterfaceStyle{
+            case .light:
+                blurBg.effect = UIBlurEffect(style: .extraLight)
+            case .dark:
+                blurBg.effect = UIBlurEffect(style: .dark)
+            default:
+                blurBg.effect = UIBlurEffect(style: .extraLight)
+            }
+        } else {
+            // Fallback on earlier versions
+        }
         
         userView.frame.origin.x = -((window?.frame.width)! / 3 * 2)
         
@@ -167,11 +179,9 @@ class Session: NSObject, UITableViewDelegate, UITableViewDataSource, UICollectio
     }
     internal func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        
         switch indexPath.section{
         case 0:
             cell.textLabel?.text = settings[indexPath.row]
-            cell.textLabel?.textColor = .black
             if indexPath.row == 0{
                 cell.textLabel?.font = UIFont(name: "AvenirNext-Heavy", size: 27)
                 cell.textLabel?.textAlignment = .center
@@ -280,7 +290,9 @@ class Session: NSObject, UITableViewDelegate, UITableViewDataSource, UICollectio
                 dimView.removeFromSuperview()
                 userDefault.set(false, forKey: "isLoggedIn")
                 userDefault.set(false, forKey: "reduceMotion")
-                UIApplication.shared.keyWindow?.rootViewController?.dismiss(animated: false, completion: nil)
+//                UIApplication.shared.keyWindow?.rootViewController?.dismiss(animated: false, completion: nil)
+                let userView = UIApplication.shared.keyWindow?.rootViewController?.presentedViewController as! userView
+                userView.logout()
                 return
             }
         }
