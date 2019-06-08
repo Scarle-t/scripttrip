@@ -113,13 +113,9 @@ class CategoryTrip: UIViewController, UICollectionViewDelegate, UICollectionView
         tripView.headerImg = imgs[trip]
         tripView.show()
         DispatchQueue.main.async {
-            if #available(iOS 13.0, *) {
-                let postview = self.storyboard?.instantiateViewController(identifier: "postView") as! postView
-                postview.tripView = self.tripView
-                self.present(postview, animated: true, completion: nil)
-            } else {
-                // Fallback on earlier versions
-            }
+            let postview = self.storyboard?.instantiateViewController(withIdentifier: "postView") as! postView
+            postview.tripView = self.tripView
+            self.present(postview, animated: true, completion: nil)
         }
     }
     

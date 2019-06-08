@@ -33,17 +33,11 @@ class Featured: UIViewController, UICollectionViewDataSource, UICollectionViewDe
     //IBACTION
     @IBAction func userBtn(_ sender: UIButton) {
         DispatchQueue.main.async {
-            if #available(iOS 13.0, *) {
-                let userview = self.storyboard?.instantiateViewController(identifier: "userView") as! userView
-                userview.logout = {
-                    self.navigationController?.popViewController(animated: false)
-                }
-                self.present(userview, animated: true, completion: nil)
-            } else {
-                // Fallback on earlier versions
-                self.session.showUserMenu()
+            let userview = self.storyboard?.instantiateViewController(withIdentifier: "userView") as! userView
+            userview.logout = {
+                self.navigationController?.popViewController(animated: false)
             }
-            
+            self.present(userview, animated: true, completion: nil)
         }
     }
     
@@ -140,13 +134,9 @@ class Featured: UIViewController, UICollectionViewDataSource, UICollectionViewDe
         tripView.headerImg = imgs[session.getTrips()[indexPath.row]]
         tripView.show()
         DispatchQueue.main.async {
-            if #available(iOS 13.0, *) {
-                let postview = self.storyboard?.instantiateViewController(identifier: "postView") as! postView
-                postview.tripView = self.tripView
-                self.present(postview, animated: true, completion: nil)
-            } else {
-                // Fallback on earlier versions
-            }
+            let postview = self.storyboard?.instantiateViewController(withIdentifier: "postView") as! postView
+            postview.tripView = self.tripView
+            self.present(postview, animated: true, completion: nil)
         }
     }
     @available(iOS 11.0, *)

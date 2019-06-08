@@ -91,17 +91,11 @@ class CategoryView: UIViewController, UITableViewDataSource, UITableViewDelegate
     //OBJC FUNC
     @objc func userMenu(_ sender: UIButton){
         DispatchQueue.main.async {
-            if #available(iOS 13.0, *) {
-                let userview = self.storyboard?.instantiateViewController(identifier: "userView") as! userView
-                userview.logout = {
-                    self.navigationController?.popViewController(animated: false)
-                }
-                self.present(userview, animated: true, completion: nil)
-            } else {
-                // Fallback on earlier versions
-                self.session.showUserMenu()
+            let userview = self.storyboard?.instantiateViewController(withIdentifier: "userView") as! userView
+            userview.logout = {
+                self.navigationController?.popViewController(animated: false)
             }
-            
+            self.present(userview, animated: true, completion: nil)
         }
     }
     

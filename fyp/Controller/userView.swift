@@ -15,9 +15,14 @@ class userView: UIViewController{
     var logout = {}
     
     //IBOUTLET
+    @IBOutlet weak var uv: UIView!
+    @IBOutlet weak var closeBtn: UIButton!
     
     
     //IBACTION
+    @IBAction func close(_ sender: UIButton) {
+        self.dismiss(animated: true, completion: nil)
+    }
     
     
     //DELEGATION
@@ -33,7 +38,14 @@ class userView: UIViewController{
     
     func layout(){
         session.userView.frame.origin.x = 0
-        self.view.addSubview(session.userView)
+        closeBtn.layer.cornerRadius = 30/2
+        if #available(iOS 13.0, *){
+            closeBtn.frame.origin.y -= 10
+        }else{
+            self.view.backgroundColor = .white
+            closeBtn.frame.origin.y += 10
+        }
+        uv.addSubview(session.userView)
     }
     
     func setup(){

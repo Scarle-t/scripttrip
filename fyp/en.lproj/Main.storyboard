@@ -332,7 +332,7 @@ Join us now</string>
                                     <constraint firstAttribute="height" constant="138" id="4a5-Qq-keY"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="24"/>
-                                <nil key="textColor"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="First Name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="wjk-Hw-88a">
@@ -422,7 +422,7 @@ Join us now</string>
                                     <constraint firstAttribute="height" constant="138" id="dG8-kR-oVK"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="24"/>
-                                <nil key="textColor"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iNK-2i-KGN">
@@ -458,7 +458,7 @@ Join us now</string>
                                                     <rect key="frame" x="0.0" y="126" width="150" height="24"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="17"/>
-                                                    <nil key="textColor"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <view alpha="0.0" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="QRD-t9-swY">
@@ -1079,7 +1079,7 @@ Join us now</string>
                                     <constraint firstAttribute="height" constant="138" id="nU3-CG-u1o"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="24"/>
-                                <nil key="textColor"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wvv-a3-h3B">
@@ -1181,7 +1181,7 @@ Join us now</string>
                             <label opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You're all set !" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5Xb-p2-tcU">
                                 <rect key="frame" x="86" y="257" width="203" height="44"/>
                                 <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="32"/>
-                                <nil key="textColor"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" alpha="0.0" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VhP-N1-csc">
@@ -2636,13 +2636,38 @@ SOFTWARE.
                     <view key="view" contentMode="scaleToFill" id="07E-Ul-EPt">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aQc-KH-js8">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4wb-AT-7XB">
+                                <rect key="frame" x="10" y="15" width="30" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" xcode11CocoaTouchSystemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <state key="normal" image="cross_tint"/>
+                                <connections>
+                                    <action selector="close:" destination="WX4-hW-6BN" eventType="touchUpInside" id="BdT-7e-EE3"/>
+                                </connections>
+                            </button>
+                        </subviews>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="aQc-KH-js8" firstAttribute="leading" secondItem="XaI-iB-Mmy" secondAttribute="leading" id="61l-8W-7oG"/>
+                            <constraint firstItem="XaI-iB-Mmy" firstAttribute="trailing" secondItem="aQc-KH-js8" secondAttribute="trailing" id="Htv-cn-5jL"/>
+                            <constraint firstItem="XaI-iB-Mmy" firstAttribute="bottom" secondItem="aQc-KH-js8" secondAttribute="bottom" id="PLf-Vq-ZVJ"/>
+                            <constraint firstItem="aQc-KH-js8" firstAttribute="top" secondItem="XaI-iB-Mmy" secondAttribute="top" id="wsv-Y9-hQN"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="XaI-iB-Mmy"/>
                     </view>
+                    <connections>
+                        <outlet property="closeBtn" destination="4wb-AT-7XB" id="AtJ-zZ-36a"/>
+                        <outlet property="uv" destination="aQc-KH-js8" id="bo5-SZ-fSd"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Kt3-uq-oaL" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-79" y="2248"/>
+            <point key="canvasLocation" x="-79.200000000000003" y="2247.5262368815593"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="juh-Nr-JvY">
@@ -2780,13 +2805,38 @@ SOFTWARE.
                     <view key="view" contentMode="scaleToFill" id="NVc-Lh-38u">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MMp-Yu-lwl">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ced-g2-jc9">
+                                <rect key="frame" x="10" y="15" width="30" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" xcode11CocoaTouchSystemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <state key="normal" image="cross_tint"/>
+                                <connections>
+                                    <action selector="close:" destination="997-uj-9E5" eventType="touchUpInside" id="Qjg-py-EWQ"/>
+                                </connections>
+                            </button>
+                        </subviews>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="MMp-Yu-lwl" firstAttribute="leading" secondItem="Pia-Ya-ssE" secondAttribute="leading" id="XdY-xx-akf"/>
+                            <constraint firstItem="Pia-Ya-ssE" firstAttribute="bottom" secondItem="MMp-Yu-lwl" secondAttribute="bottom" id="eBS-9J-0sJ"/>
+                            <constraint firstItem="Pia-Ya-ssE" firstAttribute="trailing" secondItem="MMp-Yu-lwl" secondAttribute="trailing" id="sq3-TJ-czD"/>
+                            <constraint firstItem="MMp-Yu-lwl" firstAttribute="top" secondItem="Pia-Ya-ssE" secondAttribute="top" id="wcK-dh-mgl"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="Pia-Ya-ssE"/>
                     </view>
+                    <connections>
+                        <outlet property="closeBtn" destination="Ced-g2-jc9" id="Zgq-b8-ABW"/>
+                        <outlet property="pv" destination="MMp-Yu-lwl" id="G3z-51-p0q"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="V5k-uH-BqR" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-79" y="2946"/>
+            <point key="canvasLocation" x="-79.200000000000003" y="2945.577211394303"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="epQ-Zu-ybE">

@@ -43,6 +43,8 @@ class Session: NSObject, UITableViewDelegate, UITableViewDataSource, UICollectio
                     self.iconImg = UIImage(data: data)
                     self.usr.iconImage = UIImage(data: data)
                 }
+            }else{
+                self.usr.iconImage = #imageLiteral(resourceName: "user")
             }
             
             usr.UID = Int(uid)!
@@ -120,12 +122,6 @@ class Session: NSObject, UITableViewDelegate, UITableViewDataSource, UICollectio
         dimView.backgroundColor = UIColor.black
         dimView.alpha = 0
         userView.frame = CGRect(x: 0, y: 0, width: (window?.frame.width)!, height: (window?.frame.height)!)
-        userView.layer.cornerRadius = 25
-        if #available(iOS 11.0, *) {
-            userView.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMaxXMaxYCorner]
-        } else {
-            // Fallback on earlier versions
-        }
         userView.clipsToBounds = true
         userView.backgroundColor = UIColor.clear
         userIcon.frame = CGRect(x: 0, y: 0, width: userView.frame.width, height: userView.frame.width)
@@ -198,12 +194,30 @@ class Session: NSObject, UITableViewDelegate, UITableViewDataSource, UICollectio
                 cell.accessoryType = .disclosureIndicator
             }
             cell.backgroundColor = UIColor.clear
-            if indexPath.row == 1{
-                cell.accessoryView = UIImageView(image: #imageLiteral(resourceName: "bookmark_pdf"))
-            }else if indexPath.row == 2{
-                cell.accessoryView = UIImageView(image: #imageLiteral(resourceName: "history_pdf"))
-            }else if indexPath.row == 3{
-                cell.accessoryView = UIImageView(image: #imageLiteral(resourceName: "plan.png"))
+            
+            if #available(iOS 12.0, *) {
+                switch self.userView.traitCollection.userInterfaceStyle{
+                case .light:
+                    if indexPath.row == 1{
+                        cell.accessoryView = UIImageView(image: #imageLiteral(resourceName: "bookmark_pdf"))
+                    }else if indexPath.row == 2{
+                        cell.accessoryView = UIImageView(image: #imageLiteral(resourceName: "history_pdf"))
+                    }else if indexPath.row == 3{
+                        cell.accessoryView = UIImageView(image: #imageLiteral(resourceName: "plan.png"))
+                    }
+                case .dark:
+                    if indexPath.row == 1{
+                        cell.accessoryView = UIImageView(image: #imageLiteral(resourceName: "bookmark_white.pdf"))
+                    }else if indexPath.row == 2{
+                        cell.accessoryView = UIImageView(image: #imageLiteral(resourceName: "history_white.pdf"))
+                    }else if indexPath.row == 3{
+                        cell.accessoryView = UIImageView(image: #imageLiteral(resourceName: "plan_white.pdf"))
+                    }
+                default:
+                    break
+                }
+            } else {
+                // Fallback on earlier versions
             }
             
             return cell
