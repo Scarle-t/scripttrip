@@ -95,6 +95,7 @@
 "searchPH" = "在找。。。";
 "languages" = "語言";
 "Settings" = "設定";
+"Title" = "標題";
 
 "removeBKMsg" = "您是否確定要刪除此書籤？";
 "removePlanMsg" = "您是否確定要刪除此行程？將會刪除行程內所有項目！";
@@ -113,6 +114,11 @@
 "handicraft" = "手工藝";
 "hobby" = "愛好";
 "landscape" = "山水風景";
+
+"createNew" = "新增";
+"text" = "文字";
+"imageWithCaption" = "相片";
+"location" = "地點";
 
 "networkErrorMsg" = "網絡暫時無法使用, 請稍候再試.";
 "urlSessionErrorMsg" = "網絡錯誤";

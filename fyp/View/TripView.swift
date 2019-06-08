@@ -51,8 +51,15 @@ class TripView: NSObject, UICollectionViewDelegateFlowLayout, UICollectionViewDe
             
             cell.img.image = UIImage()
             cell.img.frame = CGRect(x: 0, y: 0, width: cell.contentView.frame.width, height: cell.contentView.frame.width / 3 * 2)
-            cell.img.contentMode = .scaleAspectFit
+            cell.img.contentMode = .scaleAspectFill
+            cell.img.clipsToBounds = true
             cell.img.isUserInteractionEnabled = true
+            cell.img.layer.cornerRadius = 12
+            if #available(iOS 11.0, *){
+                cell.img.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+            }else{
+                
+            }
             cell.img.addGestureRecognizer(imgTap)
             
             cell.content.frame = CGRect(x: 0, y: cell.img.frame.maxY, width: cell.contentView.frame.width - 20, height: heightForItem[indexPath.row - 1])
@@ -135,7 +142,7 @@ class TripView: NSObject, UICollectionViewDelegateFlowLayout, UICollectionViewDe
         
         header.addSubview(header.img)
         if !haveTabBar{
-            header.addSubview(header.close)
+//            header.addSubview(header.close)
         }
         
         header.img.fillSuperview()
@@ -463,20 +470,20 @@ class TripView: NSObject, UICollectionViewDelegateFlowLayout, UICollectionViewDe
             self.contents.reloadData()
         }
         
-        if !UserDefaults.standard.bool(forKey: "reduceMotion"){
-            self.view.alpha = 1
-            UIView.animate(withDuration: slideAnimationTime + 0.1, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
-                self.view.frame.origin.y = 65
-                self.dimBg.alpha = dimViewAlpha
-            }, completion: nil)
-        }else{
-            self.view.frame.origin.y = 65
-            self.view.alpha = 0
-            UIView.animate(withDuration: fadeAnimationTime, delay: 0, options: .curveEaseOut, animations: {
-                self.view.alpha = 1
-                self.dimBg.alpha = dimViewAlpha
-            }, completion: nil)
-        }
+//        if !UserDefaults.standard.bool(forKey: "reduceMotion"){
+//            self.view.alpha = 1
+//            UIView.animate(withDuration: slideAnimationTime + 0.1, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
+//                self.view.frame.origin.y = 65
+//                self.dimBg.alpha = dimViewAlpha
+//            }, completion: nil)
+//        }else{
+//            self.view.frame.origin.y = 65
+//            self.view.alpha = 0
+//            UIView.animate(withDuration: fadeAnimationTime, delay: 0, options: .curveEaseOut, animations: {
+//                self.view.alpha = 1
+//                self.dimBg.alpha = dimViewAlpha
+//            }, completion: nil)
+//        }
     }
     func shakeShow(){
         let originalAnchor = view.layer.anchorPoint

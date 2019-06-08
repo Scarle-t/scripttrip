@@ -72,6 +72,26 @@ class createItem: UIViewController, NetworkDelegate{
             content.gestureRecognizers?.first?.isEnabled = false
         }
     }
+    @objc func keyboardWillShow(_ notification: Notification) {
+        if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
+            let keyboardRectangle = keyboardFrame.cgRectValue
+            let keyboardHeight = keyboardRectangle.height
+            UIView.animate(withDuration: slideAnimationTime) {
+                self.content.frame = CGRect(x: self.content.frame.minX, y: self.content.frame.minY, width: self.content.frame.width, height: self.content.frame.height - keyboardHeight)
+            }
+            
+        }
+    }
+    @objc func keyboardWillHide(_ notification: Notification){
+        if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
+            let keyboardRectangle = keyboardFrame.cgRectValue
+            let keyboardHeight = keyboardRectangle.height
+            UIView.animate(withDuration: slideAnimationTime) {
+                self.content.frame = CGRect(x: self.content.frame.minX, y: self.content.frame.minY, width: self.content.frame.width, height: self.content.frame.height + keyboardHeight)
+            }
+            
+        }
+    }
     
     //FUNC
     func delegate(){
@@ -102,6 +122,18 @@ class createItem: UIViewController, NetworkDelegate{
         if content.text.isEmpty{
             editText()
         }
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(keyboardWillShow(_:)),
+            name: UIResponder.keyboardWillShowNotification,
+            object: nil
+        )
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(keyboardWillHide(_:)),
+            name: UIResponder.keyboardWillHideNotification,
+            object: nil
+        )
     }
     
     //VIEW CONTROLLER

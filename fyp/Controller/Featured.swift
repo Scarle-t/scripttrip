@@ -223,7 +223,7 @@ class Featured: UIViewController, UICollectionViewDataSource, UICollectionViewDe
         DispatchQueue.main.async {
             self.mainRefresh = UIRefreshControl()
             self.mainRefresh!.addTarget(self, action: #selector(self.refreshFeatured(_:)), for: .valueChanged)
-            self.mainRefresh!.tintColor = "42DA9D".uiColor
+            self.mainRefresh!.tintColor = darkGreen
             self.cv.refreshControl = self.mainRefresh
         }
         self.becomeFirstResponder()

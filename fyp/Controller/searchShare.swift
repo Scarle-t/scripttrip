@@ -94,15 +94,10 @@ class searchShare: UIViewController, UITableViewDelegate, UITableViewDataSource,
         
         searchBar.frame = CGRect(x: 0, y: 62, width: header.frame.width, height: 50)
         searchBar.isTranslucent = false
-        searchBar.tintColor = "42D89D".uiColor
-        if #available(iOS 13.0, *) {
-            searchBar.barTintColor = .systemBackground
-        } else {
-            // Fallback on earlier versions
-            searchBar.barTintColor = .white
-        }
+        searchBar.tintColor = darkGreen
         searchBar.searchBarStyle = .minimal
         searchBar.placeholder = Localized.email.rawValue.localized()
+        searchBar.showsCancelButton = true
         
         for view : UIView in (searchBar.subviews[0]).subviews {
             if let textField = view as? UITextField {
@@ -168,6 +163,9 @@ class searchShare: UIViewController, UITableViewDelegate, UITableViewDataSource,
         //SEARCH
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         search(searchBar)
+    }
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        setup()
     }
     
     //OBJC FUNC
@@ -244,6 +242,7 @@ class searchShare: UIViewController, UITableViewDelegate, UITableViewDataSource,
     
     func setup(){
         searchBar.becomeFirstResponder()
+        network.send(url: "https://scripttrip.scarletsc.net/iOS/searchShareUser.php?user=\(session.usr.UID)&post=\(postID!)", method: "CHECK", query: nil)
     }
     
     //VIEW CONTROLLER

@@ -336,16 +336,25 @@ class mainScreen: UIViewController, UITextFieldDelegate, NetworkDelegate, FBSDKL
         login.setTitle(Localized.Login.rawValue.localized(), for: .normal)
         register.setTitle(Localized.Register.rawValue.localized(), for: .normal)
         
-//        let statusBar: UIView = UIApplication.shared.value(forKey: "statusBar") as! UIView
-//        if statusBar.responds(to: #selector(setter: UIView.backgroundColor)) {
-//            statusBar.backgroundColor = "42E89D".uiColor
-//        }
     }
     
     func setup(){
         SVProgressHUD.setHapticsEnabled(true)
         SVProgressHUD.setMinimumSize(CGSize(width: 175, height: 175))
         SVProgressHUD.setFont(UIFont(name: "AvenirNext-Medium", size: 20)!)
+        if #available(iOS 12.0, *) {
+            switch self.traitCollection.userInterfaceStyle{
+            case .light:
+                SVProgressHUD.setDefaultStyle(.light)
+            case .dark:
+                SVProgressHUD.setDefaultStyle(.dark)
+            default:
+                break
+            }
+        } else {
+            // Fallback on earlier versions
+        }
+        
         if userDefault.bool(forKey: "isLoggedIn"){
             let uuid = userDefault.value(forKey: "uuid") as! String
             let sessID = userDefault.value(forKey: "sessid") as! String

@@ -36,19 +36,37 @@ class Plans: UIViewController, UICollectionViewDelegate, UICollectionViewDataSou
         self.dismiss(animated: true, completion: nil)
     }
     @IBAction func addPlan(_ sender: UIButton) {
-        addBtn = sender
-        sender.alpha = 0
-        plans?.insert(Trip(), at: 0)
-        mode = "add"
-        cv.isScrollEnabled = false
-        cv.allowsSelection = false
-        cv.reloadData()
+        switch sender.tag{
+        case 0:
+            sender.tag = 1
+            sender.setImage(#imageLiteral(resourceName: "cross_tint_red.png"), for: .normal)
+            plans?.insert(Trip(), at: 0)
+            mode = "add"
+            cv.isScrollEnabled = false
+            cv.allowsSelection = false
+            seg?.isEnabled = false
+            cv.reloadData()
+        case 1:
+            sender.setImage(#imageLiteral(resourceName: "plus_tint.png"), for: .normal)
+            sender.tag = 0
+            plans?.remove(at: 0)
+            mode = ""
+            cv.isScrollEnabled = true
+            cv.allowsSelection = true
+            seg?.isEnabled = true
+            cv.reloadData()
+        default:
+            break
+        }
+        
     }
     @IBAction func listChange(_ sender: UISegmentedControl) {
         switch sender.selectedSegmentIndex{
         case 0:
+            addBtn?.alpha = 1
             setup()
         case 1:
+            addBtn?.alpha = 0
             DispatchQueue.main.async {
                 self.seg?.isEnabled = false
             }
@@ -87,6 +105,7 @@ class Plans: UIViewController, UICollectionViewDelegate, UICollectionViewDataSou
             
             cell.newtitle.delegate = self
             cell.newtitle.text = nil
+            cell.newtitle.attributedPlaceholder = NSAttributedString(string: Localized.Title.rawValue.localized(), attributes: [NSAttributedString.Key.foregroundColor : UIColor.darkGray])
             cell.newtitle.becomeFirstResponder()
             
             let gradient = CAGradientLayer()
@@ -217,7 +236,6 @@ class Plans: UIViewController, UICollectionViewDelegate, UICollectionViewDataSou
                     cell.alpha = 1
                 }, completion: nil)
             }
-            
             return cell
         }
     }
@@ -227,15 +245,14 @@ class Plans: UIViewController, UICollectionViewDelegate, UICollectionViewDataSou
             let header = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "header", for: indexPath) as! categoryTripsHeader
             
             header.frame = CGRect(x: 0 , y: 0, width: collectionView.frame.width, height: 112)
-            
             header.segment.setTitle(Localized.myPlan.rawValue.localized(), forSegmentAt: 0)
             header.segment.setTitle(Localized.Shared.rawValue.localized(), forSegmentAt: 1)
-            
             header.segment.setTitleTextAttributes([NSAttributedString.Key.font : UIFont(name: "AvenirNext-Medium", size: 14)!], for: .normal)
             
             header.title.text = Localized.plans.rawValue.localized()
             
             seg = header.segment
+            addBtn = header.add
             
             return header
             
@@ -263,6 +280,9 @@ class Plans: UIViewController, UICollectionViewDelegate, UICollectionViewDataSou
                 self.tripView.isCustomPlan = true
                 DispatchQueue.main.async {
                     self.tripView.show()
+                    let postview = self.storyboard?.instantiateViewController(withIdentifier: "postView") as! postView
+                    postview.tripView = self.tripView
+                    self.present(postview, animated: true, completion: nil)
                 }
             })
         case 1:
@@ -280,6 +300,9 @@ class Plans: UIViewController, UICollectionViewDelegate, UICollectionViewDataSou
                 self.tripView.isCustomPlan = true
                 DispatchQueue.main.async {
                     self.tripView.show()
+                    let postview = self.storyboard?.instantiateViewController(withIdentifier: "postView") as! postView
+                    postview.tripView = self.tripView
+                    self.present(postview, animated: true, completion: nil)
                 }
             })
         default:
@@ -315,7 +338,8 @@ class Plans: UIViewController, UICollectionViewDelegate, UICollectionViewDataSou
                     SVProgressHUD.showSuccess(withStatus: nil)
                     DispatchQueue.main.async {
                         textField.resignFirstResponder()
-                        self.addBtn?.alpha = 1
+                        self.addBtn?.setImage(#imageLiteral(resourceName: "plus_tint.png"), for: .normal)
+                        self.addBtn?.tag = 0
                         self.cv.isScrollEnabled = true
                         self.cv.allowsSelection = true
                         self.setup()

@@ -46,6 +46,7 @@ class Search: UIViewController, UITableViewDelegate, UITableViewDataSource, UISe
         menu.addTarget(self, action: #selector(userMenu(_:)), for: .touchUpInside)
         menu.clipsToBounds = true
         menu.layer.cornerRadius = 45 / 2
+        menu.backgroundColor = .white
         
         let text = UILabel(frame: CGRect(x: 0, y: 0, width: header.frame.width, height: 63))
         text.text = Localized.search.rawValue.localized()

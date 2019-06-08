@@ -92,7 +92,7 @@ class reg_done: UIViewController, NetworkDelegate {
         }
         interest = String(interest.dropLast())
         if state == "regFb"{
-            network.send(url: "https://scripttrip.scarletsc.net/iOS/register.php", method: "POST", query: "email=\(session.regEmail)&&fname=\(session.regFname)&lname=\(session.regLname)&interest=\(interest)&fb=\(session.regFbId)")
+            network.send(url: "https://scripttrip.scarletsc.net/iOS/register.php", method: "POST", query: "email=\(session.regEmail)&&fname=\(session.regFname)&lname=\(session.regLname)&interest=\(interest)^&icon=\(session.usr.icon)&fb=\(session.regFbId)")
         }else{
             state = "reg"
             network.send(url: "https://scripttrip.scarletsc.net/iOS/register.php", method: "POST", query: "email=\(session.regEmail)&pass=\(session.regPass.sha1())&fname=\(session.regFname)&lname=\(session.regLname)&interest=\(interest)")

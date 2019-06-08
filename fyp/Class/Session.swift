@@ -188,6 +188,7 @@ class Session: NSObject, UITableViewDelegate, UITableViewDataSource, UICollectio
                 userIcon.image = usr.iconImage
                 userIcon.clipsToBounds = true
                 userIcon.layer.cornerRadius = userIcon.frame.width / 2
+                userIcon.backgroundColor = .white
             }else{
                 cell.textLabel?.font = UIFont(name: "AvenirNext-DemiBold", size: 17)
                 cell.textLabel?.textAlignment = .left

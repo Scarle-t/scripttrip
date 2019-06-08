@@ -117,10 +117,28 @@ class viewPlan: UIViewController, UITableViewDelegate, UITableViewDataSource, Ne
         self.navigationController?.popViewController(animated: true)
     }
     @objc func addItem(_ sender: UIButton){
-        let viewItem = storyboard?.instantiateViewController(withIdentifier: "viewItem") as! createItem
-        viewItem.mode = "add"
-        viewItem.planID = selectedPlan.TID
-        self.navigationController?.pushViewController(viewItem, animated: true)
+        
+        let alert = UIAlertController(title: Localized.createNew.rawValue.localized(), message: nil, preferredStyle: .actionSheet)
+        
+        alert.addAction(UIAlertAction(title: Localized.text.rawValue.localized(), style: .default, handler: { (_) in
+            let viewItem = self.storyboard?.instantiateViewController(withIdentifier: "viewItem") as! createItem
+            viewItem.mode = "add"
+            viewItem.planID = self.selectedPlan.TID
+            self.navigationController?.pushViewController(viewItem, animated: true)
+        }))
+        
+        alert.addAction(UIAlertAction(title: Localized.imageWithCaption.rawValue.localized(), style: .default, handler: { (_) in
+            
+        }))
+        
+        alert.addAction(UIAlertAction(title: Localized.location.rawValue.localized(), style: .default, handler: { (_) in
+            
+        }))
+        
+        alert.addAction(UIAlertAction(title: Localized.Cancel.rawValue.localized(), style: .cancel, handler: nil))
+        
+        self.present(alert, animated: true, completion: nil)
+        
     }
     
     //FUNC

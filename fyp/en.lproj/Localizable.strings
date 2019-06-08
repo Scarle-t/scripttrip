@@ -69,6 +69,7 @@
 "shareTo" = "Share to";
 "stopSharing" = "Stop sharing";
 "Sharing" = "Sharing";
+"Title" = "Title";
 
 "introText" = "ScriptTrip provides an entire new way to experience outgoing\n\nJoin us now";
 "getStarted" = "Get Started";
@@ -113,6 +114,11 @@
 "handicraft" = "Handicraft";
 "hobby" = "Hobby";
 "landscape" = "Landscape";
+
+"createNew" = "Create New";
+"text" = "Text";
+"imageWithCaption" = "Image";
+"location" = "Location";
 
 "networkErrorMsg" = "Network unavailable, please try again later.";
 "urlSessionErrorMsg" = "Network Error";

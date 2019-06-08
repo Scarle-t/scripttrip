@@ -47,6 +47,7 @@ class CategoryView: UIViewController, UITableViewDataSource, UITableViewDelegate
         menu.addTarget(self, action: #selector(userMenu(_:)), for: .touchUpInside)
         menu.clipsToBounds = true
         menu.layer.cornerRadius = 45 / 2
+        menu.backgroundColor = .white
         
         let text = UILabel(frame: header.frame)
         text.text = Localized.category.rawValue.localized()

@@ -116,6 +116,11 @@ class Bookmarks: UIViewController, UICollectionViewDelegate, UICollectionViewDat
         tripView.displayTrip = trip
         tripView.headerImg = imgs[trip]
         tripView.show()
+        DispatchQueue.main.async {
+            let postview = self.storyboard?.instantiateViewController(withIdentifier: "postView") as! postView
+            postview.tripView = self.tripView
+            self.present(postview, animated: true, completion: nil)
+        }
     }
     
         //NETWORK
@@ -169,7 +174,7 @@ class Bookmarks: UIViewController, UICollectionViewDelegate, UICollectionViewDat
         DispatchQueue.main.async {
             self.mainRefresh = UIRefreshControl()
             self.mainRefresh!.addTarget(self, action: #selector(self.refreshFeatured(_:)), for: .valueChanged)
-            self.mainRefresh!.tintColor = "42DA9D".uiColor
+            self.mainRefresh!.tintColor = darkGreen
             self.cv.refreshControl = self.mainRefresh
         }
     }

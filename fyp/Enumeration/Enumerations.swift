@@ -98,6 +98,11 @@ enum Localized: String{
     case stopSharing
     case stopSharingMsg
     case Sharing
+    case createNew
+    case text
+    case imageWithCaption
+    case location
+    case Title
 }
 
 enum locale: String, CaseIterable{
