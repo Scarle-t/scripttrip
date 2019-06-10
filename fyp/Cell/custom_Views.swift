@@ -29,6 +29,7 @@ class featuredCell: UICollectionViewCell {
     @IBOutlet weak var edit: UIButton!
     @IBOutlet weak var delete: UIButton!
     @IBOutlet weak var sharer: UILabel!
+    @IBOutlet weak var pin: UIButton!
 }
 
 class contentViewCell: UICollectionViewCell{

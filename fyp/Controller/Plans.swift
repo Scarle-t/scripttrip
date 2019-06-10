@@ -21,6 +21,8 @@ class Plans: UIViewController, UICollectionViewDelegate, UICollectionViewDataSou
     var editPlan = [UIButton : UIButton]()
     var viewPlanBtn = [UIButton : UIButton]()
     var planTripBtn = [UIButton : Trip]()
+    var pinPlanBtn = [UIButton : UIButton]()
+    var pinTrips = [UIButton : Trip]()
     var mode = ""
     var addBtn: UIButton?
     var seg: UISegmentedControl?
@@ -108,6 +110,11 @@ class Plans: UIViewController, UICollectionViewDelegate, UICollectionViewDataSou
                 cell.contentView.frame.origin.x += 500
             }
             
+            cell.viewPost.alpha = 0
+            cell.edit.alpha = 0
+            cell.delete.alpha = 0
+            cell.pin.alpha = 0
+            
             cell.layer.masksToBounds = false
             cell.layer.shadowColor = UIColor.lightGray.cgColor
             cell.layer.shadowOpacity = 0.1
@@ -161,6 +168,7 @@ class Plans: UIViewController, UICollectionViewDelegate, UICollectionViewDataSou
             if let sharer = plan.sharer{
                 cell.sharer.text = Localized.from.rawValue.localized() + sharer + Localized.created.rawValue.localized()
                 cell.removeBK.alpha = 0
+                cell.pin.alpha = 1
             }else{
                 network.send(url: "https://scripttrip.scarletsc.net/iOS/share.php?post=\(plan.TID)", method: "CHECK", query: nil) { (data) in
                     guard let result = Session.parser.parse(data!) else{
@@ -182,6 +190,34 @@ class Plans: UIViewController, UICollectionViewDelegate, UICollectionViewDataSou
                     }
                 }
                 cell.removeBK.alpha = 1
+            }
+            
+            network.send(url: "https://scripttrip.scarletsc.net/iOS/quickAccess.php?user=\(session.usr.UID)&post=\(plan.TID)", method: "CHECK", query: nil) { (data) in
+                guard let result = Session.parser.parse(data!) else {
+                    return
+                }
+                
+                for item in result{
+                    if (item["Result"] as! String) == "Exist"{
+                        if #available(iOS 13.0, *) {
+                            DispatchQueue.main.async {
+                                cell.pin.setImage(UIImage(systemName: "pin.fill"), for: .normal)
+                                cell.pin.tag = 1
+                            }
+                        } else {
+                            // Fallback on earlier versions
+                        }
+                    }else{
+                        if #available(iOS 13.0, *) {
+                            DispatchQueue.main.async {
+                                cell.pin.setImage(UIImage(systemName: "pin"), for: .normal)
+                                cell.pin.tag = 0
+                            }
+                        } else {
+                            // Fallback on earlier versions
+                        }
+                    }
+                }
             }
             
             cell.view.layer.cornerRadius = 15
@@ -218,24 +254,28 @@ class Plans: UIViewController, UICollectionViewDelegate, UICollectionViewDataSou
             cell.delete.layer.shadowColor = UIColor.lightGray.cgColor
             cell.delete.layer.shadowOffset = CGSize(width: 0, height: 1)
             
+            cell.pin.layer.cornerRadius = 35 / 2
+            cell.pin.layer.shadowOpacity = 0.7
+            cell.pin.layer.shadowColor = UIColor.lightGray.cgColor
+            cell.pin.layer.shadowOffset = CGSize(width: 0, height: 1)
+            
             btnTrip[cell.delete] = plan
             cell.removeBK.addTarget(self, action: #selector(showMenu(_:)), for: .touchUpInside)
             cell.edit.addTarget(self, action: #selector(edit(_:)), for: .touchUpInside)
             cell.delete.addTarget(self, action: #selector(remove(_:)), for: .touchUpInside)
             cell.viewPost.addTarget(self, action: #selector(viewPlan(_:)), for: .touchUpInside)
+            cell.pin.addTarget(self, action: #selector(pinPlan(_:)), for: .touchUpInside)
             
             viewPlanBtn[cell.removeBK] = cell.viewPost
             editPlan[cell.removeBK] = cell.edit
             removePlan[cell.removeBK] = cell.delete
+            pinPlanBtn[cell.removeBK] = cell.pin
+            pinTrips[cell.pin] = plan
             
             cell.viewPost.tag = indexPath.row
             cell.edit.tag = indexPath.row
             
             planTripBtn[cell.viewPost] = plan
-            
-            cell.viewPost.alpha = 0
-            cell.edit.alpha = 0
-            cell.delete.alpha = 0
             
             if !UserDefaults.standard.bool(forKey: "reduceMotion"){
                 UIView.animate(withDuration: slideAnimationTime, delay: slideAnimationDelay, options: .curveEaseOut, animations: {
@@ -372,10 +412,12 @@ class Plans: UIViewController, UICollectionViewDelegate, UICollectionViewDataSou
                 self.editPlan[sender]?.alpha = 1
                 self.removePlan[sender]?.alpha = 1
                 self.viewPlanBtn[sender]?.alpha = 1
+                self.pinPlanBtn[sender]?.alpha = 1
                 
-                self.removePlan[sender]?.frame.origin.x -= 150
-                self.editPlan[sender]?.frame.origin.x -= 100
-                self.viewPlanBtn[sender]?.frame.origin.x -= 50
+                self.removePlan[sender]?.frame.origin.x -= 200
+                self.editPlan[sender]?.frame.origin.x -= 150
+                self.viewPlanBtn[sender]?.frame.origin.x -= 100
+                self.pinPlanBtn[sender]?.frame.origin.x -= 50
                 
             }, completion: nil)
             sender.tag = 1
@@ -385,9 +427,11 @@ class Plans: UIViewController, UICollectionViewDelegate, UICollectionViewDataSou
                 self.editPlan[sender]?.frame.origin.x = sender.frame.origin.x
                 self.removePlan[sender]?.frame.origin.x = sender.frame.origin.x
                 self.viewPlanBtn[sender]?.frame.origin.x = sender.frame.origin.x
+                self.pinPlanBtn[sender]?.frame.origin.x = sender.frame.origin.x
                 self.editPlan[sender]?.alpha = 0
                 self.removePlan[sender]?.alpha = 0
                 self.viewPlanBtn[sender]?.alpha = 0
+                self.pinPlanBtn[sender]?.alpha = 0
             }, completion: nil)
             sender.tag = 0
         }
@@ -421,6 +465,70 @@ class Plans: UIViewController, UICollectionViewDelegate, UICollectionViewDataSou
         searchShare.isSharing = isSharing[sender.tag]
         self.navigationController?.pushViewController(searchShare, animated: true)
     }
+    @objc func pinPlan(_ sender: UIButton){
+        switch sender.tag{
+        case 0:
+            network.send(url: "https://scripttrip.scarletsc.net/iOS/quickAccess.php?user=\(session.usr.UID)&post=\(pinTrips[sender]!.TID)", method: "POST", query: nil) { (data) in
+                guard let result = Session.parser.parse(data!) else {
+                    SVProgressHUD.showError(withStatus: nil)
+                    SVProgressHUD.dismiss(withDelay: 1.5)
+                    return
+                }
+                
+                for item in result{
+                    if (item["Result"] as! String) == "OK"{
+                        SVProgressHUD.showSuccess(withStatus: nil)
+                        SVProgressHUD.dismiss(withDelay: 1.5)
+                        if #available(iOS 13.0, *) {
+                            DispatchQueue.main.async {
+                                sender.setImage(UIImage(systemName: "pin.fill"), for: .normal)
+                                sender.tag = 1
+                            }
+                        } else {
+                            // Fallback on earlier versions
+                            DispatchQueue.main.async {
+                                sender.tag = 1
+                            }
+                        }
+                    }else{
+                        SVProgressHUD.showError(withStatus: item["Reason"] as? String)
+                        SVProgressHUD.dismiss(withDelay: 1.5)
+                    }
+                }
+            }
+        case 1:
+            network.send(url: "https://scripttrip.scarletsc.net/iOS/quickAccess.php?user=\(session.usr.UID)&post=\(pinTrips[sender]!.TID)", method: "DELETE", query: nil) { (data) in
+                guard let result = Session.parser.parse(data!) else {
+                    SVProgressHUD.showError(withStatus: nil)
+                    SVProgressHUD.dismiss(withDelay: 1.5)
+                    return
+                }
+                
+                for item in result{
+                    if (item["Result"] as! String) == "OK"{
+                        SVProgressHUD.showSuccess(withStatus: nil)
+                        SVProgressHUD.dismiss(withDelay: 1.5)
+                        if #available(iOS 13.0, *) {
+                            DispatchQueue.main.async {
+                                sender.setImage(UIImage(systemName: "pin"), for: .normal)
+                                sender.tag = 0
+                            }
+                        } else {
+                            // Fallback on earlier versions
+                            DispatchQueue.main.async {
+                                sender.tag = 0
+                            }
+                        }
+                    }else{
+                        SVProgressHUD.showError(withStatus: item["Reason"] as? String)
+                        SVProgressHUD.dismiss(withDelay: 1.5)
+                    }
+                }
+            }
+        default:
+            break
+        }
+    }
     @objc func refreshFeatured(_ sender: UIRefreshControl){
         switch seg?.selectedSegmentIndex{
         case 0:
@@ -452,7 +560,7 @@ class Plans: UIViewController, UICollectionViewDelegate, UICollectionViewDataSou
         DispatchQueue.main.async {
             self.mainRefresh = UIRefreshControl()
             self.mainRefresh!.addTarget(self, action: #selector(self.refreshFeatured(_:)), for: .valueChanged)
-            self.mainRefresh!.tintColor = "42DA9D".uiColor
+            self.mainRefresh!.tintColor = darkGreen
             self.cv.refreshControl = self.mainRefresh
         }
         popRecognizer = InteractivePopRecognizer(controller: self.navigationController!)

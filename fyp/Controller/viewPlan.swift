@@ -186,7 +186,9 @@ class viewPlan: UIViewController, UITableViewDelegate, UITableViewDataSource, Ne
     }
     
     func setup(){
-        self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
+        DispatchQueue.main.async {
+            self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
+        }
         selectedPlan.Items.removeAll()
         network.send(url: "https://scripttrip.scarletsc.net/iOS/plan.php?user=\(session.usr.UID)&PID=\(selectedPlan.TID)&mode=item", method: "GET", query: nil)
     }

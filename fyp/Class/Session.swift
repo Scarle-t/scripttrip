@@ -255,7 +255,7 @@ class Session: NSObject, UITableViewDelegate, UITableViewDataSource, UICollectio
                 // Fallback on earlier versions
                 cell.textLabel?.textColor = .darkGray
             }
-            cell.textLabel?.text = "Version " + (Bundle.main.infoDictionary!["CFBundleShortVersionString"] as! String) + "(" + (Bundle.main.infoDictionary!["CFBundleVersion"] as! String) + ")"
+            cell.textLabel?.text = "Version " + (Bundle.main.infoDictionary!["CFBundleShortVersionString"] as! String) + " (" + (Bundle.main.infoDictionary!["CFBundleVersion"] as! String) + ")"
             
             return cell
         default:

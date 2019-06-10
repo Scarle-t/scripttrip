@@ -534,13 +534,13 @@ Join us now</string>
                                 <color key="backgroundColor" xcode11CocoaTouchSystemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="70" minimumInteritemSpacing="70" id="Uf5-cg-sSm">
                                     <size key="itemSize" width="341" height="338"/>
-                                    <size key="headerReferenceSize" width="50" height="62"/>
+                                    <size key="headerReferenceSize" width="50" height="152"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                     <inset key="sectionInset" minX="16" minY="10" maxX="16" maxY="10"/>
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="cell" id="2el-x3-5Ke" customClass="featuredCell" customModule="fyp" customModuleProvider="target">
-                                        <rect key="frame" x="17" y="72" width="341" height="338"/>
+                                        <rect key="frame" x="17" y="162" width="341" height="338"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
                                             <rect key="frame" x="0.0" y="0.0" width="341" height="338"/>
@@ -586,7 +586,7 @@ Join us now</string>
                                     </collectionViewCell>
                                 </cells>
                                 <collectionReusableView key="sectionHeaderView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" reuseIdentifier="header" id="bFm-3u-fg1" customClass="HeaderView" customModule="fyp" customModuleProvider="target">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="62"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="152"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Script Trip" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rc8-KV-KXj">
@@ -608,44 +608,43 @@ Join us now</string>
                                             </connections>
                                         </button>
                                         <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceHorizontal="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="ErO-FP-Olr">
-                                            <rect key="frame" x="0.0" y="112" width="375" height="92"/>
+                                            <rect key="frame" x="0.0" y="112" width="375" height="30"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <color key="backgroundColor" xcode11CocoaTouchSystemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                             <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="2VW-0Z-DBg">
-                                                <size key="itemSize" width="250" height="89"/>
+                                                <size key="itemSize" width="165" height="30"/>
                                                 <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                                 <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                                 <inset key="sectionInset" minX="10" minY="0.0" maxX="0.0" maxY="0.0"/>
                                             </collectionViewFlowLayout>
                                             <cells>
                                                 <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="cell" id="KR8-48-Ahe" customClass="featuredCell" customModule="fyp" customModuleProvider="target">
-                                                    <rect key="frame" x="10" y="1.5" width="250" height="89"/>
+                                                    <rect key="frame" x="10" y="0.0" width="165" height="30"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="Df5-Qs-DiS">
-                                                        <rect key="frame" x="0.0" y="0.0" width="250" height="89"/>
+                                                    <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="Nfy-9L-Vcz">
+                                                        <rect key="frame" x="0.0" y="0.0" width="165" height="30"/>
                                                         <autoresizingMask key="autoresizingMask"/>
                                                         <subviews>
                                                             <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="K8T-jz-yWQ">
-                                                                <rect key="frame" x="0.0" y="0.0" width="250" height="89"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="165" height="30"/>
                                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             </view>
                                                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Sample Text" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="xuT-W7-Ita">
-                                                                <rect key="frame" x="8" y="40" width="234" height="41"/>
+                                                                <rect key="frame" x="8" y="0.0" width="149" height="30"/>
                                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                                 <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="30"/>
                                                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                         </subviews>
-                                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <constraints>
-                                                            <constraint firstItem="K8T-jz-yWQ" firstAttribute="leading" secondItem="Df5-Qs-DiS" secondAttribute="leading" id="5EK-BD-qHK"/>
+                                                            <constraint firstItem="K8T-jz-yWQ" firstAttribute="leading" secondItem="Nfy-9L-Vcz" secondAttribute="leading" id="5EK-BD-qHK"/>
                                                             <constraint firstAttribute="trailing" secondItem="K8T-jz-yWQ" secondAttribute="trailing" id="Aji-0Z-Ghg"/>
                                                             <constraint firstAttribute="bottom" secondItem="K8T-jz-yWQ" secondAttribute="bottom" id="Ve6-Be-f6M"/>
-                                                            <constraint firstItem="K8T-jz-yWQ" firstAttribute="top" secondItem="Df5-Qs-DiS" secondAttribute="top" id="ZPP-49-sk8"/>
+                                                            <constraint firstItem="K8T-jz-yWQ" firstAttribute="top" secondItem="Nfy-9L-Vcz" secondAttribute="top" id="ZPP-49-sk8"/>
                                                         </constraints>
                                                     </collectionViewCellContentView>
-                                                    <size key="customSize" width="250" height="89"/>
+                                                    <size key="customSize" width="165" height="30"/>
                                                     <connections>
                                                         <outlet property="gradView" destination="K8T-jz-yWQ" id="x7r-uQ-nxB"/>
                                                         <outlet property="title" destination="xuT-W7-Ita" id="HKh-ZC-sUq"/>
@@ -1993,6 +1992,15 @@ History works across devices.</string>
                                                                 <color key="titleColor" red="0.25882352939999997" green="0.7843137255" blue="0.61568627450000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             </state>
                                                         </button>
+                                                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jQe-rR-0xa">
+                                                            <rect key="frame" x="298" y="8" width="35" height="35"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                            <color key="backgroundColor" xcode11CocoaTouchSystemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                                            <color key="tintColor" red="0.25882352939999997" green="0.7843137255" blue="0.61568627450000002" alpha="1" colorSpace="calibratedRGB"/>
+                                                            <state key="normal" image="pin" catalog="system">
+                                                                <color key="titleColor" red="0.25882352939999997" green="0.7843137255" blue="0.61568627450000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            </state>
+                                                        </button>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wJf-ww-KhV">
                                                             <rect key="frame" x="298" y="8" width="35" height="35"/>
                                                             <color key="backgroundColor" xcode11CocoaTouchSystemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
@@ -2034,6 +2042,7 @@ History works across devices.</string>
                                             <outlet property="delete" destination="lu1-UI-Xm7" id="GIo-ah-pgK"/>
                                             <outlet property="edit" destination="jKb-dH-0d7" id="llD-Xq-RWS"/>
                                             <outlet property="gradView" destination="9lE-ED-lHh" id="K8B-Vh-amg"/>
+                                            <outlet property="pin" destination="jQe-rR-0xa" id="sgr-gq-oCw"/>
                                             <outlet property="removeBK" destination="wJf-ww-KhV" id="zmX-c1-AVr"/>
                                             <outlet property="sharer" destination="Few-Zb-jGw" id="evH-1l-SM7"/>
                                             <outlet property="title" destination="i44-Yg-aQ0" id="4Kn-qd-JNR"/>
@@ -2351,7 +2360,7 @@ History works across devices.</string>
                                             <rect key="frame" x="18" y="16" width="30" height="30"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <color key="tintColor" red="0.25882352939999997" green="0.7843137255" blue="0.61568627450000002" alpha="1" colorSpace="calibratedRGB"/>
-                                            <state key="normal" title="Button" image="xmark" catalog="system"/>
+                                            <state key="normal" image="xmark" catalog="system"/>
                                             <connections>
                                                 <action selector="back:" destination="FXl-cs-PEN" eventType="touchUpInside" id="Kg8-s1-HQo"/>
                                                 <action selector="back:" destination="1hb-Jl-yVI" eventType="touchUpInside" id="mWn-8k-sIP"/>
@@ -3082,6 +3091,7 @@ SOFTWARE.
         <image name="loc_outline" width="800" height="800"/>
         <image name="logo" width="2048" height="733"/>
         <image name="pencil.circle" catalog="system" width="64" height="62"/>
+        <image name="pin" catalog="system" width="48" height="64"/>
         <image name="plus" catalog="system" width="64" height="58"/>
         <image name="search_pdf" width="30" height="30"/>
         <image name="square.and.arrow.up" catalog="system" width="56" height="64"/>

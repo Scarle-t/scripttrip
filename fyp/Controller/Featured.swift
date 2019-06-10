@@ -24,12 +24,14 @@ class Featured: UIViewController, UICollectionViewDataSource, UICollectionViewDe
     var state = ""
     var mainRefresh: UIRefreshControl?
     var tripView: TripView!
+    var planView: TripView!
     let group = DispatchGroup()
     var lastOffset: CGFloat = 0.0
     var plans: [Trip]?
     let colors: [[CGColor]] = [[lightGreen.cgColor, blue.cgColor], [blue.cgColor, lightGreen.cgColor]]
     var pv: UICollectionView?
     var gradient: CAGradientLayer?
+    var qaState: Bool?
     
     //IBOUTLET
     @IBOutlet weak var cv: UICollectionView!
@@ -70,14 +72,14 @@ class Featured: UIViewController, UICollectionViewDataSource, UICollectionViewDe
             cell.title.text = plan.T_Title
             
             let grad = CAGradientLayer()
-            grad.frame = CGRect(x: 0, y: 0, width: 250, height: 89)
+            grad.frame = CGRect(x: 0, y: 0, width: 165, height: 30)
             grad.colors = colors[indexPath.row % colors.count]
             grad.startPoint = CGPoint(x: 0, y: 0)
             grad.endPoint = CGPoint(x: 1, y: 1)
             
             cell.gradView.layer.addSublayer(grad)
             
-            cell.layer.cornerRadius = 15
+            cell.layer.cornerRadius = 7
             
             gradient = grad
             
@@ -142,7 +144,7 @@ class Featured: UIViewController, UICollectionViewDataSource, UICollectionViewDe
             return .zero
         case 1:
             if UserDefaults.standard.bool(forKey: "quickAccess"){
-                return .init(width: self.view.frame.width, height: 212)
+                return .init(width: self.view.frame.width, height: 154)
             }else{
                 return .init(width: self.view.frame.width, height: 62)
             }
@@ -174,7 +176,7 @@ class Featured: UIViewController, UICollectionViewDataSource, UICollectionViewDe
                     header.plans.alpha = 1
                     header.more.alpha = 1
                     header.quickAccess.alpha = 1
-                    network.send(url: "https://scripttrip.scarletsc.net/iOS/plan.php?user=\(session.usr.UID)&mode=plan", method: "GET", query: nil) { (data) in
+                    network.send(url: "https://scripttrip.scarletsc.net/iOS/quickAccess.php?user=\(session.usr.UID)", method: "GET", query: nil) { (data) in
                         guard let data = data else {
                             header.frame = CGRect(x: 0 , y: 0, width: collectionView.frame.width, height: 62)
                             header.plans.alpha = 0
@@ -203,22 +205,22 @@ class Featured: UIViewController, UICollectionViewDataSource, UICollectionViewDe
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         switch collectionView.tag{
         case 0:
-            network.send(url: "https://scripttrip.scarletsc.net/iOS/plan.php?user=\(session.usr.UID)&PID=\(plans![indexPath.row].TID)&mode=item", method: "GET", query: nil, completion: { data in
+            network.send(url: "https://scripttrip.scarletsc.net/iOS/plan.php?PID=\(plans![indexPath.row].TID)&mode=item", method: "GET", query: nil, completion: { data in
                 guard let data = data else {return}
                 self.plans?[indexPath.row].Items = self.session.parsePlanItem(Session.parser.parse(data))!
-                self.tripView.displayTrip = self.plans?[indexPath.row]
-                self.tripView.headerImg = UIImage()
+                self.planView.displayTrip = self.plans?[indexPath.row]
+                self.planView.headerImg = UIImage()
                 let gradient = CAGradientLayer()
                 gradient.frame = CGRect(x: 0, y: 0, width: 800, height: 800)
                 gradient.colors = self.colors[indexPath.row % self.colors.count]
                 gradient.startPoint = CGPoint(x: 0, y: 0)
                 gradient.endPoint = CGPoint(x: 1, y: 1)
-                self.tripView.gradientMask = gradient
-                self.tripView.isCustomPlan = true
+                self.planView.gradientMask = gradient
+                self.planView.isCustomPlan = true
                 DispatchQueue.main.async {
-                    self.tripView.show()
+                    self.planView.show()
                     let postview = self.storyboard?.instantiateViewController(withIdentifier: "postView") as! postView
-                    postview.tripView = self.tripView
+                    postview.tripView = self.planView
                     self.present(postview, animated: true, completion: nil)
                 }
             })
@@ -227,8 +229,6 @@ class Featured: UIViewController, UICollectionViewDataSource, UICollectionViewDe
                 network.send(url: "https://scripttrip.scarletsc.net/iOS/history.php", method: "POST", query: "user=\(session.usr.UID)&trip=\(session.getTrips()[indexPath.row].TID)") { (_) in
                 }
             }
-            tripView.isCustomPlan = false
-            tripView.gradientMask = nil
             tripView.displayTrip = session.getTrips()[indexPath.row]
             tripView.headerImg = imgs[session.getTrips()[indexPath.row]]
             tripView.show()
@@ -244,7 +244,7 @@ class Featured: UIViewController, UICollectionViewDataSource, UICollectionViewDe
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         switch collectionView.tag{
         case 0:
-            return .init(width: 250, height: 89)
+            return .init(width: 165, height: 30)
         case 1:
             return .init(width: 341, height: 338)
         default:
@@ -290,23 +290,23 @@ class Featured: UIViewController, UICollectionViewDataSource, UICollectionViewDe
     }
     
         //SCROLL VIEW
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if (self.lastOffset > scrollView.contentOffset.y) {
-            // move up
-            let layout = cv.collectionViewLayout as! UICollectionViewFlowLayout
-            layout.sectionHeadersPinToVisibleBounds = true
-            cv.collectionViewLayout = layout
-        }
-        else if (self.lastOffset < scrollView.contentOffset.y) {
-            // move down
-            let layout = cv.collectionViewLayout as! UICollectionViewFlowLayout
-            layout.sectionHeadersPinToVisibleBounds = false
-            cv.collectionViewLayout = layout
-        }
-        
-        // update the new position acquired
-        self.lastOffset = scrollView.contentOffset.y
-    }
+//    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+//        if (self.lastOffset > scrollView.contentOffset.y) {
+//            // move up
+//            let layout = cv.collectionViewLayout as! UICollectionViewFlowLayout
+//            layout.sectionHeadersPinToVisibleBounds = true
+//            cv.collectionViewLayout = layout
+//        }
+//        else if (self.lastOffset < scrollView.contentOffset.y) {
+//            // move down
+//            let layout = cv.collectionViewLayout as! UICollectionViewFlowLayout
+//            layout.sectionHeadersPinToVisibleBounds = false
+//            cv.collectionViewLayout = layout
+//        }
+//
+//        // update the new position acquired
+//        self.lastOffset = scrollView.contentOffset.y
+//    }
     
     //OBJC FUNC
     @objc func showPlan(_ ender: UIButton){
@@ -327,11 +327,15 @@ class Featured: UIViewController, UICollectionViewDataSource, UICollectionViewDe
     
     func layout(){
         SVProgressHUD.dismiss()
+        let layout = cv.collectionViewLayout as! UICollectionViewFlowLayout
+        layout.sectionHeadersPinToVisibleBounds = true
+        cv.collectionViewLayout = layout
     }
     
     func setup(){
         session.setupUserView()
         tripView = TripView(delegate: self, haveTabBar: true)
+        planView = TripView(delegate: self, haveTabBar: true)
         DispatchQueue.main.async {
             self.mainRefresh = UIRefreshControl()
             self.mainRefresh!.addTarget(self, action: #selector(self.refreshFeatured(_:)), for: .valueChanged)
@@ -339,6 +343,7 @@ class Featured: UIViewController, UICollectionViewDataSource, UICollectionViewDe
             self.cv.refreshControl = self.mainRefresh
         }
         self.becomeFirstResponder()
+        qaState = UserDefaults.standard.bool(forKey: "quickAccess")
         state = "trip"
         network.send(url: "https://scripttrip.scarletsc.net/iOS/getTrips.php", method: "GET", query: nil)
         
@@ -356,6 +361,19 @@ class Featured: UIViewController, UICollectionViewDataSource, UICollectionViewDe
         layout()
         setup()
 
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        if qaState != UserDefaults.standard.bool(forKey: "quickAccess"){
+            DispatchQueue.main.async {
+                self.cv.reloadData()
+            }
+        }
+        
+        
+        
     }
     
     override var canBecomeFirstResponder: Bool{
