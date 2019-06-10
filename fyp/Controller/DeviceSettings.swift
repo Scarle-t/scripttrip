@@ -27,6 +27,8 @@ class DeviceSettings: UITableViewController, UIPickerViewDelegate, UIPickerViewD
     @IBOutlet weak var heading: UILabel!
     @IBOutlet weak var reduceMotion: UISwitch!
     @IBOutlet weak var reduceMotionText: UILabel!
+    @IBOutlet weak var quickAccess: UISwitch!
+    @IBOutlet weak var quickAccessText: UILabel!
     
     //IBACTION
     @IBAction func historySwitch(_ sender: UISwitch) {
@@ -38,6 +40,9 @@ class DeviceSettings: UITableViewController, UIPickerViewDelegate, UIPickerViewD
     @IBAction func reduceMotionSwitch(_ sender: UISwitch) {
         userDefault.set(sender.isOn, forKey: "reduceMotion")
     }
+    @IBAction func quickAccessSwitch(_ sender: UISwitch) {
+        userDefault.set(sender.isOn, forKey: "quickAccess")
+    }
     @IBAction func close(_ sender: UIButton) {
         self.dismiss(animated: true, completion: nil)
     }
@@ -45,13 +50,13 @@ class DeviceSettings: UITableViewController, UIPickerViewDelegate, UIPickerViewD
     //DELEGATION
         //TABLE VIEW
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 4
+        return 5
     }
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section{
-        case 0, 1, 2:
+        case 0, 1, 2, 3:
             return 1
-        case 3:
+        case 4:
             return 2
         default:
             return 0
@@ -95,6 +100,8 @@ class DeviceSettings: UITableViewController, UIPickerViewDelegate, UIPickerViewD
         case 1:
             footer.text = Localized.shakeFooter.rawValue.localized()
         case 3:
+            footer.text = Localized.quickAccessFooter.rawValue.localized()
+        case 4:
             footer.text = Localized.historyFooter.rawValue.localized()
         default:
             return nil
@@ -190,6 +197,7 @@ class DeviceSettings: UITableViewController, UIPickerViewDelegate, UIPickerViewD
         clearHistoryText.text = Localized.clearHistory.rawValue.localized()
         heading.text = Localized.Settings.rawValue.localized()
         reduceMotionText.text = Localized.reduceMotion.rawValue.localized()
+        quickAccessText.text = Localized.quickAccess.rawValue.localized()
     }
     
     func setup(){
@@ -215,6 +223,8 @@ class DeviceSettings: UITableViewController, UIPickerViewDelegate, UIPickerViewD
         shake.setOn(userDefault.bool(forKey: "shake"), animated: false)
         
         reduceMotion.setOn(userDefault.bool(forKey: "reduceMotion"), animated: false)
+        
+        quickAccess.setOn(userDefault.bool(forKey: "quickAccess"), animated: false)
         
         localeLabel.text = Localized.init(rawValue: "\(locale.init(rawValue: (userDefault.string(forKey: "locale") ?? "system"))!)")?.rawValue.localized()
         localeLabel.inputView = langPicker

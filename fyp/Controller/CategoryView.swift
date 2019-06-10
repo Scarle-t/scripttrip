@@ -13,6 +13,7 @@ class CategoryView: UIViewController, UITableViewDataSource, UITableViewDelegate
     //VARIABLE
     let network = Network()
     let session = Session.shared
+    var popRecognizer: InteractivePopRecognizer?
     
     //IBOUTLET
     @IBOutlet weak var category: UITableView!
@@ -114,6 +115,8 @@ class CategoryView: UIViewController, UITableViewDataSource, UITableViewDelegate
     
     func setup(){
         network.send(url: "https://scripttrip.scarletsc.net/iOS/getCategory.php", method: "GET", query: nil)
+        popRecognizer = InteractivePopRecognizer(controller: self.navigationController!)
+        self.navigationController?.interactivePopGestureRecognizer?.delegate = popRecognizer
     }
     
     

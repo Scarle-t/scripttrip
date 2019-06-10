@@ -29,22 +29,9 @@ class TripView: NSObject, UICollectionViewDelegateFlowLayout, UICollectionViewDe
             cell.addSubview(cell.title)
             
             return cell
-        }else if indexPath.row == 1{
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "mainContent", for: indexPath) as! mainContent
-            
-            cell.content.frame = CGRect(x: 0, y: 0, width: cell.contentView.frame.width, height: cell.contentView.frame.height)
-            cell.content.font = UIFont(name: "AvenirNext-Regular", size: 18)
-            cell.content.dataDetectorTypes = [.address, .link, .calendarEvent, .flightNumber, .phoneNumber]
-            cell.content.isEditable = false
-            cell.content.isScrollEnabled = false
-            cell.content.tintColor = darkGreen
-            cell.content.text = displayTrip?.Items[0].I_Content
-            
-            cell.contentView.addSubview(cell.content)
-            cell.content.fillSuperview(padding: UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10))
-            
-            return cell
-        }else{
+        }
+        
+        if isCustomPlan{
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "otherContent", for: indexPath) as! secondaryContent
             
             let imgTap = UITapGestureRecognizer(target: self, action: #selector(showImg(_:)))
@@ -58,7 +45,6 @@ class TripView: NSObject, UICollectionViewDelegateFlowLayout, UICollectionViewDe
             if #available(iOS 11.0, *){
                 cell.img.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
             }else{
-                
             }
             cell.img.addGestureRecognizer(imgTap)
             
@@ -69,7 +55,7 @@ class TripView: NSObject, UICollectionViewDelegateFlowLayout, UICollectionViewDe
             cell.content.isEditable = false
             cell.content.isScrollEnabled = false
             cell.content.tintColor = darkGreen
-            cell.content.text = displayTrip?.Items[indexPath.row - 1].I_Content
+            cell.content.text = (displayTrip?.Items[indexPath.row - 1].I_Content) == "STINERNAL_IMG_STINTERNAL" ? nil : (displayTrip?.Items[indexPath.row - 1].I_Content)
             
             cell.contentView.addSubview(cell.img)
             cell.contentView.addSubview(cell.content)
@@ -92,30 +78,100 @@ class TripView: NSObject, UICollectionViewDelegateFlowLayout, UICollectionViewDe
                 
                 DispatchQueue.main.async {
                     UIView.animate(withDuration: 0.2, animations: {
+                        cell.img.alpha = 1
                         cell.img.image = self.imgs[self.displayTrip!.Items[indexPath.row - 1]]
                         self.tapImgs[imgTap] = self.imgs[self.displayTrip!.Items[indexPath.row - 1]]
                     })
                 }
             }else{
-                if isCustomPlan{
+                cell.img.alpha = 0
+                cell.content.frame.origin.y -= (collectionView.frame.width / 3 * 2)
+            }
+            
+            return cell
+            
+        }else{
+            if indexPath.row == 1{
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "mainContent", for: indexPath) as! mainContent
+                
+                cell.content.frame = CGRect(x: 0, y: 0, width: cell.contentView.frame.width, height: cell.contentView.frame.height)
+                cell.content.font = UIFont(name: "AvenirNext-Regular", size: 18)
+                cell.content.dataDetectorTypes = [.address, .link, .calendarEvent, .flightNumber, .phoneNumber]
+                cell.content.isEditable = false
+                cell.content.isScrollEnabled = false
+                cell.content.tintColor = darkGreen
+                cell.content.text = displayTrip?.Items[0].I_Content
+                
+                cell.contentView.addSubview(cell.content)
+                cell.content.fillSuperview(padding: UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10))
+                
+                return cell
+            }else{
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "otherContent", for: indexPath) as! secondaryContent
+                
+                let imgTap = UITapGestureRecognizer(target: self, action: #selector(showImg(_:)))
+                
+                cell.img.image = UIImage()
+                cell.img.frame = CGRect(x: 0, y: 0, width: cell.contentView.frame.width, height: cell.contentView.frame.width / 3 * 2)
+                cell.img.contentMode = .scaleAspectFill
+                cell.img.clipsToBounds = true
+                cell.img.isUserInteractionEnabled = true
+                cell.img.layer.cornerRadius = 12
+                if #available(iOS 11.0, *){
+                    cell.img.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+                }else{
+                }
+                cell.img.addGestureRecognizer(imgTap)
+                
+                cell.content.frame = CGRect(x: 0, y: cell.img.frame.maxY, width: cell.contentView.frame.width - 20, height: heightForItem[indexPath.row - 1])
+                cell.content.frame.origin.x += 10
+                cell.content.font = UIFont(name: "AvenirNext-Regular", size: 18)
+                cell.content.dataDetectorTypes = [.address, .link, .calendarEvent, .flightNumber, .phoneNumber]
+                cell.content.isEditable = false
+                cell.content.isScrollEnabled = false
+                cell.content.tintColor = darkGreen
+                cell.content.text = displayTrip?.Items[indexPath.row - 1].I_Content
+                
+                cell.contentView.addSubview(cell.img)
+                cell.contentView.addSubview(cell.content)
+                if displayTrip!.Items[indexPath.row - 1].I_Image != "0"{
+                    if imgs[displayTrip!.Items[indexPath.row - 1]] == nil{
+                        group.enter()
+                        Network().getPhoto(url: "https://scripttrip.scarletsc.net/img/\(displayTrip!.Items[indexPath.row - 1].I_Image)") { (data, response, error) in
+                            guard let data = data, error == nil else {
+                                cell.img.image = UIImage()
+                                self.group.leave()
+                                return
+                            }
+                            self.imgs[self.displayTrip!.Items[indexPath.row - 1]] = UIImage(data: data)
+                            self.group.leave()
+                        }
+                        group.notify(queue: .main) {
+                            self.contents.reloadItems(at: [indexPath])
+                        }
+                    }
+                    
+                    DispatchQueue.main.async {
+                        UIView.animate(withDuration: 0.2, animations: {
+                            cell.img.image = self.imgs[self.displayTrip!.Items[indexPath.row - 1]]
+                            self.tapImgs[imgTap] = self.imgs[self.displayTrip!.Items[indexPath.row - 1]]
+                        })
+                    }
+                }else{
                     cell.img.alpha = 0
                     cell.content.frame.origin.y -= (collectionView.frame.width / 3 * 2)
                 }
+                
+                return cell
             }
-            
-            
-            return cell
         }
+        
     }
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         let header = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "header", for: indexPath) as! contentHeader
-        
-        let imgTap = UITapGestureRecognizer(target: self, action: #selector(showImg(_:)))
-        
-        tapImgs[imgTap] = headerImg
         
         header.close.frame = CGRect(x: 17, y: 17, width: 35, height: 35)
         header.close.layer.cornerRadius = 35 / 2
@@ -136,14 +192,13 @@ class TripView: NSObject, UICollectionViewDelegateFlowLayout, UICollectionViewDe
         header.img.frame = header.frame
         header.img.contentMode = .scaleAspectFill
         header.img.clipsToBounds = true
-        header.img.image = headerImg
         header.img.isUserInteractionEnabled = true
+        header.img.image = headerImg
+        let imgTap = UITapGestureRecognizer(target: self, action: #selector(showImg(_:)))
+        tapImgs[imgTap] = headerImg
         header.img.addGestureRecognizer(imgTap)
         
         header.addSubview(header.img)
-        if !haveTabBar{
-//            header.addSubview(header.close)
-        }
         
         header.img.fillSuperview()
         
@@ -239,7 +294,6 @@ class TripView: NSObject, UICollectionViewDelegateFlowLayout, UICollectionViewDe
             
             self.contents.frame = self.view.frame
             
-            self.addBookmark.setImage(#imageLiteral(resourceName: "plus_tint"), for: .normal)
             self.addBookmark.frame = CGRect(x: self.view.frame.maxX - 17 - 35, y: 17, width: 35, height: 35)
             self.addBookmark.layer.cornerRadius = 35 / 2
             self.addBookmark.addTarget(self, action: #selector(self.addBk(_:)), for: .touchUpInside)
@@ -248,7 +302,18 @@ class TripView: NSObject, UICollectionViewDelegateFlowLayout, UICollectionViewDe
             self.addBookmark.layer.shadowColor = UIColor.lightGray.cgColor
             self.addBookmark.layer.shadowOffset = CGSize(width: 0, height: 1)
             
-            self.actionBtn.setImage(#imageLiteral(resourceName: "more_tint"), for: .normal)
+            if #available(iOS 13.0, *){
+                self.actionBtn.tintColor = darkGreen
+                self.shareBtn.tintColor = darkGreen
+                self.addBookmark.tintColor = darkGreen
+                self.addBookmark.setImage(UIImage(systemName: "plus"), for: .normal)
+                self.actionBtn.setImage(UIImage(systemName: "ellipsis"), for: .normal)
+                self.shareBtn.setImage(UIImage(systemName: "square.and.arrow.up"), for: .normal)
+            }else{
+                self.actionBtn.setImage(#imageLiteral(resourceName: "more_tint"), for: .normal)
+                self.shareBtn.setImage(#imageLiteral(resourceName: "action_tint"), for: .normal)
+                self.addBookmark.setImage(#imageLiteral(resourceName: "plus_tint"), for: .normal)
+            }
             self.actionBtn.frame = CGRect(x: self.view.frame.maxX - 17 - 35, y: 17, width: 35, height: 35)
             self.actionBtn.layer.cornerRadius = 35 / 2
             self.actionBtn.addTarget(self, action: #selector(self.showAction(_:)), for: .touchUpInside)
@@ -256,7 +321,7 @@ class TripView: NSObject, UICollectionViewDelegateFlowLayout, UICollectionViewDe
             self.actionBtn.layer.shadowColor = UIColor.lightGray.cgColor
             self.actionBtn.layer.shadowOffset = CGSize(width: 0, height: 1)
             
-            self.shareBtn.setImage(#imageLiteral(resourceName: "action_tint"), for: .normal)
+            
             self.shareBtn.frame = CGRect(x: self.view.frame.maxX - 17 - 35, y: 17, width: 35, height: 35)
             self.shareBtn.layer.cornerRadius = 35 / 2
             self.shareBtn.addTarget(self, action: #selector(self.share(_:)), for: .touchUpInside)
@@ -411,18 +476,27 @@ class TripView: NSObject, UICollectionViewDelegateFlowLayout, UICollectionViewDe
         delegate?.present(activityViewController, animated: true, completion: nil)
     }
     @objc func showImg(_ sender: UITapGestureRecognizer){
-        if !isCustomPlan{
-            let photo = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "imgZoom") as! Photo
-            photo.img = tapImgs[sender]
-            delegate?.present(photo, animated: true, completion: nil)
-        }
+        let photo = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "imgZoom") as! Photo
+        photo.img = tapImgs[sender]
+        delegate?.present(photo, animated: true, completion: nil)
     }
     
     func calculateTextHeight(){
         heightForItem.removeAll()
-        for item in displayTrip!.Items{
-            heightForItem.append(item.I_Content.calculateHeight(width: contents.frame.width - 20, font: UIFont(name: "AvenirNext-Regular", size: 18)!) + 30)
+        if isCustomPlan{
+            for item in displayTrip!.Items{
+                if item.I_Content == "STINERNAL_IMG_STINTERNAL"{
+                    heightForItem.append((contents.frame.width / 3 * 2) + 30)
+                }else{
+                    heightForItem.append(item.I_Content.calculateHeight(width: contents.frame.width - 20, font: UIFont(name: "AvenirNext-Regular", size: 18)!) + 30)
+                }
+            }
+        }else{
+            for item in displayTrip!.Items{
+                heightForItem.append(item.I_Content.calculateHeight(width: contents.frame.width - 20, font: UIFont(name: "AvenirNext-Regular", size: 18)!) + 30)
+            }
         }
+        
     }
     
     func checkBookmark(){
@@ -445,7 +519,7 @@ class TripView: NSObject, UICollectionViewDelegateFlowLayout, UICollectionViewDe
         contents.setContentOffset(CGPoint(x: 0,y: 0), animated: false)
         calculateTextHeight()
         checkBookmark()
-        if headerImg == nil {
+        if headerImg == nil && !isCustomPlan {
             if Session.imgCache.object(forKey: displayTrip!) == nil{
                 group.enter()
                 Network().getPhoto(url: "https://scripttrip.scarletasc.net/img/\(displayTrip!.Items[0].I_Image)") { (data, response, error) in
@@ -457,7 +531,7 @@ class TripView: NSObject, UICollectionViewDelegateFlowLayout, UICollectionViewDe
                 group.notify(queue: .main) {
                     self.contents.reloadSections(IndexSet(arrayLiteral: 0))
                 }
-            }else{
+            }else if !isCustomPlan{
                 headerImg = Session.imgCache.object(forKey: displayTrip!)
             }
         }

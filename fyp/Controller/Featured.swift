@@ -26,6 +26,10 @@ class Featured: UIViewController, UICollectionViewDataSource, UICollectionViewDe
     var tripView: TripView!
     let group = DispatchGroup()
     var lastOffset: CGFloat = 0.0
+    var plans: [Trip]?
+    let colors: [[CGColor]] = [[lightGreen.cgColor, blue.cgColor], [blue.cgColor, lightGreen.cgColor]]
+    var pv: UICollectionView?
+    var gradient: CAGradientLayer?
     
     //IBOUTLET
     @IBOutlet weak var cv: UICollectionView!
@@ -44,104 +48,208 @@ class Featured: UIViewController, UICollectionViewDataSource, UICollectionViewDe
     //DELEGATION
         //COLLECTION VIEW
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return session.getTrips().count
+        switch collectionView.tag{
+        case 0:
+            return plans?.count ?? 0
+        case 1:
+            return session.getTrips().count
+        default:
+            return 0
+        }
+        
     }
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! featuredCell
-        
-        cell.alpha = 0
-        if !UserDefaults.standard.bool(forKey: "reduceMotion"){
-            cell.contentView.frame.origin.x += 500
-        }
-        
-        cell.layer.masksToBounds = false
-        cell.layer.shadowColor = UIColor.lightGray.cgColor
-        cell.layer.shadowOpacity = 0.1
-        
-        cell.title.text = session.getTrips()[indexPath.row].T_Title
-
-        cell.view.layer.cornerRadius = 15
-        
-        if imgs[self.session.getTrips()[indexPath.row]] == nil{
+        switch collectionView.tag{
+        case 0:
+            guard let plan = plans?[indexPath.row] else {return cell}
+            cell.layer.masksToBounds = true
+            cell.layer.shadowColor = UIColor.lightGray.cgColor
+            cell.layer.shadowOpacity = 0.1
             
-            if Session.imgCache.object(forKey: self.session.getTrips()[indexPath.row]) == nil{
-                group.enter()
-                network.getPhoto(url: "https://scripttrip.scarletsc.net/img/\(session.getTrips()[indexPath.row].Items[0].I_Image)") { (data, response, error) in
-                    guard let data = data, error == nil else {return}
-                    self.imgs[self.session.getTrips()[indexPath.row]] = UIImage(data: data)!
-                    Session.imgCache.setObject(UIImage(data: data)!, forKey: self.session.getTrips()[indexPath.row])
-                    self.group.leave()
-                }
-                group.notify(queue: .main) {
-                    self.cv.reloadItems(at: [indexPath])
-                }
-            }else{
-                self.imgs[self.session.getTrips()[indexPath.row]] = Session.imgCache.object(forKey: self.session.getTrips()[indexPath.row])
+            cell.title.text = plan.T_Title
+            
+            let grad = CAGradientLayer()
+            grad.frame = CGRect(x: 0, y: 0, width: 250, height: 89)
+            grad.colors = colors[indexPath.row % colors.count]
+            grad.startPoint = CGPoint(x: 0, y: 0)
+            grad.endPoint = CGPoint(x: 1, y: 1)
+            
+            cell.gradView.layer.addSublayer(grad)
+            
+            cell.layer.cornerRadius = 15
+            
+            gradient = grad
+            
+            return cell
+        case 1:
+            cell.alpha = 0
+            if !UserDefaults.standard.bool(forKey: "reduceMotion"){
+                cell.contentView.frame.origin.x += 500
             }
             
+            cell.layer.masksToBounds = false
+            cell.layer.shadowColor = UIColor.lightGray.cgColor
+            cell.layer.shadowOpacity = 0.1
+            
+            cell.title.text = session.getTrips()[indexPath.row].T_Title
+            
+            cell.view.layer.cornerRadius = 15
+            
+            if imgs[self.session.getTrips()[indexPath.row]] == nil{
+                
+                if Session.imgCache.object(forKey: self.session.getTrips()[indexPath.row]) == nil{
+                    group.enter()
+                    network.getPhoto(url: "https://scripttrip.scarletsc.net/img/\(session.getTrips()[indexPath.row].Items[0].I_Image)") { (data, response, error) in
+                        guard let data = data, error == nil else {return}
+                        self.imgs[self.session.getTrips()[indexPath.row]] = UIImage(data: data)!
+                        Session.imgCache.setObject(UIImage(data: data)!, forKey: self.session.getTrips()[indexPath.row])
+                        self.group.leave()
+                    }
+                    group.notify(queue: .main) {
+                        self.cv.reloadItems(at: [indexPath])
+                    }
+                }else{
+                    self.imgs[self.session.getTrips()[indexPath.row]] = Session.imgCache.object(forKey: self.session.getTrips()[indexPath.row])
+                }
+                
+            }
+            
+            DispatchQueue.main.async {
+                UIView.animate(withDuration: 0.2, animations: {
+                    cell.img.image = self.imgs[self.session.getTrips()[indexPath.row]]
+                })
+            }
+            
+            if !UserDefaults.standard.bool(forKey: "reduceMotion"){
+                UIView.animate(withDuration: slideAnimationTime, delay: slideAnimationDelay, options: .curveEaseOut, animations: {
+                    cell.alpha = 1
+                    cell.contentView.frame.origin.x -= 500
+                }, completion: nil)
+            }else{
+                UIView.animate(withDuration: fadeAnimationTime, delay: 0, options: .curveEaseOut, animations: {
+                    cell.alpha = 1
+                }, completion: nil)
+            }
+            return cell
+        default:
+            return cell
         }
-        
-        DispatchQueue.main.async {
-            UIView.animate(withDuration: 0.2, animations: {
-                cell.img.image = self.imgs[self.session.getTrips()[indexPath.row]]
-            })
-        }
-        
-        if !UserDefaults.standard.bool(forKey: "reduceMotion"){
-            UIView.animate(withDuration: slideAnimationTime, delay: slideAnimationDelay, options: .curveEaseOut, animations: {
-                cell.alpha = 1
-                cell.contentView.frame.origin.x -= 500
-            }, completion: nil)
-        }else{
-            UIView.animate(withDuration: fadeAnimationTime, delay: 0, options: .curveEaseOut, animations: {
-                cell.alpha = 1
-            }, completion: nil)
-        }
-        
-        return cell
-        
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        return .init(width: self.view.frame.width, height: 62)
-
+        switch collectionView.tag{
+        case 0:
+            return .zero
+        case 1:
+            if UserDefaults.standard.bool(forKey: "quickAccess"){
+                return .init(width: self.view.frame.width, height: 212)
+            }else{
+                return .init(width: self.view.frame.width, height: 62)
+            }
+            
+        default:
+            return .zero
+        }
     }
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        switch kind{
+        switch collectionView.tag{
+        case 0:
+            return UICollectionReusableView()
+        case 1:
+            switch kind{
             case UICollectionView.elementKindSectionHeader:
                 let header = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "header", for: indexPath) as! HeaderView
-                
-                header.frame = CGRect(x: 0 , y: 0, width: collectionView.frame.width, height: 62)
                 
                 header.userIcon.setImage(session.usr.iconImage, for: .normal)
                 header.userIcon.contentMode = .scaleAspectFill
                 header.userIcon.clipsToBounds = true
                 header.userIcon.layer.cornerRadius = header.userIcon.frame.width / 2
+                header.plans.delegate = self
+                header.plans.dataSource = self
+                
+                header.more.addTarget(self, action: #selector(showPlan(_:)), for: .touchUpInside)
+                header.quickAccess.text = Localized.quickAccess.rawValue.localized()
+                
+                if UserDefaults.standard.bool(forKey: "quickAccess"){
+                    header.plans.alpha = 1
+                    header.more.alpha = 1
+                    header.quickAccess.alpha = 1
+                    network.send(url: "https://scripttrip.scarletsc.net/iOS/plan.php?user=\(session.usr.UID)&mode=plan", method: "GET", query: nil) { (data) in
+                        guard let data = data else {
+                            header.frame = CGRect(x: 0 , y: 0, width: collectionView.frame.width, height: 62)
+                            header.plans.alpha = 0
+                            return
+                        }
+                        self.plans = self.session.parsePlan(Session.parser.parse(data))
+                        DispatchQueue.main.async {
+                            header.plans.reloadData()
+                        }
+                    }
+                }else{
+                    header.plans.alpha = 0
+                    header.more.alpha = 0
+                    header.quickAccess.alpha = 0
+                }
                 
                 return header
-            
+                
             default:
                 return UICollectionReusableView()
+            }
+        default:
+            return UICollectionReusableView()
         }
-
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if UserDefaults.standard.bool(forKey: "history") {
-            network.send(url: "https://scripttrip.scarletsc.net/iOS/history.php", method: "POST", query: "user=\(session.usr.UID)&trip=\(session.getTrips()[indexPath.row].TID)") { (_) in
+        switch collectionView.tag{
+        case 0:
+            network.send(url: "https://scripttrip.scarletsc.net/iOS/plan.php?user=\(session.usr.UID)&PID=\(plans![indexPath.row].TID)&mode=item", method: "GET", query: nil, completion: { data in
+                guard let data = data else {return}
+                self.plans?[indexPath.row].Items = self.session.parsePlanItem(Session.parser.parse(data))!
+                self.tripView.displayTrip = self.plans?[indexPath.row]
+                self.tripView.headerImg = UIImage()
+                let gradient = CAGradientLayer()
+                gradient.frame = CGRect(x: 0, y: 0, width: 800, height: 800)
+                gradient.colors = self.colors[indexPath.row % self.colors.count]
+                gradient.startPoint = CGPoint(x: 0, y: 0)
+                gradient.endPoint = CGPoint(x: 1, y: 1)
+                self.tripView.gradientMask = gradient
+                self.tripView.isCustomPlan = true
+                DispatchQueue.main.async {
+                    self.tripView.show()
+                    let postview = self.storyboard?.instantiateViewController(withIdentifier: "postView") as! postView
+                    postview.tripView = self.tripView
+                    self.present(postview, animated: true, completion: nil)
+                }
+            })
+        case 1:
+            if UserDefaults.standard.bool(forKey: "history") {
+                network.send(url: "https://scripttrip.scarletsc.net/iOS/history.php", method: "POST", query: "user=\(session.usr.UID)&trip=\(session.getTrips()[indexPath.row].TID)") { (_) in
+                }
             }
-        }
-        
-        tripView.displayTrip = session.getTrips()[indexPath.row]
-        tripView.headerImg = imgs[session.getTrips()[indexPath.row]]
-        tripView.show()
-        DispatchQueue.main.async {
-            let postview = self.storyboard?.instantiateViewController(withIdentifier: "postView") as! postView
-            postview.tripView = self.tripView
-            self.present(postview, animated: true, completion: nil)
+            tripView.isCustomPlan = false
+            tripView.gradientMask = nil
+            tripView.displayTrip = session.getTrips()[indexPath.row]
+            tripView.headerImg = imgs[session.getTrips()[indexPath.row]]
+            tripView.show()
+            DispatchQueue.main.async {
+                let postview = self.storyboard?.instantiateViewController(withIdentifier: "postView") as! postView
+                postview.tripView = self.tripView
+                self.present(postview, animated: true, completion: nil)
+            }
+        default:
+            break
         }
     }
-    @available(iOS 11.0, *)
-    func collectionView(_ collectionView: UICollectionView, shouldSpringLoadItemAt indexPath: IndexPath, with context: UISpringLoadedInteractionContext) -> Bool {
-        return true
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        switch collectionView.tag{
+        case 0:
+            return .init(width: 250, height: 89)
+        case 1:
+            return .init(width: 341, height: 338)
+        default:
+            return .zero
+        }
     }
     
         //NETWORK
@@ -201,6 +309,10 @@ class Featured: UIViewController, UICollectionViewDataSource, UICollectionViewDe
     }
     
     //OBJC FUNC
+    @objc func showPlan(_ ender: UIButton){
+        let planView = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "planNav") as! UINavigationController
+        self.present(planView, animated: true, completion: nil)
+    }
     @objc func refreshFeatured(_ sender: UIRefreshControl){
         state = "trip"
         network.send(url: "https://scripttrip.scarletsc.net/iOS/getTrips.php", method: "GET", query: nil)

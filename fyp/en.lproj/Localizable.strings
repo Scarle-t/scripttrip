@@ -24,14 +24,16 @@
 "regVerPwdMsg" = "Please verify your password!";
 "regEmailRegexMsg" = "This is not an Email!";
 "regError" = "Oops.";
+"photoEmptyMsg" = "Get some nice photo! This cannot be empty.";
 
 "otpTitle" = "2-Factor Authentication enabled\n\nPlease provide the 6-digit code";
 
 "historyError" = "History is not enabled!";
 
-"langFooter" = "Restart app is recommended for language change.";
+"langFooter" = "Restart app is recommended for language change";
 "shakeFooter" = "Are you feeling lucky?";
-"historyFooter" = "Enabling History allows you to find trips you have browsed before.\nHistory syncs with your account.";
+"historyFooter" = "Enabling History allows you to find trips you have browsed before\nHistory syncs with your account";
+"quickAccessFooter" = "Show Quick Access at the top of main page";
 
 "email" = "Email";
 "password" = "Password";
@@ -70,6 +72,9 @@
 "stopSharing" = "Stop sharing";
 "Sharing" = "Sharing";
 "Title" = "Title";
+"Camera" = "Camera";
+"photoLibrary" = "Photo Library";
+"quickAccess" = "Quick Acccess";
 
 "introText" = "ScriptTrip provides an entire new way to experience outgoing\n\nJoin us now";
 "getStarted" = "Get Started";

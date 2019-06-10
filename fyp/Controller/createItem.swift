@@ -134,6 +134,7 @@ class createItem: UIViewController, NetworkDelegate{
             name: UIResponder.keyboardWillHideNotification,
             object: nil
         )
+        self.navigationController?.interactivePopGestureRecognizer?.isEnabled = false
     }
     
     //VIEW CONTROLLER

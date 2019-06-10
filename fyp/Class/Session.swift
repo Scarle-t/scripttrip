@@ -161,7 +161,7 @@ class Session: NSObject, UITableViewDelegate, UITableViewDataSource, UICollectio
         
     }
     internal func numberOfSections(in tableView: UITableView) -> Int {
-        return 3
+        return 4
     }
     internal func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0{
@@ -169,6 +169,8 @@ class Session: NSObject, UITableViewDelegate, UITableViewDataSource, UICollectio
         }else if section == 1{
             return 3
         }else if section == 2{
+            return 1
+        }else if section == 3{
             return 1
         }
         return 0
@@ -196,26 +198,16 @@ class Session: NSObject, UITableViewDelegate, UITableViewDataSource, UICollectio
             }
             cell.backgroundColor = UIColor.clear
             
-            if #available(iOS 12.0, *) {
-                switch self.userView.traitCollection.userInterfaceStyle{
-                case .light:
-                    if indexPath.row == 1{
-                        cell.accessoryView = UIImageView(image: #imageLiteral(resourceName: "bookmark_pdf"))
-                    }else if indexPath.row == 2{
-                        cell.accessoryView = UIImageView(image: #imageLiteral(resourceName: "history_pdf"))
-                    }else if indexPath.row == 3{
-                        cell.accessoryView = UIImageView(image: #imageLiteral(resourceName: "plan.png"))
-                    }
-                case .dark:
-                    if indexPath.row == 1{
-                        cell.accessoryView = UIImageView(image: #imageLiteral(resourceName: "bookmark_white.pdf"))
-                    }else if indexPath.row == 2{
-                        cell.accessoryView = UIImageView(image: #imageLiteral(resourceName: "history_white.pdf"))
-                    }else if indexPath.row == 3{
-                        cell.accessoryView = UIImageView(image: #imageLiteral(resourceName: "plan_white.pdf"))
-                    }
-                default:
-                    break
+            if #available(iOS 13.0, *) {
+                if indexPath.row == 1{
+                    cell.tintColor = darkGreen
+                    cell.accessoryView = UIImageView(image: UIImage(systemName: "bookmark"))
+                }else if indexPath.row == 2{
+                    cell.accessoryView = UIImageView(image: UIImage(systemName: "clock"))
+                    cell.tintColor = darkGreen
+                }else if indexPath.row == 3{
+                    cell.accessoryView = UIImageView(image: UIImage(systemName: "doc.richtext"))
+                    cell.tintColor = darkGreen
                 }
             } else {
                 // Fallback on earlier versions
@@ -253,7 +245,19 @@ class Session: NSObject, UITableViewDelegate, UITableViewDataSource, UICollectio
                 
                 return cell
             }
+        case 3:
+            cell.backgroundColor = .clear
+            cell.textLabel?.textAlignment = .center
+            cell.textLabel?.font = UIFont(name: "AvenirNext-Medium", size: 12)
+            if #available(iOS 13.0, *) {
+                cell.textLabel?.textColor = .systemGray
+            } else {
+                // Fallback on earlier versions
+                cell.textLabel?.textColor = .darkGray
+            }
+            cell.textLabel?.text = "Version " + (Bundle.main.infoDictionary!["CFBundleShortVersionString"] as! String) + "(" + (Bundle.main.infoDictionary!["CFBundleVersion"] as! String) + ")"
             
+            return cell
         default:
             return UITableViewCell()
         }

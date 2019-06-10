@@ -26,6 +26,7 @@ class Plans: UIViewController, UICollectionViewDelegate, UICollectionViewDataSou
     var seg: UISegmentedControl?
     var isSharing = [Int : Bool]()
     var mainRefresh: UIRefreshControl?
+    var popRecognizer: InteractivePopRecognizer?
     
     //IBOUTLET
     @IBOutlet weak var cv: UICollectionView!
@@ -39,7 +40,12 @@ class Plans: UIViewController, UICollectionViewDelegate, UICollectionViewDataSou
         switch sender.tag{
         case 0:
             sender.tag = 1
-            sender.setImage(#imageLiteral(resourceName: "cross_tint_red.png"), for: .normal)
+            if #available(iOS 13.0, *) {
+                sender.setImage(UIImage(systemName: "xmark"), for: .normal)
+                sender.tintColor = red
+            } else {
+                // Fallback on earlier versions
+            }
             plans?.insert(Trip(), at: 0)
             mode = "add"
             cv.isScrollEnabled = false
@@ -47,8 +53,13 @@ class Plans: UIViewController, UICollectionViewDelegate, UICollectionViewDataSou
             seg?.isEnabled = false
             cv.reloadData()
         case 1:
-            sender.setImage(#imageLiteral(resourceName: "plus_tint.png"), for: .normal)
             sender.tag = 0
+            if #available(iOS 13.0, *) {
+                sender.setImage(UIImage(systemName: "plus"), for: .normal)
+                sender.tintColor = darkGreen
+            } else {
+                // Fallback on earlier versions
+            }
             plans?.remove(at: 0)
             mode = ""
             cv.isScrollEnabled = true
@@ -444,6 +455,8 @@ class Plans: UIViewController, UICollectionViewDelegate, UICollectionViewDataSou
             self.mainRefresh!.tintColor = "42DA9D".uiColor
             self.cv.refreshControl = self.mainRefresh
         }
+        popRecognizer = InteractivePopRecognizer(controller: self.navigationController!)
+        self.navigationController?.interactivePopGestureRecognizer?.delegate = popRecognizer
     }
     
     func setup(){

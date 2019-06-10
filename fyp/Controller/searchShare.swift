@@ -71,7 +71,12 @@ class searchShare: UIViewController, UITableViewDelegate, UITableViewDataSource,
         let header = UIView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: 112))
         
         let menu = UIButton(frame: CGRect(x: 18, y: 16, width: 30, height: 30))
-        menu.setImage(#imageLiteral(resourceName: "left_tint"), for: .normal)
+        if #available(iOS 13.0, *){
+            menu.setImage(UIImage(systemName: "chevron.left"), for: .normal)
+            menu.tintColor = darkGreen
+        }else{
+            menu.setImage(#imageLiteral(resourceName: "left_tint"), for: .normal)
+        }
         menu.addTarget(self, action: #selector(userMenu(_:)), for: .touchUpInside)
         
         let text = UILabel(frame: CGRect(x: 0, y: 0, width: header.frame.width, height: 63))
@@ -102,6 +107,9 @@ class searchShare: UIViewController, UITableViewDelegate, UITableViewDataSource,
         for view : UIView in (searchBar.subviews[0]).subviews {
             if let textField = view as? UITextField {
                 textField.font = UIFont(name: "AvenirNext-Medium", size: 15)
+            }
+            if let cancel = view as? UIButton {
+                cancel.setTitle(Localized.Cancel.rawValue.localized(), for: .normal)
             }
         }
         

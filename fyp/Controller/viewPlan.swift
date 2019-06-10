@@ -28,27 +28,57 @@ class viewPlan: UIViewController, UITableViewDelegate, UITableViewDataSource, Ne
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell")
-        cell?.textLabel?.text = selectedPlan.Items[indexPath.row].I_Content
+        cell?.textLabel?.text = selectedPlan.Items[indexPath.row].I_Content == "STINERNAL_IMG_STINTERNAL" ? "Image" : selectedPlan.Items[indexPath.row].I_Content
         cell?.accessoryType = .disclosureIndicator
+        if selectedPlan.Items[indexPath.row].I_Image != "0"{
+            network.getPhoto(url: "https://scripttrip.scarletsc.net/img/\(selectedPlan.Items[indexPath.row].I_Image)") { (data, response, error) in
+                guard let image = UIImage(data: data!) else {return}
+                DispatchQueue.main.async {
+                    let imgView = UIImageView(frame: CGRect(x: 0, y: 0, width: 30, height: 30))
+                    imgView.clipsToBounds = true
+                    imgView.contentMode = .scaleAspectFit
+                    imgView.image = image
+                    cell?.accessoryView = imgView
+                }
+            }
+        }
         cell?.textLabel!.font = UIFont(name: "AvenirNext-Regular", size: 28)
         return cell!
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.cellForRow(at: indexPath)?.setSelected(false, animated: true)
-        let viewItem = storyboard?.instantiateViewController(withIdentifier: "viewItem") as! createItem
-        viewItem.item = selectedPlan.Items[indexPath.row]
-        viewItem.mode = "edit"
-        self.navigationController?.pushViewController(viewItem, animated: true)
+        let cell = tableView.cellForRow(at: indexPath)
+        cell?.setSelected(false, animated: true)
+        
+        if selectedPlan.Items[indexPath.row].I_Content == "STINERNAL_IMG_STINTERNAL"{
+            let viewItem = storyboard?.instantiateViewController(withIdentifier: "addPhoto") as! addPhoto
+            viewItem.item = selectedPlan.Items[indexPath.row]
+            viewItem.mode = "edit"
+            self.navigationController?.pushViewController(viewItem, animated: true)
+        }else{
+            let viewItem = storyboard?.instantiateViewController(withIdentifier: "viewItem") as! createItem
+            viewItem.item = selectedPlan.Items[indexPath.row]
+            viewItem.mode = "edit"
+            self.navigationController?.pushViewController(viewItem, animated: true)
+        }
+        
+        
     }
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let header = UIView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: 62))
         
         let menu = UIButton(frame: CGRect(x: 18, y: 16, width: 30, height: 30))
-        menu.setImage(#imageLiteral(resourceName: "down_tint"), for: .normal)
+        let add = UIButton(frame: CGRect(x: 308, y: 8, width: 46, height: 46))
+        if #available(iOS 13.0, *){
+            menu.setImage(UIImage(systemName: "chevron.left"), for: .normal)
+            menu.tintColor = darkGreen
+            add.setImage(UIImage(systemName: "plus"), for: .normal)
+            add.tintColor = darkGreen
+        }else{
+            menu.setImage(#imageLiteral(resourceName: "left_tint"), for: .normal)
+            add.setImage(#imageLiteral(resourceName: "plus_tint"), for: .normal)
+        }
         menu.addTarget(self, action: #selector(userMenu(_:)), for: .touchUpInside)
         
-        let add = UIButton(frame: CGRect(x: 308, y: 8, width: 46, height: 46))
-        add.setImage(#imageLiteral(resourceName: "plus_tint"), for: .normal)
         add.addTarget(self, action: #selector(addItem(_:)), for: .touchUpInside)
         
         let text = UILabel(frame: header.frame)
@@ -128,7 +158,10 @@ class viewPlan: UIViewController, UITableViewDelegate, UITableViewDataSource, Ne
         }))
         
         alert.addAction(UIAlertAction(title: Localized.imageWithCaption.rawValue.localized(), style: .default, handler: { (_) in
-            
+            let viewItem = self.storyboard?.instantiateViewController(withIdentifier: "addPhoto") as! addPhoto
+            viewItem.mode = "add"
+            viewItem.planID = self.selectedPlan.TID
+            self.navigationController?.pushViewController(viewItem, animated: true)
         }))
         
         alert.addAction(UIAlertAction(title: Localized.location.rawValue.localized(), style: .default, handler: { (_) in
@@ -153,6 +186,7 @@ class viewPlan: UIViewController, UITableViewDelegate, UITableViewDataSource, Ne
     }
     
     func setup(){
+        self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
         selectedPlan.Items.removeAll()
         network.send(url: "https://scripttrip.scarletsc.net/iOS/plan.php?user=\(session.usr.UID)&PID=\(selectedPlan.TID)&mode=item", method: "GET", query: nil)
     }

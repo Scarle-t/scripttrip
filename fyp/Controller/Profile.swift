@@ -36,8 +36,12 @@ class Profile: UITableViewController, NetworkDelegate {
         if sender.tag == -1{
             sender.tag = 0
             right.tag = 0
-            right.image = #imageLiteral(resourceName: "Edit_pdf")
-            sender.image = #imageLiteral(resourceName: "small_tick_pdf")
+            if #available(iOS 13.0, *) {
+                right.image = UIImage(systemName: "pencil.circle")
+                sender.image = UIImage(systemName: "checkmark.circle")
+            } else {
+                // Fallback on earlier versions
+            }
             fname.layer.shadowOpacity = 0
             lname.layer.shadowOpacity = 0
             fname.isUserInteractionEnabled = false
@@ -56,16 +60,24 @@ class Profile: UITableViewController, NetworkDelegate {
             lname.isUserInteractionEnabled = true
             sender.tag = -1
             left.tag = -1
-            sender.image = #imageLiteral(resourceName: "small_tick_pdf")
-            left.image = #imageLiteral(resourceName: "small_cross_pdf")
+            if #available(iOS 13.0, *) {
+                left.image = UIImage(systemName: "xmark.circle")
+                sender.image = UIImage(systemName: "checkmark.circle")
+            } else {
+                // Fallback on earlier versions
+            }
             return
         }
         
         if sender.tag == -1{
             sender.tag = 0
             left.tag = 0
-            sender.image = #imageLiteral(resourceName: "Edit_pdf")
-            left.image = #imageLiteral(resourceName: "small_tick_pdf")
+            if #available(iOS 13.0, *) {
+                left.image = UIImage(systemName: "checkmark.circle")
+                sender.image = UIImage(systemName: "pencil.circle")
+            } else {
+                // Fallback on earlier versions
+            }
             fname.layer.shadowOpacity = 0
             lname.layer.shadowOpacity = 0
             fname.isUserInteractionEnabled = false

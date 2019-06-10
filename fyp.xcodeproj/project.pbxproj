@@ -10,6 +10,7 @@
 		A612D418226EC61F004BF88F /* tripDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = A612D417226EC61F004BF88F /* tripDetail.swift */; };
 		A613B4822276310400947AA0 /* reg_detail.swift in Sources */ = {isa = PBXBuildFile; fileRef = A613B4812276310400947AA0 /* reg_detail.swift */; };
 		A613B4842276364400947AA0 /* reg_password.swift in Sources */ = {isa = PBXBuildFile; fileRef = A613B4832276364400947AA0 /* reg_password.swift */; };
+		A61A219A22AC7C2000319C53 /* addPhoto.swift in Sources */ = {isa = PBXBuildFile; fileRef = A61A219922AC7C2000319C53 /* addPhoto.swift */; };
 		A61A7B972280E3DF001D993A /* History.swift in Sources */ = {isa = PBXBuildFile; fileRef = A61A7B962280E3DF001D993A /* History.swift */; };
 		A61FFBD32289885500E00513 /* DeviceSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = A61FFBD22289885500E00513 /* DeviceSettings.swift */; };
 		A6216A2D2265DED30073CE1F /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6216A2C2265DED30073CE1F /* Reachability.swift */; };
@@ -23,6 +24,7 @@
 		A622590B2286C92100B72578 /* SVIndefiniteAnimatedView.m in Sources */ = {isa = PBXBuildFile; fileRef = A62259052286C92000B72578 /* SVIndefiniteAnimatedView.m */; };
 		A622590C2286C92100B72578 /* SVProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A62259062286C92000B72578 /* SVProgressHUD.bundle */; };
 		A622590F2286C94900B72578 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A622590E2286C94800B72578 /* QuartzCore.framework */; };
+		A6268A0F22AE53B500C395CB /* InteractivePopGesture.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6268A0E22AE53B500C395CB /* InteractivePopGesture.swift */; };
 		A639DAE82296E03900CBAAAF /* Plans.swift in Sources */ = {isa = PBXBuildFile; fileRef = A639DAE72296E03900CBAAAF /* Plans.swift */; };
 		A639DAEC2296E05B00CBAAAF /* createItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = A639DAEB2296E05B00CBAAAF /* createItem.swift */; };
 		A639DAEE2299670900CBAAAF /* viewPlan.swift in Sources */ = {isa = PBXBuildFile; fileRef = A639DAED2299670900CBAAAF /* viewPlan.swift */; };
@@ -73,6 +75,7 @@
 		A612D417226EC61F004BF88F /* tripDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = tripDetail.swift; sourceTree = "<group>"; };
 		A613B4812276310400947AA0 /* reg_detail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = reg_detail.swift; sourceTree = "<group>"; };
 		A613B4832276364400947AA0 /* reg_password.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = reg_password.swift; sourceTree = "<group>"; };
+		A61A219922AC7C2000319C53 /* addPhoto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = addPhoto.swift; sourceTree = "<group>"; };
 		A61A7B962280E3DF001D993A /* History.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = History.swift; sourceTree = "<group>"; };
 		A61FFBD22289885500E00513 /* DeviceSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceSettings.swift; sourceTree = "<group>"; };
 		A61FFBD42289A95500E00513 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -92,6 +95,7 @@
 		A62259062286C92000B72578 /* SVProgressHUD.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = SVProgressHUD.bundle; sourceTree = "<group>"; };
 		A62259072286C92000B72578 /* SVProgressAnimatedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVProgressAnimatedView.h; sourceTree = "<group>"; };
 		A622590E2286C94800B72578 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		A6268A0E22AE53B500C395CB /* InteractivePopGesture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InteractivePopGesture.swift; sourceTree = "<group>"; };
 		A639DAE72296E03900CBAAAF /* Plans.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Plans.swift; sourceTree = "<group>"; };
 		A639DAEB2296E05B00CBAAAF /* createItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = createItem.swift; sourceTree = "<group>"; };
 		A639DAED2299670900CBAAAF /* viewPlan.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = viewPlan.swift; sourceTree = "<group>"; };
@@ -225,6 +229,7 @@
 				A6753A92229C870C00C20EDF /* searchShare.swift */,
 				A6A9FF4F22A6B72100D2E7C5 /* userView.swift */,
 				A6A9FF5122A6BFFB00D2E7C5 /* postView.swift */,
+				A61A219922AC7C2000319C53 /* addPhoto.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -252,6 +257,7 @@
 			children = (
 				A6FF7BF2223854B200EF58D1 /* DirectionalPan.swift */,
 				A6216A322265E3C80073CE1F /* Session.swift */,
+				A6268A0E22AE53B500C395CB /* InteractivePopGesture.swift */,
 			);
 			path = Class;
 			sourceTree = "<group>";
@@ -435,6 +441,7 @@
 				A680EC402280B732006E116E /* Bookmarks.swift in Sources */,
 				A6216A332265E3C80073CE1F /* Session.swift in Sources */,
 				A6216A3A226691340073CE1F /* Category.swift in Sources */,
+				A61A219A22AC7C2000319C53 /* addPhoto.swift in Sources */,
 				A64BD9F22268BA6800E29669 /* Item.swift in Sources */,
 				A6216A362265E56F0073CE1F /* JSONParser.swift in Sources */,
 				A613B4842276364400947AA0 /* reg_password.swift in Sources */,
@@ -443,6 +450,7 @@
 				A6C2BAAB227F615900BC19F7 /* CategoryTrip.swift in Sources */,
 				A6AECE992287CE9000B3E68B /* Enumerations.swift in Sources */,
 				A6A67CF9222FE9A700D82479 /* AppDelegate.swift in Sources */,
+				A6268A0F22AE53B500C395CB /* InteractivePopGesture.swift in Sources */,
 				A612D418226EC61F004BF88F /* tripDetail.swift in Sources */,
 				A6753A93229C870C00C20EDF /* searchShare.swift in Sources */,
 				A6216A312265DF0D0073CE1F /* Network.swift in Sources */,
@@ -631,7 +639,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = fyp/fyp.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 150;
+				CURRENT_PROJECT_VERSION = 157;
 				DEVELOPMENT_TEAM = 7WC44F9Y8F;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -659,7 +667,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = fyp/fyp.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 150;
+				CURRENT_PROJECT_VERSION = 157;
 				DEVELOPMENT_TEAM = 7WC44F9Y8F;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",

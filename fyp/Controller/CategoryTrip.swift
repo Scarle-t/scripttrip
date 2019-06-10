@@ -22,14 +22,15 @@ class CategoryTrip: UIViewController, UICollectionViewDelegate, UICollectionView
     @IBOutlet weak var cv: UICollectionView!
     
     //IBACTION
-    @IBAction func back(_ sender: UIButton) {
+    @IBAction func back(_ sender: Any) {
         self.navigationController?.popViewController(animated: true)
     }
     
     //DELEGATION
     	//COLLECTION VIEW
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return trips?.count ?? 0
+        guard let trip = trips, trip[0].TID != 0 else {return 0}
+        return trip.count
     }
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! featuredCell
@@ -155,6 +156,7 @@ class CategoryTrip: UIViewController, UICollectionViewDelegate, UICollectionView
             self.mainRefresh!.tintColor = "42DA9D".uiColor
             self.cv.refreshControl = self.mainRefresh
         }
+        
     }
     
     func setup(){

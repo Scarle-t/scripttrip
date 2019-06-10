@@ -103,6 +103,11 @@ enum Localized: String{
     case imageWithCaption
     case location
     case Title
+    case Camera
+    case photoLibrary
+    case photoEmptyMsg
+    case quickAccess
+    case quickAccessFooter
 }
 
 enum locale: String, CaseIterable{

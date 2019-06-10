@@ -24,6 +24,7 @@
 "regVerPwdMsg" = "請確認您的密碼";
 "regEmailRegexMsg" = "這個不像電郵地址喔";
 "regError" = "糟糕了！";
+"photoEmptyMsg" = "找張好照片吧！這個不能為空。";
 
 "otpTitle" = "已啟用雙重認證\n\n請輸入六位數驗證碼";
 
@@ -31,7 +32,8 @@
 
 "langFooter" = "更改語言後建議重啟程式";
 "shakeFooter" = "覺得幸運嗎？";
-"historyFooter" = "開啟歷程紀錄能讓您更容易尋找看過的旅程。\n歷程紀錄與您的帳戶同步";
+"historyFooter" = "開啟歷程紀錄能讓您更容易尋找看過的旅程\n歷程紀錄與您的帳戶同步";
+"quickAccessFooter" = "於主頁上顯示捷徑";
 
 "email" = "電郵地址";
 "password" = "密碼";
@@ -69,6 +71,7 @@
 "shareTo" = "分享至";
 "stopSharing" = "停止分享";
 "Sharing" = "正在分享";
+"quickAccess" = "捷徑";
 
 "introText" = "ScriptTrip 為您帶來嶄新的外出體驗\n\n加入我們";
 "getStarted" = "現在開始";
@@ -96,6 +99,8 @@
 "languages" = "語言";
 "Settings" = "設定";
 "Title" = "標題";
+"Camera" = "相機";
+"photoLibrary" = "圖片庫";
 
 "removeBKMsg" = "您是否確定要刪除此書籤？";
 "removePlanMsg" = "您是否確定要刪除此行程？將會刪除行程內所有項目！";
