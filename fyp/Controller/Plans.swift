@@ -110,11 +110,6 @@ class Plans: UIViewController, UICollectionViewDelegate, UICollectionViewDataSou
                 cell.contentView.frame.origin.x += 500
             }
             
-            cell.viewPost.alpha = 0
-            cell.edit.alpha = 0
-            cell.delete.alpha = 0
-            cell.pin.alpha = 0
-            
             cell.layer.masksToBounds = false
             cell.layer.shadowColor = UIColor.lightGray.cgColor
             cell.layer.shadowOpacity = 0.1
@@ -159,6 +154,11 @@ class Plans: UIViewController, UICollectionViewDelegate, UICollectionViewDataSou
             }
             
             guard let plan = plans?[indexPath.row] else {return cell}
+            
+            cell.viewPost.alpha = 0
+            cell.edit.alpha = 0
+            cell.delete.alpha = 0
+            cell.pin.alpha = 0
             
             cell.layer.masksToBounds = false
             cell.layer.shadowColor = UIColor.lightGray.cgColor

@@ -7,12 +7,16 @@
 //
 
 import UIKit
+import AuthenticationServices
 
-class mainScreen: UIViewController, UITextFieldDelegate, NetworkDelegate, FBSDKLoginButtonDelegate {
+class mainScreen: UIViewController, UITextFieldDelegate, NetworkDelegate, FBSDKLoginButtonDelegate, ASAuthorizationControllerDelegate, ASAuthorizationControllerPresentationContextProviding {
+    
+    
     //VARIABLE
     var state = ""
     var networkState = ""
     var loginButton: FBSDKLoginButton!
+    var appleLogin: UIControl!
     let network = Network()
     let session = Session.shared
     let userDefault = UserDefaults.standard
@@ -41,6 +45,7 @@ class mainScreen: UIViewController, UITextFieldDelegate, NetworkDelegate, FBSDKL
                 
                 self.login.frame = CGRect(x: self.login.frame.minX, y: self.login.frame.minY + 55, width: self.login.frame.width, height: self.login.frame.height)
                 self.loginButton.alpha = 1
+                self.appleLogin.alpha = 1
                 
             }
             state = "login"
@@ -144,6 +149,32 @@ class mainScreen: UIViewController, UITextFieldDelegate, NetworkDelegate, FBSDKL
     }
     
     //DELEGATION
+        //SIGN IN WITH APPLE
+    @available(iOS 13.0, *)
+    func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
+        return self.view.window!
+    }
+    @available(iOS 13.0, *)
+    func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
+        
+    }
+    @available(iOS 13.0, *)
+    func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
+        
+        switch authorization.credential{
+        case let appleID as ASAuthorizationAppleIDCredential:
+            networkState = "login_apple"
+            SVProgressHUD.show()
+            network.send(url: "https://scripttrip.scarletsc.net/iOS/login.php", method: "POST", query: "appleid=\(appleID.user.sha1())")
+        case let password as ASPasswordCredential:
+            networkState = "login"
+            SVProgressHUD.show()
+            network.send(url: "https://scripttrip.scarletsc.net/iOS/login.php", method: "POST", query: "email=\(password.user)&pass=\(password.password.sha1())")
+        default:
+            break
+        }
+        
+    }
         //NETWORK
     func ResponseHandle(data: Data) {
         guard let result = Session.parser.parse(data) else {return}
@@ -203,7 +234,24 @@ class mainScreen: UIViewController, UITextFieldDelegate, NetworkDelegate, FBSDKL
                         self.whiteView.alpha = 0
                         self.navigationController?.pushViewController(vct, animated: false)
                     }
-                    
+                }
+            }
+        }else if networkState == "login_apple"{
+            for item in result{
+                if (item["Result"] as! String) == "OK"{
+                    session.parseUser([item["Reason"] as! NSDictionary])
+                    userDefault.set(true, forKey: "isLoggedIn")
+                    DispatchQueue.main.async {
+                        let vct = self.storyboard?.instantiateViewController(withIdentifier: "vct") as! UITabBarController
+                        self.whiteView.alpha = 0
+                        self.navigationController?.pushViewController(vct, animated: false)
+                    }
+                }else{
+                    SVProgressHUD.showError(withStatus: Localized.failLoginMsg.rawValue.localized())
+                    SVProgressHUD.dismiss(withDelay: 1.5)
+                    DispatchQueue.main.async {
+                        self.whiteView.alpha = 0
+                    }
                 }
             }
         }
@@ -251,6 +299,19 @@ class mainScreen: UIViewController, UITextFieldDelegate, NetworkDelegate, FBSDKL
         view.endEditing(true)
     }
     
+    @available(iOS 13.0, *)
+    @objc func handleAppleLogin(){
+        let requests = [ASAuthorizationAppleIDProvider().createRequest(),
+        ASAuthorizationPasswordProvider().createRequest()]
+        
+        let controller = ASAuthorizationController(authorizationRequests: requests)
+        
+        controller.delegate = self
+        controller.presentationContextProvider = self
+        
+        controller.performRequests()
+    }
+    
     //FUNC
     func backFunc(){
         view.endEditing(true)
@@ -266,6 +327,7 @@ class mainScreen: UIViewController, UITextFieldDelegate, NetworkDelegate, FBSDKL
             self.backBtn.alpha = 0
             self.forgot.alpha = 0
             self.loginButton.alpha = 0
+            self.appleLogin.alpha = 0
             
             if self.state == "login"{
                 self.login.frame = CGRect(x: self.login.frame.minX, y: self.login.frame.minY - 55, width: self.login.frame.width, height: self.login.frame.height)
@@ -379,7 +441,17 @@ class mainScreen: UIViewController, UITextFieldDelegate, NetworkDelegate, FBSDKL
         loginButton.frame.origin.y = login.frame.maxY + 70 + 55
         loginButton.alpha = 0
         
+        if #available(iOS 13.0, *){
+            appleLogin = ASAuthorizationAppleIDButton()
+            appleLogin.frame.origin.x = login.frame.origin.x - 13
+            appleLogin.frame.origin.y = login.frame.maxY + 70 + 55 + 55
+            appleLogin.alpha = 0
+            appleLogin.addTarget(self, action: #selector(handleAppleLogin), for: .touchUpInside)
+            
+        }
+        
         view.addSubview(loginButton)
+        view.addSubview(appleLogin)
     }
     
     //VIEW CONTROLLER
