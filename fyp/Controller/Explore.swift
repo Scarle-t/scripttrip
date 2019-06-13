@@ -323,7 +323,9 @@ class Explore: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, U
         DispatchQueue.main.async {
             let userview = self.storyboard?.instantiateViewController(withIdentifier: "userView") as! userView
             userview.logout = {
-                self.navigationController?.popViewController(animated: false)
+                userview.dismiss(animated: false) {
+                    self.navigationController?.popViewController(animated: false)
+                }
             }
             self.present(userview, animated: true, completion: nil)
         }

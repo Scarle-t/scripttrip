@@ -459,14 +459,11 @@ class Session: NSObject, UITableViewDelegate, UITableViewDataSource, UICollectio
     }
     func parseCategory(_ item: [NSDictionary]?)->[Category]?{
         guard let data = item else {return nil}
-        
         var returnItem = [Category]()
         for item in data{
             guard let cid = item["CID"] as? Int else {return nil}
             guard let c_name = item["C_Name"] as? String else {return nil}
-            
             returnItem.append(Category(CID: cid, C_Name: c_name))
-            
         }
         return returnItem
     }
