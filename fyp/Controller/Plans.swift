@@ -168,6 +168,7 @@ class Plans: UIViewController, UICollectionViewDelegate, UICollectionViewDataSou
                 cell.edit.setImage(#imageLiteral(resourceName: "Edit_pdf"), for: .normal)
                 cell.delete.setImage(#imageLiteral(resourceName: "cross_tint_red"), for: .normal)
                 cell.removeBK.setImage(#imageLiteral(resourceName: "more_tint"), for: .normal)
+                cell.pin.setImage(#imageLiteral(resourceName: "pin_outline_tint"), for: .normal)
             }
             
             cell.layer.masksToBounds = false
@@ -216,6 +217,10 @@ class Plans: UIViewController, UICollectionViewDelegate, UICollectionViewDataSou
                             }
                         } else {
                             // Fallback on earlier versions
+                            DispatchQueue.main.async {
+                                cell.pin.setImage(#imageLiteral(resourceName: "pin_fill_tint"), for: .normal)
+                                cell.pin.tag = 1
+                            }
                         }
                     }else{
                         if #available(iOS 13.0, *) {
@@ -225,6 +230,10 @@ class Plans: UIViewController, UICollectionViewDelegate, UICollectionViewDataSou
                             }
                         } else {
                             // Fallback on earlier versions
+                            DispatchQueue.main.async {
+                                cell.pin.setImage(#imageLiteral(resourceName: "pin_outline_tint"), for: .normal)
+                                cell.pin.tag = 0
+                            }
                         }
                     }
                 }
@@ -503,6 +512,7 @@ class Plans: UIViewController, UICollectionViewDelegate, UICollectionViewDataSou
                         } else {
                             // Fallback on earlier versions
                             DispatchQueue.main.async {
+                                sender.setImage(#imageLiteral(resourceName: "pin_fill_tint"), for: .normal)
                                 sender.tag = 1
                             }
                         }
@@ -532,6 +542,7 @@ class Plans: UIViewController, UICollectionViewDelegate, UICollectionViewDataSou
                         } else {
                             // Fallback on earlier versions
                             DispatchQueue.main.async {
+                                sender.setImage(#imageLiteral(resourceName: "pin_outline_tint"), for: .normal)
                                 sender.tag = 0
                             }
                         }
