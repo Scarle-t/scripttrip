@@ -202,6 +202,7 @@
 			isa = PBXGroup;
 			children = (
 				A680EC412280C0EA006E116E /* About.swift */,
+				A61A219922AC7C2000319C53 /* addPhoto.swift */,
 				A680EC3F2280B732006E116E /* Bookmarks.swift */,
 				A6C2BAAA227F615900BC19F7 /* CategoryTrip.swift */,
 				A6B77B1C22302A3600DA4543 /* CategoryView.swift */,
@@ -216,6 +217,7 @@
 				A6BE20972291CFEF00546311 /* otp_setup.swift */,
 				A6719E25226236E000483AFC /* Photo.swift */,
 				A639DAE72296E03900CBAAAF /* Plans.swift */,
+				A6A9FF5122A6BFFB00D2E7C5 /* postView.swift */,
 				A6C94FEB227A103F00C5F35E /* Profile.swift */,
 				A613B4812276310400947AA0 /* reg_detail.swift */,
 				A6B77B162230172D00DA4543 /* reg_done.swift */,
@@ -223,13 +225,11 @@
 				A613B4832276364400947AA0 /* reg_password.swift */,
 				A6836A35226B5165008F75EB /* reg.swift */,
 				A6856A2E2232C65F0036A677 /* Search.swift */,
+				A6753A92229C870C00C20EDF /* searchShare.swift */,
 				A695797C223422F0008F79C4 /* Settings.swift */,
 				A612D417226EC61F004BF88F /* tripDetail.swift */,
-				A639DAED2299670900CBAAAF /* viewPlan.swift */,
-				A6753A92229C870C00C20EDF /* searchShare.swift */,
 				A6A9FF4F22A6B72100D2E7C5 /* userView.swift */,
-				A6A9FF5122A6BFFB00D2E7C5 /* postView.swift */,
-				A61A219922AC7C2000319C53 /* addPhoto.swift */,
+				A639DAED2299670900CBAAAF /* viewPlan.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -639,7 +639,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = fyp/fyp.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 162;
+				CURRENT_PROJECT_VERSION = 167;
 				DEVELOPMENT_TEAM = 7WC44F9Y8F;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -667,7 +667,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = fyp/fyp.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 162;
+				CURRENT_PROJECT_VERSION = 167;
 				DEVELOPMENT_TEAM = 7WC44F9Y8F;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",

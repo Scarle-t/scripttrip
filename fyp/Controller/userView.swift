@@ -44,6 +44,7 @@ class userView: UIViewController{
         }else{
             self.view.backgroundColor = .white
             closeBtn.frame.origin.y += 10
+            closeBtn.setImage(#imageLiteral(resourceName: "cross_tint"), for: .normal)
         }
         uv.addSubview(session.userView)
     }
