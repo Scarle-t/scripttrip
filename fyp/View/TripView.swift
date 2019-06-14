@@ -514,9 +514,19 @@ class TripView: NSObject, UICollectionViewDelegateFlowLayout, UICollectionViewDe
         }
     }
     
+    func updateFrame(){
+        DispatchQueue.main.async {
+            self.view.frame = CGRect(x: self.view.frame.minX, y: self.view.frame.minY, width: (self.delegate?.view.bounds.width)!, height: (self.delegate?.view.bounds.height)!)
+            self.actionBtn.frame.origin.x = self.view.frame.maxX - 50
+            self.addBookmark.frame = self.actionBtn.frame
+            self.shareBtn.frame = self.actionBtn.frame
+        }
+    }
+    
     func show(){
         isShown = true
         contents.setContentOffset(CGPoint(x: 0,y: 0), animated: false)
+        updateFrame()
         calculateTextHeight()
         checkBookmark()
         if headerImg == nil && !isCustomPlan {

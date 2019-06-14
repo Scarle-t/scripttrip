@@ -47,6 +47,7 @@ class Search: UIViewController, UITableViewDelegate, UITableViewDataSource, UISe
         menu.clipsToBounds = true
         menu.layer.cornerRadius = 45 / 2
         menu.backgroundColor = .white
+        menu.frame.origin.x = self.view.bounds.width - 75
         
         let text = UILabel(frame: CGRect(x: 0, y: 0, width: header.frame.width, height: 63))
         text.text = Localized.search.rawValue.localized()

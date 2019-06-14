@@ -28,7 +28,9 @@ class postView: UIViewController{
     
     
     //OBJC FUNC
-    
+    @objc func rotated(){
+        tripView?.updateFrame()
+    }
     
     //FUNC
     func delegate(){
@@ -46,11 +48,12 @@ class postView: UIViewController{
             closeBtn.frame.origin.y += 23
             closeBtn.setImage(#imageLiteral(resourceName: "cross_tint"), for: .normal)
         }
+        tripView?.updateFrame()
         pv.addSubview(tripView!.view)
     }
     
     func setup(){
-        
+        NotificationCenter.default.addObserver(self, selector: #selector(rotated), name: UIDevice.orientationDidChangeNotification, object: nil)
     }
     
     //VIEW CONTROLLER

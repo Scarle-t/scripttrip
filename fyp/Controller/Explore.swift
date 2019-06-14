@@ -448,6 +448,7 @@ class Explore: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, U
         menu.clipsToBounds = true
         menu.layer.cornerRadius = 45 / 2
         menu.backgroundColor = .white
+        menu.frame.origin.x = self.view.bounds.width - 75
         
         let text = UILabel(frame: header.frame)
         text.text = Localized.explore.rawValue.localized()

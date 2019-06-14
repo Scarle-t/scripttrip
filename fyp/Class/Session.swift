@@ -8,7 +8,7 @@
 
 import UIKit
 
-class Session: NSObject, UITableViewDelegate, UITableViewDataSource, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, FBSDKLoginButtonDelegate{
+class Session: NSObject, UITableViewDelegate, UITableViewDataSource, FBSDKLoginButtonDelegate{
     
     static let shared = Session()
     static let parser = JSONParser()
@@ -76,14 +76,10 @@ class Session: NSObject, UITableViewDelegate, UITableViewDataSource, UICollectio
     
     //USER MENU
     fileprivate var window: UIWindow?
-    var userView = UIView()
-    fileprivate var userTable = UITableView(frame: CGRect(origin: CGPoint.zero, size: CGSize.zero), style: .grouped)
+    var userTable = UITableView(frame: CGRect(origin: CGPoint.zero, size: CGSize.zero), style: .grouped)
+    var delegate: UIViewController?
     fileprivate let userIcon = UIImageView()
     fileprivate var iconImg: UIImage?
-    fileprivate let closeUser = UIButton()
-    let dimView = UIView()
-    fileprivate var mainCollectionView: UICollectionView!
-    fileprivate let blurBg = UIVisualEffectView(effect: UIBlurEffect(style: .extraLight))
     fileprivate var settings = ["", Localized.bookmarks.rawValue.localized(), Localized.history.rawValue.localized(), Localized.plans.rawValue.localized(), Localized.accountSettings.rawValue.localized(), Localized.deviceSettings.rawValue.localized(), Localized.about.rawValue.localized()]
     fileprivate let group = DispatchGroup()
     fileprivate let loginButton = FBSDKLoginButton()
@@ -91,74 +87,13 @@ class Session: NSObject, UITableViewDelegate, UITableViewDataSource, UICollectio
     func setupUserView(){
         settings[0] = usr.Fname + " " + usr.Lname
         window = UIApplication.shared.keyWindow
-        mainCollectionView = UICollectionView(frame: userView.frame, collectionViewLayout: StretchyHeaderLayout())
-        let dimTap = UITapGestureRecognizer(target: self, action: #selector(closeMenu))
         
-        mainCollectionView.delegate = self
-        mainCollectionView.dataSource = self
         userTable.delegate = self
         userTable.dataSource = self
         
-        mainCollectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "cell")
-        mainCollectionView.register(UICollectionReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "header")
-        if #available(iOS 11.0, *) {
-            mainCollectionView.contentInsetAdjustmentBehavior = .always
-        } else {
-            // Fallback on earlier versions
-        }
-//        let layout = mainCollectionView.collectionViewLayout as! UICollectionViewFlowLayout
-//        layout.sectionHeadersPinToVisibleBounds = true
-//        mainCollectionView.collectionViewLayout = layout
         userTable.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         userIcon.image = #imageLiteral(resourceName: "user")
         userIcon.contentMode = .scaleAspectFill
-        closeUser.setImage(#imageLiteral(resourceName: "left_tint"), for: .normal)
-        closeUser.contentMode = .scaleAspectFill
-        closeUser.titleLabel?.text = nil
-        closeUser.addTarget(self, action: #selector(closeMenu), for: .touchUpInside)
-        dimView.addGestureRecognizer(dimTap)
-        
-        dimView.frame = window!.frame
-        dimView.backgroundColor = UIColor.black
-        dimView.alpha = 0
-        userView.frame = CGRect(x: 0, y: 0, width: (window?.frame.width)!, height: (window?.frame.height)!)
-        userView.clipsToBounds = true
-        userView.backgroundColor = UIColor.clear
-        userIcon.frame = CGRect(x: 0, y: 0, width: userView.frame.width, height: userView.frame.width)
-        mainCollectionView.clipsToBounds = true
-        mainCollectionView.showsVerticalScrollIndicator = false
-        mainCollectionView.showsHorizontalScrollIndicator = false
-        mainCollectionView.frame = userView.frame
-        mainCollectionView.backgroundColor = UIColor.clear
-        closeUser.frame = CGRect(x: 5, y: 53, width: 50, height: 50)
-        closeUser.backgroundColor = bgWhite
-        closeUser.layer.cornerRadius = closeUser.frame.width / 2
-        closeUser.layer.shadowOpacity = 0.7
-        closeUser.layer.shadowColor = UIColor.lightGray.cgColor
-        closeUser.layer.shadowOffset = CGSize(width: 0, height: 1)
-        
-        blurBg.frame = userView.frame
-        userView.addSubview(blurBg)
-        if #available(iOS 12.0, *) {
-            switch userView.traitCollection.userInterfaceStyle{
-            case .light:
-                blurBg.effect = UIBlurEffect(style: .extraLight)
-            case .dark:
-                blurBg.effect = UIBlurEffect(style: .dark)
-            default:
-                blurBg.effect = UIBlurEffect(style: .extraLight)
-            }
-        } else {
-            // Fallback on earlier versions
-        }
-        
-        userView.frame.origin.x = -((window?.frame.width)! / 3 * 2)
-        
-        userView.addSubview(mainCollectionView)
-        mainCollectionView.reloadData()
-        UIApplication.shared.keyWindow?.rootViewController?.presentedViewController?.view.addSubview(dimView)
-        UIApplication.shared.keyWindow?.rootViewController?.presentedViewController?.view.addSubview(userView)
-        
     }
     internal func numberOfSections(in tableView: UITableView) -> Int {
         return 4
@@ -312,8 +247,6 @@ class Session: NSObject, UITableViewDelegate, UITableViewDataSource, UICollectio
                 iconImg = nil
                 userDefault.set(true, forKey: "shake")
                 userDefault.set(true, forKey: "history")
-                userView.removeFromSuperview()
-                dimView.removeFromSuperview()
                 userDefault.set(false, forKey: "isLoggedIn")
                 userDefault.set(false, forKey: "reduceMotion")
 //                UIApplication.shared.keyWindow?.rootViewController?.dismiss(animated: false, completion: nil)
@@ -323,85 +256,6 @@ class Session: NSObject, UITableViewDelegate, UITableViewDataSource, UICollectio
             }
         }
     }
-    
-    internal func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 1
-    }
-    internal func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 1
-    }
-    internal func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath)
-        
-        userTable.removeFromSuperview()
-        
-        userTable.frame = cell.contentView.frame
-//        userTable.contentInset = UIEdgeInsets(top: -35, left: 0, bottom: 0, right: 0)
-        userTable.backgroundColor = UIColor.clear
-        
-        cell.contentView.addSubview(userTable)
-        
-        return cell
-        
-    }
-    internal func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        switch kind{
-        case UICollectionView.elementKindSectionHeader:
-            let header = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "header", for: indexPath)
-            
-            header.backgroundColor = UIColor.clear
-            
-            if usr.icon != nil{
-                if iconImg == nil{
-                    group.enter()
-                    Network().getPhoto(url: "\(usr.icon!)") { (data, response, error) in
-                        guard let data = data, error == nil else {return}
-                        self.iconImg = UIImage(data: data)
-                        self.usr.iconImage = UIImage(data: data)
-                        self.group.leave()
-                    }
-                }
-                
-                userIcon.image = iconImg
-            }
-            
-            header.addSubview(userIcon)
-//            header.addSubview(blur)
-//            header.addSubview(closeUser)
-            
-            userIcon.fillSuperview()
-//            blur.bottomSuperview()
-            
-            return header
-            
-        default:
-            return UICollectionReusableView()
-        }
-    }
-    internal func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-//        return .init(width: userView.frame.width, height: userView.frame.width / 2)
-        return .zero
-    }
-    internal func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return .init(width: userView.frame.width, height: userView.frame.height)
-    }
-    @objc func closeMenu(){
-        if userDefault.bool(forKey: "reduceMotion"){
-            UIView.animate(withDuration: fadeAnimationTime, delay: 0, options: .curveEaseOut, animations: {
-                self.dimView.alpha = 0
-                self.userView.alpha = 0
-            }, completion: { _ in
-                self.userView.frame.origin.x -= self.userView.frame.width
-                self.userView.alpha = 1
-            })
-        }else{
-            UIView.animate(withDuration: slideAnimationTime, delay: 0, options: .curveEaseOut, animations: {
-                self.dimView.alpha = 0
-                self.userView.frame.origin.x -= self.userView.frame.width
-            }, completion: nil)
-        }
-        
-    }
     func loginButton(_ loginButton: FBSDKLoginButton!, didCompleteWith result: FBSDKLoginManagerLoginResult!, error: Error!) {
         return
     }
@@ -409,36 +263,12 @@ class Session: NSObject, UITableViewDelegate, UITableViewDataSource, UICollectio
     func loginButtonDidLogOut(_ loginButton: FBSDKLoginButton!) {
         loginButton.removeFromSuperview()
         iconImg = nil
-        userView.removeFromSuperview()
-        dimView.removeFromSuperview()
         loginState = ""
         userDefault.set(false, forKey: "isLoggedIn")
         userDefault.set(true, forKey: "shake")
         userDefault.set(true, forKey: "history")
         userDefault.set(false, forKey: "reduceMotion")
         UIApplication.shared.keyWindow?.rootViewController?.dismiss(animated: false, completion: nil)
-    }
-    func showUserMenu(){
-        DispatchQueue.main.async {
-            self.mainCollectionView.reloadData()
-            self.userTable.reloadData()
-        }
-        
-        if userDefault.bool(forKey: "reduceMotion"){
-            self.userView.alpha = 0
-            self.userView.frame.origin.x = 0
-            UIView.animate(withDuration: fadeAnimationTime, delay: 0, options: .curveEaseOut, animations: {
-                self.userView.alpha = 1
-                self.dimView.alpha = dimViewAlpha
-            }, completion: nil)
-        }else{
-            self.userView.alpha = 1
-            UIView.animate(withDuration: slideAnimationTime, delay: 0, options: .curveEaseOut, animations: {
-                self.userView.frame.origin.x = 0
-                self.dimView.alpha = dimViewAlpha
-            }, completion: nil)
-        }
-        
     }
     func reloadLocale(){
         settings[1] = Localized.bookmarks.rawValue.localized()
@@ -452,6 +282,9 @@ class Session: NSObject, UITableViewDelegate, UITableViewDataSource, UICollectio
     func reloadUserTable(){
         settings[0] = usr.Fname + " " + usr.Lname
         userTable.reloadData()
+    }
+    func updateFrame(){
+        userTable.frame = CGRect(x: 0, y: 0, width: (self.delegate?.view.bounds.width)!, height: (self.delegate?.view.bounds.height)!)
     }
     
     //CATEGORY

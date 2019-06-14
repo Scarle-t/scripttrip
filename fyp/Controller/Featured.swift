@@ -146,9 +146,9 @@ class Featured: UIViewController, UICollectionViewDataSource, UICollectionViewDe
             return .zero
         case 1:
             if UserDefaults.standard.bool(forKey: "quickAccess"){
-                return .init(width: self.view.frame.width, height: 154)
+                return .init(width: self.view.bounds.width, height: 154)
             }else{
-                return .init(width: self.view.frame.width, height: 62)
+                return .init(width: self.view.bounds.width, height: 62)
             }
             
         default:
@@ -167,6 +167,7 @@ class Featured: UIViewController, UICollectionViewDataSource, UICollectionViewDe
                 header.userIcon.setImage(session.usr.iconImage, for: .normal)
                 header.userIcon.contentMode = .scaleAspectFill
                 header.userIcon.clipsToBounds = true
+                header.userIcon.frame.origin.x = self.view.bounds.width - 75
                 header.userIcon.layer.cornerRadius = header.userIcon.frame.width / 2
                 header.plans.delegate = self
                 header.plans.dataSource = self
@@ -183,6 +184,8 @@ class Featured: UIViewController, UICollectionViewDataSource, UICollectionViewDe
                 if UserDefaults.standard.bool(forKey: "quickAccess"){
                     header.plans.alpha = 1
                     header.more.alpha = 1
+                    header.more.frame.origin.x = self.view.bounds.width - 50
+                    header.plans.frame = CGRect(x: header.plans.frame.minX, y: header.plans.frame.minY, width: self.view.bounds.width, height: header.plans.frame.height)
                     header.quickAccess.alpha = 1
                     network.send(url: "https://scripttrip.scarletsc.net/iOS/quickAccess.php?user=\(session.usr.UID)", method: "GET", query: nil) { (data) in
                         guard let data = data else {

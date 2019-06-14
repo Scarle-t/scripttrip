@@ -37,7 +37,8 @@ class userView: UIViewController{
     }
     
     func layout(){
-        session.userView.frame.origin.x = 0
+        session.delegate = self
+        session.updateFrame()
         closeBtn.layer.cornerRadius = 30/2
         if #available(iOS 13.0, *){
             closeBtn.frame.origin.y -= 10
@@ -46,7 +47,7 @@ class userView: UIViewController{
             closeBtn.frame.origin.y += 10
             closeBtn.setImage(#imageLiteral(resourceName: "cross_tint"), for: .normal)
         }
-        uv.addSubview(session.userView)
+        uv.addSubview(session.userTable)
     }
     
     func setup(){
