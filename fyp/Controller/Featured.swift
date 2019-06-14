@@ -172,6 +172,12 @@ class Featured: UIViewController, UICollectionViewDataSource, UICollectionViewDe
                 header.plans.dataSource = self
                 
                 header.more.addTarget(self, action: #selector(showPlan(_:)), for: .touchUpInside)
+                
+                if #available(iOS 13.0, *){
+                }else{
+                    header.more.setImage(#imageLiteral(resourceName: "right_tint.png"), for: .normal)
+                }
+                
                 header.quickAccess.text = Localized.quickAccess.rawValue.localized()
                 
                 if UserDefaults.standard.bool(forKey: "quickAccess"){

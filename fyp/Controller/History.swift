@@ -18,6 +18,7 @@ class History: UIViewController, UICollectionViewDelegate, UICollectionViewDataS
     var imgs = [Trip : UIImage]()
     var tripView: TripView!
     var mainRefresh: UIRefreshControl?
+    @IBOutlet weak var closeBtn: UIButton!
     
     //IBOUTLET
     @IBOutlet weak var cv: UICollectionView!
@@ -163,6 +164,10 @@ class History: UIViewController, UICollectionViewDelegate, UICollectionViewDataS
     }
     
     func layout(){
+        if #available(iOS 13.0, *){
+        }else{
+            closeBtn.setImage(#imageLiteral(resourceName: "cross_tint"), for: .normal)
+        }
         let layout = cv.collectionViewLayout as! UICollectionViewFlowLayout
         layout.sectionHeadersPinToVisibleBounds = true
         layout.headerReferenceSize = .init(width: self.view.frame.width, height: 62)

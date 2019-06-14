@@ -41,6 +41,8 @@ class Profile: UITableViewController, NetworkDelegate {
                 sender.image = UIImage(systemName: "checkmark.circle")
             } else {
                 // Fallback on earlier versions
+                right.image = #imageLiteral(resourceName: "Edit_pdf")
+                sender.image = #imageLiteral(resourceName: "small_tick_pdf")
             }
             fname.layer.shadowOpacity = 0
             lname.layer.shadowOpacity = 0
@@ -65,6 +67,8 @@ class Profile: UITableViewController, NetworkDelegate {
                 sender.image = UIImage(systemName: "checkmark.circle")
             } else {
                 // Fallback on earlier versions
+                left.image = #imageLiteral(resourceName: "small_cross_pdf")
+                sender.image = #imageLiteral(resourceName: "small_tick_pdf")
             }
             return
         }
@@ -77,6 +81,8 @@ class Profile: UITableViewController, NetworkDelegate {
                 sender.image = UIImage(systemName: "pencil.circle")
             } else {
                 // Fallback on earlier versions
+                sender.image = #imageLiteral(resourceName: "Edit_pdf")
+                left.image = #imageLiteral(resourceName: "small_tick_pdf")
             }
             fname.layer.shadowOpacity = 0
             lname.layer.shadowOpacity = 0
@@ -216,6 +222,13 @@ class Profile: UITableViewController, NetworkDelegate {
         } else {
             //fallback statements
         }
+        
+        if #available(iOS 13.0, *){
+        }else{
+            right.image = #imageLiteral(resourceName: "Edit_pdf")
+            left.image = #imageLiteral(resourceName: "small_cross_pdf")
+        }
+        
     }
     
     //VIEW CONTROLLER

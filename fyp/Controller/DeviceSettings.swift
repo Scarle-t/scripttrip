@@ -29,6 +29,7 @@ class DeviceSettings: UITableViewController, UIPickerViewDelegate, UIPickerViewD
     @IBOutlet weak var reduceMotionText: UILabel!
     @IBOutlet weak var quickAccess: UISwitch!
     @IBOutlet weak var quickAccessText: UILabel!
+    @IBOutlet weak var closeBtn: UIButton!
     
     //IBACTION
     @IBAction func historySwitch(_ sender: UISwitch) {
@@ -204,6 +205,11 @@ class DeviceSettings: UITableViewController, UIPickerViewDelegate, UIPickerViewD
         
         let tapDismiss = UITapGestureRecognizer(target: self, action: #selector(dismissKb))
         dimBg.addGestureRecognizer(tapDismiss)
+        
+        if #available(iOS 13.0, *){
+        }else{
+            closeBtn.setImage(#imageLiteral(resourceName: "cross_tint"), for: .normal)
+        }
         
         let toolBar = UIToolbar()
         let confirmButton = UIBarButtonItem(title: Localized.Confirm.rawValue.localized(), style: .plain, target: self, action: #selector(confirmPicker))

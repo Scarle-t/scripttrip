@@ -46,6 +46,9 @@ class Explore: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, U
     @IBOutlet weak var locationLabel: UILabel!
     @IBOutlet weak var clearBtn: UIButton!
     @IBOutlet weak var filterText: UILabel!
+    @IBOutlet weak var filterBtn: UIButton!
+    @IBOutlet weak var listCloseBtn: UIButton!
+    @IBOutlet weak var listFilterBtn: UIButton!
     
     //IBACTION
     @IBAction func refreshLoc(_ sender: UIButton) {
@@ -479,6 +482,14 @@ class Explore: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, U
             }
         } else {
             // Fallback on earlier versions
+        }
+        
+        if #available(iOS 13.0, *){
+        }else{
+            filterBtn.setImage(#imageLiteral(resourceName: "filter"), for: .normal)
+            listCloseBtn.setImage(#imageLiteral(resourceName: "cross_tint"), for: .normal)
+            listFilterBtn.setImage(#imageLiteral(resourceName: "filter"), for: .normal)
+            closeBtn.setImage(#imageLiteral(resourceName: "cross_tint"), for: .normal)
         }
         
     }

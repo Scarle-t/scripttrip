@@ -44,6 +44,7 @@ class postView: UIViewController{
             self.view.backgroundColor = .white
             tripView?.view.frame = view.bounds
             closeBtn.frame.origin.y += 23
+            closeBtn.setImage(#imageLiteral(resourceName: "cross_tint"), for: .normal)
         }
         pv.addSubview(tripView!.view)
     }

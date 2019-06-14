@@ -57,6 +57,7 @@ class categoryTripsHeader: UICollectionReusableView{
     @IBOutlet weak var title: UILabel!
     @IBOutlet weak var segment: UISegmentedControl!
     @IBOutlet weak var add: UIButton!
+    @IBOutlet weak var close: UIButton!
 }
 
 class contentHeader: UICollectionReusableView{

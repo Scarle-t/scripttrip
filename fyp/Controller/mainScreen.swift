@@ -447,11 +447,9 @@ class mainScreen: UIViewController, UITextFieldDelegate, NetworkDelegate, FBSDKL
             appleLogin.frame.origin.y = login.frame.maxY + 70 + 55 + 55
             appleLogin.alpha = 0
             appleLogin.addTarget(self, action: #selector(handleAppleLogin), for: .touchUpInside)
-            
+            view.addSubview(appleLogin)
         }
-        
         view.addSubview(loginButton)
-        view.addSubview(appleLogin)
     }
     
     //VIEW CONTROLLER

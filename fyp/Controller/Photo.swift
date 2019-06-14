@@ -51,6 +51,11 @@ class Photo: UIViewController, UIScrollViewDelegate{
     func layout(){
         xBtn.layer.cornerRadius = xBtn.frame.width / 2
         
+        if #available(iOS 13.0, *){
+        }else{
+            xBtn.setImage(#imageLiteral(resourceName: "cross_tint"), for: .normal)
+        }
+        
         imgScroll.minimumZoomScale = 1.0
         imgScroll.maximumZoomScale = 6.0
         imgDetail.contentMode = .scaleAspectFit

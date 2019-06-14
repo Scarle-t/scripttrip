@@ -46,6 +46,11 @@ class Bookmarks: UIViewController, UICollectionViewDelegate, UICollectionViewDat
         cell.layer.shadowColor = UIColor.lightGray.cgColor
         cell.layer.shadowOpacity = 0.1
         
+        if #available(iOS 13.0, *){
+        }else{
+            cell.removeBK.setImage(#imageLiteral(resourceName: "cross_tint_red"), for: .normal)
+        }
+        
         cell.removeBK.layer.shadowOpacity = 0.7
         cell.removeBK.layer.shadowColor = UIColor.lightGray.cgColor
         cell.removeBK.layer.shadowOffset = CGSize(width: 0, height: 1)
@@ -101,6 +106,11 @@ class Bookmarks: UIViewController, UICollectionViewDelegate, UICollectionViewDat
             header.frame = CGRect(x: 0 , y: 0, width: collectionView.frame.width, height: 62)
             
             header.title.text = Localized.bookmarks.rawValue.localized()
+            
+            if #available(iOS 13.0, *){
+            }else{
+                header.close.setImage(#imageLiteral(resourceName: "cross_tint"), for: .normal)
+            }
             
             return header
 

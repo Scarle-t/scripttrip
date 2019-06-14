@@ -14,6 +14,7 @@ class Credit: UIViewController{
     
     
     //IBOUTLET
+    @IBOutlet weak var closeBtn: UIButton!
     
     
     //IBACTION
@@ -34,7 +35,10 @@ class Credit: UIViewController{
     }
     
     func layout(){
-        
+        if #available(iOS 13.0, *){
+        }else{
+            closeBtn.setImage(#imageLiteral(resourceName: "cross_tint"), for: .normal)
+        }
     }
     
     func setup(){

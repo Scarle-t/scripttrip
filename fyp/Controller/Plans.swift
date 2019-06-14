@@ -47,6 +47,7 @@ class Plans: UIViewController, UICollectionViewDelegate, UICollectionViewDataSou
                 sender.tintColor = red
             } else {
                 // Fallback on earlier versions
+                sender.setImage(#imageLiteral(resourceName: "cross_tint_red"), for: .normal)
             }
             plans?.insert(Trip(), at: 0)
             mode = "add"
@@ -61,6 +62,7 @@ class Plans: UIViewController, UICollectionViewDelegate, UICollectionViewDataSou
                 sender.tintColor = darkGreen
             } else {
                 // Fallback on earlier versions
+                sender.setImage(#imageLiteral(resourceName: "plus_tint"), for: .normal)
             }
             plans?.remove(at: 0)
             mode = ""
@@ -159,6 +161,14 @@ class Plans: UIViewController, UICollectionViewDelegate, UICollectionViewDataSou
             cell.edit.alpha = 0
             cell.delete.alpha = 0
             cell.pin.alpha = 0
+            
+            if #available(iOS 13.0, *){
+            }else{
+                cell.viewPost.setImage(#imageLiteral(resourceName: "action_tint"), for: .normal)
+                cell.edit.setImage(#imageLiteral(resourceName: "Edit_pdf"), for: .normal)
+                cell.delete.setImage(#imageLiteral(resourceName: "cross_tint_red"), for: .normal)
+                cell.removeBK.setImage(#imageLiteral(resourceName: "more_tint"), for: .normal)
+            }
             
             cell.layer.masksToBounds = false
             cell.layer.shadowColor = UIColor.lightGray.cgColor
@@ -304,6 +314,12 @@ class Plans: UIViewController, UICollectionViewDelegate, UICollectionViewDataSou
             
             seg = header.segment
             addBtn = header.add
+            
+            if #available(iOS 13.0, *){
+            }else{
+                header.close.setImage(#imageLiteral(resourceName: "cross_tint"), for: .normal)
+                header.add.setImage(#imageLiteral(resourceName: "plus_tint"), for: .normal)
+            }
             
             return header
             

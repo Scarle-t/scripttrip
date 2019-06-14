@@ -211,6 +211,13 @@ class Session: NSObject, UITableViewDelegate, UITableViewDataSource, UICollectio
                 }
             } else {
                 // Fallback on earlier versions
+                if indexPath.row == 1{
+                    cell.accessoryView = UIImageView(image: #imageLiteral(resourceName: "bookmark_pdf"))
+                }else if indexPath.row == 2{
+                    cell.accessoryView = UIImageView(image: #imageLiteral(resourceName: "history_pdf"))
+                }else if indexPath.row == 3{
+                    cell.accessoryView = UIImageView(image: #imageLiteral(resourceName: "plan.png"))
+                }
             }
             
             return cell

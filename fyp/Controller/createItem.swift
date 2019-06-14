@@ -18,6 +18,8 @@ class createItem: UIViewController, NetworkDelegate{
     
     //IBOUTLET
     @IBOutlet weak var content: UITextView!
+    @IBOutlet weak var save: UIButton!
+    @IBOutlet weak var closeCancel: UIButton!
     
     
     //IBACTION
@@ -99,6 +101,13 @@ class createItem: UIViewController, NetworkDelegate{
     }
     
     func layout(){
+        
+        if #available(iOS 13.0, *){
+        }else{
+            save.setImage(#imageLiteral(resourceName: "small_tick_tint"), for: .normal)
+            closeCancel.setImage(#imageLiteral(resourceName: "cross_tint"), for: .normal)
+        }
+        
         let toolBar = UIToolbar()
         let spaceButton = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
         let cancelButton = UIBarButtonItem(title: Localized.hideKB.rawValue.localized(), style: .plain, target: self, action: #selector(dismissKb))
