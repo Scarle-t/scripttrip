@@ -16,7 +16,7 @@ class mainScreen: UIViewController, UITextFieldDelegate, NetworkDelegate, FBSDKL
     var state = ""
     var networkState = ""
     var loginButton: FBSDKLoginButton!
-    var appleLogin: UIControl!
+    var appleLogin: UIControl?
     let network = Network()
     let session = Session.shared
     let userDefault = UserDefaults.standard
@@ -45,7 +45,7 @@ class mainScreen: UIViewController, UITextFieldDelegate, NetworkDelegate, FBSDKL
                 
                 self.login.frame = CGRect(x: self.login.frame.minX, y: self.login.frame.minY + 55, width: self.login.frame.width, height: self.login.frame.height)
                 self.loginButton.alpha = 1
-                self.appleLogin.alpha = 1
+                self.appleLogin?.alpha = 1
                 
             }
             state = "login"
@@ -327,7 +327,7 @@ class mainScreen: UIViewController, UITextFieldDelegate, NetworkDelegate, FBSDKL
             self.backBtn.alpha = 0
             self.forgot.alpha = 0
             self.loginButton.alpha = 0
-            self.appleLogin.alpha = 0
+            self.appleLogin?.alpha = 0
             
             if self.state == "login"{
                 self.login.frame = CGRect(x: self.login.frame.minX, y: self.login.frame.minY - 55, width: self.login.frame.width, height: self.login.frame.height)
@@ -443,11 +443,11 @@ class mainScreen: UIViewController, UITextFieldDelegate, NetworkDelegate, FBSDKL
         
         if #available(iOS 13.0, *){
             appleLogin = ASAuthorizationAppleIDButton()
-            appleLogin.frame.origin.x = login.frame.origin.x - 13
-            appleLogin.frame.origin.y = login.frame.maxY + 70 + 55 + 55
-            appleLogin.alpha = 0
-            appleLogin.addTarget(self, action: #selector(handleAppleLogin), for: .touchUpInside)
-            view.addSubview(appleLogin)
+            appleLogin?.frame.origin.x = login.frame.origin.x - 13
+            appleLogin?.frame.origin.y = login.frame.maxY + 70 + 55 + 55
+            appleLogin?.alpha = 0
+            appleLogin?.addTarget(self, action: #selector(handleAppleLogin), for: .touchUpInside)
+            view.addSubview(appleLogin!)
         }
         view.addSubview(loginButton)
     }
