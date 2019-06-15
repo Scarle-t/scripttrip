@@ -14,8 +14,8 @@ class Item: NSObject{
     var IID: Int
     var I_Content: String
     var I_Image: String
-    var I_Lat: Double
-    var I_Longt: Double
+    var I_Lat: Double?
+    var I_Longt: Double?
     var Item_order: Int
     
     //INIT
@@ -23,8 +23,8 @@ class Item: NSObject{
         IID = 0
         I_Content = ""
         I_Image = ""
-        I_Lat = 0.0
-        I_Longt = 0.0
+        I_Lat = nil
+        I_Longt = nil
         Item_order = 0
     }
     

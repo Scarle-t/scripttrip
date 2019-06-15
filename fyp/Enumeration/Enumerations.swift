@@ -108,6 +108,7 @@ enum Localized: String{
     case photoEmptyMsg
     case quickAccess
     case quickAccessFooter
+    case noLocMsg
 }
 
 enum locale: String, CaseIterable{

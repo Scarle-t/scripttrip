@@ -391,6 +391,8 @@ class Session: NSObject, UITableViewDelegate, UITableViewDataSource, FBSDKLoginB
             itm.IID = iid
             itm.I_Content = i_content
             itm.I_Image = i_image
+            itm.I_Lat = item["I_Lat"] as? Double ?? nil
+            itm.I_Longt = item["I_Longt"] as? Double ?? nil
             
             returnItem.append(itm)
         }

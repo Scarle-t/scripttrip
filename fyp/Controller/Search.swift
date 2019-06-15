@@ -16,6 +16,7 @@ class Search: UIViewController, UITableViewDelegate, UITableViewDataSource, UISe
     var results: [Trip]?
     var searchBar: UISearchBar!
     var tripView: TripView!
+    let menu = UIButton(frame: CGRect(x: 306, y: 9, width: 45, height: 45))
     
     //IBOUTLET
     @IBOutlet weak var searchResult: UITableView!
@@ -41,7 +42,6 @@ class Search: UIViewController, UITableViewDelegate, UITableViewDataSource, UISe
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let header = UIView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: 162))
         
-        let menu = UIButton(frame: CGRect(x: 306, y: 9, width: 45, height: 45))
         menu.setImage(session.usr.iconImage, for: .normal)
         menu.addTarget(self, action: #selector(userMenu(_:)), for: .touchUpInside)
         menu.clipsToBounds = true
@@ -106,7 +106,9 @@ class Search: UIViewController, UITableViewDelegate, UITableViewDataSource, UISe
         DispatchQueue.main.async {
             let postview = self.storyboard?.instantiateViewController(withIdentifier: "postView") as! postView
             postview.tripView = self.tripView
-            self.present(postview, animated: true, completion: nil)
+            let pvnc = self.storyboard?.instantiateViewController(withIdentifier: "postViewNC") as! UINavigationController
+            pvnc.addChild(postview)
+            self.present(pvnc, animated: true, completion: nil)
         }
     }
     
@@ -136,6 +138,11 @@ class Search: UIViewController, UITableViewDelegate, UITableViewDataSource, UISe
     }
     @objc func dismissKb(){
         view.endEditing(true)
+    }
+    @objc func updateFrame(){
+        DispatchQueue.main.async {
+            self.menu.frame.origin.x = self.view.bounds.width - 75
+        }
     }
     
     //FUNC
@@ -192,7 +199,7 @@ class Search: UIViewController, UITableViewDelegate, UITableViewDataSource, UISe
     }
     
     func setup(){
-        
+        NotificationCenter.default.addObserver(self, selector: #selector(updateFrame), name: UIDevice.orientationDidChangeNotification, object: nil)
     }
     
     //VIEW CONTROLLER

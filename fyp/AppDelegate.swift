@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import AuthenticationServices
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {

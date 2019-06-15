@@ -14,6 +14,7 @@ class CategoryView: UIViewController, UITableViewDataSource, UITableViewDelegate
     let network = Network()
     let session = Session.shared
     var popRecognizer: InteractivePopRecognizer?
+    let menu = UIButton(frame: CGRect(x: 306, y: 9, width: 45, height: 45))
     
     //IBOUTLET
     @IBOutlet weak var category: UITableView!
@@ -43,7 +44,6 @@ class CategoryView: UIViewController, UITableViewDataSource, UITableViewDelegate
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let header = UIView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: 62))
         
-        let menu = UIButton(frame: CGRect(x: 306, y: 9, width: 45, height: 45))
         menu.setImage(session.usr.iconImage, for: .normal)
         menu.addTarget(self, action: #selector(userMenu(_:)), for: .touchUpInside)
         menu.clipsToBounds = true
@@ -103,6 +103,11 @@ class CategoryView: UIViewController, UITableViewDataSource, UITableViewDelegate
             self.present(userview, animated: true, completion: nil)
         }
     }
+    @objc func updateFrame(){
+        DispatchQueue.main.async {
+            self.menu.frame.origin.x = self.view.bounds.width - 75
+        }
+    }
     
     //FUNC
     func delegate(){
@@ -117,6 +122,7 @@ class CategoryView: UIViewController, UITableViewDataSource, UITableViewDelegate
     }
     
     func setup(){
+        NotificationCenter.default.addObserver(self, selector: #selector(updateFrame), name: UIDevice.orientationDidChangeNotification, object: nil)
         network.send(url: "https://scripttrip.scarletsc.net/iOS/getCategory.php", method: "GET", query: nil)
         popRecognizer = InteractivePopRecognizer(controller: self.navigationController!)
         self.navigationController?.interactivePopGestureRecognizer?.delegate = popRecognizer

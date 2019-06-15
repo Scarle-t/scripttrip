@@ -1314,7 +1314,7 @@ Join us now</string>
                                             <constraint firstAttribute="height" constant="30" id="viU-Mq-gp7"/>
                                         </constraints>
                                         <color key="tintColor" red="0.25882352939999997" green="0.7843137255" blue="0.61568627450000002" alpha="1" colorSpace="calibratedRGB"/>
-                                        <state key="normal" image="xmark" catalog="system"/>
+                                        <state key="normal" image="chevron.left" catalog="system"/>
                                         <connections>
                                             <action selector="xLeave:" destination="15g-9w-gpF" eventType="touchUpInside" id="0bn-eY-rvM"/>
                                         </connections>
@@ -3033,6 +3033,83 @@ SOFTWARE.
             </objects>
             <point key="canvasLocation" x="3408.8000000000002" y="2945.577211394303"/>
         </scene>
+        <!--Add Map-->
+        <scene sceneID="rZK-DV-dWs">
+            <objects>
+                <viewController storyboardIdentifier="addMap" id="pJY-Ra-1D8" customClass="addMap" customModule="fyp" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="j6X-KK-Kh5">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="rff-U0-0vs">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <gestureRecognizers/>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="VsM-JV-vrw" appends="YES" id="Z8b-zo-an3"/>
+                                </connections>
+                            </mapView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DuL-nY-5yn">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="62"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="q3h-cz-S5i">
+                                        <rect key="frame" x="18" y="8" width="46" height="46"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="46" id="Ujg-8g-cra"/>
+                                            <constraint firstAttribute="width" constant="46" id="nBe-ev-lRl"/>
+                                        </constraints>
+                                        <color key="tintColor" red="0.25882352939999997" green="0.7843137255" blue="0.61568627450000002" alpha="1" colorSpace="calibratedRGB"/>
+                                        <state key="normal" image="xmark.circle" catalog="system"/>
+                                        <connections>
+                                            <action selector="close:" destination="4IT-dp-6JQ" eventType="touchUpInside" id="5SG-V8-LVY"/>
+                                            <action selector="close:" destination="ql8-lD-0rg" eventType="touchUpInside" id="t76-n8-2Oy"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xoy-MP-Xal">
+                                        <rect key="frame" x="308" y="8" width="46" height="46"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="46" id="Xat-0M-dDA"/>
+                                            <constraint firstAttribute="width" constant="46" id="uBd-O9-is3"/>
+                                        </constraints>
+                                        <color key="tintColor" red="0.25882352939999997" green="0.7843137255" blue="0.61568627450000002" alpha="1" colorSpace="calibratedRGB"/>
+                                        <state key="normal" image="checkmark.circle" catalog="system"/>
+                                        <connections>
+                                            <action selector="save:" destination="ql8-lD-0rg" eventType="touchUpInside" id="PAB-y2-5YC"/>
+                                            <action selector="save:" destination="4IT-dp-6JQ" eventType="touchUpInside" id="j4e-ep-iYe"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" xcode11CocoaTouchSystemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <constraints>
+                                    <constraint firstItem="xoy-MP-Xal" firstAttribute="top" secondItem="DuL-nY-5yn" secondAttribute="top" constant="8" id="IS0-Di-uEg"/>
+                                    <constraint firstItem="q3h-cz-S5i" firstAttribute="top" secondItem="DuL-nY-5yn" secondAttribute="top" constant="8" id="WMP-gL-syI"/>
+                                    <constraint firstAttribute="trailing" secondItem="xoy-MP-Xal" secondAttribute="trailing" constant="21" id="Wjk-sb-ebO"/>
+                                    <constraint firstAttribute="height" constant="62" id="dZl-p1-ShH"/>
+                                    <constraint firstItem="q3h-cz-S5i" firstAttribute="leading" secondItem="DuL-nY-5yn" secondAttribute="leading" constant="18" id="huU-rN-hda"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" xcode11CocoaTouchSystemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="DuL-nY-5yn" firstAttribute="top" secondItem="sCO-dd-Eop" secondAttribute="top" id="L4d-Ww-Ldn"/>
+                            <constraint firstItem="DuL-nY-5yn" firstAttribute="leading" secondItem="sCO-dd-Eop" secondAttribute="leading" id="NMV-8s-chr"/>
+                            <constraint firstItem="sCO-dd-Eop" firstAttribute="trailing" secondItem="DuL-nY-5yn" secondAttribute="trailing" id="op5-AA-Mbf"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="sCO-dd-Eop"/>
+                    </view>
+                    <connections>
+                        <outlet property="map" destination="rff-U0-0vs" id="jwq-eq-p7R"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ajw-yO-cdc" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <pongPressGestureRecognizer allowableMovement="1" minimumPressDuration="0.5" id="VsM-JV-vrw">
+                    <connections>
+                        <action selector="longPressMap:" destination="pJY-Ra-1D8" id="pkO-UV-IKB"/>
+                    </connections>
+                </pongPressGestureRecognizer>
+            </objects>
+            <point key="canvasLocation" x="4112.8000000000002" y="2945.577211394303"/>
+        </scene>
         <!--Post View-->
         <scene sceneID="eUg-VA-JRW">
             <objects>
@@ -3065,6 +3142,7 @@ SOFTWARE.
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Pia-Ya-ssE"/>
                     </view>
+                    <navigationItem key="navigationItem" id="eUq-bM-1gg"/>
                     <connections>
                         <outlet property="closeBtn" destination="Ced-g2-jc9" id="Zgq-b8-ABW"/>
                         <outlet property="pv" destination="MMp-Yu-lwl" id="G3z-51-p0q"/>
@@ -3072,7 +3150,43 @@ SOFTWARE.
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="V5k-uH-BqR" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-79.200000000000003" y="2945.577211394303"/>
+            <point key="canvasLocation" x="-79" y="2946"/>
+        </scene>
+        <!--Post Map-->
+        <scene sceneID="Nai-wp-SQP">
+            <objects>
+                <viewController storyboardIdentifier="postMap" id="JrN-vX-lnw" customClass="postMap" customModule="fyp" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="ChX-xc-1L4">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="O6t-ZP-OSN">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </mapView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wfN-vc-k0z">
+                                <rect key="frame" x="10" y="15" width="30" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" xcode11CocoaTouchSystemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <color key="tintColor" red="0.25882352939999997" green="0.7843137255" blue="0.61568627450000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <state key="normal" image="chevron.left" catalog="system"/>
+                                <connections>
+                                    <action selector="close:" destination="997-uj-9E5" eventType="touchUpInside" id="0ff-1v-KT6"/>
+                                    <action selector="close:" destination="JrN-vX-lnw" eventType="touchUpInside" id="b9c-QE-ZyS"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="4VB-o9-Un6"/>
+                    </view>
+                    <connections>
+                        <outlet property="closeBtn" destination="wfN-vc-k0z" id="c2H-yh-8af"/>
+                        <outlet property="map" destination="O6t-ZP-OSN" id="spx-SM-ncz"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="K2j-jd-FIE" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-79.200000000000003" y="3626.5367316341831"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="epQ-Zu-ybE">
@@ -3090,6 +3204,20 @@ SOFTWARE.
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eEG-ne-EdC" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="608.79999999999995" y="2946.4767616191907"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="416-M8-vsG">
+            <objects>
+                <navigationController storyboardIdentifier="postViewNC" automaticallyAdjustsScrollViewInsets="NO" navigationBarHidden="YES" id="cvb-Qb-6R2" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="AQc-3G-rVl">
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="EiI-TS-eZg" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-759" y="2946"/>
         </scene>
     </scenes>
     <resources>

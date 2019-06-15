@@ -25,6 +25,7 @@
 "regEmailRegexMsg" = "這個不像電郵地址喔";
 "regError" = "糟糕了！";
 "photoEmptyMsg" = "找張好照片吧！這個不能為空。";
+"noLocMsg" = "未有任何地點資訊";
 
 "otpTitle" = "已啟用雙重認證\n\n請輸入六位數驗證碼";
 

@@ -358,7 +358,9 @@ class Plans: UIViewController, UICollectionViewDelegate, UICollectionViewDataSou
                     self.tripView.show()
                     let postview = self.storyboard?.instantiateViewController(withIdentifier: "postView") as! postView
                     postview.tripView = self.tripView
-                    self.present(postview, animated: true, completion: nil)
+                    let pvnc = self.storyboard?.instantiateViewController(withIdentifier: "postViewNC") as! UINavigationController
+                    pvnc.addChild(postview)
+                    self.present(pvnc, animated: true, completion: nil)
                 }
             })
         case 1:

@@ -10,6 +10,8 @@
 		A612D418226EC61F004BF88F /* tripDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = A612D417226EC61F004BF88F /* tripDetail.swift */; };
 		A613B4822276310400947AA0 /* reg_detail.swift in Sources */ = {isa = PBXBuildFile; fileRef = A613B4812276310400947AA0 /* reg_detail.swift */; };
 		A613B4842276364400947AA0 /* reg_password.swift in Sources */ = {isa = PBXBuildFile; fileRef = A613B4832276364400947AA0 /* reg_password.swift */; };
+		A6183E7522B56362004ADCDC /* postMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6183E7422B56362004ADCDC /* postMap.swift */; };
+		A6183E7722B57818004ADCDC /* addMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6183E7622B57818004ADCDC /* addMap.swift */; };
 		A61A219A22AC7C2000319C53 /* addPhoto.swift in Sources */ = {isa = PBXBuildFile; fileRef = A61A219922AC7C2000319C53 /* addPhoto.swift */; };
 		A61A7B972280E3DF001D993A /* History.swift in Sources */ = {isa = PBXBuildFile; fileRef = A61A7B962280E3DF001D993A /* History.swift */; };
 		A61FFBD32289885500E00513 /* DeviceSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = A61FFBD22289885500E00513 /* DeviceSettings.swift */; };
@@ -75,6 +77,8 @@
 		A612D417226EC61F004BF88F /* tripDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = tripDetail.swift; sourceTree = "<group>"; };
 		A613B4812276310400947AA0 /* reg_detail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = reg_detail.swift; sourceTree = "<group>"; };
 		A613B4832276364400947AA0 /* reg_password.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = reg_password.swift; sourceTree = "<group>"; };
+		A6183E7422B56362004ADCDC /* postMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = postMap.swift; sourceTree = "<group>"; };
+		A6183E7622B57818004ADCDC /* addMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = addMap.swift; sourceTree = "<group>"; };
 		A61A219922AC7C2000319C53 /* addPhoto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = addPhoto.swift; sourceTree = "<group>"; };
 		A61A7B962280E3DF001D993A /* History.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = History.swift; sourceTree = "<group>"; };
 		A61FFBD22289885500E00513 /* DeviceSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceSettings.swift; sourceTree = "<group>"; };
@@ -217,6 +221,7 @@
 				A6BE20972291CFEF00546311 /* otp_setup.swift */,
 				A6719E25226236E000483AFC /* Photo.swift */,
 				A639DAE72296E03900CBAAAF /* Plans.swift */,
+				A6183E7422B56362004ADCDC /* postMap.swift */,
 				A6A9FF5122A6BFFB00D2E7C5 /* postView.swift */,
 				A6C94FEB227A103F00C5F35E /* Profile.swift */,
 				A613B4812276310400947AA0 /* reg_detail.swift */,
@@ -230,6 +235,7 @@
 				A612D417226EC61F004BF88F /* tripDetail.swift */,
 				A6A9FF4F22A6B72100D2E7C5 /* userView.swift */,
 				A639DAED2299670900CBAAAF /* viewPlan.swift */,
+				A6183E7622B57818004ADCDC /* addMap.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -452,6 +458,7 @@
 				A6A67CF9222FE9A700D82479 /* AppDelegate.swift in Sources */,
 				A6268A0F22AE53B500C395CB /* InteractivePopGesture.swift in Sources */,
 				A612D418226EC61F004BF88F /* tripDetail.swift in Sources */,
+				A6183E7522B56362004ADCDC /* postMap.swift in Sources */,
 				A6753A93229C870C00C20EDF /* searchShare.swift in Sources */,
 				A6216A312265DF0D0073CE1F /* Network.swift in Sources */,
 				A6B77B1B22301CDF00DA4543 /* custom_Views.swift in Sources */,
@@ -469,6 +476,7 @@
 				A6216A2D2265DED30073CE1F /* Reachability.swift in Sources */,
 				A61A7B972280E3DF001D993A /* History.swift in Sources */,
 				A639DAE82296E03900CBAAAF /* Plans.swift in Sources */,
+				A6183E7722B57818004ADCDC /* addMap.swift in Sources */,
 				A6B77B192230192600DA4543 /* Featured.swift in Sources */,
 				A63CE3C4223423EE00F62E1F /* Explore.swift in Sources */,
 				A680EC422280C0EA006E116E /* About.swift in Sources */,

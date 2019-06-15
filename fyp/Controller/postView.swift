@@ -12,6 +12,7 @@ class postView: UIViewController{
     
     //VARIABLE
     var tripView: TripView?
+    var popRecognizer: InteractivePopRecognizer?
     
     //IBOUTLET
     @IBOutlet weak var closeBtn: UIButton!
@@ -20,6 +21,7 @@ class postView: UIViewController{
     
     //IBACTION
     @IBAction func close(_ sender: UIButton) {
+        tripView?.close()
         self.dismiss(animated: true, completion: nil)
     }
     
@@ -53,7 +55,9 @@ class postView: UIViewController{
     }
     
     func setup(){
-        NotificationCenter.default.addObserver(self, selector: #selector(rotated), name: UIDevice.orientationDidChangeNotification, object: nil)
+//        NotificationCenter.default.addObserver(self, selector: #selector(rotated), name: UIDevice.orientationDidChangeNotification, object: nil)
+        popRecognizer = InteractivePopRecognizer(controller: self.navigationController!)
+        self.navigationController?.interactivePopGestureRecognizer?.delegate = popRecognizer
     }
     
     //VIEW CONTROLLER

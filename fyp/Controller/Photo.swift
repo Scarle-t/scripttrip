@@ -31,7 +31,8 @@ class Photo: UIViewController, UIScrollViewDelegate{
                 // Fallback on earlier versions
             }
         }
-        self.dismiss(animated: true, completion: nil)
+//        self.dismiss(animated: true, completion: nil)
+        self.navigationController?.popViewController(animated: true)
     }
     
     //DELEGATION

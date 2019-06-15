@@ -259,12 +259,16 @@ class mainScreen: UIViewController, UITextFieldDelegate, NetworkDelegate, FBSDKL
     func httpErrorHandle(httpStatus: HTTPURLResponse){
         SVProgressHUD.showInfo(withStatus: "\(Localized.httpErrorMsg.rawValue.localized())\n\(httpStatus.statusCode)")
         SVProgressHUD.dismiss(withDelay: 1.5)
-        whiteView.alpha = 0
+        DispatchQueue.main.async {
+            self.whiteView.alpha = 0
+        }
     }
     func reachabilityError(){
         SVProgressHUD.showError(withStatus: Localized.networkErrorMsg.rawValue.localized())
         SVProgressHUD.dismiss(withDelay: 1.5)
-        whiteView.alpha = 0
+        DispatchQueue.main.async {
+            self.whiteView.alpha = 0
+        }
     }
     func URLSessionError(error: Error?){
         SVProgressHUD.showInfo(withStatus: "\(Localized.urlSessionErrorMsg.rawValue.localized())\n\(error ?? Error.self as! Error)")

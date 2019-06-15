@@ -32,6 +32,8 @@ class Featured: UIViewController, UICollectionViewDataSource, UICollectionViewDe
     var pv: UICollectionView?
     var gradient: CAGradientLayer?
     var qaState: Bool?
+    var menu: UIButton?
+    var more: UIButton?
     
     //IBOUTLET
     @IBOutlet weak var cv: UICollectionView!
@@ -171,6 +173,9 @@ class Featured: UIViewController, UICollectionViewDataSource, UICollectionViewDe
                 header.userIcon.layer.cornerRadius = header.userIcon.frame.width / 2
                 header.plans.delegate = self
                 header.plans.dataSource = self
+                pv = header.plans
+                menu = header.userIcon
+                more = header.more
                 
                 header.more.addTarget(self, action: #selector(showPlan(_:)), for: .touchUpInside)
                 
@@ -232,7 +237,9 @@ class Featured: UIViewController, UICollectionViewDataSource, UICollectionViewDe
                     self.planView.show()
                     let postview = self.storyboard?.instantiateViewController(withIdentifier: "postView") as! postView
                     postview.tripView = self.planView
-                    self.present(postview, animated: true, completion: nil)
+                    let pvnc = self.storyboard?.instantiateViewController(withIdentifier: "postViewNC") as! UINavigationController
+                    pvnc.addChild(postview)
+                    self.present(pvnc, animated: true, completion: nil)
                 }
             })
         case 1:
@@ -246,7 +253,9 @@ class Featured: UIViewController, UICollectionViewDataSource, UICollectionViewDe
             DispatchQueue.main.async {
                 let postview = self.storyboard?.instantiateViewController(withIdentifier: "postView") as! postView
                 postview.tripView = self.tripView
-                self.present(postview, animated: true, completion: nil)
+                let pvnc = self.storyboard?.instantiateViewController(withIdentifier: "postViewNC") as! UINavigationController
+                pvnc.addChild(postview)
+                self.present(pvnc, animated: true, completion: nil)
             }
         default:
             break
@@ -300,25 +309,6 @@ class Featured: UIViewController, UICollectionViewDataSource, UICollectionViewDe
         }
     }
     
-        //SCROLL VIEW
-//    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-//        if (self.lastOffset > scrollView.contentOffset.y) {
-//            // move up
-//            let layout = cv.collectionViewLayout as! UICollectionViewFlowLayout
-//            layout.sectionHeadersPinToVisibleBounds = true
-//            cv.collectionViewLayout = layout
-//        }
-//        else if (self.lastOffset < scrollView.contentOffset.y) {
-//            // move down
-//            let layout = cv.collectionViewLayout as! UICollectionViewFlowLayout
-//            layout.sectionHeadersPinToVisibleBounds = false
-//            cv.collectionViewLayout = layout
-//        }
-//
-//        // update the new position acquired
-//        self.lastOffset = scrollView.contentOffset.y
-//    }
-    
     //OBJC FUNC
     @objc func showPlan(_ ender: UIButton){
         let planView = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "planNav") as! UINavigationController
@@ -327,6 +317,13 @@ class Featured: UIViewController, UICollectionViewDataSource, UICollectionViewDe
     @objc func refreshFeatured(_ sender: UIRefreshControl){
         state = "trip"
         network.send(url: "https://scripttrip.scarletsc.net/iOS/getTrips.php", method: "GET", query: nil)
+    }
+    @objc func updateFrame(){
+        DispatchQueue.main.async {
+            self.more?.frame.origin.x = self.view.bounds.width - 50
+            self.menu?.frame.origin.x = self.view.bounds.width - 75
+        }
+        
     }
     
     //FUNC
@@ -344,6 +341,7 @@ class Featured: UIViewController, UICollectionViewDataSource, UICollectionViewDe
     }
     
     func setup(){
+        NotificationCenter.default.addObserver(self, selector: #selector(updateFrame), name: UIDevice.orientationDidChangeNotification, object: nil)
         session.setupUserView()
         tripView = TripView(delegate: self, haveTabBar: true)
         planView = TripView(delegate: self, haveTabBar: true)
@@ -382,9 +380,6 @@ class Featured: UIViewController, UICollectionViewDataSource, UICollectionViewDe
                 self.cv.reloadData()
             }
         }
-        
-        
-        
     }
     
     override var canBecomeFirstResponder: Bool{

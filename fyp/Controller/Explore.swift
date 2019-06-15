@@ -29,6 +29,7 @@ class Explore: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, U
     var tripView: TripView!
     var filters = Set<Category>()
     var pinTapped: UITapGestureRecognizer?
+    let menu = UIButton(frame: CGRect(x: 306, y: 9, width: 45, height: 45))
     
     //IBOUTLET
     @IBOutlet weak var mk: MKMapView!
@@ -194,7 +195,9 @@ class Explore: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, U
         DispatchQueue.main.async {
             let postview = self.storyboard?.instantiateViewController(withIdentifier: "postView") as! postView
             postview.tripView = self.tripView
-            self.present(postview, animated: true, completion: nil)
+            let pvnc = self.storyboard?.instantiateViewController(withIdentifier: "postViewNC") as! UINavigationController
+            pvnc.addChild(postview)
+            self.present(pvnc, animated: true, completion: nil)
         }
     }
         //LOCATION MANAGER
@@ -212,7 +215,6 @@ class Explore: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, U
     
         //MAP VIEW
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
-        
     }
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView?
     {
@@ -333,6 +335,12 @@ class Explore: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, U
             self.present(userview, animated: true, completion: nil)
         }
     }
+    @objc func updateFrame(){
+        DispatchQueue.main.async {
+            self.navBar.frame = CGRect(x: self.navBar.frame.minX, y: self.navBar.frame.minY, width: self.view.frame.width, height: self.navBar.frame.height)
+            self.menu.frame.origin.x = self.view.bounds.width - 75
+        }
+    }
     
     //FUNC
     fileprivate func mkAnnos() {
@@ -342,7 +350,7 @@ class Explore: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, U
         
         for trip in session.getTrips(){
             let anno = MKPointAnnotation()
-            anno.coordinate = CLLocationCoordinate2D(latitude: trip.Items[0].I_Lat, longitude: trip.Items[0].I_Longt)
+            anno.coordinate = CLLocationCoordinate2D(latitude: trip.Items[0].I_Lat!, longitude: trip.Items[0].I_Longt!)
             let localSearch = MKLocalSearch.Request()
 //            localSearch.region = .init(center: anno.coordinate, span: MKCoordinateSpan(latitudeDelta: 0.02, longitudeDelta: 0.02))
             localSearch.naturalLanguageQuery = trip.naturalLanguage ?? "\(anno.coordinate.latitude), \(anno.coordinate.longitude)"
@@ -442,7 +450,6 @@ class Explore: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, U
             header.backgroundColor = .white
         }
         
-        let menu = UIButton(frame: CGRect(x: 306, y: 9, width: 45, height: 45))
         menu.setImage(session.usr.iconImage, for: .normal)
         menu.addTarget(self, action: #selector(userMenu(_:)), for: .touchUpInside)
         menu.clipsToBounds = true
@@ -496,13 +503,13 @@ class Explore: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, U
     }
     
     func setup(){
+        NotificationCenter.default.addObserver(self, selector: #selector(updateFrame), name: UIDevice.orientationDidChangeNotification, object: nil)
         let pan = UIPanGestureRecognizer(target: self, action: #selector(dismissPlan(_:)))
         navBar.addGestureRecognizer(pan)
         if #available(iOS 11.0, *) {
             mk.register(AnnotationView.self, forAnnotationViewWithReuseIdentifier: "AnnotationIdentifier")
         } else {
             // Fallback on earlier versions
-            
         }
         tripView = TripView(delegate: self, haveTabBar: true)
     }
