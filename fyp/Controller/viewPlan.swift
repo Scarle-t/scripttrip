@@ -165,7 +165,10 @@ class viewPlan: UIViewController, UITableViewDelegate, UITableViewDataSource, Ne
         }))
         
         alert.addAction(UIAlertAction(title: Localized.location.rawValue.localized(), style: .default, handler: { (_) in
-            
+            let viewItem = self.storyboard?.instantiateViewController(withIdentifier: "addMap") as! addMap
+//            viewItem.mode = "add"
+//            viewItem.planID = self.selectedPlan.TID
+            self.navigationController?.pushViewController(viewItem, animated: true)
         }))
         
         alert.addAction(UIAlertAction(title: Localized.Cancel.rawValue.localized(), style: .cancel, handler: nil))
