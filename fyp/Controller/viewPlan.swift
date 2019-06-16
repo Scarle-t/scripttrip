@@ -82,21 +82,25 @@ class viewPlan: UIViewController, UITableViewDelegate, UITableViewDataSource, Ne
         
         let menu = UIButton(frame: CGRect(x: 18, y: 16, width: 30, height: 30))
         let add = UIButton(frame: CGRect(x: 308, y: 8, width: 46, height: 46))
+        let edit = UIButton(frame: CGRect(x: 270, y: 8, width: 46, height: 46))
+        
         if #available(iOS 13.0, *){
             menu.setImage(UIImage(systemName: "chevron.left"), for: .normal)
             menu.tintColor = darkGreen
             add.setImage(UIImage(systemName: "plus"), for: .normal)
             add.tintColor = darkGreen
+            edit.setImage(UIImage(systemName: "line.horizontal.3"), for: .normal)
+            edit.tintColor = darkGreen
         }else{
             menu.setImage(#imageLiteral(resourceName: "left_tint"), for: .normal)
             add.setImage(#imageLiteral(resourceName: "plus_tint"), for: .normal)
         }
         menu.addTarget(self, action: #selector(userMenu(_:)), for: .touchUpInside)
-        
         add.addTarget(self, action: #selector(addItem(_:)), for: .touchUpInside)
+        edit.addTarget(self, action: #selector(editMode(_:)), for: .touchUpInside)
         
         let text = UILabel(frame: header.frame)
-        text.frame = CGRect(x: 0, y: 0, width: text.frame.width - 150, height: text.frame.height)
+        text.frame = CGRect(x: 0, y: 0, width: text.frame.width - 170, height: text.frame.height)
         text.text = selectedPlan.T_Title
         text.textColor = "42C89D".uiColor
         text.font = UIFont(name: "AvenirNext-Heavy", size: 30)
@@ -115,6 +119,7 @@ class viewPlan: UIViewController, UITableViewDelegate, UITableViewDataSource, Ne
         header.addSubview(text)
         header.addSubview(menu)
         header.addSubview(add)
+        header.addSubview(edit)
         
         return header
     }
@@ -123,6 +128,14 @@ class viewPlan: UIViewController, UITableViewDelegate, UITableViewDataSource, Ne
     }
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         return true
+    }
+    func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+        let item = selectedPlan.Items[sourceIndexPath.row]
+        selectedPlan.Items.remove(at: sourceIndexPath.row)
+        selectedPlan.Items.insert(item, at: destinationIndexPath.row)
     }
     func tableView(_ tableView: UITableView, titleForDeleteConfirmationButtonForRowAt indexPath: IndexPath) -> String? {
         return Localized.Delete.rawValue.localized()
@@ -189,6 +202,56 @@ class viewPlan: UIViewController, UITableViewDelegate, UITableViewDataSource, Ne
         
         self.present(alert, animated: true, completion: nil)
         
+    }
+    
+    @objc func editMode(_ sender: UIButton){
+        switch sender.tag{
+        case 0:
+            UIView.animate(withDuration: slideAnimationTime) {
+                sender.transform = CGAffineTransform(rotationAngle: 2 * CGFloat.pi / 4)
+                self.itemList.isEditing = true
+            }
+            sender.tag = 1
+        case 1:
+            UIView.animate(withDuration: slideAnimationTime) {
+                sender.transform = CGAffineTransform(rotationAngle: 2 * CGFloat.pi / 2)
+                self.itemList.isEditing = false
+            }
+            
+            var items = ""
+            var order = ""
+            
+            for i in 0..<selectedPlan.Items.count{
+                items += "\(selectedPlan.Items[i].IID),"
+                order += "\(i),"
+            }
+            
+            items = String(items.dropLast())
+            order = String(order.dropLast())
+            
+            network.send(url: "https://scripttrip.scarletsc.net/iOS/plan.php?user=\(session.usr.UID)&plan=\(selectedPlan.TID)&items=\(items)&order=\(order)", method: "REORDER", query: nil) { (data) in
+                guard let result = Session.parser.parse(data!) else {
+                    SVProgressHUD.showError(withStatus: nil)
+                    SVProgressHUD.dismiss(withDelay: 1.5)
+                    return
+                }
+                for item in result{
+                    if (item["Result"] as! String) == "OK"{
+                        SVProgressHUD.showSuccess(withStatus: nil)
+                        SVProgressHUD.dismiss(withDelay: 1.5)
+                    }else{
+                        SVProgressHUD.showError(withStatus: item["Reason"] as? String)
+                        SVProgressHUD.dismiss(withDelay: 1.5)
+                    }
+                }
+                DispatchQueue.main.async {
+                    self.itemList.reloadData()
+                }
+            }
+            sender.tag = 0
+        default:
+            break
+        }
     }
     
     //FUNC

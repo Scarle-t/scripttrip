@@ -12,7 +12,11 @@ class TripView: NSObject, UICollectionViewDelegateFlowLayout, UICollectionViewDe
     
     //DELEGATE
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return (displayTrip?.Items.count ?? -1) + 1
+        if isCustomPlan{
+            return realDisplay.count + 1
+        }else{
+            return (displayTrip?.Items.count ?? -1) + 1
+        }
     }
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if indexPath.row == 0{
@@ -55,22 +59,20 @@ class TripView: NSObject, UICollectionViewDelegateFlowLayout, UICollectionViewDe
             cell.content.isEditable = false
             cell.content.isScrollEnabled = false
             cell.content.tintColor = darkGreen
-            cell.content.text = ((displayTrip?.Items[indexPath.row - 1].I_Content) == "STINERNAL_IMG_STINTERNAL" || (displayTrip?.Items[indexPath.row - 1].I_Content) == "STINTERNAL_LOCATIONDATA_STINTERNAL") ? nil : (displayTrip?.Items[indexPath.row - 1].I_Content)
-            
-            
+            cell.content.text = realDisplay[indexPath.row - 1].I_Content == "STINERNAL_IMG_STINTERNAL" ? nil : realDisplay[indexPath.row - 1].I_Content
             
             cell.contentView.addSubview(cell.img)
             cell.contentView.addSubview(cell.content)
-            if displayTrip!.Items[indexPath.row - 1].I_Image != "0"{
+            if realDisplay[indexPath.row - 1].I_Image != "0"{
                 if imgs[displayTrip!.Items[indexPath.row - 1]] == nil{
                     group.enter()
-                    Network().getPhoto(url: "https://scripttrip.scarletsc.net/img/\(displayTrip!.Items[indexPath.row - 1].I_Image)") { (data, response, error) in
+                    Network().getPhoto(url: "https://scripttrip.scarletsc.net/img/\(realDisplay[indexPath.row - 1].I_Image)") { (data, response, error) in
                         guard let data = data, error == nil else {
                             cell.img.image = UIImage()
                             self.group.leave()
                             return
                         }
-                        self.imgs[self.displayTrip!.Items[indexPath.row - 1]] = UIImage(data: data)
+                        self.imgs[self.realDisplay[indexPath.row - 1]] = UIImage(data: data)
                         self.group.leave()
                     }
                     group.notify(queue: .main) {
@@ -81,8 +83,8 @@ class TripView: NSObject, UICollectionViewDelegateFlowLayout, UICollectionViewDe
                 DispatchQueue.main.async {
                     UIView.animate(withDuration: 0.2, animations: {
                         cell.img.alpha = 1
-                        cell.img.image = self.imgs[self.displayTrip!.Items[indexPath.row - 1]]
-                        self.tapImgs[imgTap] = self.imgs[self.displayTrip!.Items[indexPath.row - 1]]
+                        cell.img.image = self.imgs[self.realDisplay[indexPath.row - 1]]
+                        self.tapImgs[imgTap] = self.imgs[self.realDisplay[indexPath.row - 1]]
                     })
                 }
             }else{
@@ -250,6 +252,7 @@ class TripView: NSObject, UICollectionViewDelegateFlowLayout, UICollectionViewDe
     var gradientMask: CAGradientLayer?
     var isCustomPlan: Bool!
     var haveTabBar = false
+    var realDisplay = [Item]()
     
     //INIT
     init(delegate: UIViewController, haveTabBar: Bool){
@@ -513,7 +516,7 @@ class TripView: NSObject, UICollectionViewDelegateFlowLayout, UICollectionViewDe
     func calculateTextHeight(){
         heightForItem.removeAll()
         if isCustomPlan{
-            for item in displayTrip!.Items{
+            for item in realDisplay{
                 if item.I_Content == "STINERNAL_IMG_STINTERNAL"{
                     heightForItem.append((contents.frame.width / 3 * 2) + 30)
                 }else{
@@ -552,6 +555,15 @@ class TripView: NSObject, UICollectionViewDelegateFlowLayout, UICollectionViewDe
         }
     }
     
+    func calculateDisplayCells(){
+        realDisplay.removeAll()
+        for item in displayTrip!.Items{
+            if item.I_Content != "STINTERNAL_LOCATIONDATA_STINTERNAL"{
+                realDisplay.append(item)
+            }
+        }
+    }
+    
     func close(){
         DispatchQueue.main.async {
             if self.actionBtn.tag == 1{
@@ -579,6 +591,7 @@ class TripView: NSObject, UICollectionViewDelegateFlowLayout, UICollectionViewDe
         isShown = true
         contents.setContentOffset(CGPoint(x: 0,y: 0), animated: false)
         updateFrame()
+        calculateDisplayCells()
         calculateTextHeight()
         checkBookmark()
         if headerImg == nil && !isCustomPlan {
@@ -605,21 +618,6 @@ class TripView: NSObject, UICollectionViewDelegateFlowLayout, UICollectionViewDe
         DispatchQueue.main.async {
             self.contents.reloadData()
         }
-        
-//        if !UserDefaults.standard.bool(forKey: "reduceMotion"){
-//            self.view.alpha = 1
-//            UIView.animate(withDuration: slideAnimationTime + 0.1, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
-//                self.view.frame.origin.y = 65
-//                self.dimBg.alpha = dimViewAlpha
-//            }, completion: nil)
-//        }else{
-//            self.view.frame.origin.y = 65
-//            self.view.alpha = 0
-//            UIView.animate(withDuration: fadeAnimationTime, delay: 0, options: .curveEaseOut, animations: {
-//                self.view.alpha = 1
-//                self.dimBg.alpha = dimViewAlpha
-//            }, completion: nil)
-//        }
     }
     func shakeShow(){
         let originalAnchor = view.layer.anchorPoint
