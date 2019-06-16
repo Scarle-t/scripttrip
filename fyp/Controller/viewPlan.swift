@@ -28,20 +28,29 @@ class viewPlan: UIViewController, UITableViewDelegate, UITableViewDataSource, Ne
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell")
-        cell?.textLabel?.text = selectedPlan.Items[indexPath.row].I_Content == "STINERNAL_IMG_STINTERNAL" ? "Image" : selectedPlan.Items[indexPath.row].I_Content
-        cell?.accessoryType = .disclosureIndicator
-        if selectedPlan.Items[indexPath.row].I_Image != "0"{
-            network.getPhoto(url: "https://scripttrip.scarletsc.net/img/\(selectedPlan.Items[indexPath.row].I_Image)") { (data, response, error) in
-                guard let image = UIImage(data: data!) else {return}
-                DispatchQueue.main.async {
-                    let imgView = UIImageView(frame: CGRect(x: 0, y: 0, width: 30, height: 30))
-                    imgView.clipsToBounds = true
-                    imgView.contentMode = .scaleAspectFit
-                    imgView.image = image
-                    cell?.accessoryView = imgView
+        
+        if selectedPlan.Items[indexPath.row].I_Content == "STINERNAL_IMG_STINTERNAL"{
+            cell?.textLabel?.text = Localized.imageWithCaption.rawValue.localized()
+            if selectedPlan.Items[indexPath.row].I_Image != "0"{
+                network.getPhoto(url: "https://scripttrip.scarletsc.net/img/\(selectedPlan.Items[indexPath.row].I_Image)") { (data, response, error) in
+                    guard let image = UIImage(data: data!) else {return}
+                    DispatchQueue.main.async {
+                        let imgView = UIImageView(frame: CGRect(x: 0, y: 0, width: 30, height: 30))
+                        imgView.clipsToBounds = true
+                        imgView.contentMode = .scaleAspectFit
+                        imgView.image = image
+                        cell?.accessoryView = imgView
+                    }
                 }
             }
+        }else if selectedPlan.Items[indexPath.row].I_Content == "STINTERNAL_LOCATIONDATA_STINTERNAL"{
+            cell?.textLabel?.text = Localized.location.rawValue.localized()
+            cell?.accessoryView = UIImageView(image: #imageLiteral(resourceName: "mapView.pdf"))
+        }else{
+            cell?.textLabel?.text = selectedPlan.Items[indexPath.row].I_Content
+            cell?.accessoryType = .disclosureIndicator
         }
+        
         cell?.textLabel!.font = UIFont(name: "AvenirNext-Regular", size: 28)
         return cell!
     }
@@ -51,6 +60,11 @@ class viewPlan: UIViewController, UITableViewDelegate, UITableViewDataSource, Ne
         
         if selectedPlan.Items[indexPath.row].I_Content == "STINERNAL_IMG_STINTERNAL"{
             let viewItem = storyboard?.instantiateViewController(withIdentifier: "addPhoto") as! addPhoto
+            viewItem.item = selectedPlan.Items[indexPath.row]
+            viewItem.mode = "edit"
+            self.navigationController?.pushViewController(viewItem, animated: true)
+        }else if selectedPlan.Items[indexPath.row].I_Content == "STINTERNAL_LOCATIONDATA_STINTERNAL"{
+            let viewItem = storyboard?.instantiateViewController(withIdentifier: "addMap") as! addMap
             viewItem.item = selectedPlan.Items[indexPath.row]
             viewItem.mode = "edit"
             self.navigationController?.pushViewController(viewItem, animated: true)
@@ -166,8 +180,8 @@ class viewPlan: UIViewController, UITableViewDelegate, UITableViewDataSource, Ne
         
         alert.addAction(UIAlertAction(title: Localized.location.rawValue.localized(), style: .default, handler: { (_) in
             let viewItem = self.storyboard?.instantiateViewController(withIdentifier: "addMap") as! addMap
-//            viewItem.mode = "add"
-//            viewItem.planID = self.selectedPlan.TID
+            viewItem.mode = "add"
+            viewItem.planID = self.selectedPlan.TID
             self.navigationController?.pushViewController(viewItem, animated: true)
         }))
         
@@ -192,7 +206,7 @@ class viewPlan: UIViewController, UITableViewDelegate, UITableViewDataSource, Ne
         DispatchQueue.main.async {
             self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
         }
-        selectedPlan.Items.removeAll()
+//        selectedPlan.Items.removeAll()
         network.send(url: "https://scripttrip.scarletsc.net/iOS/plan.php?user=\(session.usr.UID)&PID=\(selectedPlan.TID)&mode=item", method: "GET", query: nil)
     }
     

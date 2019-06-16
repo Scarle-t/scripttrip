@@ -206,6 +206,7 @@
 			isa = PBXGroup;
 			children = (
 				A680EC412280C0EA006E116E /* About.swift */,
+				A6183E7622B57818004ADCDC /* addMap.swift */,
 				A61A219922AC7C2000319C53 /* addPhoto.swift */,
 				A680EC3F2280B732006E116E /* Bookmarks.swift */,
 				A6C2BAAA227F615900BC19F7 /* CategoryTrip.swift */,
@@ -235,7 +236,6 @@
 				A612D417226EC61F004BF88F /* tripDetail.swift */,
 				A6A9FF4F22A6B72100D2E7C5 /* userView.swift */,
 				A639DAED2299670900CBAAAF /* viewPlan.swift */,
-				A6183E7622B57818004ADCDC /* addMap.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -647,7 +647,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = fyp/fyp.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 167.7;
+				CURRENT_PROJECT_VERSION = 171;
 				DEVELOPMENT_TEAM = 7WC44F9Y8F;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -675,7 +675,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = fyp/fyp.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 167.7;
+				CURRENT_PROJECT_VERSION = 171;
 				DEVELOPMENT_TEAM = 7WC44F9Y8F;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",

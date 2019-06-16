@@ -3062,6 +3062,7 @@ SOFTWARE.
                                         <state key="normal" image="xmark.circle" catalog="system"/>
                                         <connections>
                                             <action selector="close:" destination="4IT-dp-6JQ" eventType="touchUpInside" id="5SG-V8-LVY"/>
+                                            <action selector="close:" destination="pJY-Ra-1D8" eventType="touchUpInside" id="VoU-NB-qoB"/>
                                             <action selector="close:" destination="ql8-lD-0rg" eventType="touchUpInside" id="t76-n8-2Oy"/>
                                         </connections>
                                     </button>
@@ -3076,6 +3077,7 @@ SOFTWARE.
                                         <connections>
                                             <action selector="save:" destination="ql8-lD-0rg" eventType="touchUpInside" id="PAB-y2-5YC"/>
                                             <action selector="save:" destination="4IT-dp-6JQ" eventType="touchUpInside" id="j4e-ep-iYe"/>
+                                            <action selector="save:" destination="pJY-Ra-1D8" eventType="touchUpInside" id="pE8-Ra-Yo3"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -3088,6 +3090,52 @@ SOFTWARE.
                                     <constraint firstItem="q3h-cz-S5i" firstAttribute="leading" secondItem="DuL-nY-5yn" secondAttribute="leading" constant="18" id="huU-rN-hda"/>
                                 </constraints>
                             </view>
+                            <view clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Qov-yS-cxk">
+                                <rect key="frame" x="0.0" y="70" width="375" height="597"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <visualEffectView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jU7-pu-exn">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="597"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="UX4-yK-N4m">
+                                            <rect key="frame" x="0.0" y="0.0" width="135" height="469"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                        </view>
+                                        <blurEffect style="extraLight"/>
+                                    </visualEffectView>
+                                    <searchBar contentMode="redraw" fixedFrame="YES" searchBarStyle="minimal" placeholder="Search" translatesAutoresizingMaskIntoConstraints="NO" id="84l-NM-erO">
+                                        <rect key="frame" x="48" y="8" width="319" height="44"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </searchBar>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wbt-BX-yHb">
+                                        <rect key="frame" x="8" y="8" width="40" height="44"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="tintColor" red="0.25882352939999997" green="0.7843137255" blue="0.61568627450000002" alpha="1" colorSpace="calibratedRGB"/>
+                                        <state key="normal" image="chevron.up.square.fill" catalog="system"/>
+                                        <connections>
+                                            <action selector="showMenu:" destination="pJY-Ra-1D8" eventType="touchUpInside" id="xIz-xE-HwS"/>
+                                        </connections>
+                                    </button>
+                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" keyboardDismissMode="interactive" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Aeu-J8-bjC">
+                                        <rect key="frame" x="0.0" y="60" width="375" height="537"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <prototypes>
+                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" id="aWQ-sP-mGs">
+                                                <rect key="frame" x="0.0" y="28" width="375" height="43.5"/>
+                                                <autoresizingMask key="autoresizingMask"/>
+                                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="aWQ-sP-mGs" id="OIm-sE-x3L">
+                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                </tableViewCellContentView>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            </tableViewCell>
+                                        </prototypes>
+                                    </tableView>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" xcode11CocoaTouchSystemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
@@ -3099,6 +3147,12 @@ SOFTWARE.
                     </view>
                     <connections>
                         <outlet property="map" destination="rff-U0-0vs" id="jwq-eq-p7R"/>
+                        <outlet property="mapPinLPR" destination="VsM-JV-vrw" id="s14-9L-d9M"/>
+                        <outlet property="resultList" destination="Aeu-J8-bjC" id="bSk-Mx-N18"/>
+                        <outlet property="search" destination="84l-NM-erO" id="maU-2H-QXr"/>
+                        <outlet property="searchBg" destination="jU7-pu-exn" id="JNi-jn-mIe"/>
+                        <outlet property="searchView" destination="Qov-yS-cxk" id="zZ1-PZ-Uk8"/>
+                        <outlet property="searchViewBtn" destination="wbt-BX-yHb" id="2oE-DZ-dS4"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ajw-yO-cdc" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -3227,6 +3281,7 @@ SOFTWARE.
         <image name="chevron.down" catalog="system" width="64" height="34"/>
         <image name="chevron.left" catalog="system" width="46" height="64"/>
         <image name="chevron.right" catalog="system" width="46" height="64"/>
+        <image name="chevron.up.square.fill" catalog="system" width="64" height="56"/>
         <image name="cross_tint" width="800" height="800"/>
         <image name="ellipsis" catalog="system" width="64" height="20"/>
         <image name="explore_pdf" width="30" height="30"/>

@@ -25,7 +25,7 @@
 "regEmailRegexMsg" = "This is not an Email!";
 "regError" = "Oops.";
 "photoEmptyMsg" = "Get some nice photo! This cannot be empty.";
-"noLocMsg" = "No location data yet";
+"noLocMsg" = "No location data";
 
 "otpTitle" = "2-Factor Authentication enabled\n\nPlease provide the 6-digit code";
 

@@ -55,7 +55,9 @@ class TripView: NSObject, UICollectionViewDelegateFlowLayout, UICollectionViewDe
             cell.content.isEditable = false
             cell.content.isScrollEnabled = false
             cell.content.tintColor = darkGreen
-            cell.content.text = (displayTrip?.Items[indexPath.row - 1].I_Content) == "STINERNAL_IMG_STINTERNAL" ? nil : (displayTrip?.Items[indexPath.row - 1].I_Content)
+            cell.content.text = ((displayTrip?.Items[indexPath.row - 1].I_Content) == "STINERNAL_IMG_STINTERNAL" || (displayTrip?.Items[indexPath.row - 1].I_Content) == "STINTERNAL_LOCATIONDATA_STINTERNAL") ? nil : (displayTrip?.Items[indexPath.row - 1].I_Content)
+            
+            
             
             cell.contentView.addSubview(cell.img)
             cell.contentView.addSubview(cell.content)
