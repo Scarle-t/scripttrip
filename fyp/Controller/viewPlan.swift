@@ -14,6 +14,7 @@ class viewPlan: UIViewController, UITableViewDelegate, UITableViewDataSource, Ne
     let network = Network()
     let session = Session.shared
     var selectedPlan: Trip!
+    var refreshControl: UIRefreshControl?
     
     //IBOUTLET
     @IBOutlet weak var itemList: UITableView!
@@ -48,6 +49,7 @@ class viewPlan: UIViewController, UITableViewDelegate, UITableViewDataSource, Ne
             cell?.accessoryView = UIImageView(image: #imageLiteral(resourceName: "mapView.pdf"))
         }else{
             cell?.textLabel?.text = selectedPlan.Items[indexPath.row].I_Content
+            cell?.accessoryView = nil
             cell?.accessoryType = .disclosureIndicator
         }
         
@@ -62,6 +64,7 @@ class viewPlan: UIViewController, UITableViewDelegate, UITableViewDataSource, Ne
             let viewItem = storyboard?.instantiateViewController(withIdentifier: "addPhoto") as! addPhoto
             viewItem.item = selectedPlan.Items[indexPath.row]
             viewItem.mode = "edit"
+            viewItem.planID = selectedPlan.TID
             self.navigationController?.pushViewController(viewItem, animated: true)
         }else if selectedPlan.Items[indexPath.row].I_Content == "STINTERNAL_LOCATIONDATA_STINTERNAL"{
             let viewItem = storyboard?.instantiateViewController(withIdentifier: "addMap") as! addMap
@@ -166,6 +169,9 @@ class viewPlan: UIViewController, UITableViewDelegate, UITableViewDataSource, Ne
         selectedPlan.Items = session.parsePlanItem(Session.parser.parse(data))!
         DispatchQueue.main.async {
             self.itemList.reloadData()
+            if self.refreshControl!.isRefreshing{
+                self.refreshControl?.endRefreshing()
+            }
         }
     }
     
@@ -181,6 +187,7 @@ class viewPlan: UIViewController, UITableViewDelegate, UITableViewDataSource, Ne
             let viewItem = self.storyboard?.instantiateViewController(withIdentifier: "viewItem") as! createItem
             viewItem.mode = "add"
             viewItem.planID = self.selectedPlan.TID
+            viewItem.order = self.selectedPlan.Items.count
             self.navigationController?.pushViewController(viewItem, animated: true)
         }))
         
@@ -195,6 +202,7 @@ class viewPlan: UIViewController, UITableViewDelegate, UITableViewDataSource, Ne
             let viewItem = self.storyboard?.instantiateViewController(withIdentifier: "addMap") as! addMap
             viewItem.mode = "add"
             viewItem.planID = self.selectedPlan.TID
+            viewItem.order = self.selectedPlan.Items.count
             self.navigationController?.pushViewController(viewItem, animated: true)
         }))
         
@@ -253,6 +261,9 @@ class viewPlan: UIViewController, UITableViewDelegate, UITableViewDataSource, Ne
             break
         }
     }
+    @objc func refresh(_ sender: UIRefreshControl){
+        network.send(url: "https://scripttrip.scarletsc.net/iOS/plan.php?user=\(session.usr.UID)&PID=\(selectedPlan.TID)&mode=item", method: "GET", query: nil)
+    }
     
     //FUNC
     func delegate(){
@@ -269,6 +280,11 @@ class viewPlan: UIViewController, UITableViewDelegate, UITableViewDataSource, Ne
         DispatchQueue.main.async {
             self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
         }
+        refreshControl = UIRefreshControl()
+        refreshControl?.addTarget(self, action: #selector(refresh(_:)), for: .valueChanged)
+        refreshControl?.tintColor = darkGreen
+        itemList.refreshControl = refreshControl
+        
 //        selectedPlan.Items.removeAll()
         network.send(url: "https://scripttrip.scarletsc.net/iOS/plan.php?user=\(session.usr.UID)&PID=\(selectedPlan.TID)&mode=item", method: "GET", query: nil)
     }

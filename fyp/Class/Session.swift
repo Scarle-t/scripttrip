@@ -129,6 +129,7 @@ class Session: NSObject, UITableViewDelegate, UITableViewDataSource, FBSDKLoginB
             }else{
                 cell.textLabel?.font = UIFont(name: "AvenirNext-DemiBold", size: 17)
                 cell.textLabel?.textAlignment = .left
+                cell.accessoryView = nil
                 cell.accessoryType = .disclosureIndicator
             }
             cell.backgroundColor = UIColor.clear
@@ -245,10 +246,12 @@ class Session: NSObject, UITableViewDelegate, UITableViewDataSource, FBSDKLoginB
         if loginState == ""{
             if indexPath.section == 2 && indexPath.row == 0{
                 iconImg = nil
+                settings[0] = ""
                 userDefault.set(true, forKey: "shake")
                 userDefault.set(true, forKey: "history")
                 userDefault.set(false, forKey: "isLoggedIn")
                 userDefault.set(false, forKey: "reduceMotion")
+                userDefault.set(true, forKey: "quickAccess")
 //                UIApplication.shared.keyWindow?.rootViewController?.dismiss(animated: false, completion: nil)
                 let userView = UIApplication.shared.keyWindow?.rootViewController?.presentedViewController as! userView
                 userView.logout()
@@ -264,10 +267,12 @@ class Session: NSObject, UITableViewDelegate, UITableViewDataSource, FBSDKLoginB
         loginButton.removeFromSuperview()
         iconImg = nil
         loginState = ""
+        settings[0] = ""
         userDefault.set(false, forKey: "isLoggedIn")
         userDefault.set(true, forKey: "shake")
         userDefault.set(true, forKey: "history")
         userDefault.set(false, forKey: "reduceMotion")
+        userDefault.set(true, forKey: "quickAccess")
         UIApplication.shared.keyWindow?.rootViewController?.dismiss(animated: false, completion: nil)
     }
     func reloadLocale(){

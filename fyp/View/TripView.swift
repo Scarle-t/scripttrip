@@ -391,8 +391,8 @@ class TripView: NSObject, UICollectionViewDelegateFlowLayout, UICollectionViewDe
             UIView.animate(withDuration: 0.2, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
                 if !self.isCustomPlan{
                     self.addBookmark.alpha = 1
+                    self.shareBtn.alpha = 1
                 }
-                self.shareBtn.alpha = 1
                 self.mapBtn.alpha = 1
                 
                 self.addBookmark.frame.origin.x -= 55
@@ -444,9 +444,7 @@ class TripView: NSObject, UICollectionViewDelegateFlowLayout, UICollectionViewDe
             }
         }
     }
-    @objc func share(_ sender: UIButton){
-//        let text = "Let's go together! - \(displayTrip!.T_Title)\nhttps://scripttrip.scarletsc.net"
-        
+    func createPDF(){
         SVProgressHUD.show()
         
         var totalHeight = CGFloat.zero
@@ -462,16 +460,13 @@ class TripView: NSObject, UICollectionViewDelegateFlowLayout, UICollectionViewDe
         let context = UIGraphicsGetCurrentContext()!
         
         let rendView = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: totalHeight))
-        if #available(iOS 13.0, *) {
-            rendView.backgroundColor = .systemBackground
-        } else {
-            //fallback statements
-        }
+        rendView.backgroundColor = .white
         let lbl = UILabel(frame: CGRect(x: 0, y: 0, width: rendView.frame.width, height: titleHeight))
         lbl.numberOfLines = 0
         lbl.textAlignment = .center
         lbl.font = UIFont(name: "AnevirNext-Heavy", size: 30)
         lbl.text = displayTrip?.T_Title
+        lbl.textColor = .black
         rendView.addSubview(lbl)
         
         offset = titleHeight + 10
@@ -483,6 +478,7 @@ class TripView: NSObject, UICollectionViewDelegateFlowLayout, UICollectionViewDe
             lbl2.font = UIFont(name: "AnevirNext-Regular", size: 18)
             lbl2.frame.origin.x += 10
             lbl2.text = displayTrip?.Items[i].I_Content
+            lbl2.textColor = .black
             rendView.addSubview(lbl2)
             offset += heightForItem[i] + 10
         }
@@ -492,8 +488,11 @@ class TripView: NSObject, UICollectionViewDelegateFlowLayout, UICollectionViewDe
         UIGraphicsEndPDFContext()
         
         SVProgressHUD.dismiss()
-
-        let textToShare = [pdfData]
+    }
+    @objc func share(_ sender: UIButton){
+        let text = "Let's go together! - \(displayTrip!.T_Title)\nhttps://scripttrip.scarletsc.net/"
+        
+        let textToShare = [text]
         let activityViewController = UIActivityViewController(activityItems: textToShare, applicationActivities: nil)
         activityViewController.popoverPresentationController?.sourceView = self.view
         delegate?.present(activityViewController, animated: true, completion: nil)
@@ -613,6 +612,7 @@ class TripView: NSObject, UICollectionViewDelegateFlowLayout, UICollectionViewDe
         
         if isCustomPlan{
             addBookmark.alpha = 0
+            shareBtn.alpha = 0
         }
         
         DispatchQueue.main.async {

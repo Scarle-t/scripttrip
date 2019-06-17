@@ -19,6 +19,7 @@ class addMap: UIViewController, MKMapViewDelegate, UISearchBarDelegate, UITableV
     var planID: Int?
     var coordinate: CLLocationCoordinate2D?
     var feedItems: [MKMapItem]?
+    var order: Int?
     
     //IBOUTLET
     @IBOutlet weak var map: MKMapView!
@@ -43,8 +44,11 @@ class addMap: UIViewController, MKMapViewDelegate, UISearchBarDelegate, UITableV
         guard let coor = coordinate else {return}
         
         let t = "STINTERNAL_LOCATIONDATA_STINTERNAL"
-        
-        network.send(url: "https://scripttrip.scarletsc.net/iOS/plan.php?user=\(Session.user.UID)&PID=\(planID!)&image=0&i_lat=\(coor.latitude)&i_longt=\(coor.longitude)&publicity=0&content=\(t)&mode=item", method: "POST", query: nil)
+        if mode == "add"{
+            network.send(url: "https://scripttrip.scarletsc.net/iOS/plan.php?user=\(Session.user.UID)&PID=\(planID!)&image=0&i_lat=\(coor.latitude)&i_longt=\(coor.longitude)&publicity=0&content=\(t)&order=\(order!)&mode=item", method: "POST", query: nil)
+        }else if mode == "edit"{
+            network.send(url: "https://scripttrip.scarletsc.net/iOS/plan.php?user=\(Session.user.UID)&id=\(item!.IID)&i_lat=\(coor.latitude)&i_longt=\(coor.longitude)&field=location&mode=item", method: "UPDATE", query: nil)
+        }
         
     }
     @IBAction func showMenu(_ sender: UIButton) {
@@ -270,6 +274,10 @@ class addMap: UIViewController, MKMapViewDelegate, UISearchBarDelegate, UITableV
         cancelButton.setTitleTextAttributes([NSAttributedString.Key.font : UIFont(name: "AvenirNext-DemiBold", size: 17)!], for: .normal)
         
         search.inputAccessoryView = toolBar
+        
+        if mode == "edit"{
+            mkAnno(location: CLLocationCoordinate2D(latitude: item!.I_Lat!, longitude: item!.I_Longt!))
+        }
     }
     
     //VIEW CONTROLLER

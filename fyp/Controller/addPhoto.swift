@@ -42,7 +42,9 @@ class addPhoto: UIViewController, UIImagePickerControllerDelegate, UINavigationC
         network.uploadPhoto(image: image, param: [
             "user":"\(Session.user.UID)",
             "post":"\(planID!)",
-            "publicity":"\(0)"
+            "publicity":"\(0)",
+            "mode":"\(mode)",
+            "item":"\(item?.IID ?? 0)"
             ], postID: planID!)
     }
     

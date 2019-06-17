@@ -15,6 +15,7 @@ class createItem: UIViewController, NetworkDelegate{
     var item: Item?
     var planID: Int?
     var mode = ""
+    var order: Int?
     
     //IBOUTLET
     @IBOutlet weak var content: UITextView!
@@ -33,9 +34,9 @@ class createItem: UIViewController, NetworkDelegate{
         t = t.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
         
         if mode == "add"{
-            network.send(url: "https://scripttrip.scarletsc.net/iOS/plan.php?user=\(Session.user.UID)&PID=\(planID!)&image=0&i_lat=NULL&i_longt=NULL&publicity=0&content=\(t)&mode=item", method: "POST", query: nil)
+            network.send(url: "https://scripttrip.scarletsc.net/iOS/plan.php?user=\(Session.user.UID)&PID=\(planID!)&image=0&i_lat=0&i_longt=0&publicity=0&content=\(t)&order=\(order!)&mode=item", method: "POST", query: nil)
         }else if mode == "edit"{
-            network.send(url: "https://scripttrip.scarletsc.net/iOS/plan.php?user=\(Session.user.UID)&id=\(item!.IID)&content=\(t)&mode=item", method: "UPDATE", query: nil)
+            network.send(url: "https://scripttrip.scarletsc.net/iOS/plan.php?user=\(Session.user.UID)&id=\(item!.IID)&content=\(t)&mode=item&field=I_Content", method: "UPDATE", query: nil)
         }
         dismissKb()
     }

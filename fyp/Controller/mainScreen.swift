@@ -11,7 +11,6 @@ import AuthenticationServices
 
 class mainScreen: UIViewController, UITextFieldDelegate, NetworkDelegate, FBSDKLoginButtonDelegate, ASAuthorizationControllerDelegate, ASAuthorizationControllerPresentationContextProviding {
     
-    
     //VARIABLE
     var state = ""
     var networkState = ""

@@ -16,6 +16,7 @@ class postMap: UIViewController, MKMapViewDelegate, UITableViewDelegate, UITable
     var displayLoc = [Item]()
     let cellSize: CGFloat = 60
     var menuHeight: CGFloat = 0.0
+    var itemAnno = [Item: MKAnnotation]()
     
     //IBOUTLET
     @IBOutlet weak var closeBtn: UIButton!
@@ -115,7 +116,7 @@ class postMap: UIViewController, MKMapViewDelegate, UITableViewDelegate, UITable
         DispatchQueue.main.async {
             self.map.removeAnnotations(self.map.annotations)
         }
-        
+        itemAnno.removeAll()
         for item in trip!.Items{
             if let lat = item.I_Lat, let longt = item.I_Longt {
                 let anno = MKPointAnnotation()
@@ -127,6 +128,7 @@ class postMap: UIViewController, MKMapViewDelegate, UITableViewDelegate, UITable
                     guard let res = response, error == nil else {return}
                     anno.title = res.mapItems.first?.name
                 }
+                itemAnno[item] = anno
                 DispatchQueue.main.async {
                     self.map.addAnnotation(anno)
                 }
@@ -139,6 +141,7 @@ class postMap: UIViewController, MKMapViewDelegate, UITableViewDelegate, UITable
         let span = MKCoordinateSpan(latitudeDelta: 0.005, longitudeDelta: 0.005)
         let region = MKCoordinateRegion(center: coordinate, span: span)
         map.setRegion(region, animated: true)
+        map.selectAnnotation(itemAnno[displayLoc[item]]!, animated: true)
     }
     
     func delegate(){
@@ -183,6 +186,7 @@ class postMap: UIViewController, MKMapViewDelegate, UITableViewDelegate, UITable
         DispatchQueue.main.async {
             self.locMenu.alpha = 1
             self.locMenu.reloadData()
+            self.locMenu.cellForRow(at: IndexPath(row: 0, section: 0))?.setSelected(true, animated: false)
         }
         
         let menu = UIButton(frame: CGRect(x: view.bounds.width - 75, y: 15, width: cellSize, height: 30))
@@ -200,10 +204,10 @@ class postMap: UIViewController, MKMapViewDelegate, UITableViewDelegate, UITable
         }else{
             menu.setImage(#imageLiteral(resourceName: "more_tint.pdf"), for: .normal)
             menu.backgroundColor = .white
+            closeBtn.setImage(#imageLiteral(resourceName: "left_tint.png"), for: .normal)
         }
         view.addSubview(menu)
         
-        locMenu.cellForRow(at: IndexPath(row: 0, section: 0))?.setSelected(true, animated: false)
     }
     
     //VIEW CONTROLLER

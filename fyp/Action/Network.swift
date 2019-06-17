@@ -109,7 +109,7 @@ class Network: NSObject{
             
             var data = Data()
             
-            let filename = "\(Session.user.UID)_\(postID)_\(Int.random(in: 0..<10))\(Int.random(in: 0..<10))\(Int.random(in: 0..<10))\(Int.random(in: 0..<10))\(Int.random(in: 0..<10)).png"
+            let filename = "\(Session.user.UID)_\(postID)_\(Int.random(in: 0..<10))\(Int.random(in: 0..<10))\(Int.random(in: 0..<10))\(Int.random(in: 0..<10))\(Int.random(in: 0..<10)).jpg"
             
             if let param = param {
                 for (key, value) in param{
@@ -122,7 +122,7 @@ class Network: NSObject{
             data.append("\r\n--\(boundary)\r\n".data(using: .utf8)!)
             data.append("Content-Disposition: form-data; name=\"file\"; filename=\"\(filename)\"\r\n".data(using: .utf8)!)
             data.append("Content-Type: image/png\r\n\r\n".data(using: .utf8)!)
-            data.append(image.pngData()!)
+            data.append(image.jpegData(compressionQuality: 0.0)!)
             
             data.append("\r\n--\(boundary)--\r\n".data(using: .utf8)!)
             
