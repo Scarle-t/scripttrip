@@ -26,6 +26,7 @@ class Profile: UITableViewController, NetworkDelegate {
     @IBOutlet weak var emailText: UILabel!
     @IBOutlet weak var tfaText: UILabel!
     @IBOutlet weak var tfa: UISwitch!
+    @IBOutlet weak var interestText: UILabel!
     
     //IBACTION
     @IBAction func leftItem(_ sender: UIBarButtonItem) {
@@ -123,6 +124,14 @@ class Profile: UITableViewController, NetworkDelegate {
             return 0
         }
     }
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.cellForRow(at: indexPath)?.setSelected(false, animated: true)
+        if indexPath.section == 1 && indexPath.row == 0{
+            let interest = storyboard?.instantiateViewController(withIdentifier: "interest") as! reg_interestChoice
+            interest.change = true
+            self.present(interest, animated: true, completion: nil)
+        }
+    }
     
         //NETWORK
     func ResponseHandle(data: Data) {
@@ -187,6 +196,8 @@ class Profile: UITableViewController, NetworkDelegate {
         email.placeholder = Localized.email.rawValue.localized()
         emailText.text = Localized.email.rawValue.localized()
         naemText.text = Localized.name.rawValue.localized()
+        
+        interestText.text = Localized.Interest.rawValue.localized()
         
         tfaText.text = Localized.tfaText.rawValue.localized()
         

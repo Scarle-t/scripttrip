@@ -76,6 +76,7 @@
 "Camera" = "Camera";
 "photoLibrary" = "Photo Library";
 "quickAccess" = "Quick Acccess";
+"Interest" = "Interest";
 
 "introText" = "ScriptTrip provides an entire new way to experience outgoing\n\nJoin us now";
 "getStarted" = "Get Started";

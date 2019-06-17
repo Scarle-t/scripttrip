@@ -1650,6 +1650,7 @@ Join us now</string>
                         <outlet property="email" destination="o2u-JE-TQk" id="Q5N-wy-dve"/>
                         <outlet property="emailText" destination="aaV-Wm-2VZ" id="vG1-Ac-x9z"/>
                         <outlet property="fname" destination="mR8-ZX-59V" id="boo-ib-VnL"/>
+                        <outlet property="interestText" destination="qWV-fB-QxJ" id="ttw-pg-vue"/>
                         <outlet property="left" destination="ncC-Ah-9ZS" id="2yn-o9-Qys"/>
                         <outlet property="lname" destination="BSN-5g-Ukz" id="ceN-60-Pe1"/>
                         <outlet property="naemText" destination="0Hf-8J-L4r" id="nI7-gr-Z11"/>

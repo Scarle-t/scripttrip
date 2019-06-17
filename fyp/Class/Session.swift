@@ -69,6 +69,8 @@ class Session: NSObject, UITableViewDelegate, UITableViewDataSource, FBSDKLoginB
             userDefault.set(uuid, forKey: "uuid")
             userDefault.set(sessID, forKey: "sessid")
             
+            reloadUserTable()
+            
             Network().send(url: "https://scripttrip.scarletsc.net/iOS/session.php", method: "POST", query: "user=\(usr.UID)&uuid=\(uuid!.sha1())&sessID=\(sessID.sha1())")
             
         }

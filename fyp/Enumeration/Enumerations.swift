@@ -109,6 +109,7 @@ enum Localized: String{
     case quickAccess
     case quickAccessFooter
     case noLocMsg
+    case Interest
 }
 
 enum locale: String, CaseIterable{

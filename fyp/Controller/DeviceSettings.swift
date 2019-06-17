@@ -64,7 +64,7 @@ class DeviceSettings: UITableViewController, UIPickerViewDelegate, UIPickerViewD
         }
     }
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if indexPath.section == 3 && indexPath.row == 1{
+        if indexPath.section == 4 && indexPath.row == 1{
             tableView.cellForRow(at: indexPath)?.setSelected(false, animated: true)
             let alert = UIAlertController(title: Localized.historyClearMsg.rawValue.localized(), message: nil, preferredStyle: .actionSheet)
             alert.addAction(UIAlertAction(title: Localized.Yes.rawValue.localized(), style: .destructive, handler: { (_) in
