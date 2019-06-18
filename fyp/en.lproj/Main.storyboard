@@ -3147,9 +3147,11 @@ SOFTWARE.
                         <viewLayoutGuide key="safeArea" id="sCO-dd-Eop"/>
                     </view>
                     <connections>
+                        <outlet property="closeCancel" destination="q3h-cz-S5i" id="KTF-bw-inc"/>
                         <outlet property="map" destination="rff-U0-0vs" id="jwq-eq-p7R"/>
                         <outlet property="mapPinLPR" destination="VsM-JV-vrw" id="s14-9L-d9M"/>
                         <outlet property="resultList" destination="Aeu-J8-bjC" id="bSk-Mx-N18"/>
+                        <outlet property="saveBtn" destination="xoy-MP-Xal" id="MXg-wG-W1Q"/>
                         <outlet property="search" destination="84l-NM-erO" id="maU-2H-QXr"/>
                         <outlet property="searchBg" destination="jU7-pu-exn" id="JNi-jn-mIe"/>
                         <outlet property="searchView" destination="Qov-yS-cxk" id="zZ1-PZ-Uk8"/>

@@ -29,6 +29,8 @@ class addMap: UIViewController, MKMapViewDelegate, UISearchBarDelegate, UITableV
     @IBOutlet weak var search: UISearchBar!
     @IBOutlet weak var resultList: UITableView!
     @IBOutlet weak var searchBg: UIVisualEffectView!
+    @IBOutlet weak var saveBtn: UIButton!
+    @IBOutlet weak var closeCancel: UIButton!
     
     //IBACTION
     @IBAction func longPressMap(_ sender: UILongPressGestureRecognizer) {
@@ -42,7 +44,8 @@ class addMap: UIViewController, MKMapViewDelegate, UISearchBarDelegate, UITableV
     }
     @IBAction func save(_ sender: UIButton) {
         guard let coor = coordinate else {return}
-        
+        sender.isEnabled = false
+        closeCancel.isEnabled = false
         let t = "STINTERNAL_LOCATIONDATA_STINTERNAL"
         if mode == "add"{
             network.send(url: "https://scripttrip.scarletsc.net/iOS/plan.php?user=\(Session.user.UID)&PID=\(planID!)&image=0&i_lat=\(coor.latitude)&i_longt=\(coor.longitude)&publicity=0&content=\(t)&order=\(order!)&mode=item", method: "POST", query: nil)
@@ -156,11 +159,17 @@ class addMap: UIViewController, MKMapViewDelegate, UISearchBarDelegate, UITableV
             SVProgressHUD.dismiss(withDelay: 1.5)
             return
         }
-        
+        DispatchQueue.main.async {
+            self.saveBtn.isEnabled = true
+            self.closeCancel.isEnabled = true
+        }
         for item in result{
             if (item["Result"] as! String) == "OK"{
                 SVProgressHUD.showSuccess(withStatus: nil)
                 SVProgressHUD.dismiss(withDelay: 1.5)
+                DispatchQueue.main.async {
+                    self.navigationController?.popViewController(animated: true)
+                }
             }else{
                 SVProgressHUD.showError(withStatus: nil)
                 SVProgressHUD.dismiss(withDelay: 1.5)

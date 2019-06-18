@@ -32,13 +32,14 @@ class createItem: UIViewController, NetworkDelegate{
         guard var t = content.text else {return}
         
         t = t.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
-        
+        sender.isEnabled = false
+        closeCancel.isEnabled = false
+        dismissKb()
         if mode == "add"{
             network.send(url: "https://scripttrip.scarletsc.net/iOS/plan.php?user=\(Session.user.UID)&PID=\(planID!)&image=0&i_lat=0&i_longt=0&publicity=0&content=\(t)&order=\(order!)&mode=item", method: "POST", query: nil)
         }else if mode == "edit"{
             network.send(url: "https://scripttrip.scarletsc.net/iOS/plan.php?user=\(Session.user.UID)&id=\(item!.IID)&content=\(t)&mode=item&field=I_Content", method: "UPDATE", query: nil)
         }
-        dismissKb()
     }
     
     
@@ -50,11 +51,17 @@ class createItem: UIViewController, NetworkDelegate{
             SVProgressHUD.dismiss(withDelay: 1.5)
             return
         }
-        
+        DispatchQueue.main.async {
+            self.save.isEnabled = true
+            self.closeCancel.isEnabled = true
+        }
         for item in result{
             if (item["Result"] as! String) == "OK"{
                 SVProgressHUD.showSuccess(withStatus: nil)
                 SVProgressHUD.dismiss(withDelay: 1.5)
+                DispatchQueue.main.async {
+                    self.navigationController?.popViewController(animated: true)
+                }
             }else{
                 SVProgressHUD.showError(withStatus: item["Reason"] as? String)
                 SVProgressHUD.dismiss(withDelay: 1.5)

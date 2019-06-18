@@ -288,7 +288,9 @@ class Session: NSObject, UITableViewDelegate, UITableViewDataSource, FBSDKLoginB
     }
     func reloadUserTable(){
         settings[0] = usr.Fname + " " + usr.Lname
-        userTable.reloadData()
+        DispatchQueue.main.async {
+            self.userTable.reloadData()
+        }
     }
     func updateFrame(){
         userTable.frame = CGRect(x: 0, y: 0, width: (self.delegate?.view.bounds.width)!, height: (self.delegate?.view.bounds.height)!)

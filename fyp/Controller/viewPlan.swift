@@ -151,7 +151,9 @@ class viewPlan: UIViewController, UITableViewDelegate, UITableViewDataSource, Ne
                     guard let result = Session.parser.parse(data!) else {return}
                     for item in result{
                         if (item["Result"] as! String) == "OK"{
-                            self.setup()
+                            DispatchQueue.main.async {
+                                self.setup()
+                            }
                         }else{
                             SVProgressHUD.showInfo(withStatus: Localized.Fail.rawValue.localized() + "\n\(item["Reason"] as! String)")
                             SVProgressHUD.dismiss(withDelay: 1.5)

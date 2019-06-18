@@ -38,6 +38,8 @@ class addPhoto: UIViewController, UIImagePickerControllerDelegate, UINavigationC
             SVProgressHUD.dismiss(withDelay: 1.5)
             return
         }
+        sender.isEnabled = false
+        closeCancel.isEnabled = false
         SVProgressHUD.show()
         network.uploadPhoto(image: image, param: [
             "user":"\(Session.user.UID)",
@@ -67,6 +69,10 @@ class addPhoto: UIViewController, UIImagePickerControllerDelegate, UINavigationC
     func ResponseHandle(data: Data) {
         guard let result = Session.parser.parse(data) else {return}
         SVProgressHUD.dismiss()
+        DispatchQueue.main.async {
+            self.save.isEnabled = true
+            self.closeCancel.isEnabled = true
+        }
         for item in result{
             if (item["Result"] as! String) == "OK"{
                 SVProgressHUD.showSuccess(withStatus: nil)
@@ -131,7 +137,7 @@ class addPhoto: UIViewController, UIImagePickerControllerDelegate, UINavigationC
     }
     
     func setup(){
-        if mode == ""{
+        if mode == "add"{
             displayMenu()
         }else if mode == "edit"{
             network.getPhoto(url: "https://scripttrip.scarletsc.net/img/\(item!.I_Image)") { (data, response, error) in
