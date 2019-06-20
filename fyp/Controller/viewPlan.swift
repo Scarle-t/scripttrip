@@ -8,7 +8,7 @@
 
 import UIKit
 
-class viewPlan: UIViewController, UITableViewDelegate, UITableViewDataSource, NetworkDelegate{
+class viewPlan: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, NetworkDelegate{
     
     //VARIABLE
     let network = Network()
@@ -102,15 +102,18 @@ class viewPlan: UIViewController, UITableViewDelegate, UITableViewDataSource, Ne
         add.addTarget(self, action: #selector(addItem(_:)), for: .touchUpInside)
         edit.addTarget(self, action: #selector(editMode(_:)), for: .touchUpInside)
         
-        let text = UILabel(frame: header.frame)
+        let text = UITextField(frame: header.frame)
         text.frame = CGRect(x: 0, y: 0, width: text.frame.width - 170, height: text.frame.height)
         text.text = selectedPlan.T_Title
-        text.textColor = "42C89D".uiColor
+        text.textColor = darkGreen
         text.font = UIFont(name: "AvenirNext-Heavy", size: 30)
-        text.minimumScaleFactor = 0.5
         text.adjustsFontSizeToFitWidth = true
+        text.borderStyle = .none
+        text.minimumFontSize = 3
         
         text.frame.origin.x = 63
+        
+        text.delegate = self
         
         if #available(iOS 13.0, *) {
             header.backgroundColor = .systemBackground
@@ -164,6 +167,34 @@ class viewPlan: UIViewController, UITableViewDelegate, UITableViewDataSource, Ne
             alert.addAction(UIAlertAction(title: Localized.Cancel.rawValue.localized(), style: .cancel, handler: nil))
             self.present(alert, animated: true, completion: nil)
         }
+    }
+    
+        //TEXTFIELD
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        
+        let t = textField.text?.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
+        
+        network.send(url: "https://scripttrip.scarletsc.net/iOS/plan.php?content=\(t!)&id=\(selectedPlan.TID)&user=\(session.usr.UID)&mode=plan", method: "UPDATE", query: nil) { (data) in
+            guard let result = Session.parser.parse(data!) else {
+                SVProgressHUD.showError(withStatus: nil)
+                SVProgressHUD.dismiss(withDelay: 1.5)
+                return
+            }
+            
+            for item in result{
+                if (item["Result"] as! String) == "OK"{
+                    SVProgressHUD.showSuccess(withStatus: nil)
+                    SVProgressHUD.dismiss(withDelay: 1.5)
+                }else{
+                    SVProgressHUD.showError(withStatus: item["Reason"] as? String)
+                    SVProgressHUD.dismiss(withDelay: 1.5)
+                }
+            }
+        }
+        
+        view.endEditing(true)
+        
+        return true
     }
     
         //NETWORK
