@@ -85,7 +85,7 @@ class Session: NSObject, UITableViewDelegate, UITableViewDataSource, FBSDKLoginB
     var delegate: UIViewController?
     fileprivate let userIcon = UIImageView()
     fileprivate var iconImg: UIImage?
-    fileprivate var settings = ["", Localized.bookmarks.rawValue.localized(), Localized.history.rawValue.localized(), Localized.plans.rawValue.localized(), Localized.accountSettings.rawValue.localized(), Localized.deviceSettings.rawValue.localized(), Localized.about.rawValue.localized()]
+    fileprivate var settings = ["", Localized.bookmarks.rawValue.localized(), Localized.history.rawValue.localized(), Localized.plans.rawValue.localized(), Localized.accountSettings.rawValue.localized(), Localized.deviceSettings.rawValue.localized(), Localized.about.rawValue.localized(), "Licence", "Disclaimer"]
     fileprivate let group = DispatchGroup()
     fileprivate let loginButton = FBSDKLoginButton()
     fileprivate var isUserMenuShown = false
@@ -101,19 +101,21 @@ class Session: NSObject, UITableViewDelegate, UITableViewDataSource, FBSDKLoginB
         userIcon.contentMode = .scaleAspectFill
     }
     internal func numberOfSections(in tableView: UITableView) -> Int {
-        return 4
+        return 5
     }
     internal func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if section == 0{
+        switch section{
+        case 0:
             return 4
-        }else if section == 1{
+        case 1:
+            return 2
+        case 2:
             return 3
-        }else if section == 2{
+        case 3, 4:
             return 1
-        }else if section == 3{
-            return 1
+        default:
+            return 0
         }
-        return 0
     }
     internal func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
@@ -171,6 +173,14 @@ class Session: NSObject, UITableViewDelegate, UITableViewDataSource, FBSDKLoginB
             
             return cell
         case 2:
+            cell.textLabel?.text = settings[indexPath.row + 6]
+            cell.textLabel?.font = UIFont(name: "AvenirNext-DemiBold", size: 17)
+            cell.textLabel?.textAlignment = .left
+            cell.accessoryType = .disclosureIndicator
+            cell.backgroundColor = UIColor.clear
+            
+            return cell
+        case 3:
             if loginState == "fb"{
                 loginButton.removeFromSuperview()
                 cell.backgroundColor = .clear
@@ -193,7 +203,7 @@ class Session: NSObject, UITableViewDelegate, UITableViewDataSource, FBSDKLoginB
                 
                 return cell
             }
-        case 3:
+        case 4:
             cell.backgroundColor = .clear
             cell.textLabel?.textAlignment = .center
             cell.textLabel?.font = UIFont(name: "AvenirNext-Medium", size: 12)
@@ -243,13 +253,23 @@ class Session: NSObject, UITableViewDelegate, UITableViewDataSource, FBSDKLoginB
             UIApplication.shared.keyWindow?.rootViewController?.presentedViewController?.present(deviceSetting, animated: true, completion: nil)
         }
         
-        if indexPath.section == 1 && indexPath.row == 2 {
+        if indexPath.section == 2 && indexPath.row == 0 {
             let aboutView = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "about") as! About
             UIApplication.shared.keyWindow?.rootViewController?.presentedViewController?.present(aboutView, animated: true, completion: nil)
         }
         
+        if indexPath.section == 2 && indexPath.row == 1 {
+            let creditView = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "licence") as! Credit
+            UIApplication.shared.keyWindow?.rootViewController?.presentedViewController?.present(creditView, animated: true, completion: nil)
+        }
+        
+        if indexPath.section == 2 && indexPath.row == 2 {
+            let creditView = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "disclaimer") as! Credit
+            UIApplication.shared.keyWindow?.rootViewController?.presentedViewController?.present(creditView, animated: true, completion: nil)
+        }
+        
         if loginState == ""{
-            if indexPath.section == 2 && indexPath.row == 0{
+            if indexPath.section == 3 && indexPath.row == 0{
                 iconImg = nil
                 settings[0] = ""
                 userDefault.set(true, forKey: "shake")

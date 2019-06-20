@@ -2545,7 +2545,7 @@ History works across devices.</string>
                                 </constraints>
                             </imageView>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" editable="NO" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="e3T-S4-ZJX">
-                                <rect key="frame" x="16" y="263.5" width="343" height="355.5"/>
+                                <rect key="frame" x="16" y="233" width="343" height="416"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="tintColor" red="0.25882352939999997" green="0.7843137255" blue="0.61568627450000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <string key="text">Project Supervisor
@@ -2559,8 +2559,8 @@ Backend
 Dalvin Pang
 yhdp327@uowmail.edu.au
 
-UI Design
-Alex Wong, Scarlet Ng
+Art Director
+Alex Wong
 ycw829@uowmail.edu.au
 
 Software - Android
@@ -2574,44 +2574,6 @@ chn483@uowmail.edu.au</string>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                 <dataDetectorType key="dataDetectorTypes" link="YES"/>
                             </textView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Proudly presented to you by ScriptTrip Team: " textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="l1H-gE-6wD">
-                                <rect key="frame" x="16" y="232" width="343" height="23.5"/>
-                                <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <stackView opaque="NO" contentMode="scaleToFill" spacing="103" translatesAutoresizingMaskIntoConstraints="NO" id="Wkc-L4-qZm">
-                                <rect key="frame" x="16" y="627" width="344" height="32"/>
-                                <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hDO-lb-Vwa">
-                                        <rect key="frame" x="0.0" y="0.0" width="50" height="32"/>
-                                        <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="14"/>
-                                        <color key="tintColor" red="0.25882352939999997" green="0.7843137255" blue="0.61568627450000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <state key="normal" title="Privacy">
-                                            <color key="titleColor" red="0.25882352939999997" green="0.7843137255" blue="0.61568627450000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        </state>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="K4N-5O-DN8">
-                                        <rect key="frame" x="153" y="0.0" width="39" height="32"/>
-                                        <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="14"/>
-                                        <color key="tintColor" red="0.25882352939999997" green="0.7843137255" blue="0.61568627450000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <state key="normal" title="Terms">
-                                            <color key="titleColor" red="0.25882352939999997" green="0.7843137255" blue="0.61568627450000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        </state>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hiT-1Z-qT9">
-                                        <rect key="frame" x="295" y="0.0" width="49" height="32"/>
-                                        <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="14"/>
-                                        <color key="tintColor" red="0.25882352939999997" green="0.7843137255" blue="0.61568627450000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <state key="normal" title="Licence">
-                                            <color key="titleColor" red="0.25882352939999997" green="0.7843137255" blue="0.61568627450000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        </state>
-                                        <connections>
-                                            <segue destination="xxQ-6H-G50" kind="show" id="enx-y3-AGm"/>
-                                        </connections>
-                                    </button>
-                                </subviews>
-                            </stackView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="veG-M1-9lL">
                                 <rect key="frame" x="16" y="20" width="30" height="30"/>
                                 <constraints>
@@ -2624,24 +2586,27 @@ chn483@uowmail.edu.au</string>
                                     <action selector="close:" destination="Qhj-ux-z77" eventType="touchUpInside" id="WKa-2X-m6o"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Proudly presented to you by ScriptTrip Team: " textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="l1H-gE-6wD">
+                                <rect key="frame" x="16" y="201" width="343" height="23.5"/>
+                                <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" xcode11CocoaTouchSystemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
-                            <constraint firstItem="Wkc-L4-qZm" firstAttribute="top" secondItem="e3T-S4-ZJX" secondAttribute="bottom" constant="8" id="0LI-UB-TWb"/>
                             <constraint firstItem="l1H-gE-6wD" firstAttribute="leading" secondItem="OYx-Cx-tNX" secondAttribute="leading" constant="16" id="0Zs-Uj-uBX"/>
-                            <constraint firstItem="OYx-Cx-tNX" firstAttribute="trailing" secondItem="Wkc-L4-qZm" secondAttribute="trailing" constant="15" id="1NN-HC-oFu"/>
                             <constraint firstItem="OYx-Cx-tNX" firstAttribute="trailing" secondItem="l1H-gE-6wD" secondAttribute="trailing" constant="16" id="2mU-0i-hU1"/>
                             <constraint firstItem="veG-M1-9lL" firstAttribute="top" secondItem="OYx-Cx-tNX" secondAttribute="top" constant="20" id="3hK-3X-FKi"/>
                             <constraint firstItem="5Cd-tK-uQB" firstAttribute="leading" secondItem="OYx-Cx-tNX" secondAttribute="leading" id="88C-mB-6Oj"/>
-                            <constraint firstItem="l1H-gE-6wD" firstAttribute="top" secondItem="5Cd-tK-uQB" secondAttribute="bottom" constant="7" id="BcV-u5-q3a"/>
-                            <constraint firstItem="e3T-S4-ZJX" firstAttribute="top" secondItem="l1H-gE-6wD" secondAttribute="bottom" constant="8" id="Cle-f6-3Wi"/>
+                            <constraint firstItem="OYx-Cx-tNX" firstAttribute="bottom" secondItem="e3T-S4-ZJX" secondAttribute="bottom" constant="18" id="AZh-0Y-st2"/>
+                            <constraint firstItem="l1H-gE-6wD" firstAttribute="top" secondItem="5Cd-tK-uQB" secondAttribute="bottom" constant="-24" id="BcV-u5-q3a"/>
+                            <constraint firstItem="e3T-S4-ZJX" firstAttribute="top" secondItem="l1H-gE-6wD" secondAttribute="bottom" constant="8.5" id="Cle-f6-3Wi"/>
                             <constraint firstItem="OYx-Cx-tNX" firstAttribute="trailing" secondItem="e3T-S4-ZJX" secondAttribute="trailing" constant="16" id="KFd-Dx-S64"/>
                             <constraint firstItem="e3T-S4-ZJX" firstAttribute="leading" secondItem="OYx-Cx-tNX" secondAttribute="leading" constant="16" id="NKi-PZ-1k9"/>
                             <constraint firstItem="OYx-Cx-tNX" firstAttribute="trailing" secondItem="5Cd-tK-uQB" secondAttribute="trailing" id="T14-l6-tNy"/>
-                            <constraint firstItem="Wkc-L4-qZm" firstAttribute="leading" secondItem="OYx-Cx-tNX" secondAttribute="leading" constant="16" id="TxK-tF-XnL"/>
                             <constraint firstItem="veG-M1-9lL" firstAttribute="leading" secondItem="OYx-Cx-tNX" secondAttribute="leading" constant="16" id="YB7-jh-oWE"/>
                             <constraint firstItem="5Cd-tK-uQB" firstAttribute="top" secondItem="OYx-Cx-tNX" secondAttribute="top" constant="38" id="lPo-1W-4dW"/>
-                            <constraint firstItem="OYx-Cx-tNX" firstAttribute="bottom" secondItem="Wkc-L4-qZm" secondAttribute="bottom" constant="8" id="tPE-fY-m9M"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="OYx-Cx-tNX"/>
                     </view>
@@ -2651,14 +2616,14 @@ chn483@uowmail.edu.au</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wDl-Iu-bgc" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2006" y="2248"/>
+            <point key="canvasLocation" x="2717.5999999999999" y="2247.5262368815593"/>
         </scene>
         <!--Credit-->
         <scene sceneID="Qul-Yh-N1z">
             <objects>
-                <viewController id="xxQ-6H-G50" customClass="Credit" customModule="fyp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="licence" id="xxQ-6H-G50" customClass="Credit" customModule="fyp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="XKt-8V-Wal">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uSq-Ug-h3X">
@@ -2675,7 +2640,7 @@ chn483@uowmail.edu.au</string>
                                 </connections>
                             </button>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="ijT-ra-3tt">
-                                <rect key="frame" x="16" y="38" width="343" height="609"/>
+                                <rect key="frame" x="16" y="38" width="343" height="629"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="tintColor" red="0.25882352939999997" green="0.7843137255" blue="0.61568627450000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <string key="text">Facebook SDK for iOS
@@ -2776,7 +2741,7 @@ SOFTWARE.
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9Kk-tx-FVf" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2718" y="2248"/>
+            <point key="canvasLocation" x="3409" y="2248"/>
         </scene>
         <!--User View-->
         <scene sceneID="vwU-1Y-JTg">
@@ -3033,6 +2998,54 @@ SOFTWARE.
                 </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="3408.8000000000002" y="2945.577211394303"/>
+        </scene>
+        <!--Table View Controller-->
+        <scene sceneID="YYr-0p-Nld">
+            <objects>
+                <tableViewController id="TEl-fp-uNl" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="B7r-ac-Yzl">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <sections>
+                            <tableViewSection headerTitle=" " id="ElQ-Dq-W8e">
+                                <cells>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="zwX-Ha-X8j">
+                                        <rect key="frame" x="0.0" y="55.5" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="zwX-Ha-X8j" id="w0b-XT-Pu9">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="7Hb-Dt-ueg">
+                                        <rect key="frame" x="0.0" y="99.5" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="7Hb-Dt-ueg" id="zc7-Q4-R6Y">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="5CM-lD-ona">
+                                        <rect key="frame" x="0.0" y="143.5" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="5CM-lD-ona" id="X81-h1-036">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                        </sections>
+                        <connections>
+                            <outlet property="dataSource" destination="TEl-fp-uNl" id="Puq-zV-VwB"/>
+                            <outlet property="delegate" destination="TEl-fp-uNl" id="SnG-bh-OaI"/>
+                        </connections>
+                    </tableView>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="5wJ-f9-1Ph" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2006" y="2248"/>
         </scene>
         <!--Add Map-->
         <scene sceneID="rZK-DV-dWs">
@@ -3293,6 +3306,160 @@ SOFTWARE.
                 <placeholder placeholderIdentifier="IBFirstResponder" id="EiI-TS-eZg" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-759" y="2946"/>
+        </scene>
+        <!--Credit-->
+        <scene sceneID="Rvd-Wb-hnN">
+            <objects>
+                <viewController storyboardIdentifier="privacy" id="5w4-vd-jbP" customClass="Credit" customModule="fyp" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="w3Y-Et-I5v">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pV6-Dy-ete">
+                                <rect key="frame" x="16" y="0.0" width="30" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="NDq-HU-v3y"/>
+                                    <constraint firstAttribute="width" constant="30" id="e80-h2-pCa"/>
+                                </constraints>
+                                <color key="tintColor" red="0.25882352939999997" green="0.7843137255" blue="0.61568627450000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <state key="normal" image="chevron.down" catalog="system"/>
+                                <connections>
+                                    <action selector="close:" destination="Qhj-ux-z77" eventType="touchUpInside" id="4F2-UP-7J6"/>
+                                    <action selector="close:" destination="5w4-vd-jbP" eventType="touchUpInside" id="Pl8-0A-ZPM"/>
+                                </connections>
+                            </button>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="q6x-Mv-ocG">
+                                <rect key="frame" x="16" y="38" width="343" height="629"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="tintColor" red="0.25882352939999997" green="0.7843137255" blue="0.61568627450000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <mutableString key="text">Privacy Policy for ScriptTrip
+
+At ScriptTrip, accessible from https://scripttrip.scarletsc.net, one of our main priorities is the privacy of our visitors. This Privacy Policy document contains types of information that is collected and recorded by ScriptTrip and how we use it.
+
+If you have additional questions or require more information about our Privacy Policy, do not hesitate to contact us through email at chn483@uowmail.edu.au
+
+Log Files
+
+ScriptTrip follows a standard procedure of using log files. These files log visitors when they visit websites. All hosting companies do this and a part of hosting services' analytics. The information collected by log files include internet protocol (IP) addresses, browser type, Internet Service Provider (ISP), date and time stamp, referring/exit pages, and possibly the number of clicks. These are not linked to any information that is personally identifiable. The purpose of the information is for analyzing trends, administering the site, tracking users' movement on the website, and gathering demographic information.
+
+Privacy Policies
+
+You may consult this list to find the Privacy Policy for each of the advertising partners of ScriptTrip. 
+
+Third-party ad servers or ad networks uses technologies like cookies, JavaScript, or Web Beacons that are used in their respective advertisements and links that appear on ScriptTrip, which are sent directly to users' browser. They automatically receive your IP address when this occurs. These technologies are used to measure the effectiveness of their advertising campaigns and/or to personalize the advertising content that you see on websites that you visit.
+
+Note that ScriptTrip has no access to or control over these cookies that are used by third-party advertisers.
+
+Third Party Privacy Policies
+
+ScriptTrip's Privacy Policy does not apply to other advertisers or websites. Thus, we are advising you to consult the respective Privacy Policies of these third-party ad servers for more detailed information. It may include their practices and instructions about how to opt-out of certain options. You may find a complete list of these Privacy Policies and their links here: Privacy Policy Links.
+
+You can choose to disable cookies through your individual browser options. To know more detailed information about cookie management with specific web browsers, it can be found at the browsers' respective websites. What Are Cookies?
+
+Children's Information
+
+Another part of our priority is adding protection for children while using the internet. We encourage parents and guardians to observe, participate in, and/or monitor and guide their online activity.
+
+ScriptTrip does not knowingly collect any Personal Identifiable Information from children under the age of 13. If you think that your child provided this kind of information on our website, we strongly encourage you to contact us immediately and we will do our best efforts to promptly remove such information from our records.
+
+Online Privacy Policy Only
+
+This Privacy Policy applies only to our online activities and is valid for visitors to our website with regards to the information that they shared and/or collect in ScriptTrip. This policy is not applicable to any information collected offline or via channels other than this website.
+
+Consent
+
+By using our website, you hereby consent to our Privacy Policy and agree to its Terms and Conditions.</mutableString>
+                                <fontDescription key="fontDescription" name="Courier" family="Courier" pointSize="12"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                <dataDetectorType key="dataDetectorTypes" link="YES"/>
+                            </textView>
+                        </subviews>
+                        <color key="backgroundColor" xcode11CocoaTouchSystemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="pV6-Dy-ete" firstAttribute="top" secondItem="5jB-rk-r5o" secondAttribute="top" id="DeU-bS-T18"/>
+                            <constraint firstItem="pV6-Dy-ete" firstAttribute="leading" secondItem="5jB-rk-r5o" secondAttribute="leading" constant="16" id="KSJ-n7-cJP"/>
+                            <constraint firstItem="q6x-Mv-ocG" firstAttribute="leading" secondItem="5jB-rk-r5o" secondAttribute="leading" constant="16" id="NF1-QE-egY"/>
+                            <constraint firstItem="5jB-rk-r5o" firstAttribute="trailing" secondItem="q6x-Mv-ocG" secondAttribute="trailing" constant="16" id="U32-BD-5ci"/>
+                            <constraint firstItem="5jB-rk-r5o" firstAttribute="bottom" secondItem="q6x-Mv-ocG" secondAttribute="bottom" id="fgo-Lq-fi2"/>
+                            <constraint firstItem="q6x-Mv-ocG" firstAttribute="top" secondItem="pV6-Dy-ete" secondAttribute="bottom" constant="8" id="o1o-jp-xXy"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="5jB-rk-r5o"/>
+                    </view>
+                    <connections>
+                        <outlet property="closeBtn" destination="pV6-Dy-ete" id="viJ-u9-Gnk"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="j7D-Ts-aGm" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4113" y="2248"/>
+        </scene>
+        <!--Credit-->
+        <scene sceneID="Nk8-v2-XFv">
+            <objects>
+                <viewController storyboardIdentifier="disclaimer" id="xgu-y0-0YA" customClass="Credit" customModule="fyp" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="uRQ-sB-Lgo">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tII-U1-wDM">
+                                <rect key="frame" x="16" y="0.0" width="30" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="30" id="J3F-xn-oe6"/>
+                                    <constraint firstAttribute="height" constant="30" id="Nrr-D7-WGF"/>
+                                </constraints>
+                                <color key="tintColor" red="0.25882352939999997" green="0.7843137255" blue="0.61568627450000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <state key="normal" image="chevron.down" catalog="system"/>
+                                <connections>
+                                    <action selector="close:" destination="Qhj-ux-z77" eventType="touchUpInside" id="F2x-jX-tVs"/>
+                                    <action selector="close:" destination="xgu-y0-0YA" eventType="touchUpInside" id="lNK-x8-zww"/>
+                                </connections>
+                            </button>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="Ggu-zw-Qc6">
+                                <rect key="frame" x="16" y="38" width="343" height="629"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="tintColor" red="0.25882352939999997" green="0.7843137255" blue="0.61568627450000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <mutableString key="text">Disclaimer for ScriptTrip
+
+If you require any more information or have any questions about our site's disclaimer, please feel free to contact us by email at chn483@uowmail.edu.au
+
+Disclaimers for ScriptTrip
+
+All the information on this website - https://scripttrip.scarletsc.net - is published in good faith and for general information purpose only. ScriptTrip does not make any warranties about the completeness, reliability and accuracy of this information. Any action you take upon the information you find on this website (ScriptTrip), is strictly at your own risk. ScriptTrip will not be liable for any losses and/or damages in connection with the use of our website. 
+
+From our website, you can visit other websites by following hyperlinks to such external sites. While we strive to provide only quality links to useful and ethical websites, we have no control over the content and nature of these sites. These links to other websites do not imply a recommendation for all the content found on these sites. Site owners and content may change without notice and may occur before we have the opportunity to remove a link which may have gone 'bad'.
+
+Please be also aware that when you leave our website, other sites may have different privacy policies and terms which are beyond our control. Please be sure to check the Privacy Policies of these sites as well as their "Terms of Service" before engaging in any business or uploading any information.
+
+Consent
+
+By using our website, you hereby consent to our disclaimer and agree to its terms.
+
+Update
+
+Should we update, amend or make any changes to this document, those changes will be prominently posted here.</mutableString>
+                                <fontDescription key="fontDescription" name="Courier" family="Courier" pointSize="12"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                <dataDetectorType key="dataDetectorTypes" link="YES"/>
+                            </textView>
+                        </subviews>
+                        <color key="backgroundColor" xcode11CocoaTouchSystemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="tII-U1-wDM" firstAttribute="top" secondItem="Ey9-Ly-10K" secondAttribute="top" id="10Q-qv-Z5F"/>
+                            <constraint firstItem="tII-U1-wDM" firstAttribute="leading" secondItem="Ey9-Ly-10K" secondAttribute="leading" constant="16" id="aYb-au-4Cf"/>
+                            <constraint firstItem="Ey9-Ly-10K" firstAttribute="bottom" secondItem="Ggu-zw-Qc6" secondAttribute="bottom" id="emu-ek-MaR"/>
+                            <constraint firstItem="Ey9-Ly-10K" firstAttribute="trailing" secondItem="Ggu-zw-Qc6" secondAttribute="trailing" constant="16" id="fAI-eJ-3Vx"/>
+                            <constraint firstItem="Ggu-zw-Qc6" firstAttribute="leading" secondItem="Ey9-Ly-10K" secondAttribute="leading" constant="16" id="giM-Jg-QYt"/>
+                            <constraint firstItem="Ggu-zw-Qc6" firstAttribute="top" secondItem="tII-U1-wDM" secondAttribute="bottom" constant="8" id="mvc-fu-K4a"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="Ey9-Ly-10K"/>
+                    </view>
+                    <connections>
+                        <outlet property="closeBtn" destination="tII-U1-wDM" id="N8P-9A-DCa"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="aea-Ho-meG" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4847" y="2248"/>
         </scene>
     </scenes>
     <resources>
