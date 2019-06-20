@@ -14,6 +14,9 @@ class Session: NSObject, UITableViewDelegate, UITableViewDataSource, FBSDKLoginB
     static let parser = JSONParser()
     static var imgCache = NSCache<AnyObject, UIImage>()
     
+    //ROOT VIEW
+    var rootNavigationController: UINavigationController?
+    
     //REGISTER INFO
     var regFname = String()
     var regLname = String()

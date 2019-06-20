@@ -404,6 +404,7 @@ class mainScreen: UIViewController, UITextFieldDelegate, NetworkDelegate, FBSDKL
     }
     
     func setup(){
+        session.rootNavigationController = self.navigationController
         SVProgressHUD.setHapticsEnabled(true)
         SVProgressHUD.setMinimumSize(CGSize(width: 175, height: 175))
         SVProgressHUD.setFont(UIFont(name: "AvenirNext-Medium", size: 20)!)
