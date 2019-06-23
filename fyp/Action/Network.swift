@@ -95,7 +95,7 @@ class Network: NSObject{
             }.resume()
     }
     
-    func uploadPhoto(image: UIImage, param: [String : String]?, postID: Int){
+    func uploadPhoto(url action: String, image: UIImage, param: [String : String]?, postID: Int){
         if Reachability().isConnectedToNetwork(){
             
             let config = URLSessionConfiguration.default
@@ -103,7 +103,7 @@ class Network: NSObject{
             
             let boundary = UUID().uuidString
             
-            var request = URLRequest(url: URL(string: "https://scripttrip.scarletsc.net/iOS/upload.php")!)
+            var request = URLRequest(url: URL(string: action)!)
             request.setValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
             request.httpMethod = "POST"
             
@@ -138,6 +138,56 @@ class Network: NSObject{
                     return
                 }
                 self.delegate?.ResponseHandle(data: data)
+            }).resume()
+            
+        }else{
+            self.delegate?.reachabilityError()
+        }
+    }
+    
+    func uploadPhoto(url action: String, image: UIImage, param: [String : String]?, completion: ((Data?, String?)->())?){
+        if Reachability().isConnectedToNetwork(){
+            
+            let config = URLSessionConfiguration.default
+            let session = URLSession(configuration: config)
+            
+            let boundary = UUID().uuidString
+            
+            var request = URLRequest(url: URL(string: action)!)
+            request.setValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
+            request.httpMethod = "POST"
+            
+            var data = Data()
+            
+            let filename = "\(Session.user.UID)_\(Int.random(in: 0..<10))\(Int.random(in: 0..<10))\(Int.random(in: 0..<10))\(Int.random(in: 0..<10))\(Int.random(in: 0..<10)).jpg"
+            
+            if let param = param {
+                for (key, value) in param{
+                    data.append("\r\n--\(boundary)\r\n".data(using: .utf8)!)
+                    data.append("Content-Disposition: form-data; name=\"\(key)\"\r\n\r\n".data(using: .utf8)!)
+                    data.append("\(value)".data(using: .utf8)!)
+                }
+            }
+            
+            data.append("\r\n--\(boundary)\r\n".data(using: .utf8)!)
+            data.append("Content-Disposition: form-data; name=\"file\"; filename=\"\(filename)\"\r\n".data(using: .utf8)!)
+            data.append("Content-Type: image/png\r\n\r\n".data(using: .utf8)!)
+            data.append(image.jpegData(compressionQuality: 0.5)!)
+            
+            data.append("\r\n--\(boundary)--\r\n".data(using: .utf8)!)
+            
+            session.uploadTask(with: request, from: data, completionHandler: { data, response, error in
+                
+                guard let data = data, error == nil else {
+                    self.delegate?.URLSessionError(error: error)
+                    return
+                }
+                if let httpStatus = response as? HTTPURLResponse, httpStatus.statusCode != 200 {
+                    // check for http errors
+                    self.delegate?.httpErrorHandle(httpStatus: httpStatus)
+                    return
+                }
+                completion?(data, filename)
             }).resume()
             
         }else{

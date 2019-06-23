@@ -19,6 +19,7 @@ class mainScreen: UIViewController, UITextFieldDelegate, NetworkDelegate, FBSDKL
     let network = Network()
     let session = Session.shared
     let userDefault = UserDefaults.standard
+    let orText = UILabel()
     
     //IBOUTLET
     @IBOutlet weak var logo: UIView!
@@ -34,15 +35,16 @@ class mainScreen: UIViewController, UITextFieldDelegate, NetworkDelegate, FBSDKL
     @IBAction func loginAction(_ sender: UIButton) {
         if state == ""{
             UIView.animate(withDuration: 0.5) {
-                self.logo.frame = CGRect(x: self.logo.frame.minX, y: self.logo.frame.minY - 50, width: self.logo.frame.width, height: self.logo.frame.height)
+                self.logo.frame.origin.y -= 50
                 
                 self.usr.alpha = 1
                 self.pwd.alpha = 1
                 self.register.alpha = 0
                 self.backBtn.alpha = 1
                 self.forgot.alpha = 1
+                self.orText.alpha = 1
                 
-                self.login.frame = CGRect(x: self.login.frame.minX, y: self.login.frame.minY + 55, width: self.login.frame.width, height: self.login.frame.height)
+                self.login.frame.origin.y += 55
                 self.loginButton.alpha = 1
                 self.appleLogin?.alpha = 1
                 
@@ -321,7 +323,7 @@ class mainScreen: UIViewController, UITextFieldDelegate, NetworkDelegate, FBSDKL
         usr.text = nil
         pwd.text = nil
         UIView.animate(withDuration: 0.5) {
-            self.logo.frame = CGRect(x: self.logo.frame.minX, y: self.logo.frame.minY + 50, width: self.logo.frame.width, height: self.logo.frame.height)
+            self.logo.frame.origin.y += 50
             
             self.usr.alpha = 0
             self.pwd.alpha = 0
@@ -329,11 +331,12 @@ class mainScreen: UIViewController, UITextFieldDelegate, NetworkDelegate, FBSDKL
             self.login.alpha = 1
             self.backBtn.alpha = 0
             self.forgot.alpha = 0
+            self.orText.alpha = 0
             self.loginButton.alpha = 0
             self.appleLogin?.alpha = 0
             
             if self.state == "login"{
-                self.login.frame = CGRect(x: self.login.frame.minX, y: self.login.frame.minY - 55, width: self.login.frame.width, height: self.login.frame.height)
+                self.login.frame.origin.y -= 55
             }
             
         }
@@ -401,6 +404,23 @@ class mainScreen: UIViewController, UITextFieldDelegate, NetworkDelegate, FBSDKL
         login.setTitle(Localized.Login.rawValue.localized(), for: .normal)
         register.setTitle(Localized.Register.rawValue.localized(), for: .normal)
         
+        logo.frame.origin.y = 178
+        if logo.frame.maxY > view.frame.height / 2{
+            logo.frame.origin.y = 60
+        }
+        usr.frame.origin.y = logo.frame.origin.y + 118
+        pwd.frame.origin.y = usr.frame.origin.y + 44
+        login.frame.origin.y = logo.frame.origin.y + 152
+        register.frame.origin.y = login.frame.origin.y + 70
+        forgot.frame.origin.y = login.frame.origin.y + 100
+        
+        forgot.frame.origin.x = view.frame.width / 2 - (forgot.frame.width / 2)
+        logo.frame.origin.x = view.frame.width / 2 - (logo.frame.width / 2)
+        usr.frame.origin.x = view.frame.width / 2 - (usr.frame.width / 2)
+        pwd.frame.origin.x = view.frame.width / 2 - (pwd.frame.width / 2)
+        login.frame.origin.x = view.frame.width / 2 - (login.frame.width / 2)
+        register.frame.origin.x = view.frame.width / 2 - (register.frame.width / 2)
+        
     }
     
     func setup(){
@@ -437,19 +457,39 @@ class mainScreen: UIViewController, UITextFieldDelegate, NetworkDelegate, FBSDKL
         
         view.addGestureRecognizer(tap)
         
+        orText.frame = CGRect(x: view.frame.width / 2 - (150 / 2), y: forgot.frame.maxY + 30, width: 150, height: 45)
+        orText.text = Localized.loginWith.rawValue.localized()
+        orText.font = UIFont(name: "AvenirNext-Regular", size: 14)
+        orText.textAlignment = .center
+        orText.textColor = .darkGray
+        orText.alpha = 0
+        
+        view.addSubview(orText)
+        
         loginButton = FBSDKLoginButton()
         loginButton.readPermissions = ["email"]
         loginButton.delegate = self
         loginButton.frame = login.frame
-        loginButton.frame.origin.x = login.frame.origin.x
-        loginButton.frame.origin.y = login.frame.maxY + 70 + 55
+        loginButton.frame.origin.x = view.frame.width / 2 - (loginButton.frame.width / 2)
+        loginButton.frame.origin.y = orText.frame.maxY + 5
         loginButton.alpha = 0
         
         if #available(iOS 13.0, *){
             appleLogin = ASAuthorizationAppleIDButton()
-            appleLogin?.frame.origin.x = login.frame.origin.x - 13
-            appleLogin?.frame.origin.y = login.frame.maxY + 70 + 55 + 55
+            appleLogin?.frame.origin.x = view.frame.width / 2 - (appleLogin!.frame.width / 2)
+            appleLogin?.frame.origin.y = loginButton.frame.maxY + 15
             appleLogin?.alpha = 0
+            
+            login.frame = appleLogin!.frame
+            register.frame = appleLogin!.frame
+            loginButton.frame = appleLogin!.frame
+            
+            login.frame.origin.y = logo.frame.origin.y + 152
+            register.frame.origin.y = login.frame.origin.y + 70
+            
+            loginButton.frame.origin.y = orText.frame.maxY + 5
+            loginButton.frame.origin.x = view.frame.width / 2 - (loginButton.frame.width / 2)
+            
             appleLogin?.addTarget(self, action: #selector(handleAppleLogin), for: .touchUpInside)
             view.addSubview(appleLogin!)
         }

@@ -110,6 +110,9 @@ enum Localized: String{
     case quickAccessFooter
     case noLocMsg
     case Interest
+    case Licence
+    case Disclaimer
+    case loginWith
 }
 
 enum locale: String, CaseIterable{

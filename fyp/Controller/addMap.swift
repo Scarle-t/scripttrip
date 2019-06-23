@@ -137,7 +137,7 @@ class addMap: UIViewController, MKMapViewDelegate, UISearchBarDelegate, UITableV
             confirmBtn.tintColor = darkGreen
             cancelBtn.tintColor = darkGreen
         }else{
-            confirmBtn.setImage(#imageLiteral(resourceName: "small_tick_tint-01-1.png"), for: .normal)
+            confirmBtn.setImage(#imageLiteral(resourceName: "small_tick_tint"), for: .normal)
             cancelBtn.setImage(#imageLiteral(resourceName: "cross_tint.png"), for: .normal)
         }
         
@@ -268,6 +268,7 @@ class addMap: UIViewController, MKMapViewDelegate, UISearchBarDelegate, UITableV
         }
         
         map.fillSuperview()
+        self.navigationController?.interactivePopGestureRecognizer?.isEnabled = false
     }
     
     func setup(){

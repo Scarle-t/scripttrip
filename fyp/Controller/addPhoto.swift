@@ -10,8 +10,6 @@ import UIKit
 
 class addPhoto: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, NetworkDelegate{
     
-    
-    
     //VARIABLE
     let network = Network()
     let imgPicker = UIImagePickerController()
@@ -41,7 +39,7 @@ class addPhoto: UIViewController, UIImagePickerControllerDelegate, UINavigationC
         sender.isEnabled = false
         closeCancel.isEnabled = false
         SVProgressHUD.show()
-        network.uploadPhoto(image: image, param: [
+        network.uploadPhoto(url: "https://scripttrip.scarletsc.net/iOS/upload.php", image: image, param: [
             "user":"\(Session.user.UID)",
             "post":"\(planID!)",
             "publicity":"\(0)",
@@ -112,9 +110,7 @@ class addPhoto: UIViewController, UIImagePickerControllerDelegate, UINavigationC
                 self.navigationController?.popViewController(animated: true)
             }
         }))
-        
         self.present(alert, animated: true, completion: nil)
-        
     }
     func displayPicker(){
         imgPicker.allowsEditing = false

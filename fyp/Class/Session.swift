@@ -59,6 +59,7 @@ class Session: NSObject, UITableViewDelegate, UITableViewDataSource, FBSDKLoginB
             usr.Sess_ID = (item["Sess_ID"] as? String) ?? nil
             
             let uuid = UIDevice.current.identifierForVendor?.uuidString
+            
             let date = Date()
             let calendar = Calendar.current
             let hour = calendar.component(.hour, from: date)
@@ -67,6 +68,7 @@ class Session: NSObject, UITableViewDelegate, UITableViewDataSource, FBSDKLoginB
             let month = calendar.component(.month, from: date)
             let day = calendar.component(.day, from: date)
             let str = "\(day)" + "\(month)" + "\(hour)" + "\(minutes)" + "\(sec)"
+            
             let sessID = uuid![..<(uuid!.index(uuid!.startIndex, offsetBy: 5))] + "-" + str
             
             userDefault.set(uuid, forKey: "uuid")
@@ -85,7 +87,7 @@ class Session: NSObject, UITableViewDelegate, UITableViewDataSource, FBSDKLoginB
     var delegate: UIViewController?
     fileprivate let userIcon = UIImageView()
     fileprivate var iconImg: UIImage?
-    fileprivate var settings = ["", Localized.bookmarks.rawValue.localized(), Localized.history.rawValue.localized(), Localized.plans.rawValue.localized(), Localized.accountSettings.rawValue.localized(), Localized.deviceSettings.rawValue.localized(), Localized.about.rawValue.localized(), "Licence", "Disclaimer"]
+    fileprivate var settings = ["", Localized.bookmarks.rawValue.localized(), Localized.history.rawValue.localized(), Localized.plans.rawValue.localized(), Localized.Settings.rawValue.localized(), Localized.about.rawValue.localized(), Localized.Licence.rawValue.localized(), Localized.Disclaimer.rawValue.localized()]
     fileprivate let group = DispatchGroup()
     fileprivate let loginButton = FBSDKLoginButton()
     fileprivate var isUserMenuShown = false
@@ -108,7 +110,7 @@ class Session: NSObject, UITableViewDelegate, UITableViewDataSource, FBSDKLoginB
         case 0:
             return 4
         case 1:
-            return 2
+            return 1
         case 2:
             return 3
         case 3, 4:
@@ -126,7 +128,6 @@ class Session: NSObject, UITableViewDelegate, UITableViewDataSource, FBSDKLoginB
                 cell.textLabel?.font = UIFont(name: "AvenirNext-Heavy", size: 27)
                 cell.textLabel?.textAlignment = .center
                 cell.accessoryType = .none
-                cell.selectionStyle = .none
                 cell.accessoryView = userIcon
                 userIcon.frame = CGRect(x: 0, y: 0, width: 50, height: 50)
                 userIcon.image = usr.iconImage
@@ -173,7 +174,7 @@ class Session: NSObject, UITableViewDelegate, UITableViewDataSource, FBSDKLoginB
             
             return cell
         case 2:
-            cell.textLabel?.text = settings[indexPath.row + 6]
+            cell.textLabel?.text = settings[indexPath.row + 5]
             cell.textLabel?.font = UIFont(name: "AvenirNext-DemiBold", size: 17)
             cell.textLabel?.textAlignment = .left
             cell.accessoryType = .disclosureIndicator
@@ -198,7 +199,7 @@ class Session: NSObject, UITableViewDelegate, UITableViewDataSource, FBSDKLoginB
                 cell.textLabel?.text = Localized.Logout.rawValue.localized()
                 cell.textLabel?.font = UIFont(name: "AvenirNext-Medium", size: 17)
                 cell.textLabel?.textColor = "FF697B".uiColor
-                cell.textLabel?.textAlignment = .left
+                cell.textLabel?.textAlignment = .center
                 cell.backgroundColor = UIColor.clear
                 
                 return cell
@@ -223,6 +224,12 @@ class Session: NSObject, UITableViewDelegate, UITableViewDataSource, FBSDKLoginB
     }
     internal func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.cellForRow(at: indexPath)?.setSelected(false, animated: true)
+        
+        if indexPath.section == 0 && indexPath.row == 0 {
+            let profileView = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "profile") as! UINavigationController
+            UIApplication.shared.keyWindow?.rootViewController?.presentedViewController?.present(profileView, animated: true, completion: nil)
+        }
+        
         if indexPath.section == 0 && indexPath.row == 1{
             let bookmarkView = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "bookmarks") as! Bookmarks
             UIApplication.shared.keyWindow?.rootViewController?.presentedViewController?.present(bookmarkView, animated: true, completion: nil)
@@ -244,11 +251,6 @@ class Session: NSObject, UITableViewDelegate, UITableViewDataSource, FBSDKLoginB
         }
         
         if indexPath.section == 1 && indexPath.row == 0 {
-            let profileView = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "profile") as! UINavigationController
-            UIApplication.shared.keyWindow?.rootViewController?.presentedViewController?.present(profileView, animated: true, completion: nil)
-        }
-        
-        if indexPath.section == 1 && indexPath.row == 1 {
             let deviceSetting = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "deviceSetting") as! DeviceSettings
             UIApplication.shared.keyWindow?.rootViewController?.presentedViewController?.present(deviceSetting, animated: true, completion: nil)
         }
@@ -307,10 +309,17 @@ class Session: NSObject, UITableViewDelegate, UITableViewDataSource, FBSDKLoginB
         settings[4] = Localized.accountSettings.rawValue.localized()
         settings[5] = Localized.deviceSettings.rawValue.localized()
         settings[6] = Localized.about.rawValue.localized()
-        reloadUserTable()
+        DispatchQueue.main.async {
+            self.userTable.reloadData()
+        }
     }
     func reloadUserTable(){
         settings[0] = usr.Fname + " " + usr.Lname
+        Network().getPhoto(url: usr.icon!) { (data, response, error) in
+            guard let data = data, error == nil else {return}
+            self.iconImg = UIImage(data: data)
+            self.usr.iconImage = UIImage(data: data)
+        }
         DispatchQueue.main.async {
             self.userTable.reloadData()
         }

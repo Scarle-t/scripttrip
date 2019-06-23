@@ -51,7 +51,7 @@ class userView: UIViewController{
     }
     
     func setup(){
-        
+        session.reloadUserTable()
     }
     
     //VIEW CONTROLLER

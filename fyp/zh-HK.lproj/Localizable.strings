@@ -103,6 +103,9 @@
 "Title" = "標題";
 "Camera" = "相機";
 "photoLibrary" = "圖片庫";
+"Licence" = "開源庫";
+"Disclaimer" = "免責聲明";
+"loginWith" = "使用";
 
 "removeBKMsg" = "您是否確定要刪除此書籤？";
 "removePlanMsg" = "您是否確定要刪除此行程？將會刪除行程內所有項目！";

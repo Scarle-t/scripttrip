@@ -1509,9 +1509,13 @@ Join us now</string>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" xcode11CocoaTouchSystemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <color key="separatorColor" red="0.25882352939999997" green="0.7843137255" blue="0.61568627450000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <imageView key="tableHeaderView" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="DjN-CS-0mf">
+                        <imageView key="tableHeaderView" clipsSubviews="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="DjN-CS-0mf">
                             <rect key="frame" x="0.0" y="0.0" width="375" height="300"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <gestureRecognizers/>
+                            <connections>
+                                <outletCollection property="gestureRecognizers" destination="gFy-eR-8vg" appends="YES" id="oDE-PP-U9J"/>
+                            </connections>
                         </imageView>
                         <sections>
                             <tableViewSection id="xJg-3u-9Ez">
@@ -1650,6 +1654,7 @@ Join us now</string>
                         <outlet property="email" destination="o2u-JE-TQk" id="Q5N-wy-dve"/>
                         <outlet property="emailText" destination="aaV-Wm-2VZ" id="vG1-Ac-x9z"/>
                         <outlet property="fname" destination="mR8-ZX-59V" id="boo-ib-VnL"/>
+                        <outlet property="imageSelector" destination="gFy-eR-8vg" id="och-fS-Dgj"/>
                         <outlet property="interestText" destination="qWV-fB-QxJ" id="ttw-pg-vue"/>
                         <outlet property="left" destination="ncC-Ah-9ZS" id="2yn-o9-Qys"/>
                         <outlet property="lname" destination="BSN-5g-Ukz" id="ceN-60-Pe1"/>
@@ -1661,6 +1666,11 @@ Join us now</string>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wDD-Gz-0Vh" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer enabled="NO" id="gFy-eR-8vg">
+                    <connections>
+                        <action selector="imgSelect:" destination="9el-3i-Wpt" id="IbW-YC-sIh"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="608.79999999999995" y="1554.872563718141"/>
         </scene>

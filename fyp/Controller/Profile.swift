@@ -8,12 +8,13 @@
 
 import UIKit
 
-class Profile: UITableViewController, NetworkDelegate {
+class Profile: UITableViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, NetworkDelegate {
     
     //VARIABLE
     let session = Session.shared
     let userDefault = UserDefaults.standard
     let network = Network()
+    let imgPicker = UIImagePickerController()
     
     //IBOUTLET
     @IBOutlet weak var userIcon: UIImageView!
@@ -27,6 +28,7 @@ class Profile: UITableViewController, NetworkDelegate {
     @IBOutlet weak var tfaText: UILabel!
     @IBOutlet weak var tfa: UISwitch!
     @IBOutlet weak var interestText: UILabel!
+    @IBOutlet var imageSelector: UITapGestureRecognizer!
     
     //IBACTION
     @IBAction func leftItem(_ sender: UIBarButtonItem) {
@@ -49,6 +51,7 @@ class Profile: UITableViewController, NetworkDelegate {
             lname.layer.shadowOpacity = 0
             fname.isUserInteractionEnabled = false
             lname.isUserInteractionEnabled = false
+            imageSelector.isEnabled = false
             return
         }
         
@@ -61,6 +64,7 @@ class Profile: UITableViewController, NetworkDelegate {
             lname.layer.shadowOpacity = 1
             fname.isUserInteractionEnabled = true
             lname.isUserInteractionEnabled = true
+            imageSelector.isEnabled = true
             sender.tag = -1
             left.tag = -1
             if #available(iOS 13.0, *) {
@@ -89,6 +93,7 @@ class Profile: UITableViewController, NetworkDelegate {
             lname.layer.shadowOpacity = 0
             fname.isUserInteractionEnabled = false
             lname.isUserInteractionEnabled = false
+            imageSelector.isEnabled = false
             
             var query = "user=\(session.usr.UID)&fname=\(fname.text!)&lname=\(lname.text!)"
             
@@ -107,6 +112,9 @@ class Profile: UITableViewController, NetworkDelegate {
         
         self.present(setup, animated: true, completion: nil)
         
+    }
+    @IBAction func imgSelect(_ sender: UITapGestureRecognizer) {
+        displayMenu()
     }
     
     //DELEGATE
@@ -156,7 +164,41 @@ class Profile: UITableViewController, NetworkDelegate {
             }
         }
         SVProgressHUD.dismiss(withDelay: 1.5)
-        
+    }
+        //IMAGE PICKER
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        let chosenImage = info[UIImagePickerController.InfoKey.originalImage] as! UIImage
+        picker.dismiss(animated: true, completion: nil)
+        self.imageSelector.isEnabled = false
+        SVProgressHUD.show()
+        network.uploadPhoto(url: "https://scripttrip.scarletsc.net/iOS/upload_icon.php", image: chosenImage, param: ["user" : "\(session.usr.UID)"]) { (data, filename) in
+            
+            guard let result = Session.parser.parse(data!) else{
+                SVProgressHUD.dismiss()
+                SVProgressHUD.showError(withStatus: nil)
+                SVProgressHUD.dismiss(withDelay: 1.5)
+                self.imageSelector.isEnabled = true
+                return
+            }
+            
+            for item in result{
+                if (item["Result"] as! String) == "OK"{
+                    SVProgressHUD.dismiss()
+                    SVProgressHUD.showSuccess(withStatus: nil)
+                    SVProgressHUD.dismiss(withDelay: 1.5)
+                    DispatchQueue.main.async {
+                        self.userIcon.image = chosenImage
+                    }
+                    self.session.usr.icon = "https://scripttrip.scarletsc.net/img/icon/\(filename!)"
+                }else{
+                    SVProgressHUD.dismiss()
+                    SVProgressHUD.showError(withStatus: item["Reason"] as? String)
+                    SVProgressHUD.dismiss(withDelay: 1.5)
+                    self.imageSelector.isEnabled = true
+                }
+            }
+            
+        }
     }
     
     //OBJC FUNC
@@ -165,8 +207,32 @@ class Profile: UITableViewController, NetworkDelegate {
     }
     
     //FUNC
+    func displayPicker(){
+        imgPicker.allowsEditing = false
+        self.present(imgPicker, animated: true, completion: nil)
+    }
+    func displayMenu(){
+        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        
+        alert.addAction(UIAlertAction(title: Localized.Camera.rawValue.localized(), style: .default, handler: { (_) in
+            self.imgPicker.sourceType = .camera
+            self.imgPicker.cameraDevice = .rear
+            self.displayPicker()
+        }))
+        
+        alert.addAction(UIAlertAction(title: Localized.photoLibrary.rawValue.localized(), style: .default, handler: { (_) in
+            self.imgPicker.sourceType = .photoLibrary
+            self.imgPicker.mediaTypes = UIImagePickerController.availableMediaTypes(for: .photoLibrary)!
+            self.displayPicker()
+        }))
+        
+        alert.addAction(UIAlertAction(title: Localized.Cancel.rawValue.localized(), style: .cancel, handler: nil))
+        self.present(alert, animated: true, completion: nil)
+    }
+    
     func delegate(){
         network.delegate = self
+        imgPicker.delegate = self
     }
     
     func layout(){

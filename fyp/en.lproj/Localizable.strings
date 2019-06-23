@@ -77,6 +77,7 @@
 "photoLibrary" = "Photo Library";
 "quickAccess" = "Quick Acccess";
 "Interest" = "Interest";
+"loginWith" = "login with";
 
 "introText" = "ScriptTrip provides an entire new way to experience outgoing\n\nJoin us now";
 "getStarted" = "Get Started";
@@ -103,6 +104,8 @@
 "searchPH" = "Search for...";
 "languages" = "Languages";
 "Settings" = "Settings";
+"Licence" = "Open Source Library";
+"Disclaimer" = "Disclaimer";
 
 "removeBKMsg" = "Are you sure you want to remove this bookmark?";
 "removePlanMsg" = "Are you sure you want to remove this Plan? This will also remove all items in the Plan!";
