@@ -364,7 +364,7 @@ class Plans: UIViewController, UICollectionViewDelegate, UICollectionViewDataSou
                 }
             })
         case 1:
-            network.send(url: "https://scripttrip.scarletsc.net/iOS/plan.php?user=\(session.usr.UID)&PID=\(plans![indexPath.row].TID)&mode=shared", method: "GET", query: nil, completion: { data in
+            network.send(url: "https://scripttrip.scarletsc.net/iOS/plan.php?PID=\(plans![indexPath.row].TID)&mode=item", method: "GET", query: nil, completion: { data in
                 guard let data = data else {return}
                 self.plans?[indexPath.row].Items = self.session.parsePlanItem(Session.parser.parse(data))!
                 self.tripView.displayTrip = self.plans?[indexPath.row]
@@ -380,7 +380,9 @@ class Plans: UIViewController, UICollectionViewDelegate, UICollectionViewDataSou
                     self.tripView.show()
                     let postview = self.storyboard?.instantiateViewController(withIdentifier: "postView") as! postView
                     postview.tripView = self.tripView
-                    self.present(postview, animated: true, completion: nil)
+                    let pvnc = self.storyboard?.instantiateViewController(withIdentifier: "postViewNC") as! UINavigationController
+                    pvnc.addChild(postview)
+                    self.present(pvnc, animated: true, completion: nil)
                 }
             })
         default:
