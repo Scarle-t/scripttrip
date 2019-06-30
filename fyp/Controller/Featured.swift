@@ -316,7 +316,7 @@ class Featured: UIViewController, UICollectionViewDataSource, UICollectionViewDe
     }
     @objc func refreshFeatured(_ sender: UIRefreshControl){
         state = "trip"
-        network.send(url: "https://scripttrip.scarletsc.net/iOS/getTrips.php", method: "GET", query: nil)
+        network.send(url: "https://scripttrip.scarletsc.net/iOS/getAITrips.php?user=\(session.usr.UID)", method: "GET", query: nil)
     }
     @objc func updateFrame(){
         DispatchQueue.main.async {
@@ -354,7 +354,7 @@ class Featured: UIViewController, UICollectionViewDataSource, UICollectionViewDe
         self.becomeFirstResponder()
         qaState = UserDefaults.standard.bool(forKey: "quickAccess")
         state = "trip"
-        network.send(url: "https://scripttrip.scarletsc.net/iOS/getTrips.php", method: "GET", query: nil)
+        network.send(url: "https://scripttrip.scarletsc.net/iOS/getAITrips.php?user=\(session.usr.UID)", method: "GET", query: nil)
         
         DispatchQueue.main.async {
             self.cv.reloadData()

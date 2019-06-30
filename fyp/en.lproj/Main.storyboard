@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14810.11" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="kJR-vR-aPe">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14810.12" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="kJR-vR-aPe">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14766.13"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14766.15"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -2626,7 +2626,7 @@ chn483@uowmail.edu.au</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wDl-Iu-bgc" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2717.5999999999999" y="2247.5262368815593"/>
+            <point key="canvasLocation" x="2006" y="2248"/>
         </scene>
         <!--Credit-->
         <scene sceneID="Qul-Yh-N1z">
@@ -2751,7 +2751,7 @@ SOFTWARE.
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9Kk-tx-FVf" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3409" y="2248"/>
+            <point key="canvasLocation" x="2718" y="2248"/>
         </scene>
         <!--User View-->
         <scene sceneID="vwU-1Y-JTg">
@@ -3008,54 +3008,6 @@ SOFTWARE.
                 </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="3408.8000000000002" y="2945.577211394303"/>
-        </scene>
-        <!--Table View Controller-->
-        <scene sceneID="YYr-0p-Nld">
-            <objects>
-                <tableViewController id="TEl-fp-uNl" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="B7r-ac-Yzl">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
-                        <sections>
-                            <tableViewSection headerTitle=" " id="ElQ-Dq-W8e">
-                                <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="zwX-Ha-X8j">
-                                        <rect key="frame" x="0.0" y="55.5" width="375" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="zwX-Ha-X8j" id="w0b-XT-Pu9">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="7Hb-Dt-ueg">
-                                        <rect key="frame" x="0.0" y="99.5" width="375" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="7Hb-Dt-ueg" id="zc7-Q4-R6Y">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="5CM-lD-ona">
-                                        <rect key="frame" x="0.0" y="143.5" width="375" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="5CM-lD-ona" id="X81-h1-036">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
-                                </cells>
-                            </tableViewSection>
-                        </sections>
-                        <connections>
-                            <outlet property="dataSource" destination="TEl-fp-uNl" id="Puq-zV-VwB"/>
-                            <outlet property="delegate" destination="TEl-fp-uNl" id="SnG-bh-OaI"/>
-                        </connections>
-                    </tableView>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="5wJ-f9-1Ph" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="2006" y="2248"/>
         </scene>
         <!--Add Map-->
         <scene sceneID="rZK-DV-dWs">
@@ -3401,7 +3353,7 @@ By using our website, you hereby consent to our Privacy Policy and agree to its 
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="j7D-Ts-aGm" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4113" y="2248"/>
+            <point key="canvasLocation" x="3409" y="2248"/>
         </scene>
         <!--Credit-->
         <scene sceneID="Nk8-v2-XFv">
@@ -3469,7 +3421,7 @@ Should we update, amend or make any changes to this document, those changes will
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aea-Ho-meG" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4847" y="2248"/>
+            <point key="canvasLocation" x="4113" y="2248"/>
         </scene>
     </scenes>
     <resources>
