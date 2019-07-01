@@ -8,7 +8,7 @@
 
 import UIKit
 
-class addPhoto: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, NetworkDelegate{
+class addPhoto: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, CropViewControllerDelegate, NetworkDelegate{
     
     //VARIABLE
     let network = Network()
@@ -59,8 +59,17 @@ class addPhoto: UIViewController, UIImagePickerControllerDelegate, UINavigationC
     }
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         let chosenImage = info[UIImagePickerController.InfoKey.originalImage] as! UIImage
-        img.image = chosenImage
         picker.dismiss(animated: true, completion: nil)
+        
+        let cropViewController = CropViewController(image: chosenImage)
+        cropViewController.delegate = self
+        navigationController?.pushViewController(cropViewController, animated: false)
+        
+    }
+    
+    func cropViewController(_ cropViewController: CropViewController, didCropToImage image: UIImage, withRect cropRect: CGRect, angle: Int) {
+        navigationController?.popViewController(animated: false)
+        img.image = image
     }
     
         //NETWORK

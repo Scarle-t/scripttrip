@@ -59,23 +59,25 @@ class addMap: UIViewController, MKMapViewDelegate, UISearchBarDelegate, UITableV
         case 0:
             if #available(iOS 13.0, *) {
                 sender.setImage(UIImage(systemName: "chevron.down.square.fill"), for: .normal)
-                UIView.animate(withDuration: slideAnimationTime, delay: slideAnimationDelay, usingSpringWithDamping: 0.7, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
-                    self.searchView.frame.origin.y = self.view.bounds.height - self.searchView.frame.height
-                }, completion: nil)
             } else {
                 // Fallback on earlier versions
+                sender.setImage(#imageLiteral(resourceName: "down_tint.png"), for: .normal)
             }
+            UIView.animate(withDuration: slideAnimationTime, delay: slideAnimationDelay, usingSpringWithDamping: 0.7, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
+                self.searchView.frame.origin.y = self.view.bounds.height - self.searchView.frame.height
+            }, completion: nil)
             sender.tag = 1
             search.becomeFirstResponder()
         case 1:
             if #available(iOS 13.0, *) {
                 sender.setImage(UIImage(systemName: "chevron.up.square.fill"), for: .normal)
-                UIView.animate(withDuration: slideAnimationTime, delay: slideAnimationDelay, usingSpringWithDamping: 0.7, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
-                    self.searchView.frame.origin.y = self.view.bounds.height - 150
-                }, completion: nil)
             } else {
                 // Fallback on earlier versions
+                sender.setImage(#imageLiteral(resourceName: "down_tint.png"), for: .normal)
             }
+            UIView.animate(withDuration: slideAnimationTime, delay: slideAnimationDelay, usingSpringWithDamping: 0.7, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
+                self.searchView.frame.origin.y = self.view.bounds.height - 150
+            }, completion: nil)
             sender.tag = 0
             dismissKb()
         default:
@@ -265,6 +267,13 @@ class addMap: UIViewController, MKMapViewDelegate, UISearchBarDelegate, UITableV
             default:
                 break
             }
+        }
+        
+        if #available(iOS 13.0, *){
+        }else{
+            saveBtn.setImage(#imageLiteral(resourceName: "small_tick_tint"), for: .normal)
+            closeCancel.setImage(#imageLiteral(resourceName: "cross_tint"), for: .normal)
+            searchViewBtn.setImage(#imageLiteral(resourceName: "down_tint.png"), for: .normal)
         }
         
         map.fillSuperview()

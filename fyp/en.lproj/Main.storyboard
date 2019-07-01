@@ -1517,6 +1517,13 @@ Join us now</string>
                                 <outletCollection property="gestureRecognizers" destination="gFy-eR-8vg" appends="YES" id="oDE-PP-U9J"/>
                             </connections>
                         </imageView>
+                        <label key="tableFooterView" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" id="tMh-Mr-QxA">
+                            <rect key="frame" x="0.0" y="605" width="375" height="44"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
                         <sections>
                             <tableViewSection id="xJg-3u-9Ez">
                                 <cells>
@@ -1662,6 +1669,7 @@ Join us now</string>
                         <outlet property="right" destination="LzL-Nn-bhj" id="AxF-zs-rei"/>
                         <outlet property="tfa" destination="UIj-aa-DAn" id="DAi-7C-n4D"/>
                         <outlet property="tfaText" destination="4Es-H0-beP" id="u4a-1d-tzl"/>
+                        <outlet property="userIDText" destination="tMh-Mr-QxA" id="F6n-gc-EM4"/>
                         <outlet property="userIcon" destination="DjN-CS-0mf" id="L0z-oY-yud"/>
                     </connections>
                 </tableViewController>
@@ -2653,7 +2661,7 @@ chn483@uowmail.edu.au</string>
                                 <rect key="frame" x="16" y="38" width="343" height="629"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="tintColor" red="0.25882352939999997" green="0.7843137255" blue="0.61568627450000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <string key="text">Facebook SDK for iOS
+                                <mutableString key="text">Facebook SDK for iOS
 https://developers.facebook.com/docs/ios
 
 Copyright (c) 2014-present, Facebook, Inc. All rights reserved.
@@ -2728,7 +2736,34 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
----</string>
+---
+
+TOCropViewController
+https://github.com/TimOliver/TOCropViewController
+
+The MIT License (MIT)
+
+Copyright (c) 2015-2019 Tim Oliver
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+---</mutableString>
                                 <fontDescription key="fontDescription" name="Courier" family="Courier" pointSize="12"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                 <dataDetectorType key="dataDetectorTypes" link="YES"/>

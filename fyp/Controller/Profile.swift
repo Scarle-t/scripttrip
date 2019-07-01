@@ -8,7 +8,7 @@
 
 import UIKit
 
-class Profile: UITableViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, NetworkDelegate {
+class Profile: UITableViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, CropViewControllerDelegate, NetworkDelegate {
     
     //VARIABLE
     let session = Session.shared
@@ -29,6 +29,7 @@ class Profile: UITableViewController, UIImagePickerControllerDelegate, UINavigat
     @IBOutlet weak var tfa: UISwitch!
     @IBOutlet weak var interestText: UILabel!
     @IBOutlet var imageSelector: UITapGestureRecognizer!
+    @IBOutlet weak var userIDText: UILabel!
     
     //IBACTION
     @IBAction func leftItem(_ sender: UIBarButtonItem) {
@@ -170,8 +171,17 @@ class Profile: UITableViewController, UIImagePickerControllerDelegate, UINavigat
         let chosenImage = info[UIImagePickerController.InfoKey.originalImage] as! UIImage
         picker.dismiss(animated: true, completion: nil)
         self.imageSelector.isEnabled = false
+        
+        let cropViewController = CropViewController(image: chosenImage)
+        cropViewController.delegate = self
+        navigationController?.pushViewController(cropViewController, animated: false)
+    }
+    
+    //CROP VIEW
+    func cropViewController(_ cropViewController: CropViewController, didCropToImage image: UIImage, withRect cropRect: CGRect, angle: Int) {
+        navigationController?.popViewController(animated: false)
         SVProgressHUD.show()
-        network.uploadPhoto(url: "https://scripttrip.scarletsc.net/iOS/upload_icon.php", image: chosenImage, param: ["user" : "\(session.usr.UID)"]) { (data, filename) in
+        network.uploadPhoto(url: "https://scripttrip.scarletsc.net/iOS/upload_icon.php", image: image, param: ["user" : "\(session.usr.UID)"]) { (data, filename) in
             
             guard let result = Session.parser.parse(data!) else{
                 SVProgressHUD.dismiss()
@@ -187,7 +197,7 @@ class Profile: UITableViewController, UIImagePickerControllerDelegate, UINavigat
                     SVProgressHUD.showSuccess(withStatus: nil)
                     SVProgressHUD.dismiss(withDelay: 1.5)
                     DispatchQueue.main.async {
-                        self.userIcon.image = chosenImage
+                        self.userIcon.image = image
                     }
                     self.session.usr.icon = "https://scripttrip.scarletsc.net/img/icon/\(filename!)"
                 }else{
@@ -217,6 +227,8 @@ class Profile: UITableViewController, UIImagePickerControllerDelegate, UINavigat
         alert.addAction(UIAlertAction(title: Localized.Camera.rawValue.localized(), style: .default, handler: { (_) in
             self.imgPicker.sourceType = .camera
             self.imgPicker.cameraDevice = .rear
+            self.imgPicker.cameraCaptureMode = .photo
+            self.imgPicker.showsCameraControls = true
             self.displayPicker()
         }))
         
@@ -276,7 +288,9 @@ class Profile: UITableViewController, UIImagePickerControllerDelegate, UINavigat
         fname.text = session.usr.Fname
         lname.text = session.usr.Lname
         email.text = session.usr.email
+        userIDText.text = "ID\n\(session.usr.UID)"
         
+        userIDText.font = UIFont(name: "AvenirNext-Regular", size: 14)
         fname.isUserInteractionEnabled = false
         lname.isUserInteractionEnabled = false
         email.isUserInteractionEnabled = false
@@ -301,7 +315,9 @@ class Profile: UITableViewController, UIImagePickerControllerDelegate, UINavigat
         }
         
         if #available(iOS 13.0, *){
+            userIDText.textColor = .systemGray
         }else{
+            userIDText.textColor = .gray
             right.image = #imageLiteral(resourceName: "Edit_pdf")
             left.image = #imageLiteral(resourceName: "small_cross_pdf")
         }

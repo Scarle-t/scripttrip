@@ -5,3 +5,4 @@
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <FBSDKLoginKit/FBSDKLoginKit.h>
 #import "SVProgressHUD/SVProgressHUD.h"
+#import "TOCropViewController/TOCropViewController.h"
