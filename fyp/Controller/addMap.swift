@@ -73,7 +73,7 @@ class addMap: UIViewController, MKMapViewDelegate, UISearchBarDelegate, UITableV
                 sender.setImage(UIImage(systemName: "chevron.up.square.fill"), for: .normal)
             } else {
                 // Fallback on earlier versions
-                sender.setImage(#imageLiteral(resourceName: "down_tint.png"), for: .normal)
+                sender.setImage(#imageLiteral(resourceName: "up_tint.png"), for: .normal)
             }
             UIView.animate(withDuration: slideAnimationTime, delay: slideAnimationDelay, usingSpringWithDamping: 0.7, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
                 self.searchView.frame.origin.y = self.view.bounds.height - 150
@@ -273,7 +273,7 @@ class addMap: UIViewController, MKMapViewDelegate, UISearchBarDelegate, UITableV
         }else{
             saveBtn.setImage(#imageLiteral(resourceName: "small_tick_tint"), for: .normal)
             closeCancel.setImage(#imageLiteral(resourceName: "cross_tint"), for: .normal)
-            searchViewBtn.setImage(#imageLiteral(resourceName: "down_tint.png"), for: .normal)
+            searchViewBtn.setImage(#imageLiteral(resourceName: "up_tint.png"), for: .normal)
         }
         
         map.fillSuperview()

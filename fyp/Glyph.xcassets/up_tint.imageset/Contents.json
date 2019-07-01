@@ -2,7 +2,7 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "down_tint.png",
+      "filename" : "up_tint.png",
       "scale" : "1x"
     },
     {

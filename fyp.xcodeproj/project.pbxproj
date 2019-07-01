@@ -50,7 +50,7 @@
 		A685689922CA98FE0005C318 /* TOCropOverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = A685688A22CA98FE0005C318 /* TOCropOverlayView.m */; };
 		A685689A22CA98FE0005C318 /* TOCropToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = A685688B22CA98FE0005C318 /* TOCropToolbar.m */; };
 		A685689B22CA98FF0005C318 /* UIImage+CropRotate.m in Sources */ = {isa = PBXBuildFile; fileRef = A685688E22CA98FE0005C318 /* UIImage+CropRotate.m */; };
-		A68568A022CA995D0005C318 /* CropViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A685689E22CA995D0005C318 /* CropViewController.swift */; };
+		A68568A522CA9E620005C318 /* CropViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A68568A422CA9E620005C318 /* CropViewController.swift */; };
 		A6856A2F2232C65F0036A677 /* Search.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6856A2E2232C65F0036A677 /* Search.swift */; };
 		A68BFAFF2265043100BAF061 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A68BFAFE2265043100BAF061 /* Extensions.swift */; };
 		A695797D223422F0008F79C4 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = A695797C223422F0008F79C4 /* Settings.swift */; };
@@ -168,8 +168,8 @@
 		A685688E22CA98FE0005C318 /* UIImage+CropRotate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+CropRotate.m"; sourceTree = "<group>"; };
 		A685688F22CA98FE0005C318 /* UIImage+CropRotate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+CropRotate.h"; sourceTree = "<group>"; };
 		A685689022CA98FE0005C318 /* TOCropViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TOCropViewController.h; sourceTree = "<group>"; };
-		A685689D22CA995D0005C318 /* CropViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CropViewController.h; sourceTree = "<group>"; };
-		A685689E22CA995D0005C318 /* CropViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CropViewController.swift; sourceTree = "<group>"; };
+		A68568A322CA9E620005C318 /* CropViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CropViewController.h; sourceTree = "<group>"; };
+		A68568A422CA9E620005C318 /* CropViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CropViewController.swift; sourceTree = "<group>"; };
 		A6856A2E2232C65F0036A677 /* Search.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Search.swift; sourceTree = "<group>"; };
 		A68BFAFE2265043100BAF061 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		A695797C223422F0008F79C4 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
@@ -336,11 +336,10 @@
 		A685689C22CA995D0005C318 /* CropViewController */ = {
 			isa = PBXGroup;
 			children = (
-				A685689D22CA995D0005C318 /* CropViewController.h */,
-				A685689E22CA995D0005C318 /* CropViewController.swift */,
+				A68568A322CA9E620005C318 /* CropViewController.h */,
+				A68568A422CA9E620005C318 /* CropViewController.swift */,
 			);
-			name = CropViewController;
-			path = "../../../../../../../../../../Downloads/TOCropViewController-2.5.0/Swift/CropViewController";
+			path = CropViewController;
 			sourceTree = "<group>";
 		};
 		A68BFAF9226503A400BAF061 /* Controller */ = {
@@ -626,7 +625,7 @@
 				A6C2BAAB227F615900BC19F7 /* CategoryTrip.swift in Sources */,
 				A6AECE992287CE9000B3E68B /* Enumerations.swift in Sources */,
 				A6A67CF9222FE9A700D82479 /* AppDelegate.swift in Sources */,
-				A68568A022CA995D0005C318 /* CropViewController.swift in Sources */,
+				A68568A522CA9E620005C318 /* CropViewController.swift in Sources */,
 				A6268A0F22AE53B500C395CB /* InteractivePopGesture.swift in Sources */,
 				A612D418226EC61F004BF88F /* tripDetail.swift in Sources */,
 				A6183E7522B56362004ADCDC /* postMap.swift in Sources */,
