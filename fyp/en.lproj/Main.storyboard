@@ -852,7 +852,8 @@ Join us now</string>
                                                     <constraint firstAttribute="height" constant="35" id="CAb-KJ-Qir"/>
                                                     <constraint firstAttribute="width" constant="35" id="a2s-Q4-s5P"/>
                                                 </constraints>
-                                                <state key="normal" image="cross_tint"/>
+                                                <color key="tintColor" red="0.25882352939999997" green="0.7843137255" blue="0.61568627450000002" alpha="1" colorSpace="calibratedRGB"/>
+                                                <state key="normal" image="xmark" catalog="system"/>
                                                 <connections>
                                                     <action selector="xClose:" destination="xPR-Ay-xLs" eventType="touchUpInside" id="Jsa-0b-aZb"/>
                                                 </connections>
@@ -2661,7 +2662,7 @@ chn483@uowmail.edu.au</string>
                                 <rect key="frame" x="16" y="38" width="343" height="629"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="tintColor" red="0.25882352939999997" green="0.7843137255" blue="0.61568627450000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <mutableString key="text">Facebook SDK for iOS
+                                <string key="text">Facebook SDK for iOS
 https://developers.facebook.com/docs/ios
 
 Copyright (c) 2014-present, Facebook, Inc. All rights reserved.
@@ -2763,7 +2764,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
----</mutableString>
+---</string>
                                 <fontDescription key="fontDescription" name="Courier" family="Courier" pointSize="12"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                 <dataDetectorType key="dataDetectorTypes" link="YES"/>
@@ -3273,6 +3274,152 @@ SOFTWARE.
             </objects>
             <point key="canvasLocation" x="-79.200000000000003" y="3626.5367316341831"/>
         </scene>
+        <!--Tut1-->
+        <scene sceneID="N9y-lJ-9ib">
+            <objects>
+                <viewController id="Vu2-Kk-tI0" customClass="Tut1" customModule="fyp" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="WQC-IU-Agg">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="IMG_2381" translatesAutoresizingMaskIntoConstraints="NO" id="92W-Bl-RcY">
+                                <rect key="frame" x="16" y="222" width="343" height="445"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AKX-Gy-J7o">
+                                <rect key="frame" x="16" y="56" width="335" height="147"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <string key="text">Curated recommdations
+
+for your everyday trip</string>
+                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="y1z-Kb-I4y">
+                                <rect key="frame" x="320" y="184" width="32" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Next"/>
+                                <connections>
+                                    <action selector="next:" destination="Vu2-Kk-tI0" eventType="touchUpInside" id="CIS-EH-E9a"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" red="0.82745098039215681" green="0.94901960784313721" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        <viewLayoutGuide key="safeArea" id="a94-rP-fMX"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="B3k-RC-dUX"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="VWt-Rw-vdz" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-79" y="4389"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="oB8-6N-cgV">
+            <objects>
+                <navigationController storyboardIdentifier="tut" navigationBarHidden="YES" id="Uoa-yX-uvF" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="Zum-t1-suq">
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="Vu2-Kk-tI0" kind="relationship" relationship="rootViewController" id="LbB-jT-Sv8"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="LXz-Qp-yTT" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-759" y="4390"/>
+        </scene>
+        <!--Tut2-->
+        <scene sceneID="yUV-9Z-Bos">
+            <objects>
+                <viewController storyboardIdentifier="tut2" id="UG8-HY-USS" customClass="Tut2" customModule="fyp" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="0IV-qH-ICg">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="IMG_2382" translatesAutoresizingMaskIntoConstraints="NO" id="sEa-jT-sbc">
+                                <rect key="frame" x="16" y="222" width="343" height="445"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Explore nearby place" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vce-xi-MaX">
+                                <rect key="frame" x="20" y="67" width="335" height="147"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0te-99-dj9">
+                                <rect key="frame" x="22" y="184" width="34" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Back"/>
+                                <connections>
+                                    <action selector="back:" destination="UG8-HY-USS" eventType="touchUpInside" id="9Zi-Hd-HiI"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8CH-RE-sev">
+                                <rect key="frame" x="316" y="184" width="32" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Next"/>
+                                <connections>
+                                    <action selector="next:" destination="UG8-HY-USS" eventType="touchUpInside" id="MM4-oE-yXD"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" red="0.82745098039999998" green="0.94901960780000005" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        <viewLayoutGuide key="safeArea" id="mXb-XN-dHD"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="5QC-4C-Vze" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="609" y="4391"/>
+        </scene>
+        <!--Tut3-->
+        <scene sceneID="lSd-sr-0G4">
+            <objects>
+                <viewController storyboardIdentifier="tut3" id="zce-p6-ICj" customClass="Tut3" customModule="fyp" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="4BO-ZW-Ryz">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nuA-QC-Inm">
+                                <rect key="frame" x="20" y="67" width="335" height="147"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <string key="text">Create your own Plan
+
+Share with friends</string>
+                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="h7R-dc-HGp">
+                                <rect key="frame" x="318" y="184" width="37" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Done"/>
+                                <connections>
+                                    <action selector="done:" destination="zce-p6-ICj" eventType="touchUpInside" id="IFN-se-huN"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IuV-pi-gBf">
+                                <rect key="frame" x="22" y="184" width="34" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Back"/>
+                                <connections>
+                                    <action selector="back:" destination="zce-p6-ICj" eventType="touchUpInside" id="6XW-jh-fKd"/>
+                                </connections>
+                            </button>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="IMG_2383" translatesAutoresizingMaskIntoConstraints="NO" id="rkg-ED-8fY">
+                                <rect key="frame" x="16" y="222" width="343" height="445"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" red="0.82745098039999998" green="0.94901960780000005" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        <viewLayoutGuide key="safeArea" id="LaK-BE-wQg"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Fz1-91-kRs" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1302" y="4391"/>
+        </scene>
         <!--Navigation Controller-->
         <scene sceneID="epQ-Zu-ybE">
             <objects>
@@ -3460,6 +3607,9 @@ Should we update, amend or make any changes to this document, those changes will
         </scene>
     </scenes>
     <resources>
+        <image name="IMG_2381" width="1125" height="1412"/>
+        <image name="IMG_2382" width="1125" height="1412"/>
+        <image name="IMG_2383" width="1125" height="1544"/>
         <image name="Image" width="4032" height="3024"/>
         <image name="cateory_pdf" width="30" height="30"/>
         <image name="checkmark.circle" catalog="system" width="64" height="62"/>
@@ -3467,7 +3617,6 @@ Should we update, amend or make any changes to this document, those changes will
         <image name="chevron.left" catalog="system" width="46" height="64"/>
         <image name="chevron.right" catalog="system" width="46" height="64"/>
         <image name="chevron.up.square.fill" catalog="system" width="64" height="56"/>
-        <image name="cross_tint" width="800" height="800"/>
         <image name="ellipsis" catalog="system" width="64" height="20"/>
         <image name="explore_pdf" width="30" height="30"/>
         <image name="featured_pdf" width="30" height="30"/>

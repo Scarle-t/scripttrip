@@ -424,6 +424,7 @@ class mainScreen: UIViewController, UITextFieldDelegate, NetworkDelegate, FBSDKL
     }
     
     func setup(){
+        session.clearTrips()
         session.rootNavigationController = self.navigationController
         SVProgressHUD.setHapticsEnabled(true)
         SVProgressHUD.setMinimumSize(CGSize(width: 175, height: 175))

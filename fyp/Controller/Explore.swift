@@ -12,7 +12,7 @@ import CoreLocation
 
 class Explore: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UITableViewDelegate, UITableViewDataSource, NetworkDelegate {
     
-    //VARIABLE
+    //MARK: VARIABLE
     let locationManager = CLLocationManager()
     let network = Network()
     let session = Session.shared
@@ -31,7 +31,7 @@ class Explore: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, U
     var pinTapped: UITapGestureRecognizer?
     let menu = UIButton(frame: CGRect(x: 306, y: 9, width: 45, height: 45))
     
-    //IBOUTLET
+    //MARK: IBOUTLET
     @IBOutlet weak var mk: MKMapView!
     @IBOutlet weak var navBar: UIView!
     @IBOutlet weak var refresh: UIActivityIndicatorView!
@@ -51,7 +51,7 @@ class Explore: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, U
     @IBOutlet weak var listCloseBtn: UIButton!
     @IBOutlet weak var listFilterBtn: UIButton!
     
-    //IBACTION
+    //MARK: IBACTION
     @IBAction func refreshLoc(_ sender: UIButton) {
         
         UIView.animate(withDuration: 0.3) {
@@ -100,8 +100,8 @@ class Explore: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, U
         mkAnnos()
     }
     
-    //DELEGATION
-        //TABLE VIEW
+    //MARK: DELEGATION
+        //MARK: TABLE VIEW
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return session.getCategories().count
     }
@@ -114,13 +114,19 @@ class Explore: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, U
         let img = UIImageView(image: session.cate_icons[session.getCategories()[indexPath.row].CID - 1])
         img.frame = CGRect(x: 0, y: 0, width: 55, height: 55)
         
-        let tick = UIImageView(image: #imageLiteral(resourceName: "small_tick_tint"))
+        var tick = UIImageView()
+        if #available(iOS 13.0, *){
+            tick = UIImageView(image: UIImage(systemName: "checkmark.circle.fill"))
+            tick.tintColor = darkGreen
+        }else{
+            tick = UIImageView(image: #imageLiteral(resourceName: "small_tick_tint"))
+        }
+        
         tick.frame = CGRect(x: 0, y: 0, width: 40, height: 40)
         
         if filters.contains(session.getCategories()[indexPath.row]){
-            let tick = UIImageView(image: #imageLiteral(resourceName: "small_tick_tint"))
-            tick.frame = CGRect(x: 0, y: 0, width: 55, height: 55)
             cell?.accessoryView = tick
+            cell?.accessoryView?.tintColor = darkGreen
         }else{
             let img = UIImageView(image: session.cate_icons[session.getCategories()[indexPath.row].CID - 1])
             img.frame = CGRect(x: 0, y: 0, width: 55, height: 55)
@@ -140,15 +146,22 @@ class Explore: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, U
             filters.remove(id)
             cell?.accessoryView = img
         }else{
-            let tick = UIImageView(image: #imageLiteral(resourceName: "small_tick_tint"))
+            var tick = UIImageView()
+            if #available(iOS 13.0, *){
+                tick = UIImageView(image: UIImage(systemName: "checkmark.circle.fill"))
+                tick.tintColor = darkGreen
+            }else{
+                tick = UIImageView(image: #imageLiteral(resourceName: "small_tick_tint"))
+            }
             tick.frame = CGRect(x: 0, y: 0, width: 55, height: 55)
             filters.insert(id)
             cell?.accessoryView = tick
+            cell?.accessoryView?.tintColor = darkGreen
         }
         mkAnnos()
     }
     
-        //COLLECTION VIEW
+        //MARK: COLLECTION VIEW
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return selectedTrips.count
     }
@@ -200,7 +213,7 @@ class Explore: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, U
             self.present(pvnc, animated: true, completion: nil)
         }
     }
-        //LOCATION MANAGER
+        //MARK: LOCATION MANAGER
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let locValue: CLLocationCoordinate2D = manager.location?.coordinate else { return }
         let span = MKCoordinateSpan(latitudeDelta: 0.03, longitudeDelta: 0.03)
@@ -213,7 +226,7 @@ class Explore: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, U
         }
     }
     
-        //MAP VIEW
+        //MARK: MAP VIEW
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
     }
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView?
@@ -252,13 +265,13 @@ class Explore: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, U
         taps = 0
     }
     
-        //NETWORK
+        //MARK: NETWORK
     func ResponseHandle(data: Data) {
         session.setTrips(session.parseTrip(Session.parser.parseNested(data)))
         mkAnnos()
     }
     
-    //OBJC FUNC
+    //MARK: OBJC FUNC
     @objc func tapPin(_ sender: UITapGestureRecognizer){
         
         if taps == 0 {
@@ -342,7 +355,7 @@ class Explore: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, U
         }
     }
     
-    //FUNC
+    //MARK: FUNC
     fileprivate func mkAnnos() {
         DispatchQueue.main.async {
             self.mk.removeAnnotations(self.mk.annotations)
@@ -514,7 +527,7 @@ class Explore: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, U
         tripView = TripView(delegate: self, haveTabBar: true)
     }
     
-    //VIEW CONTROLLER
+    //MARK: VIEW CONTROLLER
     override func viewDidLoad() {
         super.viewDidLoad()
 

@@ -58,7 +58,11 @@ class Featured: UIViewController, UICollectionViewDataSource, UICollectionViewDe
         case 0:
             return plans?.count ?? 0
         case 1:
-            return session.getTrips().count
+            if session.getTrips().count == 1 && session.getTrips()[0].TID == 0{
+                return 0
+            }else{
+                return session.getTrips().count
+            }
         default:
             return 0
         }
@@ -315,8 +319,7 @@ class Featured: UIViewController, UICollectionViewDataSource, UICollectionViewDe
         self.present(planView, animated: true, completion: nil)
     }
     @objc func refreshFeatured(_ sender: UIRefreshControl){
-        state = "trip"
-        network.send(url: "https://scripttrip.scarletsc.net/iOS/getAITrips.php?user=\(session.usr.UID)", method: "GET", query: nil)
+        updateList()
     }
     @objc func updateFrame(){
         DispatchQueue.main.async {
@@ -327,6 +330,26 @@ class Featured: UIViewController, UICollectionViewDataSource, UICollectionViewDe
     }
     
     //FUNC
+    func updateList(){
+        network.send(url: "https://scripttrip.scarletsc.net/iOS/score.php", method: "POST", query: "user=\(session.usr.UID)") { (data) in
+            guard let result = Session.parser.parse(data!)else{
+                SVProgressHUD.showError(withStatus: nil)
+                SVProgressHUD.dismiss(withDelay: 1.5)
+                return
+            }
+            for item in result {
+                if (item["Result"] as! String) == "OK"{
+                    self.state = "trip"
+                    self.network.send(url: "https://scripttrip.scarletsc.net/iOS/getAITrips.php?user=\(self.session.usr.UID)", method: "GET", query: nil)
+                }else{
+                    self.state = "trip"
+                    self.network.send(url: "https://scripttrip.scarletsc.net/iOS/getTrips.php", method: "GET", query: nil)
+                }
+            }
+            
+        }
+        
+    }
     func delegate(){
         cv.dataSource = self
         cv.delegate = self
@@ -341,6 +364,7 @@ class Featured: UIViewController, UICollectionViewDataSource, UICollectionViewDe
     }
     
     func setup(){
+        session.clearTrips()
         NotificationCenter.default.addObserver(self, selector: #selector(updateFrame), name: UIDevice.orientationDidChangeNotification, object: nil)
         session.setupUserView()
         tripView = TripView(delegate: self, haveTabBar: true)
@@ -353,8 +377,7 @@ class Featured: UIViewController, UICollectionViewDataSource, UICollectionViewDe
         }
         self.becomeFirstResponder()
         qaState = UserDefaults.standard.bool(forKey: "quickAccess")
-        state = "trip"
-        network.send(url: "https://scripttrip.scarletsc.net/iOS/getAITrips.php?user=\(session.usr.UID)", method: "GET", query: nil)
+        updateList()
         
         DispatchQueue.main.async {
             self.cv.reloadData()
@@ -369,6 +392,11 @@ class Featured: UIViewController, UICollectionViewDataSource, UICollectionViewDe
         delegate()
         layout()
         setup()
+        
+        if UserDefaults.standard.bool(forKey: "isReg"){
+            let tut = storyboard?.instantiateViewController(withIdentifier: "tut") as! UINavigationController
+            present(tut, animated: true, completion: nil)
+        }
 
     }
     

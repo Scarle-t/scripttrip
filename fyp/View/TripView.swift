@@ -8,9 +8,10 @@
 
 import UIKit
 
-class TripView: NSObject, UICollectionViewDelegateFlowLayout, UICollectionViewDelegate, UICollectionViewDataSource{
+class TripView: NSObject, UICollectionViewDelegateFlowLayout, UICollectionViewDelegate, UICollectionViewDataSource, UIScrollViewDelegate{
     
-    //DELEGATE
+    //MARK: DELEGATE
+        //MARK: COLLECTION VIEW
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if isCustomPlan{
             return realDisplay.count + 1
@@ -229,8 +230,41 @@ class TripView: NSObject, UICollectionViewDelegateFlowLayout, UICollectionViewDe
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
         return .init(width: collectionView.frame.width, height: collectionView.frame.width / 3 * 2)
     }
+        //MARK: SCROLL VIEW
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        
+        if !scrollLock{
+            if (self.lastOffset > scrollView.contentOffset.y) {
+                // move up
+                actionBtn.tag = 0
+                showAction(actionBtn)
+            }
+            else if (self.lastOffset < scrollView.contentOffset.y) {
+                // move down
+                actionBtn.tag = 1
+                showAction(actionBtn)
+            }
+        }
+        // update the new position acquired
+        self.lastOffset = scrollView.contentOffset.y
+        scrollLock = true
+    }
+    func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
+        scrollLock = false
+    }
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+//        scrollLock = false
+    }
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        scrollLock = false
+    }
+    func scrollViewDidScrollToTop(_ scrollView: UIScrollView) {
+        scrollLock = false
+        actionBtn.tag = 0
+        showAction(actionBtn)
+    }
     
-    //ATTRIBUTE
+    //MARK: ATTRIBUTE
     var delegate: UIViewController?
     var displayTrip: Trip?
     var headerImg: UIImage?
@@ -253,8 +287,10 @@ class TripView: NSObject, UICollectionViewDelegateFlowLayout, UICollectionViewDe
     var isCustomPlan: Bool!
     var haveTabBar = false
     var realDisplay = [Item]()
+    var lastOffset: CGFloat = 0.0
+    var scrollLock = false
     
-    //INIT
+    //MARK: INIT
     init(delegate: UIViewController, haveTabBar: Bool){
         super.init()
         DispatchQueue.main.async {
@@ -301,14 +337,6 @@ class TripView: NSObject, UICollectionViewDelegateFlowLayout, UICollectionViewDe
             
             self.contents.frame = self.view.frame
             
-            self.addBookmark.frame = CGRect(x: self.view.frame.maxX - 17 - 35, y: 17, width: 35, height: 35)
-            self.addBookmark.layer.cornerRadius = 35 / 2
-            self.addBookmark.addTarget(self, action: #selector(self.addBk(_:)), for: .touchUpInside)
-            self.addBookmark.alpha = 0
-            self.addBookmark.layer.shadowOpacity = 0.7
-            self.addBookmark.layer.shadowColor = UIColor.lightGray.cgColor
-            self.addBookmark.layer.shadowOffset = CGSize(width: 0, height: 1)
-            
             if #available(iOS 13.0, *){
                 self.actionBtn.tintColor = darkGreen
                 self.shareBtn.tintColor = darkGreen
@@ -332,14 +360,22 @@ class TripView: NSObject, UICollectionViewDelegateFlowLayout, UICollectionViewDe
                 self.shareBtn.backgroundColor = .white
                 self.mapBtn.backgroundColor = .white
             }
-            self.actionBtn.frame = CGRect(x: self.view.frame.maxX - 17 - 35, y: 17, width: 35, height: 35)
+            self.actionBtn.frame = CGRect(x: self.window!.frame.maxX - 50, y: 17, width: 35, height: 35)
             self.actionBtn.layer.cornerRadius = 35 / 2
             self.actionBtn.addTarget(self, action: #selector(self.showAction(_:)), for: .touchUpInside)
             self.actionBtn.layer.shadowOpacity = 0.7
             self.actionBtn.layer.shadowColor = UIColor.lightGray.cgColor
             self.actionBtn.layer.shadowOffset = CGSize(width: 0, height: 1)
             
-            self.shareBtn.frame = CGRect(x: self.view.frame.maxX - 17 - 35, y: 17, width: 35, height: 35)
+            self.addBookmark.frame = CGRect(x: self.actionBtn.frame.origin.x - 55, y: self.actionBtn.frame.origin.y + 5, width: 35, height: 35)
+            self.addBookmark.layer.cornerRadius = 35 / 2
+            self.addBookmark.addTarget(self, action: #selector(self.addBk(_:)), for: .touchUpInside)
+            self.addBookmark.alpha = 0
+            self.addBookmark.layer.shadowOpacity = 0.7
+            self.addBookmark.layer.shadowColor = UIColor.lightGray.cgColor
+            self.addBookmark.layer.shadowOffset = CGSize(width: 0, height: 1)
+            
+            self.shareBtn.frame = CGRect(x: self.actionBtn.frame.origin.x - 30, y: self.actionBtn.frame.origin.y + 40, width: 35, height: 35)
             self.shareBtn.layer.cornerRadius = 35 / 2
             self.shareBtn.addTarget(self, action: #selector(self.share(_:)), for: .touchUpInside)
             self.shareBtn.alpha = 0
@@ -347,7 +383,7 @@ class TripView: NSObject, UICollectionViewDelegateFlowLayout, UICollectionViewDe
             self.shareBtn.layer.shadowColor = UIColor.lightGray.cgColor
             self.shareBtn.layer.shadowOffset = CGSize(width: 0, height: 1)
             
-            self.mapBtn.frame = CGRect(x: self.view.frame.maxX - 17 - 35, y: 17, width: 35, height: 35)
+            self.mapBtn.frame = CGRect(x: self.actionBtn.frame.origin.x + 10, y: self.actionBtn.frame.origin.y + 55, width: 35, height: 35)
             self.mapBtn.layer.cornerRadius = 35 / 2
             self.mapBtn.addTarget(self, action: #selector(self.showMap(_:)), for: .touchUpInside)
             self.mapBtn.alpha = 0
@@ -383,7 +419,7 @@ class TripView: NSObject, UICollectionViewDelegateFlowLayout, UICollectionViewDe
         
     }
     
-    //ACTION
+    //MARK: ACTION
     @objc func showAction(_ sender: UIButton){
         
         switch sender.tag{
@@ -395,14 +431,14 @@ class TripView: NSObject, UICollectionViewDelegateFlowLayout, UICollectionViewDe
                 }
                 self.mapBtn.alpha = 1
                 
-                self.addBookmark.frame.origin.x -= 55
-                self.addBookmark.frame.origin.y += 5
+                self.addBookmark.frame.origin.x = sender.frame.origin.x - 55
+                self.addBookmark.frame.origin.y = sender.frame.origin.y + 5
                 
-                self.shareBtn.frame.origin.x -= 30
-                self.shareBtn.frame.origin.y += 40
+                self.shareBtn.frame.origin.x = sender.frame.origin.x - 30
+                self.shareBtn.frame.origin.y = sender.frame.origin.y + 40
                 
-                self.mapBtn.frame.origin.x += 10
-                self.mapBtn.frame.origin.y += 55
+                self.mapBtn.frame.origin.x = sender.frame.origin.x + 10
+                self.mapBtn.frame.origin.y = sender.frame.origin.y + 55
                 
                 self.actionBtn.transform = CGAffineTransform(rotationAngle: 2 * CGFloat.pi / 4)
             }, completion: nil)
@@ -411,14 +447,14 @@ class TripView: NSObject, UICollectionViewDelegateFlowLayout, UICollectionViewDe
             UIView.animate(withDuration: 0.2, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
                 self.actionBtn.transform = CGAffineTransform(rotationAngle: 2 * CGFloat.pi / 2)
                 
-                self.addBookmark.frame.origin.x += 55
-                self.addBookmark.frame.origin.y -= 5
+                self.addBookmark.frame.origin.x = sender.frame.origin.x
+                self.addBookmark.frame.origin.y = sender.frame.origin.y
                 
-                self.shareBtn.frame.origin.x += 30
-                self.shareBtn.frame.origin.y -= 40
+                self.shareBtn.frame.origin.x = sender.frame.origin.x
+                self.shareBtn.frame.origin.y = sender.frame.origin.y
                 
-                self.mapBtn.frame.origin.x -= 10
-                self.mapBtn.frame.origin.y -= 55
+                self.mapBtn.frame.origin.x = sender.frame.origin.x
+                self.mapBtn.frame.origin.y = sender.frame.origin.y
                 
                 self.addBookmark.alpha = 0
                 self.shareBtn.alpha = 0

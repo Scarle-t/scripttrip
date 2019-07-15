@@ -21,7 +21,7 @@ class postView: UIViewController{
     
     //IBACTION
     @IBAction func close(_ sender: UIButton) {
-        tripView?.close()
+//        tripView?.close()
         self.dismiss(animated: true, completion: nil)
     }
     

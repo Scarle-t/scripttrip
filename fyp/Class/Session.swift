@@ -315,7 +315,15 @@ class Session: NSObject, UITableViewDelegate, UITableViewDataSource, FBSDKLoginB
     }
     func reloadUserTable(){
         settings[0] = usr.Fname + " " + usr.Lname
-        Network().getPhoto(url: usr.icon!) { (data, response, error) in
+        guard let img = usr.icon else{
+            iconImg = #imageLiteral(resourceName: "user")
+            usr.iconImage = #imageLiteral(resourceName: "user")
+            DispatchQueue.main.async {
+                self.userTable.reloadData()
+            }
+            return
+        }
+        Network().getPhoto(url: img) { (data, response, error) in
             guard let data = data, error == nil else {return}
             self.iconImg = UIImage(data: data)
             self.usr.iconImage = UIImage(data: data)
@@ -395,6 +403,9 @@ class Session: NSObject, UITableViewDelegate, UITableViewDataSource, FBSDKLoginB
             returnItem.append(trip)
         }
         return returnItem
+    }
+    func clearTrips(){
+        trips.removeAll()
     }
     
     //PLAN PARSER

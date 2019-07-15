@@ -57,11 +57,11 @@ class reg_done: UIViewController, NetworkDelegate {
                 if (item["Result"] as! String) == "OK"{
                     session.parseUser([item["Reason"] as! NSDictionary])
                     DispatchQueue.main.async {
+                        UserDefaults.standard.set(true, forKey: "isReg")
                         let vct = self.storyboard?.instantiateViewController(withIdentifier: "vct") as! UITabBarController
                         self.session.rootNavigationController?.pushViewController(vct, animated: false)
                         self.navigationController?.dismiss(animated: false, completion: nil)
                     }
-//                    UIApplication.shared.keyWindow?.rootViewController!.present(vct, animated: false, completion: nil)
                 }else{
                     SVProgressHUD.showError(withStatus: Localized.failLoginTitle.rawValue.localized() + " " + Localized.failLoginMsg.rawValue.localized())
                     SVProgressHUD.dismiss(withDelay: 1.5)
