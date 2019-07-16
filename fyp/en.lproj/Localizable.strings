@@ -112,6 +112,7 @@
 "removeItemMsg" = "Are you sure you want to remove this item?";
 "historyClearMsg" = "Are you sure you want to clear your history? This cannot be undo!";
 "stopSharingMsg" = "Are you sure you want to stop sharing this plan？ Shared users can no longer access this plan!";
+"logoutMsg" = "Are you sure you want to logout?";
 
 "fun" = "Fun";
 "dining" = "Dining";

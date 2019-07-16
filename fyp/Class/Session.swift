@@ -282,17 +282,22 @@ class Session: NSObject, UITableViewDelegate, UITableViewDataSource, FBSDKLoginB
         
         if loginState == ""{
             if indexPath.section == 3 && indexPath.row == 0{
-                iconImg = nil
-                settings[0] = ""
-                userDefault.set(true, forKey: "shake")
-                userDefault.set(true, forKey: "history")
-                userDefault.set(false, forKey: "isLoggedIn")
-                userDefault.set(false, forKey: "reduceMotion")
-                userDefault.set(true, forKey: "quickAccess")
-//                UIApplication.shared.keyWindow?.rootViewController?.dismiss(animated: false, completion: nil)
-                let userView = UIApplication.shared.keyWindow?.rootViewController?.presentedViewController as! userView
-                userView.logout()
-                return
+                let alert = UIAlertController(title: Localized.logoutMsg.rawValue.localized(), message: nil, preferredStyle: .actionSheet)
+                alert.addAction(UIAlertAction(title: Localized.Yes.rawValue.localized(), style: .destructive, handler: { (_) in
+                    self.iconImg = nil
+                    self.settings[0] = ""
+                    self.userDefault.set(true, forKey: "shake")
+                    self.userDefault.set(true, forKey: "history")
+                    self.userDefault.set(false, forKey: "isLoggedIn")
+                    self.userDefault.set(false, forKey: "reduceMotion")
+                    self.userDefault.set(true, forKey: "quickAccess")
+                    //                UIApplication.shared.keyWindow?.rootViewController?.dismiss(animated: false, completion: nil)
+                    let userView = UIApplication.shared.keyWindow?.rootViewController?.presentedViewController as! userView
+                    userView.logout()
+                    return
+                }))
+                alert.addAction(UIAlertAction(title: Localized.Cancel.rawValue.localized(), style: .cancel, handler: nil))
+                UIApplication.shared.keyWindow?.rootViewController?.presentedViewController?.present(alert, animated: true, completion: nil)
             }
         }
     }

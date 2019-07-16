@@ -113,6 +113,7 @@ enum Localized: String{
     case Licence
     case Disclaimer
     case loginWith
+    case logoutMsg
 }
 
 enum locale: String, CaseIterable{
