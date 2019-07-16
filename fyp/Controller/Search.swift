@@ -16,6 +16,7 @@ class Search: UIViewController, UITableViewDelegate, UITableViewDataSource, UISe
     var results: [Trip]?
     var searchBar: UISearchBar!
     var tripView: TripView!
+    var searchImgs = [Trip : UIImage]()
     let menu = UIButton(frame: CGRect(x: 306, y: 9, width: 45, height: 45))
     
     //IBOUTLET
@@ -32,10 +33,14 @@ class Search: UIViewController, UITableViewDelegate, UITableViewDataSource, UISe
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell()
         
-        guard let trip = results?[indexPath.row] else {return cell}
+        guard let trip = results?[indexPath.row], trip.TID != 0 else {return cell}
         
         cell.textLabel?.text = trip.T_Title
         cell.textLabel?.font = UIFont(name: "AvenirNext-DemiBold", size: 22)
+        network.getPhoto(url: "https://scripttrip.scarletsc.net/img/\(trip.Items[0].I_Image)") { (data, res, err) in
+            guard let d = data, err == nil else {return}
+            self.searchImgs[trip] = UIImage(data: d)
+        }
         
         return cell
     }
@@ -104,6 +109,7 @@ class Search: UIViewController, UITableViewDelegate, UITableViewDataSource, UISe
             }
         }
         tripView.displayTrip = results?[indexPath.row]
+        tripView.headerImg = searchImgs[results![indexPath.row]]
         tripView.show()
         DispatchQueue.main.async {
             let postview = self.storyboard?.instantiateViewController(withIdentifier: "postView") as! postView
@@ -123,6 +129,9 @@ class Search: UIViewController, UITableViewDelegate, UITableViewDataSource, UISe
     }
         //SEARCH
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        search(searchBar)
+    }
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         search(searchBar)
     }
     
@@ -149,8 +158,8 @@ class Search: UIViewController, UITableViewDelegate, UITableViewDataSource, UISe
     
     //FUNC
     func search(_ sender: UISearchBar){
-        view.endEditing(true)
         results?.removeAll()
+        searchImgs.removeAll()
         guard let text = sender.text, text != "" else {
             searchResult.reloadData()
             return

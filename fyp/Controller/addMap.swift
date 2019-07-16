@@ -64,7 +64,7 @@ class addMap: UIViewController, MKMapViewDelegate, UISearchBarDelegate, UITableV
 //                sender.setImage(#imageLiteral(resourceName: "down_tint.png"), for: .normal)
 //            }
             sender.setImage(#imageLiteral(resourceName: "down_tint.png"), for: .normal)
-            UIView.animate(withDuration: slideAnimationTime, delay: slideAnimationDelay, usingSpringWithDamping: 0.7, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
+            UIView.animate(withDuration: slideAnimationTime, delay: slideAnimationDelay, usingSpringWithDamping: 0.9, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
                 self.searchView.frame.origin.y = self.view.bounds.height - self.searchView.frame.height
             }, completion: nil)
             sender.tag = 1
@@ -77,8 +77,8 @@ class addMap: UIViewController, MKMapViewDelegate, UISearchBarDelegate, UITableV
 //                sender.setImage(#imageLiteral(resourceName: "up_tint.png"), for: .normal)
 //            }
             sender.setImage(#imageLiteral(resourceName: "up_tint.png"), for: .normal)
-            UIView.animate(withDuration: slideAnimationTime, delay: slideAnimationDelay, usingSpringWithDamping: 0.7, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
-                self.searchView.frame.origin.y = self.view.bounds.height - 150
+            UIView.animate(withDuration: slideAnimationTime, delay: slideAnimationDelay, usingSpringWithDamping: 0.9, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
+                self.searchView.frame.origin.y = self.view.bounds.height - 75
             }, completion: nil)
             sender.tag = 0
             dismissKb()
@@ -112,6 +112,10 @@ class addMap: UIViewController, MKMapViewDelegate, UISearchBarDelegate, UITableV
 //        } else {
 //            // Fallback on earlier versions
 //        }
+        searchViewBtn.setImage(#imageLiteral(resourceName: "up_tint.png"), for: .normal)
+        UIView.animate(withDuration: slideAnimationTime, delay: slideAnimationDelay, usingSpringWithDamping: 0.9, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
+            self.searchView.frame.origin.y = self.view.bounds.height - 75
+        }, completion: nil)
         searchViewBtn.tag = 0
         dismissKb()
         mkAnno(location: feedItems![indexPath.row].placemark.coordinate)
@@ -208,6 +212,10 @@ class addMap: UIViewController, MKMapViewDelegate, UISearchBarDelegate, UITableV
 //            } else {
 //                // Fallback on earlier versions
 //            }
+            searchViewBtn.setImage(#imageLiteral(resourceName: "down_tint.png"), for: .normal)
+            UIView.animate(withDuration: slideAnimationTime, delay: slideAnimationDelay, usingSpringWithDamping: 0.9, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
+                self.searchView.frame.origin.y = self.view.bounds.height - self.searchView.frame.height
+            }, completion: nil)
         }
     }
     
@@ -250,7 +258,7 @@ class addMap: UIViewController, MKMapViewDelegate, UISearchBarDelegate, UITableV
     }
     
     func layout(){
-        searchView.frame.origin.y = view.bounds.height - 150
+        searchView.frame.origin.y = view.bounds.height - 75
         searchView.layer.cornerRadius = 12
         if #available(iOS 11.0, *) {
             searchView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]

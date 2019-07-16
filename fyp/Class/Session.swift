@@ -99,6 +99,7 @@ class Session: NSObject, UITableViewDelegate, UITableViewDataSource, FBSDKLoginB
         userTable.dataSource = self
         
         userTable.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        userTable.backgroundColor = .white
         userIcon.image = #imageLiteral(resourceName: "user")
         userIcon.contentMode = .scaleAspectFill
     }

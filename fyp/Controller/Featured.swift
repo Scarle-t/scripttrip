@@ -427,15 +427,20 @@ class Featured: UIViewController, UICollectionViewDataSource, UICollectionViewDe
                 tripView.displayTrip = trip
                 tripView.headerImg = imgs[trip]
                 tripView.show()
-                DispatchQueue.main.async {
-                    if #available(iOS 13.0, *) {
-                        let postview = self.storyboard?.instantiateViewController(withIdentifier: "postView") as! postView
-                        postview.tripView = self.tripView
-                        self.present(postview, animated: true, completion: nil)
-                    } else {
-                        // Fallback on earlier versions
-                    }
-                }
+                let postview = self.storyboard?.instantiateViewController(withIdentifier: "postView") as! postView
+                let postViewNC = self.storyboard?.instantiateViewController(withIdentifier: "postViewNC") as! UINavigationController
+                postview.tripView = self.tripView
+                postViewNC.addChild(postview)
+                self.present(postViewNC, animated: true, completion: nil)
+//                DispatchQueue.main.async {
+//                    if #available(iOS 13.0, *) {
+//                        let postview = self.storyboard?.instantiateViewController(withIdentifier: "postView") as! postView
+//                        postview.tripView = self.tripView
+//                        self.present(postview, animated: true, completion: nil)
+//                    } else {
+//                        // Fallback on earlier versions
+//                    }
+//                }
             }
         }
         
