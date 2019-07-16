@@ -7,7 +7,7 @@
 */
 "system" = "System Default";
 "en" = "English";
-"zhHK" = "Chinese (Hong Kong)";
+"zhHK" = "中文（香港）";
 "ja" = "Japanese";
 
 "resetTitle" = "Please enter your email and new password to reset";

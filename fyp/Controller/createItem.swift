@@ -110,11 +110,14 @@ class createItem: UIViewController, NetworkDelegate{
     
     func layout(){
         
-        if #available(iOS 13.0, *){
-        }else{
-            save.setImage(#imageLiteral(resourceName: "small_tick_tint"), for: .normal)
-            closeCancel.setImage(#imageLiteral(resourceName: "cross_tint"), for: .normal)
-        }
+//        if #available(iOS 13.0, *){
+//        }else{
+//            save.setImage(#imageLiteral(resourceName: "small_tick_tint"), for: .normal)
+//            closeCancel.setImage(#imageLiteral(resourceName: "cross_tint"), for: .normal)
+//        }
+        
+        save.setImage(#imageLiteral(resourceName: "small_tick_tint"), for: .normal)
+        closeCancel.setImage(#imageLiteral(resourceName: "cross_tint"), for: .normal)
         
         let toolBar = UIToolbar()
         let spaceButton = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)

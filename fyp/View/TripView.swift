@@ -183,12 +183,13 @@ class TripView: NSObject, UICollectionViewDelegateFlowLayout, UICollectionViewDe
         header.close.setImage(#imageLiteral(resourceName: "cross_tint"), for: .normal)
         header.close.addTarget(self, action: #selector(hide), for: .touchUpInside)
         
-        if #available(iOS 13.0, *) {
-            header.close.backgroundColor = .systemBackground
-        } else {
-            //fallback statements
-            header.close.backgroundColor = .white
-        }
+//        if #available(iOS 13.0, *) {
+//            header.close.backgroundColor = .systemBackground
+//        } else {
+//            //fallback statements
+//            header.close.backgroundColor = .white
+//        }
+        header.close.backgroundColor = .white
         
         header.close.layer.shadowOpacity = 0.7
         header.close.layer.shadowColor = UIColor.lightGray.cgColor
@@ -317,12 +318,13 @@ class TripView: NSObject, UICollectionViewDelegateFlowLayout, UICollectionViewDe
             self.contents.register(secondaryContent.self, forCellWithReuseIdentifier: "otherContent")
             self.contents.register(contentTitle.self, forCellWithReuseIdentifier: "contentTitle")
             self.contents.register(contentHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "header")
-            if #available(iOS 13.0, *) {
-                self.contents.backgroundColor = .systemBackground
-            } else {
-                // Fallback on earlier versions
-                self.contents.backgroundColor = .white
-            }
+//            if #available(iOS 13.0, *) {
+//                self.contents.backgroundColor = .systemBackground
+//            } else {
+//                // Fallback on earlier versions
+//                self.contents.backgroundColor = .white
+//            }
+            self.contents.backgroundColor = .white
             self.contents.alwaysBounceVertical = true
             
             self.view.frame = CGRect(x: 0, y: 75, width: (self.window?.frame.width)!, height: (self.window?.frame.height)! - 75)
@@ -337,29 +339,37 @@ class TripView: NSObject, UICollectionViewDelegateFlowLayout, UICollectionViewDe
             
             self.contents.frame = self.view.frame
             
-            if #available(iOS 13.0, *){
-                self.actionBtn.tintColor = darkGreen
-                self.shareBtn.tintColor = darkGreen
-                self.addBookmark.tintColor = darkGreen
-                self.mapBtn.tintColor = darkGreen
-                self.addBookmark.setImage(UIImage(systemName: "plus"), for: .normal)
-                self.actionBtn.setImage(UIImage(systemName: "ellipsis"), for: .normal)
-                self.shareBtn.setImage(UIImage(systemName: "square.and.arrow.up"), for: .normal)
-                self.mapBtn.setImage(UIImage(systemName: "map"), for: .normal)
-                self.addBookmark.backgroundColor = .systemBackground
-                self.actionBtn.backgroundColor = .systemBackground
-                self.shareBtn.backgroundColor = .systemBackground
-                self.mapBtn.backgroundColor = .systemBackground
-            }else{
-                self.actionBtn.setImage(#imageLiteral(resourceName: "more_tint"), for: .normal)
-                self.shareBtn.setImage(#imageLiteral(resourceName: "action_tint"), for: .normal)
-                self.addBookmark.setImage(#imageLiteral(resourceName: "plus_tint"), for: .normal)
-                self.mapBtn.setImage(#imageLiteral(resourceName: "bigMap.pdf"), for: .normal)
-                self.addBookmark.backgroundColor = .white
-                self.actionBtn.backgroundColor = .white
-                self.shareBtn.backgroundColor = .white
-                self.mapBtn.backgroundColor = .white
-            }
+//            if #available(iOS 13.0, *){
+//                self.actionBtn.tintColor = darkGreen
+//                self.shareBtn.tintColor = darkGreen
+//                self.addBookmark.tintColor = darkGreen
+//                self.mapBtn.tintColor = darkGreen
+//                self.addBookmark.setImage(UIImage(systemName: "plus"), for: .normal)
+//                self.actionBtn.setImage(UIImage(systemName: "ellipsis"), for: .normal)
+//                self.shareBtn.setImage(UIImage(systemName: "square.and.arrow.up"), for: .normal)
+//                self.mapBtn.setImage(UIImage(systemName: "map"), for: .normal)
+//                self.addBookmark.backgroundColor = .systemBackground
+//                self.actionBtn.backgroundColor = .systemBackground
+//                self.shareBtn.backgroundColor = .systemBackground
+//                self.mapBtn.backgroundColor = .systemBackground
+//            }else{
+//                self.actionBtn.setImage(#imageLiteral(resourceName: "more_tint"), for: .normal)
+//                self.shareBtn.setImage(#imageLiteral(resourceName: "action_tint"), for: .normal)
+//                self.addBookmark.setImage(#imageLiteral(resourceName: "plus_tint"), for: .normal)
+//                self.mapBtn.setImage(#imageLiteral(resourceName: "bigMap.pdf"), for: .normal)
+//                self.addBookmark.backgroundColor = .white
+//                self.actionBtn.backgroundColor = .white
+//                self.shareBtn.backgroundColor = .white
+//                self.mapBtn.backgroundColor = .white
+//            }
+            self.actionBtn.setImage(#imageLiteral(resourceName: "more_tint"), for: .normal)
+            self.shareBtn.setImage(#imageLiteral(resourceName: "action_tint"), for: .normal)
+            self.addBookmark.setImage(#imageLiteral(resourceName: "plus_tint"), for: .normal)
+            self.mapBtn.setImage(#imageLiteral(resourceName: "bigMap.pdf"), for: .normal)
+            self.addBookmark.backgroundColor = .white
+            self.actionBtn.backgroundColor = .white
+            self.shareBtn.backgroundColor = .white
+            self.mapBtn.backgroundColor = .white
             self.actionBtn.frame = CGRect(x: self.window!.frame.maxX - 50, y: 17, width: 35, height: 35)
             self.actionBtn.layer.cornerRadius = 35 / 2
             self.actionBtn.addTarget(self, action: #selector(self.showAction(_:)), for: .touchUpInside)

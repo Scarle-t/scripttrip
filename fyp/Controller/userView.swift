@@ -40,13 +40,16 @@ class userView: UIViewController{
         session.delegate = self
         session.updateFrame()
         closeBtn.layer.cornerRadius = 30/2
-        if #available(iOS 13.0, *){
-            closeBtn.frame.origin.y -= 10
-        }else{
-            self.view.backgroundColor = .white
-            closeBtn.frame.origin.y += 10
-            closeBtn.setImage(#imageLiteral(resourceName: "cross_tint"), for: .normal)
-        }
+//        if #available(iOS 13.0, *){
+//            closeBtn.frame.origin.y -= 10
+//        }else{
+//            self.view.backgroundColor = .white
+//            closeBtn.frame.origin.y += 10
+//            closeBtn.setImage(#imageLiteral(resourceName: "cross_tint"), for: .normal)
+//        }
+        self.view.backgroundColor = .white
+        closeBtn.frame.origin.y += 10
+        closeBtn.setImage(#imageLiteral(resourceName: "cross_tint"), for: .normal)
         uv.addSubview(session.userTable)
     }
     

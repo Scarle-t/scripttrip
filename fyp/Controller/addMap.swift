@@ -57,24 +57,26 @@ class addMap: UIViewController, MKMapViewDelegate, UISearchBarDelegate, UITableV
     @IBAction func showMenu(_ sender: UIButton) {
         switch sender.tag{
         case 0:
-            if #available(iOS 13.0, *) {
-                sender.setImage(UIImage(systemName: "chevron.down.square.fill"), for: .normal)
-            } else {
-                // Fallback on earlier versions
-                sender.setImage(#imageLiteral(resourceName: "down_tint.png"), for: .normal)
-            }
+//            if #available(iOS 13.0, *) {
+//                sender.setImage(UIImage(systemName: "chevron.down.square.fill"), for: .normal)
+//            } else {
+//                // Fallback on earlier versions
+//                sender.setImage(#imageLiteral(resourceName: "down_tint.png"), for: .normal)
+//            }
+            sender.setImage(#imageLiteral(resourceName: "down_tint.png"), for: .normal)
             UIView.animate(withDuration: slideAnimationTime, delay: slideAnimationDelay, usingSpringWithDamping: 0.7, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
                 self.searchView.frame.origin.y = self.view.bounds.height - self.searchView.frame.height
             }, completion: nil)
             sender.tag = 1
             search.becomeFirstResponder()
         case 1:
-            if #available(iOS 13.0, *) {
-                sender.setImage(UIImage(systemName: "chevron.up.square.fill"), for: .normal)
-            } else {
-                // Fallback on earlier versions
-                sender.setImage(#imageLiteral(resourceName: "up_tint.png"), for: .normal)
-            }
+//            if #available(iOS 13.0, *) {
+//                sender.setImage(UIImage(systemName: "chevron.up.square.fill"), for: .normal)
+//            } else {
+//                // Fallback on earlier versions
+//                sender.setImage(#imageLiteral(resourceName: "up_tint.png"), for: .normal)
+//            }
+            sender.setImage(#imageLiteral(resourceName: "up_tint.png"), for: .normal)
             UIView.animate(withDuration: slideAnimationTime, delay: slideAnimationDelay, usingSpringWithDamping: 0.7, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
                 self.searchView.frame.origin.y = self.view.bounds.height - 150
             }, completion: nil)
@@ -102,14 +104,14 @@ class addMap: UIViewController, MKMapViewDelegate, UISearchBarDelegate, UITableV
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.cellForRow(at: indexPath)?.setSelected(false, animated: false)
-        if #available(iOS 13.0, *) {
-            searchViewBtn.setImage(UIImage(systemName: "chevron.up.square.fill"), for: .normal)
-            UIView.animate(withDuration: slideAnimationTime, delay: slideAnimationDelay, usingSpringWithDamping: 0.7, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
-                self.searchView.frame.origin.y = self.view.bounds.height - 150
-            }, completion: nil)
-        } else {
-            // Fallback on earlier versions
-        }
+//        if #available(iOS 13.0, *) {
+//            searchViewBtn.setImage(UIImage(systemName: "chevron.up.square.fill"), for: .normal)
+//            UIView.animate(withDuration: slideAnimationTime, delay: slideAnimationDelay, usingSpringWithDamping: 0.7, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
+//                self.searchView.frame.origin.y = self.view.bounds.height - 150
+//            }, completion: nil)
+//        } else {
+//            // Fallback on earlier versions
+//        }
         searchViewBtn.tag = 0
         dismissKb()
         mkAnno(location: feedItems![indexPath.row].placemark.coordinate)
@@ -133,15 +135,17 @@ class addMap: UIViewController, MKMapViewDelegate, UISearchBarDelegate, UITableV
         cancelBtn.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
         confirmBtn.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
         
-        if #available(iOS 13.0, *){
-            confirmBtn.setImage(UIImage(systemName: "checkmark.circle"), for: .normal)
-            cancelBtn.setImage(UIImage(systemName: "xmark.circle"), for: .normal)
-            confirmBtn.tintColor = darkGreen
-            cancelBtn.tintColor = darkGreen
-        }else{
-            confirmBtn.setImage(#imageLiteral(resourceName: "small_tick_tint"), for: .normal)
-            cancelBtn.setImage(#imageLiteral(resourceName: "cross_tint.png"), for: .normal)
-        }
+//        if #available(iOS 13.0, *){
+//            confirmBtn.setImage(UIImage(systemName: "checkmark.circle"), for: .normal)
+//            cancelBtn.setImage(UIImage(systemName: "xmark.circle"), for: .normal)
+//            confirmBtn.tintColor = darkGreen
+//            cancelBtn.tintColor = darkGreen
+//        }else{
+//            confirmBtn.setImage(#imageLiteral(resourceName: "small_tick_tint"), for: .normal)
+//            cancelBtn.setImage(#imageLiteral(resourceName: "cross_tint.png"), for: .normal)
+//        }
+        confirmBtn.setImage(#imageLiteral(resourceName: "small_tick_tint"), for: .normal)
+        cancelBtn.setImage(#imageLiteral(resourceName: "cross_tint.png"), for: .normal)
         
         confirmBtn.addTarget(self, action: #selector(confirmPin(_:)), for: .touchUpInside)
         cancelBtn.addTarget(self, action: #selector(cancelPin(_:)), for: .touchUpInside)
@@ -196,14 +200,14 @@ class addMap: UIViewController, MKMapViewDelegate, UISearchBarDelegate, UITableV
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
         if searchViewBtn.tag == 0{
             searchViewBtn.tag = 1
-            if #available(iOS 13.0, *) {
-                searchViewBtn.setImage(UIImage(systemName: "chevron.down.square.fill"), for: .normal)
-                UIView.animate(withDuration: slideAnimationTime, delay: slideAnimationDelay, usingSpringWithDamping: 0.7, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
-                    self.searchView.frame.origin.y = self.view.bounds.height - self.searchView.frame.height
-                }, completion: nil)
-            } else {
-                // Fallback on earlier versions
-            }
+//            if #available(iOS 13.0, *) {
+//                searchViewBtn.setImage(UIImage(systemName: "chevron.down.square.fill"), for: .normal)
+//                UIView.animate(withDuration: slideAnimationTime, delay: slideAnimationDelay, usingSpringWithDamping: 0.7, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
+//                    self.searchView.frame.origin.y = self.view.bounds.height - self.searchView.frame.height
+//                }, completion: nil)
+//            } else {
+//                // Fallback on earlier versions
+//            }
         }
     }
     
@@ -269,12 +273,16 @@ class addMap: UIViewController, MKMapViewDelegate, UISearchBarDelegate, UITableV
             }
         }
         
-        if #available(iOS 13.0, *){
-        }else{
-            saveBtn.setImage(#imageLiteral(resourceName: "small_tick_tint"), for: .normal)
-            closeCancel.setImage(#imageLiteral(resourceName: "cross_tint"), for: .normal)
-            searchViewBtn.setImage(#imageLiteral(resourceName: "up_tint.png"), for: .normal)
-        }
+//        if #available(iOS 13.0, *){
+//        }else{
+//            saveBtn.setImage(#imageLiteral(resourceName: "small_tick_tint"), for: .normal)
+//            closeCancel.setImage(#imageLiteral(resourceName: "cross_tint"), for: .normal)
+//            searchViewBtn.setImage(#imageLiteral(resourceName: "up_tint.png"), for: .normal)
+//        }
+        
+        saveBtn.setImage(#imageLiteral(resourceName: "small_tick_tint"), for: .normal)
+        closeCancel.setImage(#imageLiteral(resourceName: "cross_tint"), for: .normal)
+        searchViewBtn.setImage(#imageLiteral(resourceName: "up_tint.png"), for: .normal)
         
         map.fillSuperview()
         self.navigationController?.interactivePopGestureRecognizer?.isEnabled = false

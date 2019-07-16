@@ -142,26 +142,34 @@ class Session: NSObject, UITableViewDelegate, UITableViewDataSource, FBSDKLoginB
             }
             cell.backgroundColor = UIColor.clear
             
-            if #available(iOS 13.0, *) {
-                if indexPath.row == 1{
-                    cell.tintColor = darkGreen
-                    cell.accessoryView = UIImageView(image: UIImage(systemName: "bookmark"))
-                }else if indexPath.row == 2{
-                    cell.accessoryView = UIImageView(image: UIImage(systemName: "clock"))
-                    cell.tintColor = darkGreen
-                }else if indexPath.row == 3{
-                    cell.accessoryView = UIImageView(image: UIImage(systemName: "doc.richtext"))
-                    cell.tintColor = darkGreen
-                }
-            } else {
-                // Fallback on earlier versions
-                if indexPath.row == 1{
-                    cell.accessoryView = UIImageView(image: #imageLiteral(resourceName: "bookmark_pdf"))
-                }else if indexPath.row == 2{
-                    cell.accessoryView = UIImageView(image: #imageLiteral(resourceName: "history_pdf"))
-                }else if indexPath.row == 3{
-                    cell.accessoryView = UIImageView(image: #imageLiteral(resourceName: "plan.png"))
-                }
+//            if #available(iOS 13.0, *) {
+//                if indexPath.row == 1{
+//                    cell.tintColor = darkGreen
+//                    cell.accessoryView = UIImageView(image: UIImage(systemName: "bookmark"))
+//                }else if indexPath.row == 2{
+//                    cell.accessoryView = UIImageView(image: UIImage(systemName: "clock"))
+//                    cell.tintColor = darkGreen
+//                }else if indexPath.row == 3{
+//                    cell.accessoryView = UIImageView(image: UIImage(systemName: "doc.richtext"))
+//                    cell.tintColor = darkGreen
+//                }
+//            } else {
+//                // Fallback on earlier versions
+//                if indexPath.row == 1{
+//                    cell.accessoryView = UIImageView(image: #imageLiteral(resourceName: "bookmark_pdf"))
+//                }else if indexPath.row == 2{
+//                    cell.accessoryView = UIImageView(image: #imageLiteral(resourceName: "history_pdf"))
+//                }else if indexPath.row == 3{
+//                    cell.accessoryView = UIImageView(image: #imageLiteral(resourceName: "plan.png"))
+//                }
+//            }
+            
+            if indexPath.row == 1{
+                cell.accessoryView = UIImageView(image: #imageLiteral(resourceName: "bookmark_pdf"))
+            }else if indexPath.row == 2{
+                cell.accessoryView = UIImageView(image: #imageLiteral(resourceName: "history_pdf"))
+            }else if indexPath.row == 3{
+                cell.accessoryView = UIImageView(image: #imageLiteral(resourceName: "plan.png"))
             }
             
             return cell
@@ -208,12 +216,13 @@ class Session: NSObject, UITableViewDelegate, UITableViewDataSource, FBSDKLoginB
             cell.backgroundColor = .clear
             cell.textLabel?.textAlignment = .center
             cell.textLabel?.font = UIFont(name: "AvenirNext-Medium", size: 12)
-            if #available(iOS 13.0, *) {
-                cell.textLabel?.textColor = .systemGray
-            } else {
-                // Fallback on earlier versions
-                cell.textLabel?.textColor = .darkGray
-            }
+//            if #available(iOS 13.0, *) {
+//                cell.textLabel?.textColor = .systemGray
+//            } else {
+//                // Fallback on earlier versions
+//                cell.textLabel?.textColor = .darkGray
+//            }
+            cell.textLabel?.textColor = .darkGray
             cell.textLabel?.text = "Version " + (Bundle.main.infoDictionary!["CFBundleShortVersionString"] as! String) + " (" + (Bundle.main.infoDictionary!["CFBundleVersion"] as! String) + ")"
             
             return cell
@@ -306,9 +315,10 @@ class Session: NSObject, UITableViewDelegate, UITableViewDataSource, FBSDKLoginB
         settings[1] = Localized.bookmarks.rawValue.localized()
         settings[2] = Localized.history.rawValue.localized()
         settings[3] = Localized.plans.rawValue.localized()
-        settings[4] = Localized.accountSettings.rawValue.localized()
-        settings[5] = Localized.deviceSettings.rawValue.localized()
-        settings[6] = Localized.about.rawValue.localized()
+        settings[4] = Localized.Settings.rawValue.localized()
+        settings[5] = Localized.about.rawValue.localized()
+        settings[6] = Localized.Licence.rawValue.localized()
+        settings[7] = Localized.Disclaimer.rawValue.localized()
         DispatchQueue.main.async {
             self.userTable.reloadData()
         }

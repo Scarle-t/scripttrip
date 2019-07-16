@@ -59,12 +59,13 @@ class Search: UIViewController, UITableViewDelegate, UITableViewDataSource, UISe
         searchBar.isTranslucent = false
         searchBar.showsScopeBar = true
         searchBar.tintColor = darkGreen
-        if #available(iOS 13.0, *) {
-            searchBar.barTintColor = .systemBackground
-        } else {
-            // Fallback on earlier versions
-            searchBar.barTintColor = .white
-        }
+//        if #available(iOS 13.0, *) {
+//            searchBar.barTintColor = .systemBackground
+//        } else {
+//            // Fallback on earlier versions
+//            searchBar.barTintColor = .white
+//        }
+        searchBar.barTintColor = .white
         searchBar.searchBarStyle = .minimal
         searchBar.scopeButtonTitles = [Localized.searchTrip.rawValue.localized(), Localized.searchLocation.rawValue.localized()]
         searchBar.placeholder = Localized.searchPH.rawValue.localized()
@@ -78,12 +79,13 @@ class Search: UIViewController, UITableViewDelegate, UITableViewDataSource, UISe
             }
         }
         
-        if #available(iOS 13.0, *) {
-            header.backgroundColor = .systemBackground
-        } else {
-            // Fallback on earlier versions
-            header.backgroundColor = .white
-        }
+//        if #available(iOS 13.0, *) {
+//            header.backgroundColor = .systemBackground
+//        } else {
+//            // Fallback on earlier versions
+//            header.backgroundColor = .white
+//        }
+        header.backgroundColor = .white
         
         header.addSubview(text)
         header.addSubview(menu)

@@ -36,7 +36,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>$(CURRENT_PROJECT_VERSION)</string>
+	<string>188</string>
 	<key>FacebookAppID</key>
 	<string>603090453493938</string>
 	<key>FacebookDisplayName</key>

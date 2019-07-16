@@ -115,12 +115,13 @@ class Explore: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, U
         img.frame = CGRect(x: 0, y: 0, width: 55, height: 55)
         
         var tick = UIImageView()
-        if #available(iOS 13.0, *){
-            tick = UIImageView(image: UIImage(systemName: "checkmark.circle.fill"))
-            tick.tintColor = darkGreen
-        }else{
-            tick = UIImageView(image: #imageLiteral(resourceName: "small_tick_tint"))
-        }
+//        if #available(iOS 13.0, *){
+//            tick = UIImageView(image: UIImage(systemName: "checkmark.circle.fill"))
+//            tick.tintColor = darkGreen
+//        }else{
+//            tick = UIImageView(image: #imageLiteral(resourceName: "small_tick_tint"))
+//        }
+        tick = UIImageView(image: #imageLiteral(resourceName: "small_tick_tint"))
         
         tick.frame = CGRect(x: 0, y: 0, width: 40, height: 40)
         
@@ -147,12 +148,13 @@ class Explore: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, U
             cell?.accessoryView = img
         }else{
             var tick = UIImageView()
-            if #available(iOS 13.0, *){
-                tick = UIImageView(image: UIImage(systemName: "checkmark.circle.fill"))
-                tick.tintColor = darkGreen
-            }else{
-                tick = UIImageView(image: #imageLiteral(resourceName: "small_tick_tint"))
-            }
+//            if #available(iOS 13.0, *){
+//                tick = UIImageView(image: UIImage(systemName: "checkmark.circle.fill"))
+//                tick.tintColor = darkGreen
+//            }else{
+//                tick = UIImageView(image: #imageLiteral(resourceName: "small_tick_tint"))
+//            }
+            tick = UIImageView(image: #imageLiteral(resourceName: "small_tick_tint"))
             tick.frame = CGRect(x: 0, y: 0, width: 55, height: 55)
             filters.insert(id)
             cell?.accessoryView = tick
@@ -456,12 +458,13 @@ class Explore: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, U
         originalFilterMenuY = self.view.frame.maxY - filterMenu.frame.height
         
         let header = UIView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: 62))
-        if #available(iOS 13.0, *) {
-            header.backgroundColor = .systemBackground
-        } else {
-            // Fallback on earlier versions
-            header.backgroundColor = .white
-        }
+//        if #available(iOS 13.0, *) {
+//            header.backgroundColor = .systemBackground
+//        } else {
+//            // Fallback on earlier versions
+//            header.backgroundColor = .white
+//        }
+        header.backgroundColor = .white
         
         menu.setImage(session.usr.iconImage, for: .normal)
         menu.addTarget(self, action: #selector(userMenu(_:)), for: .touchUpInside)
@@ -505,13 +508,17 @@ class Explore: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, U
             // Fallback on earlier versions
         }
         
-        if #available(iOS 13.0, *){
-        }else{
-            filterBtn.setImage(#imageLiteral(resourceName: "filter"), for: .normal)
-            listCloseBtn.setImage(#imageLiteral(resourceName: "cross_tint"), for: .normal)
-            listFilterBtn.setImage(#imageLiteral(resourceName: "filter"), for: .normal)
-            closeBtn.setImage(#imageLiteral(resourceName: "cross_tint"), for: .normal)
-        }
+//        if #available(iOS 13.0, *){
+//        }else{
+//            filterBtn.setImage(#imageLiteral(resourceName: "filter"), for: .normal)
+//            listCloseBtn.setImage(#imageLiteral(resourceName: "cross_tint"), for: .normal)
+//            listFilterBtn.setImage(#imageLiteral(resourceName: "filter"), for: .normal)
+//            closeBtn.setImage(#imageLiteral(resourceName: "cross_tint"), for: .normal)
+//        }
+        filterBtn.setImage(#imageLiteral(resourceName: "filter"), for: .normal)
+        listCloseBtn.setImage(#imageLiteral(resourceName: "cross_tint"), for: .normal)
+        listFilterBtn.setImage(#imageLiteral(resourceName: "filter"), for: .normal)
+        closeBtn.setImage(#imageLiteral(resourceName: "cross_tint"), for: .normal)
         
     }
     

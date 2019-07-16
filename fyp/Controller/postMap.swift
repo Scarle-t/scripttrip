@@ -197,15 +197,18 @@ class postMap: UIViewController, MKMapViewDelegate, UITableViewDelegate, UITable
         } else {
             // Fallback on earlier versions
         }
-        if #available(iOS 13.0, *){
-            menu.tintColor = darkGreen
-            menu.setImage(UIImage(systemName: "line.horizontal.3"), for: .normal)
-            menu.backgroundColor = .systemBackground
-        }else{
-            menu.setImage(#imageLiteral(resourceName: "more_tint.pdf"), for: .normal)
-            menu.backgroundColor = .white
-            closeBtn.setImage(#imageLiteral(resourceName: "left_tint.png"), for: .normal)
-        }
+//        if #available(iOS 13.0, *){
+//            menu.tintColor = darkGreen
+//            menu.setImage(UIImage(systemName: "line.horizontal.3"), for: .normal)
+//            menu.backgroundColor = .systemBackground
+//        }else{
+//            menu.setImage(#imageLiteral(resourceName: "more_tint.pdf"), for: .normal)
+//            menu.backgroundColor = .white
+//            closeBtn.setImage(#imageLiteral(resourceName: "left_tint.png"), for: .normal)
+//        }
+        menu.setImage(#imageLiteral(resourceName: "more_tint.pdf"), for: .normal)
+        menu.backgroundColor = .white
+        closeBtn.setImage(#imageLiteral(resourceName: "left_tint.png"), for: .normal)
         view.addSubview(menu)
         
     }

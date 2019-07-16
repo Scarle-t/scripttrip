@@ -95,10 +95,11 @@ class CategoryTrip: UIViewController, UICollectionViewDelegate, UICollectionView
             
             header.title.text = "\(cateEnum.init(rawValue: selectedCategory!.CID)!)".localized()
             
-            if #available(iOS 13.0, *){
-            }else{
-                header.close.setImage(#imageLiteral(resourceName: "left_tint.png"), for: .normal)
-            }
+//            if #available(iOS 13.0, *){
+//            }else{
+//                header.close.setImage(#imageLiteral(resourceName: "left_tint.png"), for: .normal)
+//            }
+            header.close.setImage(#imageLiteral(resourceName: "left_tint.png"), for: .normal)
             
             return header
             

@@ -40,14 +40,16 @@ class Profile: UITableViewController, UIImagePickerControllerDelegate, UINavigat
         if sender.tag == -1{
             sender.tag = 0
             right.tag = 0
-            if #available(iOS 13.0, *) {
-                right.image = UIImage(systemName: "pencil.circle")
-                sender.image = UIImage(systemName: "checkmark.circle")
-            } else {
-                // Fallback on earlier versions
-                right.image = #imageLiteral(resourceName: "Edit_pdf")
-                sender.image = #imageLiteral(resourceName: "small_tick_pdf")
-            }
+//            if #available(iOS 13.0, *) {
+//                right.image = UIImage(systemName: "pencil.circle")
+//                sender.image = UIImage(systemName: "checkmark.circle")
+//            } else {
+//                // Fallback on earlier versions
+//                right.image = #imageLiteral(resourceName: "Edit_pdf")
+//                sender.image = #imageLiteral(resourceName: "small_tick_pdf")
+//            }
+            right.image = #imageLiteral(resourceName: "Edit_pdf")
+            sender.image = #imageLiteral(resourceName: "small_tick_pdf")
             fname.layer.shadowOpacity = 0
             lname.layer.shadowOpacity = 0
             fname.isUserInteractionEnabled = false
@@ -68,28 +70,32 @@ class Profile: UITableViewController, UIImagePickerControllerDelegate, UINavigat
             imageSelector.isEnabled = true
             sender.tag = -1
             left.tag = -1
-            if #available(iOS 13.0, *) {
-                left.image = UIImage(systemName: "xmark.circle")
-                sender.image = UIImage(systemName: "checkmark.circle")
-            } else {
-                // Fallback on earlier versions
-                left.image = #imageLiteral(resourceName: "small_cross_pdf")
-                sender.image = #imageLiteral(resourceName: "small_tick_pdf")
-            }
+//            if #available(iOS 13.0, *) {
+//                left.image = UIImage(systemName: "xmark.circle")
+//                sender.image = UIImage(systemName: "checkmark.circle")
+//            } else {
+//                // Fallback on earlier versions
+//                left.image = #imageLiteral(resourceName: "small_cross_pdf")
+//                sender.image = #imageLiteral(resourceName: "small_tick_pdf")
+//            }
+            left.image = #imageLiteral(resourceName: "small_cross_pdf")
+            sender.image = #imageLiteral(resourceName: "small_tick_pdf")
             return
         }
         
         if sender.tag == -1{
             sender.tag = 0
             left.tag = 0
-            if #available(iOS 13.0, *) {
-                left.image = UIImage(systemName: "checkmark.circle")
-                sender.image = UIImage(systemName: "pencil.circle")
-            } else {
-                // Fallback on earlier versions
-                sender.image = #imageLiteral(resourceName: "Edit_pdf")
-                left.image = #imageLiteral(resourceName: "small_tick_pdf")
-            }
+//            if #available(iOS 13.0, *) {
+//                left.image = UIImage(systemName: "checkmark.circle")
+//                sender.image = UIImage(systemName: "pencil.circle")
+//            } else {
+//                // Fallback on earlier versions
+//                sender.image = #imageLiteral(resourceName: "Edit_pdf")
+//                left.image = #imageLiteral(resourceName: "small_tick_pdf")
+//            }
+            sender.image = #imageLiteral(resourceName: "Edit_pdf")
+            left.image = #imageLiteral(resourceName: "small_tick_pdf")
             fname.layer.shadowOpacity = 0
             lname.layer.shadowOpacity = 0
             fname.isUserInteractionEnabled = false
@@ -314,14 +320,16 @@ class Profile: UITableViewController, UIImagePickerControllerDelegate, UINavigat
             //fallback statements
         }
         
-        if #available(iOS 13.0, *){
-            userIDText.textColor = .systemGray
-        }else{
-            userIDText.textColor = .gray
-            right.image = #imageLiteral(resourceName: "Edit_pdf")
-            left.image = #imageLiteral(resourceName: "small_cross_pdf")
-        }
-        
+//        if #available(iOS 13.0, *){
+//            userIDText.textColor = .systemGray
+//        }else{
+//            userIDText.textColor = .gray
+//            right.image = #imageLiteral(resourceName: "Edit_pdf")
+//            left.image = #imageLiteral(resourceName: "small_cross_pdf")
+//        }
+        userIDText.textColor = .gray
+        right.image = #imageLiteral(resourceName: "Edit_pdf")
+        left.image = #imageLiteral(resourceName: "small_cross_pdf")
     }
     
     //VIEW CONTROLLER

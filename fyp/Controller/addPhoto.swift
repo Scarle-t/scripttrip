@@ -133,11 +133,13 @@ class addPhoto: UIViewController, UIImagePickerControllerDelegate, UINavigationC
     
     func layout(){
         
-        if #available(iOS 13.0, *){
-        }else{
-            save.setImage(#imageLiteral(resourceName: "small_tick_tint"), for: .normal)
-            closeCancel.setImage(#imageLiteral(resourceName: "cross_tint"), for: .normal)
-        }
+//        if #available(iOS 13.0, *){
+//        }else{
+//            save.setImage(#imageLiteral(resourceName: "small_tick_tint"), for: .normal)
+//            closeCancel.setImage(#imageLiteral(resourceName: "cross_tint"), for: .normal)
+//        }
+        save.setImage(#imageLiteral(resourceName: "small_tick_tint"), for: .normal)
+        closeCancel.setImage(#imageLiteral(resourceName: "cross_tint"), for: .normal)
         self.navigationController?.interactivePopGestureRecognizer?.isEnabled = false
     }
     

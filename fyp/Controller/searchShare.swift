@@ -71,12 +71,13 @@ class searchShare: UIViewController, UITableViewDelegate, UITableViewDataSource,
         let header = UIView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: 112))
         
         let menu = UIButton(frame: CGRect(x: 18, y: 16, width: 30, height: 30))
-        if #available(iOS 13.0, *){
-            menu.setImage(UIImage(systemName: "chevron.left"), for: .normal)
-            menu.tintColor = darkGreen
-        }else{
-            menu.setImage(#imageLiteral(resourceName: "left_tint"), for: .normal)
-        }
+//        if #available(iOS 13.0, *){
+//            menu.setImage(UIImage(systemName: "chevron.left"), for: .normal)
+//            menu.tintColor = darkGreen
+//        }else{
+//            menu.setImage(#imageLiteral(resourceName: "left_tint"), for: .normal)
+//        }
+        menu.setImage(#imageLiteral(resourceName: "left_tint"), for: .normal)
         menu.addTarget(self, action: #selector(userMenu(_:)), for: .touchUpInside)
         
         let text = UILabel(frame: CGRect(x: 0, y: 0, width: header.frame.width, height: 63))
@@ -113,12 +114,13 @@ class searchShare: UIViewController, UITableViewDelegate, UITableViewDataSource,
             }
         }
         
-        if #available(iOS 13.0, *) {
-            header.backgroundColor = .systemBackground
-        } else {
-            // Fallback on earlier versions
-            header.backgroundColor = .white
-        }
+//        if #available(iOS 13.0, *) {
+//            header.backgroundColor = .systemBackground
+//        } else {
+//            // Fallback on earlier versions
+//            header.backgroundColor = .white
+//        }
+        header.backgroundColor = .white
         
         header.addSubview(text)
         header.addSubview(menu)

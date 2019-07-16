@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14810.12" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="kJR-vR-aPe">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14835.7" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="kJR-vR-aPe">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14766.15"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14790.5"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
-        <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -621,11 +620,11 @@ Join us now</string>
                                                 <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="cell" id="KR8-48-Ahe" customClass="featuredCell" customModule="fyp" customModuleProvider="target">
                                                     <rect key="frame" x="10" y="0.0" width="165" height="30"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="Nfy-9L-Vcz">
+                                                    <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
                                                         <rect key="frame" x="0.0" y="0.0" width="165" height="30"/>
                                                         <autoresizingMask key="autoresizingMask"/>
                                                         <subviews>
-                                                            <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="K8T-jz-yWQ">
+                                                            <view clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="K8T-jz-yWQ">
                                                                 <rect key="frame" x="0.0" y="0.0" width="165" height="30"/>
                                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             </view>
@@ -637,13 +636,13 @@ Join us now</string>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                         </subviews>
-                                                        <constraints>
-                                                            <constraint firstItem="K8T-jz-yWQ" firstAttribute="leading" secondItem="Nfy-9L-Vcz" secondAttribute="leading" id="5EK-BD-qHK"/>
-                                                            <constraint firstAttribute="trailing" secondItem="K8T-jz-yWQ" secondAttribute="trailing" id="Aji-0Z-Ghg"/>
-                                                            <constraint firstAttribute="bottom" secondItem="K8T-jz-yWQ" secondAttribute="bottom" id="Ve6-Be-f6M"/>
-                                                            <constraint firstItem="K8T-jz-yWQ" firstAttribute="top" secondItem="Nfy-9L-Vcz" secondAttribute="top" id="ZPP-49-sk8"/>
-                                                        </constraints>
-                                                    </collectionViewCellContentView>
+                                                    </view>
+                                                    <constraints>
+                                                        <constraint firstItem="K8T-jz-yWQ" firstAttribute="leading" secondItem="KR8-48-Ahe" secondAttribute="leading" id="5EK-BD-qHK"/>
+                                                        <constraint firstAttribute="trailing" secondItem="K8T-jz-yWQ" secondAttribute="trailing" id="Aji-0Z-Ghg"/>
+                                                        <constraint firstAttribute="bottom" secondItem="K8T-jz-yWQ" secondAttribute="bottom" id="Ve6-Be-f6M"/>
+                                                        <constraint firstItem="K8T-jz-yWQ" firstAttribute="top" secondItem="KR8-48-Ahe" secondAttribute="top" id="ZPP-49-sk8"/>
+                                                    </constraints>
                                                     <size key="customSize" width="165" height="30"/>
                                                     <connections>
                                                         <outlet property="gradView" destination="K8T-jz-yWQ" id="x7r-uQ-nxB"/>

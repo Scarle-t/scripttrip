@@ -58,12 +58,14 @@ class CategoryView: UIViewController, UITableViewDataSource, UITableViewDelegate
         
         text.frame.origin.x = 23
         
-        if #available(iOS 13.0, *) {
-            header.backgroundColor = .systemBackground
-        } else {
-            // Fallback on earlier versions
-            header.backgroundColor = .white
-        }
+//        if #available(iOS 13.0, *) {
+//            header.backgroundColor = .systemBackground
+//        } else {
+//            // Fallback on earlier versions
+//            header.backgroundColor = .white
+//        }
+        
+        header.backgroundColor = .white
         
         header.addSubview(text)
         header.addSubview(menu)

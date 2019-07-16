@@ -166,10 +166,11 @@ class History: UIViewController, UICollectionViewDelegate, UICollectionViewDataS
     }
     
     func layout(){
-        if #available(iOS 13.0, *){
-        }else{
-            closeBtn.setImage(#imageLiteral(resourceName: "cross_tint"), for: .normal)
-        }
+//        if #available(iOS 13.0, *){
+//        }else{
+//            closeBtn.setImage(#imageLiteral(resourceName: "cross_tint"), for: .normal)
+//        }
+        closeBtn.setImage(#imageLiteral(resourceName: "cross_tint"), for: .normal)
         let layout = cv.collectionViewLayout as! UICollectionViewFlowLayout
         layout.sectionHeadersPinToVisibleBounds = true
         layout.headerReferenceSize = .init(width: self.view.frame.width, height: 62)

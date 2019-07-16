@@ -180,12 +180,13 @@ class DeviceSettings: UITableViewController, UIPickerViewDelegate, UIPickerViewD
     
     func layout(){
         langPicker.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height/1.8)
-        if #available(iOS 13.0, *) {
-            langPicker.backgroundColor = .systemBackground
-        } else {
-            // Fallback on earlier versions
-            langPicker.backgroundColor = .white
-        }
+//        if #available(iOS 13.0, *) {
+//            langPicker.backgroundColor = .systemBackground
+//        } else {
+//            // Fallback on earlier versions
+//            langPicker.backgroundColor = .white
+//        }
+        langPicker.backgroundColor = .white
         
         dimBg.frame = view.frame
         dimBg.backgroundColor = .black
@@ -206,10 +207,11 @@ class DeviceSettings: UITableViewController, UIPickerViewDelegate, UIPickerViewD
         let tapDismiss = UITapGestureRecognizer(target: self, action: #selector(dismissKb))
         dimBg.addGestureRecognizer(tapDismiss)
         
-        if #available(iOS 13.0, *){
-        }else{
-            closeBtn.setImage(#imageLiteral(resourceName: "cross_tint"), for: .normal)
-        }
+//        if #available(iOS 13.0, *){
+//        }else{
+//            closeBtn.setImage(#imageLiteral(resourceName: "cross_tint"), for: .normal)
+//        }
+        closeBtn.setImage(#imageLiteral(resourceName: "cross_tint"), for: .normal)
         
         let toolBar = UIToolbar()
         let confirmButton = UIBarButtonItem(title: Localized.Confirm.rawValue.localized(), style: .plain, target: self, action: #selector(confirmPicker))

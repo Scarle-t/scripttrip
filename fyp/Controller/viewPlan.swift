@@ -87,17 +87,19 @@ class viewPlan: UIViewController, UITableViewDelegate, UITableViewDataSource, UI
         let add = UIButton(frame: CGRect(x: 308, y: 8, width: 46, height: 46))
         let edit = UIButton(frame: CGRect(x: 270, y: 8, width: 46, height: 46))
         
-        if #available(iOS 13.0, *){
-            menu.setImage(UIImage(systemName: "chevron.left"), for: .normal)
-            menu.tintColor = darkGreen
-            add.setImage(UIImage(systemName: "plus"), for: .normal)
-            add.tintColor = darkGreen
-            edit.setImage(UIImage(systemName: "line.horizontal.3"), for: .normal)
-            edit.tintColor = darkGreen
-        }else{
-            menu.setImage(#imageLiteral(resourceName: "left_tint"), for: .normal)
-            add.setImage(#imageLiteral(resourceName: "plus_tint"), for: .normal)
-        }
+//        if #available(iOS 13.0, *){
+//            menu.setImage(UIImage(systemName: "chevron.left"), for: .normal)
+//            menu.tintColor = darkGreen
+//            add.setImage(UIImage(systemName: "plus"), for: .normal)
+//            add.tintColor = darkGreen
+//            edit.setImage(UIImage(systemName: "line.horizontal.3"), for: .normal)
+//            edit.tintColor = darkGreen
+//        }else{
+//            menu.setImage(#imageLiteral(resourceName: "left_tint"), for: .normal)
+//            add.setImage(#imageLiteral(resourceName: "plus_tint"), for: .normal)
+//        }
+        menu.setImage(#imageLiteral(resourceName: "left_tint"), for: .normal)
+        add.setImage(#imageLiteral(resourceName: "plus_tint"), for: .normal)
         menu.addTarget(self, action: #selector(userMenu(_:)), for: .touchUpInside)
         add.addTarget(self, action: #selector(addItem(_:)), for: .touchUpInside)
         edit.addTarget(self, action: #selector(editMode(_:)), for: .touchUpInside)
@@ -115,12 +117,13 @@ class viewPlan: UIViewController, UITableViewDelegate, UITableViewDataSource, UI
         
         text.delegate = self
         
-        if #available(iOS 13.0, *) {
-            header.backgroundColor = .systemBackground
-        } else {
-            // Fallback on earlier versions
-            header.backgroundColor = .white
-        }
+//        if #available(iOS 13.0, *) {
+//            header.backgroundColor = .systemBackground
+//        } else {
+//            // Fallback on earlier versions
+//            header.backgroundColor = .white
+//        }
+        header.backgroundColor = .white
         
         header.addSubview(text)
         header.addSubview(menu)

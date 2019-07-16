@@ -46,10 +46,11 @@ class Bookmarks: UIViewController, UICollectionViewDelegate, UICollectionViewDat
         cell.layer.shadowColor = UIColor.lightGray.cgColor
         cell.layer.shadowOpacity = 0.1
         
-        if #available(iOS 13.0, *){
-        }else{
-            cell.removeBK.setImage(#imageLiteral(resourceName: "cross_tint_red"), for: .normal)
-        }
+//        if #available(iOS 13.0, *){
+//        }else{
+//            cell.removeBK.setImage(#imageLiteral(resourceName: "cross_tint_red"), for: .normal)
+//        }
+        cell.removeBK.setImage(#imageLiteral(resourceName: "cross_tint_red"), for: .normal)
         
         cell.removeBK.layer.shadowOpacity = 0.7
         cell.removeBK.layer.shadowColor = UIColor.lightGray.cgColor
@@ -107,10 +108,11 @@ class Bookmarks: UIViewController, UICollectionViewDelegate, UICollectionViewDat
             
             header.title.text = Localized.bookmarks.rawValue.localized()
             
-            if #available(iOS 13.0, *){
-            }else{
-                header.close.setImage(#imageLiteral(resourceName: "cross_tint"), for: .normal)
-            }
+//            if #available(iOS 13.0, *){
+//            }else{
+//                header.close.setImage(#imageLiteral(resourceName: "cross_tint"), for: .normal)
+//            }
+            header.close.setImage(#imageLiteral(resourceName: "cross_tint"), for: .normal)
             
             return header
 

@@ -35,10 +35,11 @@ class Credit: UIViewController{
     }
     
     func layout(){
-        if #available(iOS 13.0, *){
-        }else{
-            closeBtn.setImage(#imageLiteral(resourceName: "cross_tint"), for: .normal)
-        }
+//        if #available(iOS 13.0, *){
+//        }else{
+//            closeBtn.setImage(#imageLiteral(resourceName: "cross_tint"), for: .normal)
+//        }
+        closeBtn.setImage(#imageLiteral(resourceName: "cross_tint"), for: .normal)
     }
     
     func setup(){

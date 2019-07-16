@@ -183,10 +183,11 @@ class Featured: UIViewController, UICollectionViewDataSource, UICollectionViewDe
                 
                 header.more.addTarget(self, action: #selector(showPlan(_:)), for: .touchUpInside)
                 
-                if #available(iOS 13.0, *){
-                }else{
-                    header.more.setImage(#imageLiteral(resourceName: "right_tint.png"), for: .normal)
-                }
+//                if #available(iOS 13.0, *){
+//                }else{
+//                    header.more.setImage(#imageLiteral(resourceName: "right_tint.png"), for: .normal)
+//                }
+                header.more.setImage(#imageLiteral(resourceName: "right_tint.png"), for: .normal)
                 
                 header.quickAccess.text = Localized.quickAccess.rawValue.localized()
                 
@@ -428,7 +429,7 @@ class Featured: UIViewController, UICollectionViewDataSource, UICollectionViewDe
                 tripView.show()
                 DispatchQueue.main.async {
                     if #available(iOS 13.0, *) {
-                        let postview = self.storyboard?.instantiateViewController(identifier: "postView") as! postView
+                        let postview = self.storyboard?.instantiateViewController(withIdentifier: "postView") as! postView
                         postview.tripView = self.tripView
                         self.present(postview, animated: true, completion: nil)
                     } else {

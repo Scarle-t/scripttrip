@@ -42,13 +42,14 @@ class Plans: UIViewController, UICollectionViewDelegate, UICollectionViewDataSou
         switch sender.tag{
         case 0:
             sender.tag = 1
-            if #available(iOS 13.0, *) {
-                sender.setImage(UIImage(systemName: "xmark"), for: .normal)
-                sender.tintColor = red
-            } else {
-                // Fallback on earlier versions
-                sender.setImage(#imageLiteral(resourceName: "cross_tint_red"), for: .normal)
-            }
+//            if #available(iOS 13.0, *) {
+//                sender.setImage(UIImage(systemName: "xmark"), for: .normal)
+//                sender.tintColor = red
+//            } else {
+//                // Fallback on earlier versions
+//                sender.setImage(#imageLiteral(resourceName: "cross_tint_red"), for: .normal)
+//            }
+            sender.setImage(#imageLiteral(resourceName: "cross_tint_red"), for: .normal)
             plans?.insert(Trip(), at: 0)
             mode = "add"
             cv.isScrollEnabled = false
@@ -57,13 +58,14 @@ class Plans: UIViewController, UICollectionViewDelegate, UICollectionViewDataSou
             cv.reloadData()
         case 1:
             sender.tag = 0
-            if #available(iOS 13.0, *) {
-                sender.setImage(UIImage(systemName: "plus"), for: .normal)
-                sender.tintColor = darkGreen
-            } else {
-                // Fallback on earlier versions
-                sender.setImage(#imageLiteral(resourceName: "plus_tint"), for: .normal)
-            }
+//            if #available(iOS 13.0, *) {
+//                sender.setImage(UIImage(systemName: "plus"), for: .normal)
+//                sender.tintColor = darkGreen
+//            } else {
+//                // Fallback on earlier versions
+//                sender.setImage(#imageLiteral(resourceName: "plus_tint"), for: .normal)
+//            }
+            sender.setImage(#imageLiteral(resourceName: "plus_tint"), for: .normal)
             plans?.remove(at: 0)
             mode = ""
             cv.isScrollEnabled = true
@@ -162,14 +164,19 @@ class Plans: UIViewController, UICollectionViewDelegate, UICollectionViewDataSou
             cell.delete.alpha = 0
             cell.pin.alpha = 0
             
-            if #available(iOS 13.0, *){
-            }else{
-                cell.viewPost.setImage(#imageLiteral(resourceName: "action_tint"), for: .normal)
-                cell.edit.setImage(#imageLiteral(resourceName: "Edit_pdf"), for: .normal)
-                cell.delete.setImage(#imageLiteral(resourceName: "cross_tint_red"), for: .normal)
-                cell.removeBK.setImage(#imageLiteral(resourceName: "more_tint"), for: .normal)
-                cell.pin.setImage(#imageLiteral(resourceName: "pin_outline_tint"), for: .normal)
-            }
+//            if #available(iOS 13.0, *){
+//            }else{
+//                cell.viewPost.setImage(#imageLiteral(resourceName: "action_tint"), for: .normal)
+//                cell.edit.setImage(#imageLiteral(resourceName: "Edit_pdf"), for: .normal)
+//                cell.delete.setImage(#imageLiteral(resourceName: "cross_tint_red"), for: .normal)
+//                cell.removeBK.setImage(#imageLiteral(resourceName: "more_tint"), for: .normal)
+//                cell.pin.setImage(#imageLiteral(resourceName: "pin_outline_tint"), for: .normal)
+//            }
+            cell.viewPost.setImage(#imageLiteral(resourceName: "action_tint"), for: .normal)
+            cell.edit.setImage(#imageLiteral(resourceName: "Edit_pdf"), for: .normal)
+            cell.delete.setImage(#imageLiteral(resourceName: "cross_tint_red"), for: .normal)
+            cell.removeBK.setImage(#imageLiteral(resourceName: "more_tint"), for: .normal)
+            cell.pin.setImage(#imageLiteral(resourceName: "pin_outline_tint"), for: .normal)
             
             cell.layer.masksToBounds = false
             cell.layer.shadowColor = UIColor.lightGray.cgColor
@@ -210,30 +217,38 @@ class Plans: UIViewController, UICollectionViewDelegate, UICollectionViewDataSou
                 
                 for item in result{
                     if (item["Result"] as! String) == "Exist"{
-                        if #available(iOS 13.0, *) {
-                            DispatchQueue.main.async {
-                                cell.pin.setImage(UIImage(systemName: "pin.fill"), for: .normal)
-                                cell.pin.tag = 1
-                            }
-                        } else {
-                            // Fallback on earlier versions
-                            DispatchQueue.main.async {
-                                cell.pin.setImage(#imageLiteral(resourceName: "pin_fill_tint"), for: .normal)
-                                cell.pin.tag = 1
-                            }
+//                        if #available(iOS 13.0, *) {
+//                            DispatchQueue.main.async {
+//                                cell.pin.setImage(UIImage(systemName: "pin.fill"), for: .normal)
+//                                cell.pin.tag = 1
+//                            }
+//                        } else {
+//                            // Fallback on earlier versions
+//                            DispatchQueue.main.async {
+//                                cell.pin.setImage(#imageLiteral(resourceName: "pin_fill_tint"), for: .normal)
+//                                cell.pin.tag = 1
+//                            }
+//                        }
+                        DispatchQueue.main.async {
+                            cell.pin.setImage(#imageLiteral(resourceName: "pin_fill_tint"), for: .normal)
+                            cell.pin.tag = 1
                         }
                     }else{
-                        if #available(iOS 13.0, *) {
-                            DispatchQueue.main.async {
-                                cell.pin.setImage(UIImage(systemName: "pin"), for: .normal)
-                                cell.pin.tag = 0
-                            }
-                        } else {
-                            // Fallback on earlier versions
-                            DispatchQueue.main.async {
-                                cell.pin.setImage(#imageLiteral(resourceName: "pin_outline_tint"), for: .normal)
-                                cell.pin.tag = 0
-                            }
+//                        if #available(iOS 13.0, *) {
+//                            DispatchQueue.main.async {
+//                                cell.pin.setImage(UIImage(systemName: "pin"), for: .normal)
+//                                cell.pin.tag = 0
+//                            }
+//                        } else {
+//                            // Fallback on earlier versions
+//                            DispatchQueue.main.async {
+//                                cell.pin.setImage(#imageLiteral(resourceName: "pin_outline_tint"), for: .normal)
+//                                cell.pin.tag = 0
+//                            }
+//                        }
+                        DispatchQueue.main.async {
+                            cell.pin.setImage(#imageLiteral(resourceName: "pin_outline_tint"), for: .normal)
+                            cell.pin.tag = 0
                         }
                     }
                 }
@@ -324,11 +339,13 @@ class Plans: UIViewController, UICollectionViewDelegate, UICollectionViewDataSou
             seg = header.segment
             addBtn = header.add
             
-            if #available(iOS 13.0, *){
-            }else{
-                header.close.setImage(#imageLiteral(resourceName: "cross_tint"), for: .normal)
-                header.add.setImage(#imageLiteral(resourceName: "plus_tint"), for: .normal)
-            }
+//            if #available(iOS 13.0, *){
+//            }else{
+//                header.close.setImage(#imageLiteral(resourceName: "cross_tint"), for: .normal)
+//                header.add.setImage(#imageLiteral(resourceName: "plus_tint"), for: .normal)
+//            }
+            header.close.setImage(#imageLiteral(resourceName: "cross_tint"), for: .normal)
+            header.add.setImage(#imageLiteral(resourceName: "plus_tint"), for: .normal)
             
             return header
             
@@ -508,17 +525,21 @@ class Plans: UIViewController, UICollectionViewDelegate, UICollectionViewDataSou
                     if (item["Result"] as! String) == "OK"{
                         SVProgressHUD.showSuccess(withStatus: nil)
                         SVProgressHUD.dismiss(withDelay: 1.5)
-                        if #available(iOS 13.0, *) {
-                            DispatchQueue.main.async {
-                                sender.setImage(UIImage(systemName: "pin.fill"), for: .normal)
-                                sender.tag = 1
-                            }
-                        } else {
-                            // Fallback on earlier versions
-                            DispatchQueue.main.async {
-                                sender.setImage(#imageLiteral(resourceName: "pin_fill_tint"), for: .normal)
-                                sender.tag = 1
-                            }
+//                        if #available(iOS 13.0, *) {
+//                            DispatchQueue.main.async {
+//                                sender.setImage(UIImage(systemName: "pin.fill"), for: .normal)
+//                                sender.tag = 1
+//                            }
+//                        } else {
+//                            // Fallback on earlier versions
+//                            DispatchQueue.main.async {
+//                                sender.setImage(#imageLiteral(resourceName: "pin_fill_tint"), for: .normal)
+//                                sender.tag = 1
+//                            }
+//                        }
+                        DispatchQueue.main.async {
+                            sender.setImage(#imageLiteral(resourceName: "pin_fill_tint"), for: .normal)
+                            sender.tag = 1
                         }
                     }else{
                         SVProgressHUD.showError(withStatus: item["Reason"] as? String)
@@ -538,17 +559,21 @@ class Plans: UIViewController, UICollectionViewDelegate, UICollectionViewDataSou
                     if (item["Result"] as! String) == "OK"{
                         SVProgressHUD.showSuccess(withStatus: nil)
                         SVProgressHUD.dismiss(withDelay: 1.5)
-                        if #available(iOS 13.0, *) {
-                            DispatchQueue.main.async {
-                                sender.setImage(UIImage(systemName: "pin"), for: .normal)
-                                sender.tag = 0
-                            }
-                        } else {
-                            // Fallback on earlier versions
-                            DispatchQueue.main.async {
-                                sender.setImage(#imageLiteral(resourceName: "pin_outline_tint"), for: .normal)
-                                sender.tag = 0
-                            }
+//                        if #available(iOS 13.0, *) {
+//                            DispatchQueue.main.async {
+//                                sender.setImage(UIImage(systemName: "pin"), for: .normal)
+//                                sender.tag = 0
+//                            }
+//                        } else {
+//                            // Fallback on earlier versions
+//                            DispatchQueue.main.async {
+//                                sender.setImage(#imageLiteral(resourceName: "pin_outline_tint"), for: .normal)
+//                                sender.tag = 0
+//                            }
+//                        }
+                        DispatchQueue.main.async {
+                            sender.setImage(#imageLiteral(resourceName: "pin_outline_tint"), for: .normal)
+                            sender.tag = 0
                         }
                     }else{
                         SVProgressHUD.showError(withStatus: item["Reason"] as? String)
