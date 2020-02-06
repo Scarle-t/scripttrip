@@ -1,6 +1,7 @@
 ![](https://i.imgur.com/c9DqdM6.png) 
 # Script Trip
 This is Final Year Project called Script Trip, a travel companion app.
+
 Bachelor of Computer Science, University of Wollongong
 
 # Description
